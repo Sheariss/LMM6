@@ -293,11 +293,467 @@
           "text": "public class GameStateManager : MonoBehaviour",
           "original": "public class GameStateManager : MonoBehaviour",
           "createdAt": "2026-09-15T01:43:10.951Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu232mke_urnr",
+          "note": "Converts persistent data between runtime objects and JSON.",
+          "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+          "line": 3,
+          "pattern": "^[^\\S\\n]*namespace Atlas\\.Core\\.Persistence",
+          "text": "namespace Atlas.Core.Persistence",
+          "original": "public class SaveManager : MonoBehaviour",
+          "createdAt": "2026-09-15T02:59:33.950Z",
+          "witnessed": true
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2376fu_bb01",
+          "note": "Reconstructs an object from JSON.",
+          "file": "Assets/_Project/Core/Pesistance/SaveSerializar.cs",
+          "line": 32,
+          "pattern": "^[^\\S\\n]*public static T FromJson<T>\\(string json\\)",
+          "text": "public static T FromJson<T>(string json)",
+          "original": "public static T FromJson<T>(string json)",
+          "createdAt": "2026-09-15T03:03:06.330Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu237j1m_dnir",
+          "note": "Converts a serializable object into JSON.",
+          "file": "Assets/_Project/Core/Pesistance/SaveSerializar.cs",
+          "line": 19,
+          "pattern": "^[^\\S\\n]*public static string ToJson<T>\\(T data\\)",
+          "text": "public static string ToJson<T>(T data)",
+          "original": "public static string ToJson<T>(T data)",
+          "createdAt": "2026-09-15T03:03:22.666Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2382g7_10dr",
+          "note": "Prevent serialized type metadata from being embedded in save files.",
+          "file": "Assets/_Project/Core/Pesistance/SaveSerializar.cs",
+          "line": 14,
+          "pattern": "^[^\\S\\n]*TypeNameHandling = TypeNameHandling\\.None",
+          "text": "TypeNameHandling = TypeNameHandling.None",
+          "original": "TypeNameHandling = TypeNameHandling.None",
+          "createdAt": "2026-09-15T03:03:47.815Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu238npx_vmmq",
+          "note": "Persistent data should be reconstructed from the file rather than merged into default collection instances.",
+          "file": "Assets/_Project/Core/Pesistance/SaveSerializar.cs",
+          "line": 12,
+          "pattern": "^[^\\S\\n]*ObjectCreationHandling = ObjectCreationHandling\\.Replace,",
+          "text": "ObjectCreationHandling = ObjectCreationHandling.Replace,",
+          "original": "ObjectCreationHandling = ObjectCreationHandling.Replace,",
+          "createdAt": "2026-09-15T03:04:15.381Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu23cydn_1f1s",
+          "note": "Deletes the save file associated with the requested slot.",
+          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+          "line": 155,
+          "pattern": "^[^\\S\\n]*public bool DeleteSave\\(int slot\\)",
+          "text": "public bool DeleteSave(int slot)",
+          "original": "public bool DeleteSave(int slot)",
+          "createdAt": "2026-09-15T03:07:35.819Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu23dmfz_l7x3",
+          "note": "Ensures a save-slot identifier is valid.",
+          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+          "line": 155,
+          "pattern": "^[^\\S\\n]*public bool DeleteSave\\(int slot\\)",
+          "text": "public bool DeleteSave(int slot)",
+          "original": "private static void ValidateSlot(int slot)",
+          "createdAt": "2026-09-15T03:08:07.007Z",
+          "witnessed": true
+        },
+        {
+          "type": "tag",
+          "id": "t_mu23eul8_rjwm",
+          "note": "Creates a Save Service using Unity's persistent application-data path.",
+          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+          "line": 18,
+          "pattern": "^[^\\S\\n]*public SaveService\\(\\)",
+          "text": "public SaveService()",
+          "original": "public SaveService()",
+          "createdAt": "2026-09-15T03:09:04.220Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu23f7sd_5mic",
+          "note": "Creates a Save Service using a specified persistence root.",
+          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+          "line": 23,
+          "pattern": "^[^\\S\\n]*public SaveService\\(string persistentDataPath\\)",
+          "text": "public SaveService(string persistentDataPath)",
+          "original": "public SaveService(string persistentDataPath)",
+          "createdAt": "2026-09-15T03:09:21.325Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu23hpte_gfgp",
+          "note": "Primarily useful for testing \r\n\r\nthe persistence subsystem without writing into the application's normal persistent-data directory.",
+          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+          "line": 23,
+          "pattern": "^[^\\S\\n]*public SaveService\\(string persistentDataPath\\)",
+          "text": "public SaveService(string persistentDataPath)",
+          "original": "public SaveService(string persistentDataPath)",
+          "createdAt": "2026-09-15T03:11:18.002Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu23ice4_aor6",
+          "note": "Resolves the file path associated with a save slot.",
+          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+          "line": 40,
+          "pattern": "^[^\\S\\n]*public string ResolveSavePath\\(int slot\\)",
+          "text": "public string ResolveSavePath(int slot)",
+          "original": "public string ResolveSavePath(int slot)",
+          "createdAt": "2026-09-15T03:11:47.260Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu23iqb0_n4q4",
+          "note": " Determines whether persistent save data exists for a slot.",
+          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+          "line": 53,
+          "pattern": "^[^\\S\\n]*public bool SaveExists\\(int slot\\)",
+          "text": "public bool SaveExists(int slot)",
+          "original": "public bool SaveExists(int slot)",
+          "createdAt": "2026-09-15T03:12:05.292Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu23j3vi_h7u5",
+          "note": "Serializes and writes save data to the requested slot.",
+          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+          "line": 167,
+          "pattern": "^[^\\S\\n]*\\{",
+          "text": "{",
+          "original": "public bool Save(int slot, GameSaveData data)",
+          "createdAt": "2026-09-15T03:12:22.878Z",
+          "witnessed": true
+        },
+        {
+          "type": "tag",
+          "id": "t_mu23jv72_bb3u",
+          "note": "Attempts to load and deserialize save data from the requested slot.",
+          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+          "line": 115,
+          "pattern": "^[^\\S\\n]*public bool TryLoad\\(int slot, out GameSaveData data\\)",
+          "text": "public bool TryLoad(int slot, out GameSaveData data)",
+          "original": "public bool TryLoad(",
+          "createdAt": "2026-09-15T03:12:58.286Z",
+          "witnessed": true
+        },
+        {
+          "type": "tag",
+          "id": "t_mu23lcls_zwtp",
+          "note": "Provides physical file-system operations for persistent save data.",
+          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+          "line": 8,
+          "pattern": "^[^\\S\\n]*public sealed class SaveService",
+          "text": "public sealed class SaveService",
+          "original": "public sealed class SaveService",
+          "createdAt": "2026-09-15T03:14:07.504Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu23wvkq_ayhi",
+          "note": "Save files are stored inside: Application.persistentDataPath / Saves",
+          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+          "line": 11,
+          "pattern": "^[^\\S\\n]*private const string SaveDirectoryName = \"Saves\";",
+          "text": "private const string SaveDirectoryName = \"Saves\";",
+          "original": "private const string SaveDirectoryName = \"Saves\";",
+          "createdAt": "2026-09-15T03:23:05.306Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu23y7j3_98c7",
+          "note": "Individual save slots use the format: save_slot_[slot].json",
+          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+          "line": 12,
+          "pattern": "^[^\\S\\n]*private const string SaveFilePrefix = \"save_slot_\";",
+          "text": "private const string SaveFilePrefix = \"save_slot_\";",
+          "original": "private const string SaveFilePrefix = \"save_slot_\";",
+          "createdAt": "2026-09-15T03:24:07.455Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu23yt0l_2j9g",
+          "note": "Resolved directory containing all save-slot files.",
+          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+          "line": 15,
+          "pattern": "^[^\\S\\n]*private readonly string saveDirectoryPath;",
+          "text": "private readonly string saveDirectoryPath;",
+          "original": "private readonly string saveDirectoryPath;",
+          "createdAt": "2026-09-15T03:24:35.301Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2489o2_z4rc",
+          "note": "Save slots are represented by non-negative integer identifiers.",
+          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+          "line": 63,
+          "pattern": "^[^\\S\\n]*private static void ValidateSlot\\(int slot\\)",
+          "text": "private static void ValidateSlot(int slot)",
+          "original": "private static void ValidateSlot(int slot)",
+          "createdAt": "2026-09-15T03:31:56.786Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu24epxz_52wt",
+          "note": "Only expose the loaded data after successful deserialization.",
+          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+          "line": 140,
+          "pattern": "^[^\\S\\n]*data = loadedData;",
+          "text": "data = loadedData;",
+          "original": "data = loadedData;",
+          "createdAt": "2026-09-15T03:36:57.815Z",
+          "notePosition": "end"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu24ftqb_gdq6",
+          "note": "Failed loads must not expose incomplete or invalid save data.",
+          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+          "line": 119,
+          "pattern": "^[^\\S\\n]*data = null;",
+          "text": "data = null;",
+          "original": "data = null;",
+          "createdAt": "2026-09-15T03:37:49.379Z",
+          "notePosition": "end"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu264py0_q2qc",
+          "note": "The active persistent-data snapshot for the current playthrough.",
+          "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+          "line": 11,
+          "pattern": "^[^\\S\\n]*public GameSaveData CurrentSave \\{ get; private set; \\}",
+          "text": "public GameSaveData CurrentSave { get; private set; }",
+          "original": "public GameSaveData CurrentSave { get; private set; }",
+          "createdAt": "2026-09-15T04:25:10.488Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu26515r_81gc",
+          "note": "Indicates whether the Save Manager has completed initialization.",
+          "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+          "line": 9,
+          "pattern": "^[^\\S\\n]*public bool IsInitialized \\{ get; private set; \\}",
+          "text": "public bool IsInitialized { get; private set; }",
+          "original": "public bool IsInitialized { get; private set; }",
+          "createdAt": "2026-09-15T04:25:25.023Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu266kg0_7vnk",
+          "note": "Indicates whether an active GameSaveData instance exists.",
+          "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+          "line": 18,
+          "pattern": "^[^\\S\\n]*public bool HasActiveSave =>",
+          "text": "public bool HasActiveSave =>",
+          "original": "public bool HasActiveSave =>",
+          "createdAt": "2026-09-15T04:26:36.672Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu266vxd_hv8d",
+          "note": "Indicates whether a save slot is currently selected.",
+          "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+          "line": 15,
+          "pattern": "^[^\\S\\n]*public bool HasSelectedSaveSlot =>",
+          "text": "public bool HasSelectedSaveSlot =>",
+          "original": "public bool HasSelectedSaveSlot =>",
+          "createdAt": "2026-09-15T04:26:51.553Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu267s7z_ju5e",
+          "note": "Identifies the currently selected save slot.",
+          "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+          "line": 13,
+          "pattern": "^[^\\S\\n]*public int CurrentSaveSlot \\{ get; private set; \\} = -1;",
+          "text": "public int CurrentSaveSlot { get; private set; } = -1;",
+          "original": "public int CurrentSaveSlot { get; private set; } = -1;",
+          "createdAt": "2026-09-15T04:27:33.407Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu267zr7_tj0e",
+          "note": "Coordinates game save and load operations for the IIS runtime.",
+          "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+          "line": 5,
+          "pattern": "^[^\\S\\n]*public sealed class SaveManager : MonoBehaviour",
+          "text": "public sealed class SaveManager : MonoBehaviour",
+          "original": "public sealed class SaveManager : MonoBehaviour",
+          "createdAt": "2026-09-15T04:27:43.171Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu26aegy_5qty",
+          "note": "Initializes the persistence services used by the Save Manager.",
+          "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+          "line": 49,
+          "pattern": "^[^\\S\\n]*private void Initialize\\(\\)",
+          "text": "private void Initialize()",
+          "original": "private void Initialize()",
+          "createdAt": "2026-09-15T04:29:35.554Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu26aq4y_ph59",
+          "note": "Selects the save slot targeted by subsequent persistence operations.",
+          "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+          "line": 56,
+          "pattern": "^[^\\S\\n]*public bool SelectSaveSlot\\(int slot\\)",
+          "text": "public bool SelectSaveSlot(int slot)",
+          "original": "public bool SelectSaveSlot(int slot)",
+          "createdAt": "2026-09-15T04:29:50.674Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu26b0vw_r1j5",
+          "note": "Determines whether persistent data exists for a specified slot.",
+          "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+          "line": 73,
+          "pattern": "^[^\\S\\n]*public bool HasSave\\(int slot\\)",
+          "text": "public bool HasSave(int slot)",
+          "original": "public bool HasSave(int slot)",
+          "createdAt": "2026-09-15T04:30:04.604Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu26bd0t_15n7",
+          "note": "Creates a fresh persistent-data instance for a new playthrough.",
+          "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+          "line": 83,
+          "pattern": "^[^\\S\\n]*public bool NewGame\\(\\)",
+          "text": "public bool NewGame()",
+          "original": "public bool NewGame()",
+          "createdAt": "2026-09-15T04:30:20.333Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu26c3ud_lykg",
+          "note": "Writes the active persistent-data snapshot to the selected slot.",
+          "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+          "line": 105,
+          "pattern": "^[^\\S\\n]*public bool SaveGame\\(\\)",
+          "text": "public bool SaveGame()",
+          "original": "public bool SaveGame()",
+          "createdAt": "2026-09-15T04:30:55.093Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu26ctzz_rv4i",
+          "note": "Loads persistent data from the selected save slot.",
+          "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+          "line": 129,
+          "pattern": "^[^\\S\\n]*public bool LoadGame\\(\\)",
+          "text": "public bool LoadGame()",
+          "original": "public bool LoadGame()",
+          "createdAt": "2026-09-15T04:31:28.991Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu26d5xd_8ab5",
+          "note": "Deletes persistent data from the selected save slot.",
+          "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+          "line": 164,
+          "pattern": "^[^\\S\\n]*public bool DeleteSave\\(\\)",
+          "text": "public bool DeleteSave()",
+          "original": "public bool DeleteSave()",
+          "createdAt": "2026-09-15T04:31:44.449Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu26dp0t_au86",
+          "note": "Determines whether the manager currently has sufficient context to perform a save operation.",
+          "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+          "line": 184,
+          "pattern": "^[^\\S\\n]*private bool CanPersistCurrentSave\\(\\)",
+          "text": "private bool CanPersistCurrentSave()",
+          "original": "private bool CanPersistCurrentSave()",
+          "createdAt": "2026-09-15T04:32:09.197Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu26e1dy_k82e",
+          "note": "Creates the default persistent-data structure for a new game.",
+          "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+          "line": 214,
+          "pattern": "^[^\\S\\n]*private static GameSaveData CreateDefaultSaveData\\(\\)",
+          "text": "private static GameSaveData CreateDefaultSaveData()",
+          "original": "private static GameSaveData CreateDefaultSaveData()",
+          "createdAt": "2026-09-15T04:32:25.222Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu26ebyg_5ex9",
+          "note": "Performs basic validation before loaded data becomes active.",
+          "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+          "line": 219,
+          "pattern": "^[^\\S\\n]*private static bool ValidateLoadedSave\\(GameSaveData data\\)",
+          "text": "private static bool ValidateLoadedSave(GameSaveData data)",
+          "original": "private static bool ValidateLoadedSave(GameSaveData data)",
+          "createdAt": "2026-09-15T04:32:38.920Z"
         }
       ]
     }
   ],
   "trash": [
+    {
+      "node": {
+        "type": "tag",
+        "id": "t_mu233ap5_5x3d",
+        "note": "Converts persistent data between runtime objects and JSON.",
+        "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+        "line": 13,
+        "pattern": "^[^\\S\\n]*public static class SaveSerializer",
+        "text": "public static class SaveSerializer",
+        "original": "public static class SaveSerializer",
+        "createdAt": "2026-09-15T03:00:05.225Z"
+      },
+      "deletedAt": "2026-09-15T04:24:23.074Z"
+    },
+    {
+      "node": {
+        "type": "tag",
+        "id": "t_mu245xr6_atv9",
+        "note": "Save slots are represented by non-negative integer identifiers.",
+        "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+        "line": 185,
+        "pattern": "^[^\\S\\n]*\\}",
+        "text": "}",
+        "original": "private static void ValidateSlot(int slot)",
+        "createdAt": "2026-09-15T03:30:08.034Z",
+        "witnessed": true
+      },
+      "deletedAt": "2026-09-15T03:31:51.298Z"
+    },
+    {
+      "node": {
+        "type": "tag",
+        "id": "t_mu23g0la_7wyq",
+        "note": "Primarily useful for testing the persistence subsystem without writing into the application's normal persistent-data directory.",
+        "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+        "line": 28,
+        "pattern": "^[^\\S\\n]*public SaveService\\(\\)",
+        "text": "public SaveService()",
+        "original": "public SaveService()",
+        "createdAt": "2026-09-15T03:09:58.654Z"
+      },
+      "deletedAt": "2026-09-15T03:10:21.019Z"
+    },
     {
       "node": {
         "type": "tag",

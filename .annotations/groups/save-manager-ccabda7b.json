@@ -1,0 +1,19 @@
+{
+  "id": "ccabda7b-318d-48c4-b56b-06c6d2052c0c",
+  "title": "Save Manager",
+  "author": "@shearis",
+  "tags": [],
+  "gitRef": "save-manager",
+  "status": "open",
+  "createdAt": 1789446494,
+  "updatedAt": 1789446524,
+  "annotations": [
+    {
+      "id": "ecb7c63b-03d8-46dd-977d-804c963c9971",
+      "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+      "range": null,
+      "content": "Coordinates game save and load operations for the IIS runtime.\n\nThe Save Manager is the primary runtime interface to the Save & Persistence subsystem.\n\nIt maintains the currently selected save slot and active GameSaveData instance while delegating physical persistence operations to the Save Service.",
+      "contentHash": ""
+    }
+  ]
+}
