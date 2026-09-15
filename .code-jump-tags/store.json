@@ -296,18 +296,6 @@
         },
         {
           "type": "tag",
-          "id": "t_mu232mke_urnr",
-          "note": "Converts persistent data between runtime objects and JSON.",
-          "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
-          "line": 3,
-          "pattern": "^[^\\S\\n]*namespace Atlas\\.Core\\.Persistence",
-          "text": "namespace Atlas.Core.Persistence",
-          "original": "public class SaveManager : MonoBehaviour",
-          "createdAt": "2026-09-15T02:59:33.950Z",
-          "witnessed": true
-        },
-        {
-          "type": "tag",
           "id": "t_mu2376fu_bb01",
           "note": "Reconstructs an object from JSON.",
           "file": "Assets/_Project/Core/Pesistance/SaveSerializar.cs",
@@ -370,8 +358,7 @@
           "pattern": "^[^\\S\\n]*public bool DeleteSave\\(int slot\\)",
           "text": "public bool DeleteSave(int slot)",
           "original": "private static void ValidateSlot(int slot)",
-          "createdAt": "2026-09-15T03:08:07.007Z",
-          "witnessed": true
+          "createdAt": "2026-09-15T03:08:07.007Z"
         },
         {
           "type": "tag",
@@ -437,8 +424,7 @@
           "pattern": "^[^\\S\\n]*\\{",
           "text": "{",
           "original": "public bool Save(int slot, GameSaveData data)",
-          "createdAt": "2026-09-15T03:12:22.878Z",
-          "witnessed": true
+          "createdAt": "2026-09-15T03:12:22.878Z"
         },
         {
           "type": "tag",
@@ -449,8 +435,7 @@
           "pattern": "^[^\\S\\n]*public bool TryLoad\\(int slot, out GameSaveData data\\)",
           "text": "public bool TryLoad(int slot, out GameSaveData data)",
           "original": "public bool TryLoad(",
-          "createdAt": "2026-09-15T03:12:58.286Z",
-          "witnessed": true
+          "createdAt": "2026-09-15T03:12:58.286Z"
         },
         {
           "type": "tag",
@@ -717,11 +702,37 @@
           "text": "public sealed class GameSaveData",
           "original": "public sealed class GameSaveData",
           "createdAt": "2026-09-15T06:27:33.049Z"
+<<<<<<< Updated upstream
+=======
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2bds5l_tcjk",
+          "note": "Naming conflit???",
+          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+          "line": 77,
+          "pattern": "^[^\\S\\n]*public bool Save\\(int slot, GameSaveData data\\) // Note: Fully qualified name used to avoid ambiguity with the SaveManager class\\.",
+          "text": "public bool Save(int slot, GameSaveData data) // Note: Fully qualified name used to avoid ambiguity with the SaveManager class.",
+          "original": "public bool Save(int slot, Atlas.Core.Persistence.Data.GameSaveData data)",
+          "createdAt": "2026-09-15T06:52:11.337Z"
+>>>>>>> Stashed changes
         }
       ]
     }
   ],
   "trash": [
+    {
+      "node": {
+        "type": "tag",
+        "id": "t_mu232mke_urnr",
+        "note": "Converts persistent data between runtime objects and JSON.",
+        "file": "Assets/_Project/Core/Pesistance/SaveManager.cs",
+        "line": 3,
+        "original": "public class SaveManager : MonoBehaviour",
+        "createdAt": "2026-09-15T02:59:33.950Z"
+      },
+      "deletedAt": "2026-09-15T06:53:51.781Z"
+    },
     {
       "node": {
         "type": "tag",
