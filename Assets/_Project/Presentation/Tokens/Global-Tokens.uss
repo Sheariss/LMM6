@@ -1,0 +1,74 @@
+:root {
+    --bg-primary: var(--gray-950);
+    --bg-secondary: var(--gray-900);
+    --bg-tertiary: var(--gray-800);
+    --bg-overlay: rgba(10, 13, 18, 0.9);
+    --surface-primary: var(--gray-900);
+    --surface-hover: var(--gray-800);
+    --surface-active: var(--gray-700);
+    --surface-disabled: var(--gray-800);
+    --border-primary: var(--gray-700);
+    --border-secondary: var(--gray-600);
+    --border-focus: var(--atlas-ui-400);
+    --text-primary: var(--gray-50);
+    --text-secondary: var(--gray-200);
+    --text-muted: var(--gray-400);
+    --text-disabled: var(--gray-500);
+    --text-inverse: var(--gray-950);
+    --accent-primary: var(--atlas-ui-500);
+    --accent-hover: var(--atlas-ui-400);
+    --accent-active: var(--atlas-ui-600);
+    --accent-soft: var(--atlas-ui-100);
+    --window-bg: var(--gray-900);
+    --window-header: var(--gray-950);
+    --window-footer: var(--gray-950);
+    --window-border: var(--border-primary);
+    --error-text-light: var(--error-300);
+    --error-text-strong: var(--error-200);
+    --error-bg-subtle: var(--error-950);
+    --error-bg: var(--error-900);
+    --error-border: var(--error-700);
+    --error-button: var(--error-600);
+    --error-button-hover: var(--error-700);
+    --error-button-pressed: var(--error-800);
+    --warning-text-light: var(--warning-300);
+    --warning-text-strong: var(--warning-200);
+    --warning-bg-subtle: var(--warning-950);
+    --warning-bg: var(--warning-900);
+    --warning-border: var(--warning-700);
+    --warning-button: var(--warning-600);
+    --warning-button-hover: var(--warning-700);
+    --warning-button-pressed: var(--warning-800);
+    --success-text-light: var(--success-300);
+    --success-text-strong: var(--success-200);
+    --success-bg-subtle: var(--success-950);
+    --success-bg: var(--success-900);
+    --success-border: var(--success-700);
+    --success-button: var(--success-600);
+    --success-button-hover: var(--success-700);
+    --success-button-pressed: var(--success-800);
+    --info-text-light: var(--info-300);
+    --info-text-strong: var(--info-200);
+    --info-bg-subtle: var(--info-950);
+    --info-bg: var(--info-900);
+    --info-border: var(--info-700);
+    --info-button: var(--info-600);
+    --info-button-hover: var(--info-700);
+    --info-button-pressed: var(--info-800);
+    --windows-blue-bg: rgb(13, 114, 206);
+    --windows-hyperlink-color: rgb(129, 190, 246);
+    --desktop-taskbar-bg: var(--pd-700);
+    --desktop-taskbar-border: var(--pd-600);
+
+    /* PD Workstation */
+    --pdw-background: var(--gray-950);
+    --pdw-surface-primary: var(--pd-900);
+    --pdw-text-primary: var(--pd-200);
+    --pdw-text-secondary: var(--pd-400);
+    --pdw-text-disabled: var(--pd-700);
+    --pdw-inv-image-border: var(--pdw-text-secondary); /* same as pdw-text-secondary */
+    --pdw-inv-image-bg: var(--pdw-background); /* same as --pdw-background */
+    --pdw-active-tab-color: var(--pd-500);
+    --pdw-sidebar-bg-color: rgba(32, 41, 57,.8); /* same as --pd-800 + lower opacity */
+
+}

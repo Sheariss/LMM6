@@ -1,0 +1,32 @@
+.main-menu-background {
+    background-color: var(--windows-blue-bg);
+    padding: 100px;
+}
+
+.amm-title{
+    font-size: 72px;
+    height: 10%;
+}
+
+.amm-instruc-group{
+    align-items: flex-start;
+    justify-content: space-evenly;
+    height: 20%;
+}
+
+.amm-instruc-1{
+     font-size: 32px;
+}
+
+.amm-instruc-2{
+     font-size: 24px;
+}
+
+.amm-options-group{
+    align-items: flex-start;
+    justify-content: space-evenly;
+    height: 30%;
+}
+.amm-options{
+    font-size: 32px;
+}
