@@ -713,11 +713,58 @@
           "text": "public bool Save(int slot, GameSaveData data) // Note: Fully qualified name used to avoid ambiguity with the SaveManager class.",
           "original": "public bool Save(int slot, Atlas.Core.Persistence.Data.GameSaveData data)",
           "createdAt": "2026-09-15T06:52:11.337Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2hbkmj_k7ke",
+          "note": "Finds UI elements and connects callbacks",
+          "file": "Assets/_Project/Presentation/GameUI/MainMenu/Scripts/MainMenuBinder.cs",
+          "line": 5,
+          "pattern": "^[^\\S\\n]*\\{",
+          "text": "{",
+          "original": "public class MainMenuBinder : MonoBehaviour",
+          "createdAt": "2026-09-15T09:38:25.963Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2hcnmk_p3qm",
+          "note": "Pure description of what the menu should currently looks like",
+          "file": "Assets/_Project/Presentation/GameUI/MainMenu/Scripts/MainMenuView.cs",
+          "line": 5,
+          "pattern": "^[^\\S\\n]*public sealed class MainMenuView",
+          "text": "public sealed class MainMenuView",
+          "original": "public sealed class MainMenuViewState",
+          "createdAt": "2026-09-15T09:39:16.508Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2ia8ze_pzz6",
+          "note": "Decides what happens when the player interacts with the main menu",
+          "file": "Assets/_Project/Presentation/GameUI/MainMenu/Scripts/MainMenuController.cs",
+          "line": 6,
+          "pattern": "^[^\\S\\n]*public sealed class MainMenuController : MonoBehaviour",
+          "text": "public sealed class MainMenuController : MonoBehaviour",
+          "original": "public sealed class MainMenuController : MonoBehaviour",
+          "createdAt": "2026-09-15T10:05:23.834Z"
         }
       ]
     }
   ],
   "trash": [
+    {
+      "node": {
+        "type": "tag",
+        "id": "t_mu2h87dd_sccu",
+        "note": "Decides what happens when the player interacts",
+        "file": "Assets/_Project/Presentation/GameUI/MainMenu/Scripts/MainMenuController.cs",
+        "line": 5,
+        "pattern": "^[^\\S\\n]*public class MainMenuController : MonoBehaviour",
+        "text": "public class MainMenuController : MonoBehaviour",
+        "original": "public class MainMenuController : MonoBehaviour",
+        "createdAt": "2026-09-15T09:35:48.817Z"
+      },
+      "deletedAt": "2026-09-15T10:05:11.733Z"
+    },
     {
       "node": {
         "type": "tag",
