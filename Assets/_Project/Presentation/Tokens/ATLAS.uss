@@ -1,0 +1,42 @@
+:root {
+}
+
+.fullscreen {
+    height: 100%;
+    width: 100%;
+}
+
+.spacing-reset {
+    margin: 0;
+    padding: 0;
+}
+
+.button-reset {
+    margin: 0;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    border-color: rgba(0, 0, 0, 0);
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.white-text {
+    color: white;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.full-height {
+    width: 100%;
+}
+
+

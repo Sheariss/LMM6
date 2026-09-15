@@ -1,0 +1,21 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
+    <Style src="project://database/Assets/_Project/Presentation/GameUI/MainMenu/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=9bdfbb9163e00ec4e98f5d07726dccc4&amp;type=3#MainMenuStyle"/>
+    <ui:VisualElement name="AtlasMainMenuRoot" class="fullscreen flex-column white-text main-menu-background">
+        <ui:Label text="Startup Settings" name="AMMTitle" class="spacing-reset amm-title"/>
+        <ui:GroupBox name="AMMInstructionGroup" class="spacing-reset amm-instruc-group">
+            <ui:Label text="Press a number to choose from the options below:" class="amm-instruc-1"/>
+            <ui:Label text="Use number keys, function keys or click on an option." class="amm-instruc-2"/>
+        </ui:GroupBox>
+        <ui:GroupBox name="AMMOptionGroup" class="spacing-reset amm-options-group">
+            <ui:Button text="1) Initialize new session" name="MM-NewGameButton" class="button-reset spacing-reset amm-options"/>
+            <ui:Button text="2) System Configuration" name="MM-LoadGameButton" class="button-reset spacing-reset amm-options"/>
+            <ui:Button text="2) System Configuration" name="MM-GameSettingsButton" class="button-reset spacing-reset amm-options"/>
+            <ui:Button text="2) System Configuration" name="MM-GameAccessibilityButton" class="button-reset spacing-reset amm-options"/>
+            <ui:Button text="2) System Configuration" name="MM-GameCreditsButton" class="button-reset spacing-reset amm-options"/>
+            <ui:Button text="3) Shutdown workstation" name="MM-ExitGameButton" class="button-reset spacing-reset amm-options"/>
+        </ui:GroupBox>
+    </ui:VisualElement>
+</ui:UXML>

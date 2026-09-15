@@ -3,5 +3,8 @@
         "Behaviour",
         "Dont",
         "Newtonsoft"
-    ]
+    ],
+    "uxmlPreview.canvas.width": 1920,
+    "uxmlPreview.canvas.height": 1080,
+    "uxmlPreview.canvas.fitToPanel": false
 }
