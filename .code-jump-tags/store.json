@@ -706,6 +706,17 @@
           "text": "private static bool ValidateLoadedSave(GameSaveData data)",
           "original": "private static bool ValidateLoadedSave(GameSaveData data)",
           "createdAt": "2026-09-15T04:32:38.920Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2ai3i1_ub5c",
+          "note": "Represents the complete persistent snapshot associated with a single save slot.",
+          "file": "Assets/_Project/Core/Pesistance/Data/GameSaveData.cs",
+          "line": 4,
+          "pattern": "^[^\\S\\n]*public sealed class GameSaveData",
+          "text": "public sealed class GameSaveData",
+          "original": "public sealed class GameSaveData",
+          "createdAt": "2026-09-15T06:27:33.049Z"
         }
       ]
     }
