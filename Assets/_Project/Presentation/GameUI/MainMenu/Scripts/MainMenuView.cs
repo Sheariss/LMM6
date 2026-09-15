@@ -17,15 +17,10 @@ namespace Atlas.Presentation.GameUI.MainMenu
             int btnNumber = 1;
 
             ApplyButton(binder.NewGameButton, true, "Initialize New Session", ref btnNumber);
-
             ApplyButton(binder.ContinueButton, state.ContinueVisible, "Resume Previous Session", ref btnNumber);
-
             ApplyButton(binder.SettingsButton, true, "System Configuration", ref btnNumber);
-
             ApplyButton(binder.AccessibilityButton, true, "Accessibility", ref btnNumber);
-
             ApplyButton(binder.CreditsButton, state.CreditsVisible, "View System Contributors", ref btnNumber);
-
             ApplyButton(binder.ExitButton, true, "Exit Workstation", ref btnNumber);
         }
 

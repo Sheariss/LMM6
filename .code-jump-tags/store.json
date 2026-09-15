@@ -351,17 +351,6 @@
         },
         {
           "type": "tag",
-          "id": "t_mu23dmfz_l7x3",
-          "note": "Ensures a save-slot identifier is valid.",
-          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
-          "line": 156,
-          "pattern": "^[^\\S\\n]*public bool DeleteSave\\(int slot\\)",
-          "text": "public bool DeleteSave(int slot)",
-          "original": "private static void ValidateSlot(int slot)",
-          "createdAt": "2026-09-15T03:08:07.007Z"
-        },
-        {
-          "type": "tag",
           "id": "t_mu23eul8_rjwm",
           "note": "Creates a Save Service using Unity's persistent application-data path.",
           "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
@@ -414,28 +403,6 @@
           "text": "public bool SaveExists(int slot)",
           "original": "public bool SaveExists(int slot)",
           "createdAt": "2026-09-15T03:12:05.292Z"
-        },
-        {
-          "type": "tag",
-          "id": "t_mu23j3vi_h7u5",
-          "note": "Serializes and writes save data to the requested slot.",
-          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
-          "line": 168,
-          "pattern": "^[^\\S\\n]*\\{",
-          "text": "{",
-          "original": "public bool Save(int slot, GameSaveData data)",
-          "createdAt": "2026-09-15T03:12:22.878Z"
-        },
-        {
-          "type": "tag",
-          "id": "t_mu23jv72_bb3u",
-          "note": "Attempts to load and deserialize save data from the requested slot.",
-          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
-          "line": 116,
-          "pattern": "^[^\\S\\n]*public bool TryLoad\\(int slot, out GameSaveData data\\)",
-          "text": "public bool TryLoad(int slot, out GameSaveData data)",
-          "original": "public bool TryLoad(",
-          "createdAt": "2026-09-15T03:12:58.286Z"
         },
         {
           "type": "tag",
@@ -705,39 +672,6 @@
         },
         {
           "type": "tag",
-          "id": "t_mu2bds5l_tcjk",
-          "note": "Naming conflit???",
-          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
-          "line": 77,
-          "pattern": "^[^\\S\\n]*public bool Save\\(int slot, GameSaveData data\\) // Note: Fully qualified name used to avoid ambiguity with the SaveManager class\\.",
-          "text": "public bool Save(int slot, GameSaveData data) // Note: Fully qualified name used to avoid ambiguity with the SaveManager class.",
-          "original": "public bool Save(int slot, Atlas.Core.Persistence.Data.GameSaveData data)",
-          "createdAt": "2026-09-15T06:52:11.337Z"
-        },
-        {
-          "type": "tag",
-          "id": "t_mu2hbkmj_k7ke",
-          "note": "Finds UI elements and connects callbacks",
-          "file": "Assets/_Project/Presentation/GameUI/MainMenu/Scripts/MainMenuBinder.cs",
-          "line": 5,
-          "pattern": "^[^\\S\\n]*\\{",
-          "text": "{",
-          "original": "public class MainMenuBinder : MonoBehaviour",
-          "createdAt": "2026-09-15T09:38:25.963Z"
-        },
-        {
-          "type": "tag",
-          "id": "t_mu2hcnmk_p3qm",
-          "note": "Pure description of what the menu should currently looks like",
-          "file": "Assets/_Project/Presentation/GameUI/MainMenu/Scripts/MainMenuView.cs",
-          "line": 5,
-          "pattern": "^[^\\S\\n]*public sealed class MainMenuView",
-          "text": "public sealed class MainMenuView",
-          "original": "public sealed class MainMenuViewState",
-          "createdAt": "2026-09-15T09:39:16.508Z"
-        },
-        {
-          "type": "tag",
           "id": "t_mu2ia8ze_pzz6",
           "note": "Decides what happens when the player interacts with the main menu",
           "file": "Assets/_Project/Presentation/GameUI/MainMenu/Scripts/MainMenuController.cs",
@@ -746,11 +680,218 @@
           "text": "public sealed class MainMenuController : MonoBehaviour",
           "original": "public sealed class MainMenuController : MonoBehaviour",
           "createdAt": "2026-09-15T10:05:23.834Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2kz598_sfod",
+          "note": "Controls the startup splash sequence.",
+          "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
+          "line": 7,
+          "pattern": "^[^\\S\\n]*public sealed class SplashController : MonoBehaviour",
+          "text": "public sealed class SplashController : MonoBehaviour",
+          "original": "public sealed class SplashController : MonoBehaviour",
+          "createdAt": "2026-09-15T11:20:44.636Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2l17d5_ilv4",
+          "note": "Initializes the splash controller with its required dependencies.",
+          "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
+          "line": 31,
+          "pattern": "^[^\\S\\n]*public void Initialize\\(SplashUXML splashDoc, GameStateManager stateManager\\)",
+          "text": "public void Initialize(SplashUXML splashDoc, GameStateManager stateManager)",
+          "original": "public void Initialize(",
+          "createdAt": "2026-09-15T11:22:20.681Z",
+          "witnessed": true
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2l2im6_x7jh",
+          "note": "Starts the startup splash sequence.",
+          "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
+          "line": 51,
+          "pattern": "^[^\\S\\n]*public void StartSplashSequence\\(\\)",
+          "text": "public void StartSplashSequence()",
+          "original": "public void StartSplashSequence()",
+          "createdAt": "2026-09-15T11:23:21.918Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2l2vkm_xqyk",
+          "note": "Requests that the currently displayed splash be skipped.",
+          "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
+          "line": 77,
+          "pattern": "^[^\\S\\n]*public void RequestSkip\\(\\)",
+          "text": "public void RequestSkip()",
+          "original": "public void RequestSkip()",
+          "createdAt": "2026-09-15T11:23:38.710Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2l3dz9_nfxk",
+          "note": "Only honored when the current splash is configured as skippable.",
+          "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
+          "line": 77,
+          "pattern": "^[^\\S\\n]*public void RequestSkip\\(\\)",
+          "text": "public void RequestSkip()",
+          "original": "public void RequestSkip()",
+          "createdAt": "2026-09-15T11:24:02.565Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2l40ah_i2rm",
+          "note": "Stops the splash sequence if it is currently running.",
+          "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
+          "line": 87,
+          "pattern": "^[^\\S\\n]*public void StopSplashSequence\\(\\)",
+          "text": "public void StopSplashSequence()",
+          "original": "public void StopSplashSequence()",
+          "createdAt": "2026-09-15T11:24:31.481Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2l5oty_pk60",
+          "note": "Finds UI elements and connects callbacks",
+          "file": "Assets/_Project/Presentation/GameUI/MainMenu/Scripts/MainMenuBinder.cs",
+          "line": 6,
+          "pattern": "^[^\\S\\n]*public sealed class MainMenuBinder",
+          "text": "public sealed class MainMenuBinder",
+          "original": "public sealed class MainMenuBinder",
+          "createdAt": "2026-09-15T11:25:49.942Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2l6x23_psht",
+          "note": "Attempts to load and deserialize save data from the requested slot.",
+          "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+          "line": 116,
+          "pattern": "^[^\\S\\n]*public bool TryLoad\\(int slot, out GameSaveData data\\)",
+          "text": "public bool TryLoad(int slot, out GameSaveData data)",
+          "original": "public bool TryLoad(int slot, out GameSaveData data)",
+          "createdAt": "2026-09-15T11:26:47.259Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2l9wof_ijkf",
+          "note": "Executes the startup splash sequence in order.",
+          "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
+          "line": 101,
+          "pattern": "^[^\\S\\n]*private IEnumerator RunSplashSequence\\(\\)",
+          "text": "private IEnumerator RunSplashSequence()",
+          "original": "private IEnumerator RunSplashSequence()",
+          "createdAt": "2026-09-15T11:29:06.735Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2lae31_qtly",
+          "note": "Displays a splash and waits until its duration expires or a valid skip request is received.",
+          "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
+          "line": 132,
+          "pattern": "^[^\\S\\n]*private IEnumerator ShowSplash\\(SplashType splashType, float duration, bool isSkippable\\)",
+          "text": "private IEnumerator ShowSplash(SplashType splashType, float duration, bool isSkippable)",
+          "original": "private IEnumerator ShowSplash(",
+          "createdAt": "2026-09-15T11:29:29.293Z",
+          "witnessed": true
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2layco_trgb",
+          "note": "Completes the splash flow and transitions the game into the Main Menu state.",
+          "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
+          "line": 155,
+          "pattern": "^[^\\S\\n]*private void CompleteSplashSequence\\(\\)",
+          "text": "private void CompleteSplashSequence()",
+          "original": "private void CompleteSplashSequence()",
+          "createdAt": "2026-09-15T11:29:55.560Z"
         }
       ]
     }
   ],
   "trash": [
+    {
+      "node": {
+        "type": "tag",
+        "id": "t_mu23dmfz_l7x3",
+        "note": "Ensures a save-slot identifier is valid.",
+        "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+        "line": 156,
+        "pattern": "^[^\\S\\n]*public bool DeleteSave\\(int slot\\)",
+        "text": "public bool DeleteSave(int slot)",
+        "original": "private static void ValidateSlot(int slot)",
+        "createdAt": "2026-09-15T03:08:07.007Z"
+      },
+      "deletedAt": "2026-09-15T11:27:50.536Z"
+    },
+    {
+      "node": {
+        "type": "tag",
+        "id": "t_mu23j3vi_h7u5",
+        "note": "Serializes and writes save data to the requested slot.",
+        "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+        "line": 168,
+        "pattern": "^[^\\S\\n]*\\{",
+        "text": "{",
+        "original": "public bool Save(int slot, GameSaveData data)",
+        "createdAt": "2026-09-15T03:12:22.878Z"
+      },
+      "deletedAt": "2026-09-15T11:27:13.977Z"
+    },
+    {
+      "node": {
+        "type": "tag",
+        "id": "t_mu23jv72_bb3u",
+        "note": "Attempts to load and deserialize save data from the requested slot.",
+        "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+        "line": 116,
+        "pattern": "^[^\\S\\n]*public bool TryLoad\\(int slot, out GameSaveData data\\)",
+        "text": "public bool TryLoad(int slot, out GameSaveData data)",
+        "original": "public bool TryLoad(",
+        "createdAt": "2026-09-15T03:12:58.286Z"
+      },
+      "deletedAt": "2026-09-15T11:26:41.620Z"
+    },
+    {
+      "node": {
+        "type": "tag",
+        "id": "t_mu2bds5l_tcjk",
+        "note": "Naming conflit???",
+        "file": "Assets/_Project/Core/Pesistance/SaveService.cs",
+        "line": 77,
+        "pattern": "^[^\\S\\n]*public bool Save\\(int slot, GameSaveData data\\) // Note: Fully qualified name used to avoid ambiguity with the SaveManager class\\.",
+        "text": "public bool Save(int slot, GameSaveData data) // Note: Fully qualified name used to avoid ambiguity with the SaveManager class.",
+        "original": "public bool Save(int slot, Atlas.Core.Persistence.Data.GameSaveData data)",
+        "createdAt": "2026-09-15T06:52:11.337Z"
+      },
+      "deletedAt": "2026-09-15T11:26:06.294Z"
+    },
+    {
+      "node": {
+        "type": "tag",
+        "id": "t_mu2hbkmj_k7ke",
+        "note": "Finds UI elements and connects callbacks",
+        "file": "Assets/_Project/Presentation/GameUI/MainMenu/Scripts/MainMenuBinder.cs",
+        "line": 5,
+        "pattern": "^[^\\S\\n]*\\{",
+        "text": "{",
+        "original": "public class MainMenuBinder : MonoBehaviour",
+        "createdAt": "2026-09-15T09:38:25.963Z"
+      },
+      "deletedAt": "2026-09-15T11:25:41.734Z"
+    },
+    {
+      "node": {
+        "type": "tag",
+        "id": "t_mu2hcnmk_p3qm",
+        "note": "Pure description of what the menu should currently looks like",
+        "file": "Assets/_Project/Presentation/GameUI/MainMenu/Scripts/MainMenuView.cs",
+        "line": 5,
+        "pattern": "^[^\\S\\n]*public sealed class MainMenuView",
+        "text": "public sealed class MainMenuView",
+        "original": "public sealed class MainMenuViewState",
+        "createdAt": "2026-09-15T09:39:16.508Z"
+      },
+      "deletedAt": "2026-09-15T11:25:20.853Z"
+    },
     {
       "node": {
         "type": "tag",

@@ -1,0 +1,19 @@
+{
+  "id": "4eba2fcc-3bb8-4ff9-ab1c-79c2a0c8ed8c",
+  "title": "SplashController",
+  "author": "@shearis",
+  "tags": [],
+  "gitRef": "splash",
+  "status": "open",
+  "createdAt": 1789471127,
+  "updatedAt": 1789471169,
+  "annotations": [
+    {
+      "id": "130f1f3f-028c-4e5c-b458-24752d2a7d36",
+      "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
+      "range": null,
+      "content": "Controls the startup splash sequence.\n\nResponsibilities:\n   - Determines splash display order.\n   - Determines how long each splash remains visible.\n   - Determines whether each splash can be skipped.\n   - Requests splash presentation through SplashView.\n   - Transitions the game to the Main Menu when complete.\n\n This controller does not directly manipulate UI elements.\n All visual presentation is delegated to SplashView.",
+      "contentHash": ""
+    }
+  ]
+}
