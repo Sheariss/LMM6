@@ -1,0 +1,68 @@
+{
+  "id": "7d6eab1f-af82-4e62-a03a-d73c77017601",
+  "title": "GameStateManager",
+  "author": "@shearis",
+  "tags": [
+    {
+      "name": "CoreRuntimeManager",
+      "color": "#3FB950"
+    },
+    {
+      "name": "Responsabilities",
+      "color": "#E5C100"
+    }
+  ],
+  "gitRef": "game-state-manager",
+  "status": "open",
+  "createdAt": 1789429060,
+  "updatedAt": 1789435870,
+  "annotations": [
+    {
+      "id": "6cdf6b77-275c-4d57-b625-4bbadbf571d6",
+      "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+      "range": null,
+      "content": "# GameStateManager Overview\n\n## Purpose\n\n`GameStateManager` is the central authority for the IIS application's logical runtime state.\n\nIt maintains two related but separate concepts:\n\n* **GameFlowState** — what the application as a whole is currently doing, such as `Booting`, `MainMenu`, `Loading`, `Playing`, or `Paused`.\n* **GameplayMode** — what type of interaction is active while the application is in `Playing`, such as `Tutorial` or `Investigating`.\n\nThe manager also coordinates high-level transitions between these states.\n\n## What This Class Owns\n\n* Current `GameFlowState`\n* Current `GameplayMode`\n* Validation of allowed Game Flow transitions\n* Notification of state changes\n* High-level coordination of scene-backed flow transitions\n* High-level operations such as starting, loading, pausing, resuming, and ending gameplay\n\n## What This Class Does Not Own\n\n* Physical Unity scene loading implementation → `SceneLoadManager`\n* Save serialization/deserialization → `SaveManager`\n* SOS account state → SOS Account System\n* Investigation progression → Investigation / Progression systems\n* Menu, pause, loading, or game-over visuals → Presentation Controllers\n\n## Important Architectural Rule\n\nLogical state, physical scene, and visual presentation are separate concepts.\n\nFor example:\n\n`GameFlowState.Loading`\n\ndoes not necessarily mean:\n\n`GameScene.Loading`\n\nThe application may be logically Loading while keeping the current scene active and displaying a loading panel instead.",
+      "contentHash": ""
+    },
+    {
+      "id": "332c6f2f-8cf8-4fe1-bdc1-84823cd69cd0",
+      "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+      "range": {
+        "startLine": 12,
+        "endLine": 12
+      },
+      "content": "# GameStateManager Responsibility\n\n`GameStateManager` is the authoritative owner of the IIS logical application state.\n\nIt maintains two independent state dimensions:\n\n- `GameFlowState` — the application's high-level operational state.\n- `GameplayMode` — the active interaction context while gameplay is occurring.\n\nThe manager also coordinates high-level flow operations, but does **not** directly implement:\n\n- physical Unity scene loading;\n- save serialization or persistence;\n- SOS account state;\n- investigation/progression state;\n- presentation rendering.\n\nThose responsibilities are delegated to their corresponding runtime systems.\n\n## Core distinction\n\nLogical state, physical scene, and presentation are separate concepts.\n\nFor example:\n\n`GameFlowState.Loading` does not inherently require `GameScene.Loading`.\n\nA loading operation may instead preserve the active scene and use an overlay or other presentation.",
+      "contentHash": "671dd8b2e6c70a0e7c6eb703474171854f1b24d665988b9cc3c9930fbb96ce82"
+    },
+    {
+      "id": "0b241977-3cb0-4e31-84ce-016e277b60a3",
+      "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+      "range": {
+        "startLine": 300,
+        "endLine": 308
+      },
+      "content": "# EndGame Function\n\n## End Gameplay Session\n\n`EndGame()` transitions:\n\n`Playing -> GameOver`\n\nUnlike Pause, Game Over represents termination of the active gameplay session.\n\nTherefore, the stored `GameplayMode` should be reset.\n\n## Current Presentation Design\n\nGame Over does not currently require its own Unity scene.\n\nThe SOS scene may remain active while `GameOverPanelController` or another presentation controller displays the ending or failure state.\n\nA dedicated Game Over scene can be introduced later without changing the meaning of `GameFlowState.GameOver`.\n\n## Implementation Caution\n\n`GameplayMode` should only be reset if the transition to `GameOver` succeeds.\n\nThe final implementation should therefore check the result of `TryTransitionTo()` before clearing the gameplay context.\n",
+      "contentHash": "5ff62e8722f7269f611e66c0fed89ac38f9fa798446804b52ff74713b3ce2e98"
+    },
+    {
+      "id": "8621dd5e-2e78-440e-be17-ac29ad9354f8",
+      "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+      "range": {
+        "startLine": 292,
+        "endLine": 298
+      },
+      "content": "# Resume Gameplay Function\n\nResume performs:\n\nPaused -> Playing\n\nwithout changing Unity scenes.\n\nThe SOS scene was never unloaded during Pause.\n\nThe existing GameplayMode is preserved and becomes operational again when Playing resumes.\n\nThis is why Resume uses the state-only transition helper instead of EnterPlaying().\n\nEnterPlaying() is the scene-backed pathway used when SOS must actually be loaded.",
+      "contentHash": "9d6f8f74278acf935a36021c33964179c0079aaa235552bfb198d95afcb380e2"
+    },
+    {
+      "id": "e5f9d7bb-1326-4709-a41a-2400e087ca1f",
+      "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+      "range": {
+        "startLine": 204,
+        "endLine": 204
+      },
+      "content": "Scene-Backed State Entry\nEnter[GameFlowState] = Generic State Change + Scene Load\n\nTransitions the application to the specified Game Flow State and requests the corresponding scene when applicable.",
+      "contentHash": "7c426fe6419fb4ab2179e9e72a06690e1029b95f936855af64a09095e1789e4b"
+    }
+  ]
+}

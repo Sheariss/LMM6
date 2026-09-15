@@ -1,0 +1,337 @@
+{
+  "version": 1,
+  "tree": [
+    {
+      "type": "folder",
+      "id": "f_mu1zgy8m_nwr7",
+      "title": "Uncategorized",
+      "inbox": true,
+      "children": [
+        {
+          "type": "tag",
+          "id": "t_mu1zgy8m_ns7y",
+          "note": "Playing -> GameOver",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 240,
+          "pattern": "^[^\\S\\n]*public void EndGame\\(\\)",
+          "text": "public void EndGame()",
+          "original": "public void EndGame()",
+          "createdAt": "2026-09-15T01:18:43.798Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu1zjxtd_3cvl",
+          "note": "Paused -> Playing",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 234,
+          "pattern": "^[^\\S\\n]*public void ResumeGame\\(\\)",
+          "text": "public void ResumeGame()",
+          "original": "public void ResumeGame()",
+          "createdAt": "2026-09-15T01:21:03.217Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu1zkfyf_fir4",
+          "note": "Playing -> Paused",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 228,
+          "pattern": "^[^\\S\\n]*public void PauseGame\\(\\)",
+          "text": "public void PauseGame()",
+          "original": "public void PauseGame()",
+          "createdAt": "2026-09-15T01:21:26.727Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu1znaml_nxc7",
+          "note": "Any valid source -> Loading Process",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 222,
+          "pattern": "^[^\\S\\n]*public void LoadGame\\(\\)",
+          "text": "public void LoadGame()",
+          "original": "public void LoadGame()",
+          "createdAt": "2026-09-15T01:23:39.789Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu1zpxzx_8s3h",
+          "note": "Continuing from an existing save file",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 214,
+          "pattern": "^[^\\S\\n]*public void LoadGame\\(int slotId\\)",
+          "text": "public void LoadGame(int slotId)",
+          "original": "public void LoadGame(int slotId)",
+          "createdAt": "2026-09-15T01:25:43.389Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu1zqr24_9as6",
+          "note": "Any valid source -> Credits State + Credits Scene",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 201,
+          "pattern": "^[^\\S\\n]*public void EnterCredits\\(\\)",
+          "text": "public void EnterCredits()",
+          "original": "public void EnterCredits()",
+          "createdAt": "2026-09-15T01:26:21.052Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu1zrbia_pt7o",
+          "note": "Any valid source -> Playing State + SOS Scene",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 196,
+          "pattern": "^[^\\S\\n]*public void EnterPlaying\\(\\)",
+          "text": "public void EnterPlaying()",
+          "original": "public void EnterPlaying()",
+          "createdAt": "2026-09-15T01:26:47.554Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu1zspx9_kn2h",
+          "note": "Any valid source -> Loading State + Loading Scene",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 191,
+          "pattern": "^[^\\S\\n]*public void EnterLoading\\(\\)",
+          "text": "public void EnterLoading()",
+          "original": "public void EnterLoading()",
+          "createdAt": "2026-09-15T01:27:52.893Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu1zt0ye_h71f",
+          "note": "Any valid source -> Main Menu State + Main Menu Scene",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 186,
+          "pattern": "^[^\\S\\n]*public void EnterMainMenu\\(\\)",
+          "text": "public void EnterMainMenu()",
+          "original": "public void EnterMainMenu()",
+          "createdAt": "2026-09-15T01:28:07.191Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu1ztsb2_kwk1",
+          "note": "Any valid source -> Splash State + Splash Scene",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 181,
+          "pattern": "^[^\\S\\n]*public void EnterSplash\\(\\)",
+          "text": "public void EnterSplash()",
+          "original": "public void EnterSplash()",
+          "createdAt": "2026-09-15T01:28:42.638Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu1zxav1_yl8v",
+          "note": "Enter[GameFlowState] = Generic State Change + Scene Load",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 180,
+          "pattern": "^[^\\S\\n]*// -------------------- Scene-Backed State Entry --------------------",
+          "text": "// -------------------- Scene-Backed State Entry --------------------",
+          "original": "// -------------------- Scene-Backed State Entry --------------------",
+          "createdAt": "2026-09-15T01:31:26.653Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu1zylw4_oqe9",
+          "note": "Transition Permission Matrix",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 92,
+          "pattern": "^[^\\S\\n]*private bool IsTransitionAllowed\\( GameFlowState current, GameFlowState target\\)",
+          "text": "private bool IsTransitionAllowed( GameFlowState current, GameFlowState target)",
+          "original": "private bool IsTransitionAllowed(",
+          "createdAt": "2026-09-15T01:32:27.604Z",
+          "witnessed": true
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2007pf_0d9m",
+          "note": "Change Flow State and Navigate to Scene",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 132,
+          "pattern": "^[^\\S\\n]*private bool TryToEnterState\\(GameFlowState target, GameScene scene, bool resetGameplayMode = false\\)",
+          "text": "private bool TryToEnterState(GameFlowState target, GameScene scene, bool resetGameplayMode = false)",
+          "original": "private bool TryToEnterState(GameFlowState target, GameScene scene, bool resetGameplayMode = false)",
+          "createdAt": "2026-09-15T01:33:42.531Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu201brd_ln1b",
+          "note": "Change State for Presentation Coupled State Entry",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 150,
+          "pattern": "^[^\\S\\n]*private bool TryTransitionTo\\(GameFlowState target\\)",
+          "text": "private bool TryTransitionTo(GameFlowState target)",
+          "original": "private bool TryTransitionTo(GameFlowState target)",
+          "createdAt": "2026-09-15T01:34:34.441Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu20289l_2e6t",
+          "note": "Logger for Invalid Transitions",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 166,
+          "pattern": "^[^\\S\\n]*private void LogInvalidTransition\\(GameFlowState targetState\\)",
+          "text": "private void LogInvalidTransition(GameFlowState targetState)",
+          "original": "private void LogInvalidTransition(GameFlowState targetState)",
+          "createdAt": "2026-09-15T01:35:16.569Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu202r79_2lpg",
+          "note": "Delegates scene loading to SceneLoadManager.",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 174,
+          "pattern": "^[^\\S\\n]*private void RequestSceneTransition\\(GameScene scene\\)",
+          "text": "private void RequestSceneTransition(GameScene scene)",
+          "original": "private void RequestSceneTransition(GameScene scene)",
+          "createdAt": "2026-09-15T01:35:41.109Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2059tu_qptm",
+          "note": "Reset Primitive GameplayMode",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 78,
+          "pattern": "^[^\\S\\n]*public void ResetGameplayMode\\(\\)",
+          "text": "public void ResetGameplayMode()",
+          "original": "public void ResetGameplayMode()",
+          "createdAt": "2026-09-15T01:37:38.562Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu2062cq_5nrb",
+          "note": "Set Gameplay Mode",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 55,
+          "pattern": "^[^\\S\\n]*private void SetGameplayMode\\(GameplayMode mode\\)",
+          "text": "private void SetGameplayMode(GameplayMode mode)",
+          "original": "private void SetGameplayMode(GameplayMode mode)",
+          "createdAt": "2026-09-15T01:38:15.530Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu207ibv_z65s",
+          "note": "Setters for Primitive State and Primitive GameplayMode",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 41,
+          "pattern": "^[^\\S\\n]*// -------------------- PRIVATE PRIMITIVE OPERATIONS --------------------",
+          "text": "// -------------------- PRIVATE PRIMITIVE OPERATIONS --------------------",
+          "original": "// -------------------- PRIVATE PRIMITIVE OPERATIONS --------------------",
+          "createdAt": "2026-09-15T01:39:22.891Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu20844w_i0nv",
+          "note": "Set Game Flow State",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 42,
+          "pattern": "^[^\\S\\n]*private void SetFlowState\\(GameFlowState state\\)",
+          "text": "private void SetFlowState(GameFlowState state)",
+          "original": "private void SetFlowState(GameFlowState state)",
+          "createdAt": "2026-09-15T01:39:51.152Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu208uvt_w2in",
+          "note": "Helper Operations",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 91,
+          "pattern": "^[^\\S\\n]*// -------------------- INTERNAL OPERATIONS --------------------",
+          "text": "// -------------------- INTERNAL OPERATIONS --------------------",
+          "original": "// -------------------- INTERNAL OPERATIONS --------------------",
+          "createdAt": "2026-09-15T01:40:25.817Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu209mrc_1so9",
+          "note": "Awaken Manager > Check for duplicate instances",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 19,
+          "pattern": "^[^\\S\\n]*private void Awake\\(\\)",
+          "text": "private void Awake()",
+          "original": "private void Awake()",
+          "createdAt": "2026-09-15T01:41:01.944Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu20ajgd_hs9d",
+          "note": "Instantiate the Game State Manager",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 9,
+          "pattern": "^[^\\S\\n]*public static GameStateManager Instance \\{ get; private set; \\}",
+          "text": "public static GameStateManager Instance { get; private set; }",
+          "original": "public static GameStateManager Instance { get; private set; }",
+          "createdAt": "2026-09-15T01:41:44.317Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu20bdho_ggzq",
+          "note": "Primitive Game Flow State",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 12,
+          "pattern": "^[^\\S\\n]*public GameFlowState FlowState \\{ get; private set; \\}",
+          "text": "public GameFlowState FlowState { get; private set; }",
+          "original": "public GameFlowState FlowState { get; private set; }",
+          "createdAt": "2026-09-15T01:42:23.244Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu20bwdv_e6ma",
+          "note": "Primitive Gameplay Mode",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 13,
+          "pattern": "^[^\\S\\n]*public GameplayMode GameplayMode \\{ get; private set; \\}",
+          "text": "public GameplayMode GameplayMode { get; private set; }",
+          "original": "public GameplayMode GameplayMode { get; private set; }",
+          "createdAt": "2026-09-15T01:42:47.731Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu20ceav_i00u",
+          "note": "Maintains the current IIS game flow state and gameplay mode, coordinates high-level application flow.",
+          "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+          "line": 7,
+          "pattern": "^[^\\S\\n]*public class GameStateManager : MonoBehaviour",
+          "text": "public class GameStateManager : MonoBehaviour",
+          "original": "public class GameStateManager : MonoBehaviour",
+          "createdAt": "2026-09-15T01:43:10.951Z"
+        }
+      ]
+    }
+  ],
+  "trash": [
+    {
+      "node": {
+        "type": "tag",
+        "id": "t_mu204wey_7170",
+        "note": "",
+        "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+        "line": 90,
+        "createdAt": "2026-09-15T01:37:21.178Z"
+      },
+      "deletedAt": "2026-09-15T01:37:33.636Z"
+    },
+    {
+      "node": {
+        "type": "folder",
+        "id": "f_mu1wvwmh_e51a",
+        "title": "未分组",
+        "inbox": true,
+        "children": [
+          {
+            "type": "tag",
+            "id": "t_mu1wvwmh_q8fa",
+            "note": "Playing -> Paused",
+            "file": "Assets/_Project/Core/GameFlow/GameStateManager.cs",
+            "line": 272,
+            "pattern": "^[^\\S\\n]*public void PauseGame\\(\\)",
+            "text": "public void PauseGame()",
+            "original": "public void PauseGame()",
+            "createdAt": "2026-09-15T00:06:22.697Z",
+            "notePosition": "end",
+            "witnessed": true
+          }
+        ]
+      },
+      "deletedAt": "2026-09-15T01:17:10.389Z"
+    }
+  ]
+}

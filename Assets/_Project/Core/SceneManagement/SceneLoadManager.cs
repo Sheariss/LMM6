@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +10,10 @@ namespace Atlas.Core.SceneManagement
     public sealed class SceneLoadManager : MonoBehaviour
     {
         public static SceneLoadManager Instance { get; private set; }
+
+        public event Action<GameScene> SceneLoadStarted;
+        public event Action<GameScene> SceneLoadCompleted;
+        public event Action<GameScene, string> SceneLoadFailed;
 
         private void Awake()
         {
@@ -34,9 +39,25 @@ namespace Atlas.Core.SceneManagement
         /// </param>
         public void LoadScene(GameScene scene)
         {
-            SceneManager.LoadScene(
-                SceneDefinitions.GetSceneName(scene)
-            );
+            string sceneName = SceneDefinitions.GetSceneName(scene);
+
+            SceneLoadStarted?.Invoke(scene);
+
+            try
+            {
+                SceneManager.LoadScene(sceneName);
+
+                SceneLoadCompleted?.Invoke(scene);
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError(
+                    $"[{nameof(SceneLoadManager)}] Failed to load " +
+                    $"scene '{scene}': {exception.Message}"
+                );
+
+                SceneLoadFailed?.Invoke(scene, exception.Message);
+            }
         }
     }
 }
