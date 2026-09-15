@@ -1,4 +1,5 @@
 using UnityEngine;
+using Atlas.Core.Persistence.Data;
 
 namespace Atlas.Core.Persistence
 {

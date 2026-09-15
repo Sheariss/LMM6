@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using UnityEngine;
+using Atlas.Core.Persistence.Data;
 
 namespace Atlas.Core.Persistence
 {
@@ -73,7 +74,7 @@ namespace Atlas.Core.Persistence
         }
 
         // -------------------- PUBLIC OPERATIONS --------------------
-        public bool Save(int slot, GameSaveData data)
+        public bool Save(int slot, GameSaveData data) // Note: Fully qualified name used to avoid ambiguity with the SaveManager class.
         {
             ValidateSlot(slot);
 
