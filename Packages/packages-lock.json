@@ -184,6 +184,12 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "file:com.unity.nuget.newtonsoft-json",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.render-pipelines.core": {
       "version": "17.3.0",
       "depth": 1,
