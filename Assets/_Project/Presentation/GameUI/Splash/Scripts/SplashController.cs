@@ -1,53 +1,69 @@
 using System.Collections;
 using UnityEngine;
-using Atlas.Core.State;
+using UnityEngine.UIElements;
+using Atlas.Core.GameState;
 
-namespace Atlas.Presentation.Splash
+namespace Atlas.Presentation.GameUI.Splash
 {
     public sealed class SplashController : MonoBehaviour
     {
+        // -------------------- UI DOCUMENT --------------------
+        [SerializeField] private UIDocument uiDoc;
+
+        // -------------------- RUNTIME DEPENDENCIES --------------------
+        [SerializeField]private GameStateManager gameStateManager;
+
+        // -------------------- SPLASH DURATIONS --------------------
         [Header("Splash Durations")]
         [SerializeField] [Min(0f)] private float universityDuration = 2f;
         [SerializeField] [Min(0f)] private float teamDuration = 2f;
         [SerializeField] [Min(0f)] private float capstoneDuration = 2.5f;
         [SerializeField] [Min(0f)] private float accessibilityDuration = 3f;
 
-
+        // -------------------- SKIP SETTINGS --------------------
         [Header("Skip Settings")]
         [SerializeField] private bool universitySkippable = true;
         [SerializeField] private bool teamSkippable = true;
         [SerializeField] private bool capstoneSkippable = true;
         [SerializeField] private bool accessibilitySkippable = false;
 
-        private SplashUXML uiDoc;
-        private GameStateManager gameStateManager;
+        // -------------------- HELPERS --------------------
+        private SplashBinder binder;
+        private SplashView view;
 
         private Coroutine splashSequence;
 
+        // -------------------- STATE --------------------
         private bool skipRequested;
         private bool isRunning;
-        private bool isInitialized;
 
-        public void Initialize(SplashUXML splashDoc, GameStateManager stateManager)
+        // -------------------- LIFECYCLE --------------------
+        private void Awake()
         {
-            if (splashDoc == null)
-            {
-                Debug.LogError("[SplashController] SplashUXML cannot be null.");
-                return;
-            }
+            binder =
+                new SplashBinder(
+                    uiDoc.rootVisualElement
+                );
 
-            if (stateManager == null)
-            {
-                Debug.LogError("[SplashController] GameStateManager cannot be null.");
-                return;
-            }
+            view =
+                new SplashView(
+                    binder
+                );
 
-            uiDoc = splashDoc;
-            gameStateManager = stateManager;
-
-            isInitialized = true;
+            view.HideAll();
         }
 
+        private void OnEnable()
+        {
+            StartSplashSequence();
+        }
+
+        private void OnDisable()
+        {
+            StopSplashSequence();
+        }
+
+        // -------------------- SPLASH SEQUENCE --------------------
         public void StartSplashSequence()
         {
             if (!isInitialized)
@@ -74,16 +90,6 @@ namespace Atlas.Presentation.Splash
             );
         }
 
-        public void RequestSkip()
-        {
-            if (!isRunning)
-            {
-                return;
-            }
-
-            skipRequested = true;
-        }
-
         public void StopSplashSequence()
         {
             if (splashSequence == null)
@@ -98,6 +104,18 @@ namespace Atlas.Presentation.Splash
             isRunning = false;
         }
 
+        // -------------------- SKIP --------------------
+        public void RequestSkip()
+        {
+            if (!isRunning)
+            {
+                return;
+            }
+
+            skipRequested = true;
+        }
+
+        // -------------------- FLOW --------------------
         private IEnumerator RunSplashSequence()
         {
             isRunning = true;
@@ -133,18 +151,24 @@ namespace Atlas.Presentation.Splash
         {
             skipRequested = false;
 
-            view.Show(splashType);
+            view.Show(
+                splashType
+            );
 
             float elapsedTime = 0f;
 
             while (elapsedTime < duration)
             {
-                if (isSkippable && skipRequested)
+                if (
+                    isSkippable &&
+                    skipRequested
+                )
                 {
                     break;
                 }
 
-                elapsedTime += Time.unscaledDeltaTime;
+                elapsedTime +=
+                    Time.unscaledDeltaTime;
 
                 yield return null;
             }
@@ -154,16 +178,13 @@ namespace Atlas.Presentation.Splash
 
         private void CompleteSplashSequence()
         {
-            isRunning = false;
+            view.HideAll();
+
             splashSequence = null;
             skipRequested = false;
+            isRunning = false;
 
             gameStateManager.EnterMainMenu();
-        }
-
-        private void OnDisable()
-        {
-            StopSplashSequence();
         }
     }
 }

@@ -1,0 +1,1508 @@
+fileFormatVersion: 2
+guid: 06f5eeec5e84f7f4b880b2fee59901da
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3490073622984437350
+    second: LOGO_PUPR_0
+  - first:
+      213: -7149680094392784315
+    second: LOGO_PUPR_1
+  - first:
+      213: -8084559960937261827
+    second: LOGO_PUPR_2
+  - first:
+      213: -2200306632875172455
+    second: LOGO_PUPR_3
+  - first:
+      213: -2680218297723793002
+    second: LOGO_PUPR_4
+  - first:
+      213: 9184580576455793161
+    second: LOGO_PUPR_5
+  - first:
+      213: 841530416352581074
+    second: LOGO_PUPR_6
+  - first:
+      213: 706837051042662518
+    second: LOGO_PUPR_7
+  - first:
+      213: 4366512264873097024
+    second: LOGO_PUPR_8
+  - first:
+      213: -5824747579388841549
+    second: LOGO_PUPR_9
+  - first:
+      213: 108616632063399699
+    second: LOGO_PUPR_10
+  - first:
+      213: 7962483986213563810
+    second: LOGO_PUPR_11
+  - first:
+      213: 4039941587478768265
+    second: LOGO_PUPR_12
+  - first:
+      213: -5722523226032688220
+    second: LOGO_PUPR_13
+  - first:
+      213: -1918176457118525033
+    second: LOGO_PUPR_14
+  - first:
+      213: 7104758450545545590
+    second: LOGO_PUPR_15
+  - first:
+      213: 1667348064015592580
+    second: LOGO_PUPR_16
+  - first:
+      213: -5778550466354482016
+    second: LOGO_PUPR_17
+  - first:
+      213: -7338349126089751929
+    second: LOGO_PUPR_18
+  - first:
+      213: -73374311564297468
+    second: LOGO_PUPR_19
+  - first:
+      213: 8480618375105140529
+    second: LOGO_PUPR_20
+  - first:
+      213: -3691226875950585223
+    second: LOGO_PUPR_21
+  - first:
+      213: -5579078173303591415
+    second: LOGO_PUPR_22
+  - first:
+      213: -4963906353750032037
+    second: LOGO_PUPR_23
+  - first:
+      213: 1664830834930679186
+    second: LOGO_PUPR_24
+  - first:
+      213: -8524446961702103994
+    second: LOGO_PUPR_25
+  - first:
+      213: 8428139325542809282
+    second: LOGO_PUPR_26
+  - first:
+      213: -8013619845414968131
+    second: LOGO_PUPR_27
+  - first:
+      213: 1830086580249543162
+    second: LOGO_PUPR_28
+  - first:
+      213: 4704485849924552194
+    second: LOGO_PUPR_29
+  - first:
+      213: 2379466203318992875
+    second: LOGO_PUPR_30
+  - first:
+      213: 4901030160868800747
+    second: LOGO_PUPR_31
+  - first:
+      213: 1015911890111346793
+    second: LOGO_PUPR_32
+  - first:
+      213: -9107496314243113002
+    second: LOGO_PUPR_33
+  - first:
+      213: 7405508706028818308
+    second: LOGO_PUPR_34
+  - first:
+      213: 7779259783061421671
+    second: LOGO_PUPR_35
+  - first:
+      213: 6110352224624316602
+    second: LOGO_PUPR_36
+  - first:
+      213: -502659888583521782
+    second: LOGO_PUPR_37
+  - first:
+      213: 97834029289304160
+    second: LOGO_PUPR_38
+  - first:
+      213: -5365186178293152388
+    second: LOGO_PUPR_39
+  - first:
+      213: -4161110871905440077
+    second: LOGO_PUPR_40
+  - first:
+      213: 6706509943577345431
+    second: LOGO_PUPR_41
+  - first:
+      213: 2058268145748308402
+    second: LOGO_PUPR_42
+  - first:
+      213: -755591161342437641
+    second: LOGO_PUPR_43
+  - first:
+      213: -34604179401338530
+    second: LOGO_PUPR_44
+  - first:
+      213: 5349447837325979637
+    second: LOGO_PUPR_45
+  - first:
+      213: 4813470610629663832
+    second: LOGO_PUPR_46
+  - first:
+      213: -6177091765483496705
+    second: LOGO_PUPR_47
+  - first:
+      213: 5057900855704424815
+    second: LOGO_PUPR_48
+  - first:
+      213: 7096085449366007365
+    second: LOGO_PUPR_49
+  - first:
+      213: -4270923066880664620
+    second: LOGO_PUPR_50
+  - first:
+      213: 8968496501721410498
+    second: LOGO_PUPR_51
+  - first:
+      213: -2488670959428619165
+    second: LOGO_PUPR_52
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: LOGO_PUPR_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 3
+        width: 244
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a915d06f784c09fc0800000000000000
+      internalID: -3490073622984437350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_1
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 180
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54a6904b5db37cc90800000000000000
+      internalID: -7149680094392784315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_2
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 180
+        width: 56
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df41df2ac8fddcf80800000000000000
+      internalID: -8084559960937261827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_3
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 181
+        width: 24
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99d1a8e66c0f671e0800000000000000
+      internalID: -2200306632875172455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_4
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 181
+        width: 54
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 691dbab98a3fdcad0800000000000000
+      internalID: -2680218297723793002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_5
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 181
+        width: 40
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90a999e4f5f267f70800000000000000
+      internalID: 9184580576455793161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_6
+      rect:
+        serializedVersion: 2
+        x: 642
+        y: 181
+        width: 49
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d5d16e7477bdab00800000000000000
+      internalID: 841530416352581074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_7
+      rect:
+        serializedVersion: 2
+        x: 714
+        y: 180
+        width: 38
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6788b7d8d803fc900800000000000000
+      internalID: 706837051042662518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_8
+      rect:
+        serializedVersion: 2
+        x: 776
+        y: 181
+        width: 24
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 047b52725c7f89c30800000000000000
+      internalID: 4366512264873097024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_9
+      rect:
+        serializedVersion: 2
+        x: 822
+        y: 181
+        width: 55
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b13638ffe65a2fa0800000000000000
+      internalID: -5824747579388841549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_10
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 181
+        width: 53
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31796da5042e18100800000000000000
+      internalID: 108616632063399699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_11
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 181
+        width: 54
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2adeef79ffc608e60800000000000000
+      internalID: 7962483986213563810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_12
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 79
+        width: 71
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98aeff22871c01830800000000000000
+      internalID: 4039941587478768265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_13
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 147
+        width: 25
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a33665f1738590b0800000000000000
+      internalID: -5722523226032688220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_14
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 79
+        width: 62
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 799dee8dca44165e0800000000000000
+      internalID: -1918176457118525033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_15
+      rect:
+        serializedVersion: 2
+        x: 904
+        y: 79
+        width: 62
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 671d8bb0b2c299260800000000000000
+      internalID: 7104758450545545590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_16
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 81
+        width: 53
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48ca590fa3c932710800000000000000
+      internalID: 1667348064015592580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_17
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 81
+        width: 52
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a4f54887f67ecfa0800000000000000
+      internalID: -5778550466354482016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_18
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 81
+        width: 31
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7824f9d9952f82a90800000000000000
+      internalID: -7338349126089751929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_19
+      rect:
+        serializedVersion: 2
+        x: 563
+        y: 81
+        width: 60
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40b329fc3725bfef0800000000000000
+      internalID: -73374311564297468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_20
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 81
+        width: 52
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 137dacbda7531b570800000000000000
+      internalID: 8480618375105140529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_21
+      rect:
+        serializedVersion: 2
+        x: 774
+        y: 80
+        width: 72
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97a279996b026ccc0800000000000000
+      internalID: -3691226875950585223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_22
+      rect:
+        serializedVersion: 2
+        x: 860
+        y: 81
+        width: 31
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90eaa1ae5f12392b0800000000000000
+      internalID: -5579078173303591415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_23
+      rect:
+        serializedVersion: 2
+        x: 977
+        y: 81
+        width: 69
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b51cc6e9879ac1bb0800000000000000
+      internalID: -4963906353750032037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_24
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 17
+        width: 17
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29df82fd2daaa1710800000000000000
+      internalID: 1664830834930679186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_25
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 18
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 644961d17a413b980800000000000000
+      internalID: -8524446961702103994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_26
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 18
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ceba78ff04c6f470800000000000000
+      internalID: 8428139325542809282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_27
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 17
+        width: 16
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db425056537e9c090800000000000000
+      internalID: -8013619845414968131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_28
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 17
+        width: 17
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af1cbfb6c06c56910800000000000000
+      internalID: 1830086580249543162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_29
+      rect:
+        serializedVersion: 2
+        x: 431
+        y: 18
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 206ca9f74f0b94140800000000000000
+      internalID: 4704485849924552194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_30
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 18
+        width: 17
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bef30eba7ef850120800000000000000
+      internalID: 2379466203318992875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_31
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 23
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be87f0ce6f4f30440800000000000000
+      internalID: 4901030160868800747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_32
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 17
+        width: 18
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 968be254b7e391e00800000000000000
+      internalID: 1015911890111346793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_33
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 18
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6df1c541b5cab9180800000000000000
+      internalID: -9107496314243113002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_34
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 18
+        width: 16
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48f09eb9ee6a5c660800000000000000
+      internalID: 7405508706028818308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_35
+      rect:
+        serializedVersion: 2
+        x: 597
+        y: 18
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76ebbd07e8b75fb60800000000000000
+      internalID: 7779259783061421671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_36
+      rect:
+        serializedVersion: 2
+        x: 622
+        y: 18
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab0104969f45cc450800000000000000
+      internalID: 6110352224624316602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_37
+      rect:
+        serializedVersion: 2
+        x: 646
+        y: 18
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0a442a9e713609f0800000000000000
+      internalID: -502659888583521782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_38
+      rect:
+        serializedVersion: 2
+        x: 670
+        y: 17
+        width: 18
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 060fbb208839b5100800000000000000
+      internalID: 97834029289304160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_39
+      rect:
+        serializedVersion: 2
+        x: 709
+        y: 23
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c754009c8970b85b0800000000000000
+      internalID: -5365186178293152388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_40
+      rect:
+        serializedVersion: 2
+        x: 744
+        y: 18
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3be6f0165b3c046c0800000000000000
+      internalID: -4161110871905440077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_41
+      rect:
+        serializedVersion: 2
+        x: 774
+        y: 18
+        width: 7
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79d7d85d24f421d50800000000000000
+      internalID: 6706509943577345431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_42
+      rect:
+        serializedVersion: 2
+        x: 786
+        y: 18
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b174df29ff609c10800000000000000
+      internalID: 2058268145748308402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_43
+      rect:
+        serializedVersion: 2
+        x: 812
+        y: 18
+        width: 22
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f652c097d99385f0800000000000000
+      internalID: -755591161342437641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_44
+      rect:
+        serializedVersion: 2
+        x: 841
+        y: 18
+        width: 8
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e511a03aeaf058ff0800000000000000
+      internalID: -34604179401338530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_45
+      rect:
+        serializedVersion: 2
+        x: 870
+        y: 23
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ffeb48277e0d3a40800000000000000
+      internalID: 5349447837325979637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_46
+      rect:
+        serializedVersion: 2
+        x: 903
+        y: 18
+        width: 19
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85c1d5b7402ecc240800000000000000
+      internalID: 4813470610629663832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_47
+      rect:
+        serializedVersion: 2
+        x: 927
+        y: 18
+        width: 7
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffa9d5554cf864aa0800000000000000
+      internalID: -6177091765483496705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_48
+      rect:
+        serializedVersion: 2
+        x: 941
+        y: 18
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f611865c706413640800000000000000
+      internalID: 5057900855704424815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_49
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 18
+        width: 17
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54e67499e1c5a7260800000000000000
+      internalID: 7096085449366007365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_50
+      rect:
+        serializedVersion: 2
+        x: 985
+        y: 17
+        width: 18
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4db5e875912aab4c0800000000000000
+      internalID: -4270923066880664620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_51
+      rect:
+        serializedVersion: 2
+        x: 1007
+        y: 18
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cb207a1d00867c70800000000000000
+      internalID: 8968496501721410498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LOGO_PUPR_52
+      rect:
+        serializedVersion: 2
+        x: 1033
+        y: 18
+        width: 14
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3643d6ca2f6767dd0800000000000000
+      internalID: -2488670959428619165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      LOGO_PUPR_0: -3490073622984437350
+      LOGO_PUPR_1: -7149680094392784315
+      LOGO_PUPR_10: 108616632063399699
+      LOGO_PUPR_11: 7962483986213563810
+      LOGO_PUPR_12: 4039941587478768265
+      LOGO_PUPR_13: -5722523226032688220
+      LOGO_PUPR_14: -1918176457118525033
+      LOGO_PUPR_15: 7104758450545545590
+      LOGO_PUPR_16: 1667348064015592580
+      LOGO_PUPR_17: -5778550466354482016
+      LOGO_PUPR_18: -7338349126089751929
+      LOGO_PUPR_19: -73374311564297468
+      LOGO_PUPR_2: -8084559960937261827
+      LOGO_PUPR_20: 8480618375105140529
+      LOGO_PUPR_21: -3691226875950585223
+      LOGO_PUPR_22: -5579078173303591415
+      LOGO_PUPR_23: -4963906353750032037
+      LOGO_PUPR_24: 1664830834930679186
+      LOGO_PUPR_25: -8524446961702103994
+      LOGO_PUPR_26: 8428139325542809282
+      LOGO_PUPR_27: -8013619845414968131
+      LOGO_PUPR_28: 1830086580249543162
+      LOGO_PUPR_29: 4704485849924552194
+      LOGO_PUPR_3: -2200306632875172455
+      LOGO_PUPR_30: 2379466203318992875
+      LOGO_PUPR_31: 4901030160868800747
+      LOGO_PUPR_32: 1015911890111346793
+      LOGO_PUPR_33: -9107496314243113002
+      LOGO_PUPR_34: 7405508706028818308
+      LOGO_PUPR_35: 7779259783061421671
+      LOGO_PUPR_36: 6110352224624316602
+      LOGO_PUPR_37: -502659888583521782
+      LOGO_PUPR_38: 97834029289304160
+      LOGO_PUPR_39: -5365186178293152388
+      LOGO_PUPR_4: -2680218297723793002
+      LOGO_PUPR_40: -4161110871905440077
+      LOGO_PUPR_41: 6706509943577345431
+      LOGO_PUPR_42: 2058268145748308402
+      LOGO_PUPR_43: -755591161342437641
+      LOGO_PUPR_44: -34604179401338530
+      LOGO_PUPR_45: 5349447837325979637
+      LOGO_PUPR_46: 4813470610629663832
+      LOGO_PUPR_47: -6177091765483496705
+      LOGO_PUPR_48: 5057900855704424815
+      LOGO_PUPR_49: 7096085449366007365
+      LOGO_PUPR_5: 9184580576455793161
+      LOGO_PUPR_50: -4270923066880664620
+      LOGO_PUPR_51: 8968496501721410498
+      LOGO_PUPR_52: -2488670959428619165
+      LOGO_PUPR_6: 841530416352581074
+      LOGO_PUPR_7: 706837051042662518
+      LOGO_PUPR_8: 4366512264873097024
+      LOGO_PUPR_9: -5824747579388841549
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

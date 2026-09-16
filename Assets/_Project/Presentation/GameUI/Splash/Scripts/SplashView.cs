@@ -2,6 +2,13 @@ using UnityEngine;
 
 namespace Atlas.Presentation.GameUI.Splash
 {
+    public enum SplashType
+    {
+        University,
+        Team,
+        Capstone,
+        Accessibility
+    }
     public sealed class SplashView
     {
         private readonly SplashBinder binder;

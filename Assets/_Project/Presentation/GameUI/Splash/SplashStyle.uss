@@ -1,1 +1,38 @@
-VisualElement {}
+:root{
+	--splash-uni-bg: #FFFFFF;
+	--splash-team-bg: #483A6E;
+	--splash-capstone-bg: #173AA3;
+	--splash-accessibility-bg: #D7F6FF;
+}
+
+.splash-screen{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	display: none;
+}
+
+.splash-university{
+	background-color: var(--splash-uni-bg);
+}
+
+.splash-university-logo{
+	position: absolute;
+	height: 60%;
+	width: 40%;
+	top: 50%;
+	left: 50%;
+	-unity-background-scale-mode: scale-to-fit;
+}
+
+.splash-team{
+	background-color: var(--splash-team-bg);
+}
+
+.splash-capstone{
+	background-color: var(--splash-capstone-bg);
+}
+
+.splash-accessibility{
+	background-color: var(--splash-accessibility-bg);
+}

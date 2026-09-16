@@ -686,7 +686,7 @@
           "id": "t_mu2kz598_sfod",
           "note": "Controls the startup splash sequence.",
           "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
-          "line": 7,
+          "line": 8,
           "pattern": "^[^\\S\\n]*public sealed class SplashController : MonoBehaviour",
           "text": "public sealed class SplashController : MonoBehaviour",
           "original": "public sealed class SplashController : MonoBehaviour",
@@ -697,9 +697,9 @@
           "id": "t_mu2l17d5_ilv4",
           "note": "Initializes the splash controller with its required dependencies.",
           "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
-          "line": 31,
-          "pattern": "^[^\\S\\n]*public void Initialize\\(SplashUXML splashDoc, GameStateManager stateManager\\)",
-          "text": "public void Initialize(SplashUXML splashDoc, GameStateManager stateManager)",
+          "line": 68,
+          "pattern": "^[^\\S\\n]*\\{",
+          "text": "{",
           "original": "public void Initialize(",
           "createdAt": "2026-09-15T11:22:20.681Z",
           "witnessed": true
@@ -709,7 +709,7 @@
           "id": "t_mu2l2im6_x7jh",
           "note": "Starts the startup splash sequence.",
           "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
-          "line": 51,
+          "line": 67,
           "pattern": "^[^\\S\\n]*public void StartSplashSequence\\(\\)",
           "text": "public void StartSplashSequence()",
           "original": "public void StartSplashSequence()",
@@ -717,32 +717,10 @@
         },
         {
           "type": "tag",
-          "id": "t_mu2l2vkm_xqyk",
-          "note": "Requests that the currently displayed splash be skipped.",
-          "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
-          "line": 77,
-          "pattern": "^[^\\S\\n]*public void RequestSkip\\(\\)",
-          "text": "public void RequestSkip()",
-          "original": "public void RequestSkip()",
-          "createdAt": "2026-09-15T11:23:38.710Z"
-        },
-        {
-          "type": "tag",
-          "id": "t_mu2l3dz9_nfxk",
-          "note": "Only honored when the current splash is configured as skippable.",
-          "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
-          "line": 77,
-          "pattern": "^[^\\S\\n]*public void RequestSkip\\(\\)",
-          "text": "public void RequestSkip()",
-          "original": "public void RequestSkip()",
-          "createdAt": "2026-09-15T11:24:02.565Z"
-        },
-        {
-          "type": "tag",
           "id": "t_mu2l40ah_i2rm",
           "note": "Stops the splash sequence if it is currently running.",
           "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
-          "line": 87,
+          "line": 93,
           "pattern": "^[^\\S\\n]*public void StopSplashSequence\\(\\)",
           "text": "public void StopSplashSequence()",
           "original": "public void StopSplashSequence()",
@@ -775,7 +753,7 @@
           "id": "t_mu2l9wof_ijkf",
           "note": "Executes the startup splash sequence in order.",
           "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
-          "line": 101,
+          "line": 119,
           "pattern": "^[^\\S\\n]*private IEnumerator RunSplashSequence\\(\\)",
           "text": "private IEnumerator RunSplashSequence()",
           "original": "private IEnumerator RunSplashSequence()",
@@ -786,7 +764,7 @@
           "id": "t_mu2lae31_qtly",
           "note": "Displays a splash and waits until its duration expires or a valid skip request is received.",
           "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
-          "line": 132,
+          "line": 150,
           "pattern": "^[^\\S\\n]*private IEnumerator ShowSplash\\(SplashType splashType, float duration, bool isSkippable\\)",
           "text": "private IEnumerator ShowSplash(SplashType splashType, float duration, bool isSkippable)",
           "original": "private IEnumerator ShowSplash(",
@@ -798,16 +776,66 @@
           "id": "t_mu2layco_trgb",
           "note": "Completes the splash flow and transitions the game into the Main Menu state.",
           "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
-          "line": 155,
+          "line": 179,
           "pattern": "^[^\\S\\n]*private void CompleteSplashSequence\\(\\)",
           "text": "private void CompleteSplashSequence()",
           "original": "private void CompleteSplashSequence()",
           "createdAt": "2026-09-15T11:29:55.560Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu3hhh99_y8d4",
+          "note": "Requests that the currently displayed splash be skipped.",
+          "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
+          "line": 108,
+          "pattern": "^[^\\S\\n]*public void RequestSkip\\(\\)",
+          "text": "public void RequestSkip()",
+          "original": "public void RequestSkip()",
+          "createdAt": "2026-09-16T02:30:47.709Z"
+        },
+        {
+          "type": "tag",
+          "id": "t_mu3hi0be_tb1w",
+          "note": "Only honored when the current splash is configured as skippable.",
+          "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
+          "line": 108,
+          "pattern": "^[^\\S\\n]*public void RequestSkip\\(\\)",
+          "text": "public void RequestSkip()",
+          "original": "public void RequestSkip()",
+          "createdAt": "2026-09-16T02:31:12.410Z"
         }
       ]
     }
   ],
   "trash": [
+    {
+      "node": {
+        "type": "tag",
+        "id": "t_mu2l3dz9_nfxk",
+        "note": "Only honored when the current splash is configured as skippable.",
+        "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
+        "line": 167,
+        "pattern": "^[^\\S\\n]*public void RequestSkip\\(\\)",
+        "text": "public void RequestSkip()",
+        "original": "public void RequestSkip()",
+        "createdAt": "2026-09-15T11:24:02.565Z"
+      },
+      "deletedAt": "2026-09-16T02:31:06.411Z"
+    },
+    {
+      "node": {
+        "type": "tag",
+        "id": "t_mu2l2vkm_xqyk",
+        "note": "Requests that the currently displayed splash be skipped.",
+        "file": "Assets/_Project/Presentation/GameUI/Splash/Scripts/SplashController.cs",
+        "line": 107,
+        "pattern": "^[^\\S\\n]*public void RequestSkip\\(\\)",
+        "text": "public void RequestSkip()",
+        "original": "public void RequestSkip()",
+        "createdAt": "2026-09-15T11:23:38.710Z"
+      },
+      "deletedAt": "2026-09-16T02:30:07.221Z"
+    },
     {
       "node": {
         "type": "tag",

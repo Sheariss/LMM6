@@ -1,9 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ui:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ui="UnityEngine.UIElements"
-    xmlns:uie="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd"
->
-    
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
+    <Style src="project://database/Assets/_Project/Presentation/GameUI/Splash/SplashStyle.uss?fileID=7433441132597879392&amp;guid=dd20509ed6333b141a7ae0998a246fe1&amp;type=3#SplashStyle"/>
+    <ui:VisualElement name="Splash-university" class="splash-screen splash-university" style="display: flex;">
+        <ui:Image class="splash-university-logo" style="background-image: resource(&quot;Splash/LOGO_PUPR&quot;);"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="Splash-team" class="splash-screen splash-team"/>
+    <ui:VisualElement name="Splash-capstone" class="splash-screen splash-capstone"/>
+    <ui:VisualElement name="Splash-accessibility" class="splash-screen splash-accessibility"/>
 </ui:UXML>
