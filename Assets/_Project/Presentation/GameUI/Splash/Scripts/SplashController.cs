@@ -40,15 +40,8 @@ namespace Atlas.Presentation.GameUI.Splash
         // -------------------- LIFECYCLE --------------------
         private void Awake()
         {
-            binder =
-                new SplashBinder(
-                    uiDoc.rootVisualElement
-                );
-
-            view =
-                new SplashView(
-                    binder
-                );
+            binder = new SplashBinder(uiDoc.rootVisualElement);
+            view = new SplashView(binder);
 
             view.HideAll();
         }
