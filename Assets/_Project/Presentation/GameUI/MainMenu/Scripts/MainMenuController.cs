@@ -57,7 +57,7 @@ namespace Atlas.Presentation.GameUI.MainMenu
         {
             saveManager = SaveManager.Instance;
 
-            progressionManager = ProgressionManager.Instance;
+            //progressionManager = ProgressionManager.Instance;
 
             gameStateManager = GameStateManager.Instance;
 
