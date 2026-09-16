@@ -11,7 +11,7 @@ namespace Atlas.Presentation.GameUI.Splash
         [SerializeField] private UIDocument uiDoc;
 
         // -------------------- RUNTIME DEPENDENCIES --------------------
-        [SerializeField]private GameStateManager gameStateManager;
+        public static GameStateManager Instance { get; private set; }
 
         // -------------------- SPLASH DURATIONS --------------------
         [Header("Splash Durations")]
@@ -30,6 +30,7 @@ namespace Atlas.Presentation.GameUI.Splash
         // -------------------- HELPERS --------------------
         private SplashBinder binder;
         private SplashView view;
+        private GameStateManager gameStateManager;
 
         private Coroutine splashSequence;
 
@@ -40,6 +41,17 @@ namespace Atlas.Presentation.GameUI.Splash
         // -------------------- LIFECYCLE --------------------
         private void Awake()
         {
+            gameStateManager = GameStateManager.Instance;
+            if (gameStateManager == null)
+            {
+                Debug.LogError(
+                    "[SplashController] GameStateManager instance was not found."
+                );
+
+                enabled = false;
+                return;
+            }
+
             binder = new SplashBinder(uiDoc.rootVisualElement);
             view = new SplashView(binder);
 

@@ -14,10 +14,7 @@ namespace Atlas.Presentation.GameUI.MainMenu
 
         // -------------------- RUNTIME DEPENDENCIES --------------------
 
-        [SerializeField]
         private SaveManager saveManager;
-
-        [SerializeField]
         private ProgressionManager progressionManager;
         private GameStateManager gameStateManager;
 
@@ -31,6 +28,8 @@ namespace Atlas.Presentation.GameUI.MainMenu
 
         private void Awake()
         {
+            ResolveDependencies();
+
             binder =
                 new MainMenuBinder(
                     uiDoc.rootVisualElement
@@ -53,6 +52,31 @@ namespace Atlas.Presentation.GameUI.MainMenu
             RefreshView();
         }
 
+        // -------------------- DEPENDENCIES --------------------
+        private void ResolveDependencies()
+        {
+            saveManager = SaveManager.Instance;
+
+            progressionManager = ProgressionManager.Instance;
+
+            gameStateManager = GameStateManager.Instance;
+
+            if (saveManager == null)
+            {
+                Debug.LogError("[MainMenuController] SaveManager instance was not found.");
+            }
+
+            if (progressionManager == null)
+            {
+                Debug.LogError("[MainMenuController] ProgressionManager instance was not found.");
+            }
+
+            if (gameStateManager == null)
+            {
+                Debug.LogError("[MainMenuController] GameStateManager instance was not found.");
+            }
+        }
+
         // -------------------- ACTION BINDING --------------------
 
         private void BindActions()
@@ -71,9 +95,7 @@ namespace Atlas.Presentation.GameUI.MainMenu
 
         public void RefreshView()
         {
-            MainMenuView.ViewState state =
-                builder.Build();
-
+            MainMenuView.ViewState state = builder.Build();
             view.Apply(state);
         }
 
