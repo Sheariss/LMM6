@@ -1,3 +1,7 @@
+using UnityEngine;
+using Atlas.Core.Persistence;
+//using Atlas.Core.Progression;
+
 namespace Atlas.Presentation.GameUI.MainMenu
 {
     public sealed class MainMenuViewBuilder
@@ -13,16 +17,16 @@ namespace Atlas.Presentation.GameUI.MainMenu
 
         public MainMenuView.ViewState Build()
         {
-            bool hasSaveData = saveManager.GetSaveCount() > 0;
+            bool hasSaveData = saveManager.HasAnySave();
 
-            bool gameCompleted = progressionManager.IsCheckpointCompleted(
+            //bool gameCompleted = progressionManager.IsCheckpointCompleted(
                     // TODO: Replace with actual final checkpoint identifier
-                );
+               // );
 
             return new MainMenuView.ViewState
             {
                 ContinueVisible = hasSaveData,
-                CreditsVisible = gameCompleted
+                //CreditsVisible = gameCompleted
             };
         }
     }

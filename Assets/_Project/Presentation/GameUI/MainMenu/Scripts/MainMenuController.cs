@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using Atlas.Core.Persistence;
+using Atlas.Core.GameState;
 
 namespace Atlas.Presentation.GameUI.MainMenu
 {
@@ -17,6 +19,7 @@ namespace Atlas.Presentation.GameUI.MainMenu
 
         [SerializeField]
         private ProgressionManager progressionManager;
+        private GameStateManager gameStateManager;
 
         // -------------------- HELPERS --------------------
 
@@ -98,7 +101,7 @@ namespace Atlas.Presentation.GameUI.MainMenu
 
         private void OnCreditsPressed()
         {
-            GameStateManager.EnterCredits();
+            gameStateManager.EnterCredits();
         }
 
         private void OnExitPressed()

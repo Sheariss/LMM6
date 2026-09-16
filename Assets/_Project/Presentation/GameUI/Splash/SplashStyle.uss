@@ -1,8 +1,14 @@
 :root{
 	--splash-uni-bg: #FFFFFF;
-	--splash-team-bg: #483A6E;
-	--splash-capstone-bg: #173AA3;
-	--splash-accessibility-bg: #D7F6FF;
+	--splash-team-bg: #605084;
+	--splash-capstone-bg: #212224;
+	--splash-capstone-text: #ffffff;
+	--splash-capstone-title-size: var(--space-8);
+	--splash-accessibility-bg: #16324F;
+	--splash-accessibility-text: #ffffff;
+	--accessibility-button-height: 100px;
+	--accessibility-description-size: 42px;
+
 }
 
 .splash-screen{
@@ -14,25 +20,88 @@
 
 .splash-university{
 	background-color: var(--splash-uni-bg);
+	align-items: center;
+	justify-content: center;
 }
 
 .splash-university-logo{
-	position: absolute;
 	height: 60%;
 	width: 40%;
-	top: 50%;
-	left: 50%;
 	-unity-background-scale-mode: scale-to-fit;
 }
 
 .splash-team{
 	background-color: var(--splash-team-bg);
+	align-items: center;
+	justify-content: center;
+}
+
+.splash-team-logo{
+	height: 70%;
+	width: 60%;
+	-unity-background-scale-mode: scale-to-fit;
 }
 
 .splash-capstone{
 	background-color: var(--splash-capstone-bg);
+	color: var(--splash-capstone-text);
+	align-items: center;
+	justify-content: center;
+	padding: var(--space-9);
+}
+
+.splash-capstone-title{
+	font-size: var(--splash-capstone-title-size);
+	-unity-font-style: bold;
+	-unity-text-align: middle-center;
+	padding-bottom: var(--space-8);
+}
+
+.splash-capstone-description{
+	font-size: var(--text-5xl);
+	-unity-text-align: middle-center;
+	white-space: normal;
+	width: 90%;
 }
 
 .splash-accessibility{
 	background-color: var(--splash-accessibility-bg);
+	color: var(--splash-accessibility-text);
+	align-items: center;
+	justify-content: space-between;
+	padding: var(--space-9);
+}
+
+.splash-accessibility-title{
+	font-size: var(--splash-capstone-title-size);
+	-unity-font-style: bold;
+	-unity-text-align: middle-center;
+	padding-bottom: var(--space-6);
+}
+
+.splash-accessibility-description{
+	font-size: var(--text-5xl);
+	-unity-text-align: middle-center;
+	white-space: normal;
+	width: 80%;
+}
+
+.splash-accessibility-button-container{
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-evenly;
+	padding-top: var(--space-6);
+	width: 80%;
+}
+
+.splash-accessibility-button{
+	font-size: var(--accessibility-description-size);
+	-unity-font-style: bold;
+	-unity-text-align: middle-center;
+	background-color: rgba(0, 0, 0, 0.3);
+	padding: var(--space-4);
+	height: var(--accessibility-button-height);
+	padding-left: var(--space-8);
+	padding-right: var(--space-8);
+	border-radius: var(--radius-2xl);
 }

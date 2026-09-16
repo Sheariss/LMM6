@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 2027755969}
   - component: {fileID: 2027755968}
   m_Layer: 0
-  m_Name: SplashUXML
+  m_Name: GameUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

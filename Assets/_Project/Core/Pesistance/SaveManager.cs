@@ -227,5 +227,15 @@ namespace Atlas.Core.Persistence
             // validation will be added as the data model is implemented.
             return true;
         }
+
+        public bool HasAnySave()
+        {
+            if (!IsInitialized)
+            {
+                return false;
+            }
+
+            return saveService.HasAnySave();
+        }
     }
 }

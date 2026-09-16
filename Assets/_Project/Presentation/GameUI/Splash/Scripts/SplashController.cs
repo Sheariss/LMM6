@@ -59,16 +59,6 @@ namespace Atlas.Presentation.GameUI.Splash
         // -------------------- SPLASH SEQUENCE --------------------
         public void StartSplashSequence()
         {
-            if (!isInitialized)
-            {
-                Debug.LogError(
-                    "[SplashController] Cannot start splash sequence " +
-                    "before initialization."
-                );
-
-                return;
-            }
-
             if (isRunning)
             {
                 Debug.LogWarning(

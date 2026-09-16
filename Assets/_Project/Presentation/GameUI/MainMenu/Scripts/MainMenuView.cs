@@ -40,8 +40,8 @@ namespace Atlas.Presentation.GameUI.MainMenu
         // -------------------- VIEW STATE --------------------
         public sealed class ViewState
         {
-            public bool ContinueVisible { get; init; }
-            public bool CreditsVisible { get; init; }
+            public bool ContinueVisible { get; set; }
+            public bool CreditsVisible { get; set; }
         }
     }
 }

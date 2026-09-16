@@ -3,10 +3,22 @@
     <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
     <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
     <Style src="project://database/Assets/_Project/Presentation/GameUI/Splash/SplashStyle.uss?fileID=7433441132597879392&amp;guid=dd20509ed6333b141a7ae0998a246fe1&amp;type=3#SplashStyle"/>
-    <ui:VisualElement name="Splash-university" class="splash-screen splash-university" style="display: flex;">
+    <ui:VisualElement name="Splash-university" class="splash-screen splash-university">
         <ui:Image class="splash-university-logo" style="background-image: resource(&quot;Splash/LOGO_PUPR&quot;);"/>
     </ui:VisualElement>
-    <ui:VisualElement name="Splash-team" class="splash-screen splash-team"/>
-    <ui:VisualElement name="Splash-capstone" class="splash-screen splash-capstone"/>
-    <ui:VisualElement name="Splash-accessibility" class="splash-screen splash-accessibility"/>
+    <ui:VisualElement name="Splash-team" class="splash-screen splash-team">
+        <ui:Image class="splash-team-logo" style="background-image: resource(&quot;Splash/LOGO_ATLAS&quot;);"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="Splash-capstone" class="splash-screen splash-capstone">
+        <ui:Label text="Academic Project" class="spacing-reset splash-capstone-title"/>
+        <ui:Label text="Interactive Investigation Simulator was developed as a Capstone Project for the Computer Science program at Polytechnic University of Puerto Rico, San Juan Campus during the Spring 2026 semester.&#10;&#10;This project was created for academic and educational purposes." class="spacing-reset splash-capstone-description"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="Splash-accessibility" class="splash-screen splash-accessibility" style="display: flex; white-space: nowrap;">
+        <ui:Label text="Play Your Way" class="splash-accessibility-title"/>
+        <ui:Label text="The Interactive Investigation Simulator was designed with accessibility in mind. We encourage you to take a moment to explore the Accessibility settings and adjust the experience to what works best for you.&#10;&#10;Accessibility is an ongoing process. If there is a feature you expected to find, something that could work better, or an accessibility option you would like to see added, we would love to hear from you. Player feedback helps us make the experience better for everyone." class="splash-accessibility-description"/>
+        <ui:GroupBox class="spacing-reset splash-accessibility-button-container">
+            <ui:Button text="Explore Accessibility" class="button-reset splash-accessibility-button" style="display: none;"/>
+            <ui:Button text="Continue" class="button-reset splash-accessibility-button"/>
+        </ui:GroupBox>
+    </ui:VisualElement>
 </ui:UXML>

@@ -1,8 +1,10 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 using Atlas.Core.Persistence.Data;
+
 
 namespace Atlas.Core.Persistence
 {
@@ -179,6 +181,25 @@ namespace Atlas.Core.Persistence
 
                 return false;
             }
+        }
+    
+        public bool HasAnySave()
+        {
+            if (!Directory.Exists(saveDirectoryPath))
+            {
+                return false;
+            }
+
+            string searchPattern =
+                $"{SaveFilePrefix}*{SaveFileExtension}";
+
+            return Directory
+                .EnumerateFiles(
+                    saveDirectoryPath,
+                    searchPattern,
+                    SearchOption.TopDirectoryOnly
+                )
+                .Any();
         }
     }    
 }

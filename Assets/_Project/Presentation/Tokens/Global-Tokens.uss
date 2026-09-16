@@ -1,4 +1,7 @@
 :root {
+
+
+
     --bg-primary: var(--gray-950);
     --bg-secondary: var(--gray-900);
     --bg-tertiary: var(--gray-800);
@@ -60,15 +63,167 @@
     --desktop-taskbar-bg: var(--pd-700);
     --desktop-taskbar-border: var(--pd-600);
 
-    /* PD Workstation */
-    --pdw-background: var(--gray-950);
-    --pdw-surface-primary: var(--pd-900);
-    --pdw-text-primary: var(--pd-200);
-    --pdw-text-secondary: var(--pd-400);
-    --pdw-text-disabled: var(--pd-700);
-    --pdw-inv-image-border: var(--pdw-text-secondary); /* same as pdw-text-secondary */
-    --pdw-inv-image-bg: var(--pdw-background); /* same as --pdw-background */
-    --pdw-active-tab-color: var(--pd-500);
-    --pdw-sidebar-bg-color: rgba(32, 41, 57,.8); /* same as --pd-800 + lower opacity */
 
+
+    /* =========================================================
+       SPACING
+       ========================================================= */
+
+    --space-0: 0px;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+    --space-8: 64px;
+    --space-9: 96px;
+
+
+    /* =========================================================
+       TEXT SIZE
+       Primitive typography scale.
+       ========================================================= */
+
+    --text-xs: 12px;
+    --text-sm: 14px;
+    --text-md: 16px;
+    --text-lg: 18px;
+    --text-xl: 20px;
+    --text-2xl: 24px;
+    --text-3xl: 32px;
+    --text-4xl: 40px;
+    --text-5xl: 48px;
+
+
+    /* =========================================================
+       CORNER RADIUS
+       ========================================================= */
+
+    --radius-none: 0px;
+    --radius-xs: 2px;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-2xl: 24px;
+    --radius-full: 999px;
+
+    /* =========================================================
+       BORDER WIDTH
+       ========================================================= */
+
+    --border-none: 0px;
+    --border-thin: 1px;
+    --border-medium: 2px;
+    --border-thick: 4px;
+
+    /* =========================================================
+       CONTROL HEIGHT
+       Buttons, inputs, dropdowns, etc.
+       ========================================================= */
+
+    --control-xs: 28px;
+    --control-sm: 32px;
+    --control-md: 40px;
+    --control-lg: 48px;
+    --control-xl: 56px;
+
+
+    /* =========================================================
+       ICON SIZE
+       ========================================================= */
+
+    --icon-xs: 12px;
+    --icon-sm: 16px;
+    --icon-md: 20px;
+    --icon-lg: 24px;
+    --icon-xl: 32px;
+    --icon-2xl: 48px;
+    --icon-3xl: 64px;
+
+
+    /* =========================================================
+       AVATAR / BADGE SIZE
+       Optional reusable square/circular elements.
+       ========================================================= */
+
+    --avatar-sm: 24px;
+    --avatar-md: 32px;
+    --avatar-lg: 40px;
+    --avatar-xl: 48px;
+
+
+    /* =========================================================
+       LAYOUT WIDTH
+       General-purpose width constraints.
+       ========================================================= */
+
+    --width-xs: 240px;
+    --width-sm: 320px;
+    --width-md: 480px;
+    --width-lg: 640px;
+    --width-xl: 960px;
+    --width-2xl: 1200px;
+
+
+    /* =========================================================
+       MINIMUM INTERACTION SIZE
+       Useful for accessibility and keyboard/mouse interaction.
+       ========================================================= */
+
+    --target-min: 32px;
+    --target-comfortable: 40px;
+    --target-large: 48px;
+
+
+    /* =========================================================
+       COMPONENT GAPS
+       ========================================================= */
+
+    --gap-xs: var(--space-1);
+    --gap-sm: var(--space-2);
+    --gap-md: var(--space-3);
+    --gap-lg: var(--space-4);
+    --gap-xl: var(--space-5);
+    --gap-2xl: var(--space-6);
+
+
+    /* =========================================================
+       LAYER / Z-ORDER
+       ---------------------------------------------------------
+       Unity UI Toolkit does not use CSS z-index in the same way
+       as web CSS, but these values can still act as conceptual
+       design-system references for ordering.
+       ========================================================= */
+
+    --layer-base: 0;
+    --layer-window: 100;
+    --layer-overlay: 200;
+    --layer-modal: 300;
+    --layer-tooltip: 400;
+    --layer-notification: 500;
+
+
+    /* =========================================================
+       MOTION DURATION
+       Baseline values for UI transitions.
+       ========================================================= */
+
+    --duration-instant: 0s;
+    --duration-fast: 0.1s;
+    --duration-normal: 0.2s;
+    --duration-slow: 0.3s;
+    --duration-emphasis: 0.5s;
+
+
+    /* =========================================================
+       OPACITY
+       ========================================================= */
+
+    --opacity-disabled: 0.45;
+    --opacity-secondary: 0.7;
+    --opacity-muted: 0.55;
+    --opacity-overlay: 0.8;
 }

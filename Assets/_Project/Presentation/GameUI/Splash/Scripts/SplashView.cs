@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Atlas.Presentation.GameUI.Splash
 {
@@ -44,6 +45,14 @@ namespace Atlas.Presentation.GameUI.Splash
                         DisplayStyle.Flex;
                     break;
             }
+        }
+
+        public void HideAll()
+        {
+            binder.UniversitySplash.style.display = DisplayStyle.None;
+            binder.TeamSplash.style.display = DisplayStyle.None;
+            binder.CapstoneSplash.style.display = DisplayStyle.None;
+            binder.AccessibilitySplash.style.display = DisplayStyle.None;
         }
     }
 }
