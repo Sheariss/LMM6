@@ -1,0 +1,24 @@
+{
+  "id": "7dbc4953-e410-4990-b92a-6fc022a01e03",
+  "title": "SceneLoadManager",
+  "author": "@shearis",
+  "tags": [
+    {
+      "name": "CoreRuntimeManager",
+      "color": "#3FB950"
+    }
+  ],
+  "gitRef": "splash",
+  "status": "open",
+  "createdAt": 1789555344,
+  "updatedAt": 1789555363,
+  "annotations": [
+    {
+      "id": "a6b37592-5a9e-4ab8-a752-348d43c71525",
+      "file": "Assets/_Project/Core/SceneManagement/SceneLoadManager.cs",
+      "range": null,
+      "content": "Provides centralized access to Unity scene loading.\n\nBootstrap remains loaded for the lifetime of the application.\nGame scenes are loaded additively on top of Bootstrap.",
+      "contentHash": ""
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+:root {
+    --ssm-back-button-size: var(--control-xl);
+    --ssm-element-size: 170px;
+    --smm-focus-color: rgb(91, 180, 235);
+}
+
+.main-menu-background {
+    background-color: var(--windows-blue-bg);
+    padding: 80px;
+}
+
+.amm-title {
+    font-size: 72px;
+}
+
+.amm-instruc-group {
+    align-items: flex-start;
+    justify-content: space-evenly;
+    height: 30%;
+}
+
+.amm-instruc-1 {
+    font-size: 32px;
+}
+
+.amm-instruc-2 {
+    font-size: 24px;
+}
+
+.amm-options-group {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.amm-options {
+    font-size: 32px;
+}
+
+.ssm-header-container {
+    flex-direction: row;
+}
+
+.ssm-back-button {
+    height: var(--ssm-back-button-size);
+    width: var(--ssm-back-button-size);
+    border-radius: var(--radius-full);
+    border-width: var(--border-thick);
+    border-color: rgb(255, 255, 255);
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--space-5);
+}
+
+.ssm-back-button-icon {
+    height: var(--icon-2xl);
+    width: var(--icon-2xl);
+}
+
+.ssm-header-text-container {
+    padding-left: var(--space-7);
+}
+
+.ssm-save-slots-container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 49%;
+    padding-top: var(--space-6);
+}
+
+.ssm-save-slot-button {
+    width: 100%;
+    flex-direction: row;
+    border-radius: var(--radius-2xl);
+    border-width: var(--border-medium);
+    border-color: var(--smm-focus-color);
+    align-items: center;
+    justify-content: flex-start;
+    padding: var(--space-6);
+}
+
+.ssm-save-slot-elements-container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: var(--ssm-element-size);
+    width: var(--ssm-element-size);
+    background-color: var(--smm-focus-color);
+}
+
+.ssm-save-slot-icon {
+    height: var(--space-9);
+    width: var(--space-9);
+}
+
+.ssm-save-slot-text-container {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-left: var(--space-6);
+}
+
+.ssm-save-slot-title-text {
+    font-size: 36px;
+    -unity-text-align: middle-left;
+    padding-bottom: var(--space-1);
+}
+
+.ssm-save-slot-description-text {
+    font-size: 30px;
+    -unity-text-align: middle-left;
+}

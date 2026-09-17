@@ -27,14 +27,16 @@ namespace Atlas.Core.Persistence
             {
                 Debug.LogWarning(
                     $"[{nameof(SaveManager)}] Duplicate instance detected. " +
-                    "Destroying duplicate component."
+                    "Destroying duplicate."
                 );
 
-                Destroy(this);
+                Destroy(gameObject);
                 return;
             }
 
             Instance = this;
+
+            DontDestroyOnLoad(gameObject);
 
             Initialize();
         }

@@ -8,10 +8,10 @@ namespace Atlas.Presentation.GameUI.Splash
     public sealed class SplashController : MonoBehaviour
     {
         // -------------------- UI DOCUMENT --------------------
-        [SerializeField] private UIDocument uiDoc;
+        private UIDocument uiDoc;
 
         // -------------------- RUNTIME DEPENDENCIES --------------------
-        public static GameStateManager Instance { get; private set; }
+        private GameStateManager gameStateManager;
 
         // -------------------- SPLASH DURATIONS --------------------
         [Header("Splash Durations")]
@@ -30,24 +30,32 @@ namespace Atlas.Presentation.GameUI.Splash
         // -------------------- HELPERS --------------------
         private SplashBinder binder;
         private SplashView view;
-        private GameStateManager gameStateManager;
 
         private Coroutine splashSequence;
 
         // -------------------- STATE --------------------
         private bool skipRequested;
         private bool isRunning;
+        private bool isInitialized;
 
         // -------------------- LIFECYCLE --------------------
         private void Awake()
         {
+            uiDoc = GetComponentInParent<UIDocument>();
+
+            if (uiDoc == null)
+            {
+                Debug.LogError("[SplashController] UIDocument component was not found.");
+                enabled = false;
+                return;
+            }
+
+
             gameStateManager = GameStateManager.Instance;
+
             if (gameStateManager == null)
             {
-                Debug.LogError(
-                    "[SplashController] GameStateManager instance was not found."
-                );
-
+                Debug.LogError( "[SplashController] GameStateManager instance was not found.");
                 enabled = false;
                 return;
             }
@@ -57,9 +65,15 @@ namespace Atlas.Presentation.GameUI.Splash
 
             view.HideAll();
         }
-
-        private void OnEnable()
+        private void Start()
         {
+            InitializeUI();
+
+            if (!isInitialized)
+            {
+                return;
+            }
+
             StartSplashSequence();
         }
 
@@ -68,21 +82,56 @@ namespace Atlas.Presentation.GameUI.Splash
             StopSplashSequence();
         }
 
-        // -------------------- SPLASH SEQUENCE --------------------
-        public void StartSplashSequence()
+        // -------------------- INITIALIZATION --------------------
+        private void InitializeUI()
         {
-            if (isRunning)
+            if (uiDoc == null)
             {
-                Debug.LogWarning(
-                    "[SplashController] Splash sequence is already running."
-                );
-
+                Debug.LogError("[SplashController] Cannot initialize UI because UIDocument is null.");
                 return;
             }
 
-            splashSequence = StartCoroutine(
-                RunSplashSequence()
-            );
+            VisualElement root = uiDoc.rootVisualElement;
+
+            if (root == null)
+            {
+                Debug.LogError("[SplashController] UIDocument rootVisualElement is null.");
+                return;
+            }
+
+            binder = new SplashBinder(root);
+
+            if (!binder.IsValid)
+            {
+                Debug.LogError("[SplashController] Splash UI binding validation failed.");
+                return;
+            }
+
+            view = new SplashView(binder);
+
+            view.HideAll();
+
+            isInitialized = true;
+
+            Debug.Log("[SplashController] Splash UI initialized successfully.");
+        }
+
+        // -------------------- SPLASH SEQUENCE --------------------
+        public void StartSplashSequence()
+        {
+            if (!isInitialized)
+            {
+                Debug.LogWarning("[SplashController] Cannot start splash sequence because the controller is not initialized.");
+                return;
+            }
+
+            if (isRunning)
+            {
+                Debug.LogWarning("[SplashController] Splash sequence is already running.");
+                return;
+            }
+
+            splashSequence = StartCoroutine(RunSplashSequence());
         }
 
         public void StopSplashSequence()
@@ -146,24 +195,18 @@ namespace Atlas.Presentation.GameUI.Splash
         {
             skipRequested = false;
 
-            view.Show(
-                splashType
-            );
+            view.Show(splashType);
 
             float elapsedTime = 0f;
 
             while (elapsedTime < duration)
             {
-                if (
-                    isSkippable &&
-                    skipRequested
-                )
+                if (isSkippable && skipRequested)
                 {
                     break;
                 }
 
-                elapsedTime +=
-                    Time.unscaledDeltaTime;
+                elapsedTime += Time.unscaledDeltaTime;
 
                 yield return null;
             }

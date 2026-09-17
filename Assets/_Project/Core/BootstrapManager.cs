@@ -1,22 +1,30 @@
 using UnityEngine;
+using Atlas.Core.GameState;
+using Atlas.Core.Persistence;
+using Atlas.Core.SceneManagement;
 
 namespace Atlas.Core
 {
-
-    /// <summary>
-    /// Persistent entry point for the IIS Core Runtime.
-    /// </summary>
-    /// <remarks>
-    /// Responsible for coordinating validation of the configured
-    /// Core Runtime before normal application flow begins.
-    /// </remarks>
     public sealed class BootstrapManager : MonoBehaviour
     {
+        // -------------------- CORE RUNTIME MANAGERS --------------------
+        [SerializeField] private GameStateManager gameStateManager;
+        [SerializeField] private SceneLoadManager sceneLoadManager;
+        [SerializeField] private SaveManager saveManager;
+        // TODO: Add rest of the managers
+        //
+        // [SerializeField] private AccessibilityManager accessibilityManager;
+        // [SerializeField] private AudioManager audioManager;
+        // [SerializeField] private InputManager inputManager;
+        // [SerializeField] private NavigationManager navigationManager;
+        // [SerializeField] private ProgressionManager progressionManager;
+        // [SerializeField] private SettingsManager settingsManager;
+        // [SerializeField] private ShortcutManager shortcutManager;
+        // [SerializeField] private ThemeManager themeManager;
+
+
         public static BootstrapManager Instance { get; private set; }
 
-        /// <summary>
-        /// Indicates whether Bootstrap initialization has completed successfully.
-        /// </summary>
         public bool IsInitialized { get; private set; }
 
         private void Awake()
@@ -42,13 +50,6 @@ namespace Atlas.Core
             Initialize();
         }
 
-        /// <summary>
-        /// Initializes the Bootstrap Manager and it verifies the Core Runtime.
-        /// </summary>
-        /// <remarks>
-        /// Verification of Core Runtime Managers is called in start on purpose.
-        /// This allows the invidiaul managers to get isntantiated on Awake BEFORE the bootstrap verification.
-        /// </remarks>
         private void Initialize()
         {
             if (IsInitialized)
@@ -71,23 +72,52 @@ namespace Atlas.Core
             Debug.Log(
                 $"[{nameof(BootstrapManager)}] Core Runtime initialized successfully."
             );
+
+            gameStateManager.EnterSplash();
         }
 
-        /// <summary>
-        /// Verifies that all required Core Runtime managers are available.
-        /// </summary>
+        // -------------------- RUNTIME VERIFICATION --------------------
         private bool VerifyCoreRuntime()
         {
 
             bool isValid = true;
-            // TO DO: Required manager checks will be added as
-            // each Core Runtime manager is implemented.
-            // Reporting verification errors must also fall to each manager check
-            // isValid &= VerifyRequiredManager(
-            // GameStateManager.Instance,
-            // nameof(GameStateManager));
+
+            isValid &= VerifyRequiredManager(
+                GameStateManager.Instance,
+                nameof(GameStateManager)
+            );
+
+            isValid &= VerifyRequiredManager(
+                SaveManager.Instance,
+                nameof(SaveManager)
+            );
+
+            isValid &= VerifyRequiredManager(
+                SceneLoadManager.Instance,
+                nameof(SceneLoadManager)
+            );
+
+            // TODO: Add verification for the rest of the managers
 
             return isValid;
+        }
+
+        private bool VerifyRequiredManager(
+            Object manager,
+            string managerName
+        )
+        {
+            if (manager != null)
+            {
+                return true;
+            }
+
+            Debug.LogError(
+                $"[{nameof(BootstrapManager)}] Required Core Runtime manager " +
+                $"'{managerName}' was not found."
+            );
+
+            return false;
         }
 
 

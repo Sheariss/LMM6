@@ -9,10 +9,10 @@ namespace Atlas.Presentation.GameUI.MainMenu
         private readonly SaveManager saveManager;
         private readonly ProgressionManager progressionManager;
 
-        public MainMenuViewBuilder(SaveManager saveManager, ProgressionManager progressionManager)
+        public MainMenuViewBuilder(SaveManager saveManager/*, ProgressionManager progressionManager*/)
         {
             this.saveManager = saveManager;
-            this.progressionManager = progressionManager;
+            //this.progressionManager = progressionManager;
         }
 
         public MainMenuView.ViewState Build()

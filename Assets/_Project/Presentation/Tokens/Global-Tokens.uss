@@ -1,7 +1,4 @@
 :root {
-
-
-
     --bg-primary: var(--gray-950);
     --bg-secondary: var(--gray-900);
     --bg-tertiary: var(--gray-800);

@@ -9,13 +9,12 @@ namespace Atlas.Presentation.GameUI.MainMenu
     {
         // -------------------- UI DOCUMENT --------------------
 
-        [SerializeField]
         private UIDocument uiDoc;
 
         // -------------------- RUNTIME DEPENDENCIES --------------------
 
         private SaveManager saveManager;
-        private ProgressionManager progressionManager;
+        // private ProgressionManager progressionManager;
         private GameStateManager gameStateManager;
 
         // -------------------- HELPERS --------------------
@@ -26,9 +25,23 @@ namespace Atlas.Presentation.GameUI.MainMenu
 
         // -------------------- LIFECYCLE --------------------
 
-        private void Awake()
+        private void Start()
         {
-            ResolveDependencies();
+            uiDoc = GetComponentInParent<UIDocument>();
+
+            if (uiDoc == null)
+            {
+                Debug.LogError(
+                    "[MainMenuController] UIDocument was not found in parent hierarchy."
+                );
+
+                return;
+            }
+
+            if (!ResolveDependencies())
+            {
+                return;
+            }
 
             binder =
                 new MainMenuBinder(
@@ -40,41 +53,54 @@ namespace Atlas.Presentation.GameUI.MainMenu
 
             builder =
                 new MainMenuViewBuilder(
-                    saveManager,
-                    progressionManager
+                    saveManager//,
+                    //progressionManager
                 );
 
             BindActions();
-        }
 
-        private void OnEnable()
-        {
             RefreshView();
         }
 
         // -------------------- DEPENDENCIES --------------------
-        private void ResolveDependencies()
+
+        private bool ResolveDependencies()
         {
-            saveManager = SaveManager.Instance;
-
-            //progressionManager = ProgressionManager.Instance;
-
             gameStateManager = GameStateManager.Instance;
+            saveManager = SaveManager.Instance;
+            // progressionManager = ProgressionManager.Instance;
 
-            if (saveManager == null)
-            {
-                Debug.LogError("[MainMenuController] SaveManager instance was not found.");
-            }
-
-            if (progressionManager == null)
-            {
-                Debug.LogError("[MainMenuController] ProgressionManager instance was not found.");
-            }
+            bool valid = true;
 
             if (gameStateManager == null)
             {
-                Debug.LogError("[MainMenuController] GameStateManager instance was not found.");
+                Debug.LogError(
+                    "[MainMenuController] GameStateManager instance was not found."
+                );
+
+                valid = false;
             }
+
+            if (saveManager == null)
+            {
+                Debug.LogError(
+                    "[MainMenuController] SaveManager instance was not found."
+                );
+
+                valid = false;
+            }
+
+            /*
+            if (progressionManager == null)
+            {
+                Debug.LogError(
+                    "[MainMenuController] ProgressionManager instance was not found."
+                );
+
+                valid = false;
+            }*/
+
+            return valid;
         }
 
         // -------------------- ACTION BINDING --------------------
@@ -95,7 +121,13 @@ namespace Atlas.Presentation.GameUI.MainMenu
 
         public void RefreshView()
         {
+            if (builder == null || view == null)
+            {
+                return;
+            }
+
             MainMenuView.ViewState state = builder.Build();
+
             view.Apply(state);
         }
 

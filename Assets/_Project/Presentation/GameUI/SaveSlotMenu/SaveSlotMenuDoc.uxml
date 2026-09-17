@@ -1,0 +1,91 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/GameUI/SaveSlotMenu/SaveSlotMenuiStyle.uss?fileID=7433441132597879392&amp;guid=431e9d73b7726024294291c0dadc017c&amp;type=3#SaveSlotMenuiStyle"/>
+    <ui:VisualElement name="AtlasMainMenuRoot" class="fullscreen flex-column white-text main-menu-background">
+        <ui:GroupBox class="spacing-reset ssm-header-container">
+            <ui:Button text="" class="button-reset ssm-back-button">
+                <ui:Image name="Image" class="ssm-back-button-icon" style="background-image: resource(&quot;Icons/Arrows/Arrow Back/arrow_back_48dp_FFFFFF_FILL0_wght400_GRAD0_opsz48&quot;);"/>
+            </ui:Button>
+            <ui:GroupBox class="spacing-reset ssm-header-text-container">
+                <ui:Label text="Save Slots" name="AMMTitle" class="spacing-reset amm-title"/>
+                <ui:GroupBox name="AMMInstructionGroup" class="spacing-reset amm-instruc-group">
+                    <ui:Label text="Choose a save slot to save or load your investigation." class="amm-instruc-1 spacing-reset"/>
+                </ui:GroupBox>
+            </ui:GroupBox>
+        </ui:GroupBox>
+        <ui:GroupBox name="AMMOptionGroup" class="spacing-reset amm-options-group">
+            <ui:GroupBox class="spacing-reset ssm-save-slots-container">
+                <ui:Button text="" name="SaveSlotButton1" class="button-reset ssm-save-slot-button">
+                    <ui:VisualElement class="ssm-save-slot-elements-container">
+                        <ui:Image name="SaveSlotStateIcon" class="ssm-save-slot-icon" style="background-image: resource(&quot;Icons/Empty Document/description_dashed_48dp_FFFFFF_FILL0_wght400_GRAD0_opsz48&quot;);"/>
+                    </ui:VisualElement>
+                    <ui:GroupBox name="" class="spacing-reset ssm-save-slot-text-container">
+                        <ui:Label text="Save Slot 01" name="SaveSlotTitle" class="spacing-reset ssm-save-slot-title-text"/>
+                        <ui:Label text="Empty Slot" name="SaveSlotChapter" class="spacing-reset ssm-save-slot-description-text"/>
+                        <ui:Label text="No saved game data." name="SaveSlotDate" class="spacing-reset ssm-save-slot-description-text"/>
+                        <ui:Label text="Progress: 0%" name="SaveSlotProgress" class="spacing-reset ssm-save-slot-description-text" style="display: flex; visibility: hidden;"/>
+                    </ui:GroupBox>
+                </ui:Button>
+                <ui:Button text="" name="SaveSlotButton3" class="button-reset ssm-save-slot-button">
+                    <ui:VisualElement class="ssm-save-slot-elements-container">
+                        <ui:Image name="SaveSlotStateIcon" class="ssm-save-slot-icon" style="background-image: resource(&quot;Icons/Empty Document/description_dashed_48dp_FFFFFF_FILL0_wght400_GRAD0_opsz48&quot;);"/>
+                    </ui:VisualElement>
+                    <ui:GroupBox name="" class="spacing-reset ssm-save-slot-text-container">
+                        <ui:Label text="Save Slot 03" name="SaveSlotTitle" class="spacing-reset ssm-save-slot-title-text"/>
+                        <ui:Label text="Empty Slot" name="SaveSlotChapter" class="spacing-reset ssm-save-slot-description-text"/>
+                        <ui:Label text="No saved game data." name="SaveSlotDate" class="spacing-reset ssm-save-slot-description-text"/>
+                        <ui:Label text="Progress: 0%" name="SaveSlotProgress" class="spacing-reset ssm-save-slot-description-text" style="display: flex; visibility: hidden;"/>
+                    </ui:GroupBox>
+                </ui:Button>
+                <ui:Button text="" name="SaveSlotButton5" class="button-reset ssm-save-slot-button">
+                    <ui:VisualElement class="ssm-save-slot-elements-container">
+                        <ui:Image name="SaveSlotStateIcon" class="ssm-save-slot-icon" style="background-image: resource(&quot;Icons/Empty Document/description_dashed_48dp_FFFFFF_FILL0_wght400_GRAD0_opsz48&quot;);"/>
+                    </ui:VisualElement>
+                    <ui:GroupBox name="" class="spacing-reset ssm-save-slot-text-container">
+                        <ui:Label text="Save Slot 05" name="SaveSlotTitle" class="spacing-reset ssm-save-slot-title-text"/>
+                        <ui:Label text="Empty Slot" name="SaveSlotChapter" class="spacing-reset ssm-save-slot-description-text"/>
+                        <ui:Label text="No saved game data." name="SaveSlotDate" class="spacing-reset ssm-save-slot-description-text"/>
+                        <ui:Label text="Progress: 0%" name="SaveSlotProgress" class="spacing-reset ssm-save-slot-description-text" style="display: flex; visibility: hidden;"/>
+                    </ui:GroupBox>
+                </ui:Button>
+            </ui:GroupBox>
+            <ui:GroupBox class="spacing-reset ssm-save-slots-container">
+                <ui:Button text="" name="SaveSlotButton1" class="button-reset ssm-save-slot-button">
+                    <ui:VisualElement class="ssm-save-slot-elements-container">
+                        <ui:Image name="SaveSlotStateIcon" class="ssm-save-slot-icon" style="background-image: resource(&quot;Icons/Empty Document/description_dashed_48dp_FFFFFF_FILL0_wght400_GRAD0_opsz48&quot;);"/>
+                    </ui:VisualElement>
+                    <ui:GroupBox name="" class="spacing-reset ssm-save-slot-text-container">
+                        <ui:Label text="Save Slot 02" name="SaveSlotTitle" class="spacing-reset ssm-save-slot-title-text"/>
+                        <ui:Label text="Empty Slot" name="SaveSlotChapter" class="spacing-reset ssm-save-slot-description-text"/>
+                        <ui:Label text="No saved game data." name="SaveSlotDate" class="spacing-reset ssm-save-slot-description-text"/>
+                        <ui:Label text="Progress: 0%" name="SaveSlotProgress" class="spacing-reset ssm-save-slot-description-text" style="display: flex; visibility: hidden;"/>
+                    </ui:GroupBox>
+                </ui:Button>
+                <ui:Button text="" name="SaveSlotButton3" class="button-reset ssm-save-slot-button">
+                    <ui:VisualElement class="ssm-save-slot-elements-container">
+                        <ui:Image name="SaveSlotStateIcon" class="ssm-save-slot-icon" style="background-image: resource(&quot;Icons/Empty Document/description_dashed_48dp_FFFFFF_FILL0_wght400_GRAD0_opsz48&quot;);"/>
+                    </ui:VisualElement>
+                    <ui:GroupBox name="" class="spacing-reset ssm-save-slot-text-container">
+                        <ui:Label text="Save Slot 04" name="SaveSlotTitle" class="spacing-reset ssm-save-slot-title-text"/>
+                        <ui:Label text="Empty Slot" name="SaveSlotChapter" class="spacing-reset ssm-save-slot-description-text"/>
+                        <ui:Label text="No saved game data." name="SaveSlotDate" class="spacing-reset ssm-save-slot-description-text"/>
+                        <ui:Label text="Progress: 0%" name="SaveSlotProgress" class="spacing-reset ssm-save-slot-description-text" style="display: flex; visibility: hidden;"/>
+                    </ui:GroupBox>
+                </ui:Button>
+                <ui:Button text="" name="SaveSlotButton5" class="button-reset ssm-save-slot-button">
+                    <ui:VisualElement class="ssm-save-slot-elements-container">
+                        <ui:Image name="SaveSlotStateIcon" class="ssm-save-slot-icon" style="background-image: resource(&quot;Icons/Empty Document/description_dashed_48dp_FFFFFF_FILL0_wght400_GRAD0_opsz48&quot;);"/>
+                    </ui:VisualElement>
+                    <ui:GroupBox name="" class="spacing-reset ssm-save-slot-text-container">
+                        <ui:Label text="Save Slot 06" name="SaveSlotTitle" class="spacing-reset ssm-save-slot-title-text"/>
+                        <ui:Label text="Empty Slot" name="SaveSlotChapter" class="spacing-reset ssm-save-slot-description-text"/>
+                        <ui:Label text="No saved game data." name="SaveSlotDate" class="spacing-reset ssm-save-slot-description-text"/>
+                        <ui:Label text="Progress: 0%" name="SaveSlotProgress" class="spacing-reset ssm-save-slot-description-text" style="display: flex; visibility: hidden;"/>
+                    </ui:GroupBox>
+                </ui:Button>
+            </ui:GroupBox>
+        </ui:GroupBox>
+    </ui:VisualElement>
+</ui:UXML>

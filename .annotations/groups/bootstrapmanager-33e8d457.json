@@ -1,0 +1,24 @@
+{
+  "id": "33e8d457-f022-4234-aba4-c833d8d93867",
+  "title": "BootstrapManager",
+  "author": "@shearis",
+  "tags": [
+    {
+      "name": "CoreRuntimeManager",
+      "color": "#3FB950"
+    }
+  ],
+  "gitRef": "splash",
+  "status": "open",
+  "createdAt": 1789547524,
+  "updatedAt": 1789547545,
+  "annotations": [
+    {
+      "id": "5b50a894-70c7-4559-957f-9f90b4ad20bc",
+      "file": "Assets/_Project/Core/BootstrapManager.cs",
+      "range": null,
+      "content": "Persistent entry point for the IIS Core Runtime.\n\nResponsible for coordinating validation of the configured Core Runtime before normal application flow begins.",
+      "contentHash": ""
+    }
+  ]
+}

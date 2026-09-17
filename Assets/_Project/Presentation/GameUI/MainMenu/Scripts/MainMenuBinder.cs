@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Atlas.Presentation.GameUI.MainMenu
@@ -13,16 +14,80 @@ namespace Atlas.Presentation.GameUI.MainMenu
         public Button CreditsButton { get; }
         public Button ExitButton { get; }
 
-        // -------------------- UI BINDER --------------------
+        // -------------------- STATE --------------------
 
+        public bool IsValid { get; }
+
+        // -------------------- UI BINDER --------------------
         public MainMenuBinder(VisualElement root)
         {
+            if (root == null)
+            {
+                Debug.LogError(
+                    "[MainMenuBinder] Root VisualElement is null."
+                );
+
+                IsValid = false;
+                return;
+            }
+
             NewGameButton = root.Q<Button>("MM-NewGameButton");
-            ContinueButton = root.Q<Button>("MM-ContinueButton");
-            SettingsButton = root.Q<Button>("MM-SettingsButton");
-            AccessibilityButton = root.Q<Button>("MM-AccessibilityButton");
-            CreditsButton = root.Q<Button>("MM-CreditsButton");
-            ExitButton = root.Q<Button>("MM-ExitButton");
+            ContinueButton = root.Q<Button>("MM-LoadGameButton");
+            SettingsButton = root.Q<Button>("MM-GameSettingsButton");
+            AccessibilityButton = root.Q<Button>("MM-GameAccessibilityButton");
+            CreditsButton = root.Q<Button>("MM-GameCreditsButton");
+            ExitButton = root.Q<Button>("MM-ExitGameButton");
+
+            IsValid = VerifyBindings();
+        }
+
+        // -------------------- VERIFICATION --------------------
+        private bool VerifyBindings()
+        {
+            bool isValid = true;
+
+            if (NewGameButton == null)
+            {
+                Debug.LogError("[MainMenuBinder] Missing required element: 'MM-NewGameButton'.");
+                isValid = false;
+            }
+
+            if (ContinueButton == null)
+            {
+                Debug.LogError("[MainMenuBinder] Missing required element: 'MM-ContinueButton'.");
+                isValid = false;
+            }
+
+            if (SettingsButton == null)
+            {
+                Debug.LogError("[MainMenuBinder] Missing required element: 'MM-SettingsButton'.");
+                isValid = false;
+            }
+
+            if (AccessibilityButton == null)
+            {
+                Debug.LogError("[MainMenuBinder] Missing required element: 'MM-AccessibilityButton'.");
+                isValid = false;
+            }
+
+            if (CreditsButton == null)
+            {
+                Debug.LogError("[MainMenuBinder] Missing required element: 'MM-CreditsButton'.");
+                isValid = false;
+            }
+
+            if (ExitButton == null)
+            {
+                Debug.LogError("[MainMenuBinder] Missing required element: 'MM-ExitButton'.");
+                isValid = false;
+            }
+
+            if (isValid)
+            {
+                Debug.Log("[MainMenuBinder] All required UI bindings verified.");
+            }
+
+            return isValid;
         }
 
         // -------------------- ACTION BINDER --------------------
