@@ -75,7 +75,7 @@
     width: 100%;
     flex-direction: row;
     border-radius: var(--radius-2xl);
-    border-width: var(--border-medium);
+    border-width: var(--border-thick);
     border-color: var(--smm-focus-color);
     align-items: center;
     justify-content: flex-start;
@@ -106,7 +106,7 @@
 .ssm-save-slot-title-text {
     font-size: 36px;
     -unity-text-align: middle-left;
-    padding-bottom: var(--space-1);
+    padding-bottom: var(--space-2);
 }
 
 .ssm-save-slot-description-text {
