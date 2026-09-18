@@ -91,9 +91,17 @@
     background-color: var(--smm-focus-color);
 }
 
+ 
 .ssm-save-slot-icon {
     height: var(--space-9);
     width: var(--space-9);
+    background-image: resource("Icons/Empty Document/description_dashed_48dp_FFFFFF_FILL0_wght400_GRAD0_opsz48");
+}
+
+.ssm-save-slot-icon--occupied{
+    height: var(--space-9);
+    width: var(--space-9);
+    background-image: resource("Icons/Empty Document/description_dashed_48dp_FFFFFF_FILL0_wght400_GRAD0_opsz48");
 }
 
 .ssm-save-slot-text-container {

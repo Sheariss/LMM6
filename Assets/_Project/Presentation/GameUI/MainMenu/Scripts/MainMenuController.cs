@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Atlas.Core.Persistence;
 using Atlas.Core.GameState;
+using System;
+using Atlas.Presentation.GameUI.SaveSlotMenu;
 
 namespace Atlas.Presentation.GameUI.MainMenu
 {
@@ -16,6 +18,13 @@ namespace Atlas.Presentation.GameUI.MainMenu
         private SaveManager saveManager;
         // private ProgressionManager progressionManager;
         private GameStateManager gameStateManager;
+
+        // -------------------- MENU CONTROLLERS --------------------
+
+        [SerializeField]
+        private SaveSlotMenuController saveSlotMenuController;
+
+
 
         // -------------------- HELPERS --------------------
 
@@ -63,7 +72,6 @@ namespace Atlas.Presentation.GameUI.MainMenu
         }
 
         // -------------------- DEPENDENCIES --------------------
-
         private bool ResolveDependencies()
         {
             gameStateManager = GameStateManager.Instance;
@@ -100,6 +108,16 @@ namespace Atlas.Presentation.GameUI.MainMenu
                 valid = false;
             }*/
 
+            if (saveSlotMenuController == null)
+            {
+                Debug.LogError(
+                    "[MainMenuController] SaveSlotMenuController reference was not assigned."
+                );
+
+                valid = false;
+            }
+
+
             return valid;
         }
 
@@ -135,12 +153,14 @@ namespace Atlas.Presentation.GameUI.MainMenu
 
         private void OnNewGamePressed()
         {
-            // saveSlotMenuController.ShowForNewGame();
+            Debug.Log("[MainMenuController] OnNewGamePressed called.");
+            saveSlotMenuController.ShowForNewGame();
+
         }
 
         private void OnContinuePressed()
         {
-            // saveSlotMenuController.ShowExistingSaves();
+            saveSlotMenuController.ShowForContinue();
         }
 
         private void OnSettingsPressed()

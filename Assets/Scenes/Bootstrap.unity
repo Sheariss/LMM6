@@ -207,6 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 701f8d6398e79c04b869aea8f595996f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Core.BootstrapManager
+  developmentSettings: {fileID: 11400000, guid: ee5196de180236240b0479539d981cb1, type: 2}
   gameStateManager: {fileID: 1029865346}
   sceneLoadManager: {fileID: 1670966423}
   saveManager: {fileID: 2135876327}

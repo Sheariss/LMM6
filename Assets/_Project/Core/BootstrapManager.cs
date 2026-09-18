@@ -1,12 +1,18 @@
-using UnityEngine;
 using Atlas.Core.GameState;
 using Atlas.Core.Persistence;
 using Atlas.Core.SceneManagement;
+using Atlas.Development;
+using UnityEngine;
+using UnityEngine.AdaptivePerformance;
 
 namespace Atlas.Core
 {
     public sealed class BootstrapManager : MonoBehaviour
     {
+        [Header("Development")]
+        [SerializeField]
+        private DevelopmentSettings developmentSettings;
+
         // -------------------- CORE RUNTIME MANAGERS --------------------
         [SerializeField] private GameStateManager gameStateManager;
         [SerializeField] private SceneLoadManager sceneLoadManager;
@@ -73,7 +79,11 @@ namespace Atlas.Core
                 $"[{nameof(BootstrapManager)}] Core Runtime initialized successfully."
             );
 
-            gameStateManager.EnterSplash();
+            DevelopmentContext.Initialize(
+                developmentSettings
+            );
+
+            StartGameFlow();
         }
 
         // -------------------- RUNTIME VERIFICATION --------------------
@@ -120,6 +130,32 @@ namespace Atlas.Core
             return false;
         }
 
+        private void StartGameFlow()
+        {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+
+            if (DevelopmentContext.IsEnabled)
+            {
+                switch (DevelopmentContext.StartPoint)
+                {
+                    case DevelopmentStartPoint.MainMenu:
+                        gameStateManager.EnterMainMenu();
+                        return;
+
+                    case DevelopmentStartPoint.NewGame:
+                        gameStateManager.StartNewGame(1);
+                        return;
+
+                    case DevelopmentStartPoint.SOS:
+                        //StartDevelopmentSOS();
+                        return;
+                }
+            }
+
+#endif
+
+            gameStateManager.EnterSplash();
+        }
 
         private void OnDestroy()
         {

@@ -1,0 +1,196 @@
+:root {
+    --boot-screen-bg: rgb(0, 0, 0);
+    --boot-logo-size: 200px;
+    --boot-logo-leaf-size: 125px;
+    --boot-screen-text-color: rgb(255, 255, 255);
+    --boot-text-size: var(--text-2xl);
+    --boot-progress-bar-width: 600px;
+}
+
+.boot-screen {
+    background-color: var(--boot-screen-bg);
+    padding: var(--space-8);
+    align-items: center;
+    justify-content: center;
+}
+
+.boot-logo-area {
+    height: var(--boot-logo-size);
+    width: var(--boot-logo-size);
+}
+
+.boot-logo-placeholder {
+    height: var(--boot-logo-size);
+    width: var(--boot-logo-size);
+    align-self: center;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+
+.boot-title {
+    color: var(--boot-screen-text-color);
+    font-size: var(--boot-text-size);
+    margin-top: 15px;
+}
+
+
+/* =========================================================
+   LEAF CONTAINERS
+   ========================================================= */
+
+/*
+    Each leaf container:
+    - sits in its final logo position
+    - controls rotation
+    - does NOT perform the reveal itself
+*/
+
+.boot-logo__leaf {
+    width: 80px;
+    height: 140px;
+
+    position: absolute;
+
+    transform-origin: 50% 50%;
+}
+
+
+/* -------------------- TOP LEAF -------------------- */
+
+.boot-logo__leaf--top {
+    left: 70px;
+    top: 4px;
+
+    rotate: 0deg;
+}
+
+
+/* -------------------- BOTTOM LEFT LEAF -------------------- */
+
+.boot-logo__leaf--left {
+    left: 28px;
+    top: 78px;
+
+    rotate: -120deg;
+}
+
+
+/* -------------------- BOTTOM RIGHT LEAF -------------------- */
+
+.boot-logo__leaf--right {
+    left: 112px;
+    top: 78px;
+
+    rotate: 120deg;
+}
+
+
+/* =========================================================
+   LEAF REVEAL MASK
+   ========================================================= */
+
+/*
+    This is the actual animated element.
+
+    It starts at 0px tall and expands upward to the
+    full 140px height.
+
+    Because overflow is hidden, it reveals the image
+    instead of stretching it.
+*/
+
+.boot-logo__leaf-mask {
+    width: 80px;
+    height:  140px;
+
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    overflow: hidden;
+
+    transition-property: height;
+    transition-duration: 600ms;
+    transition-timing-function: ease-out;
+}
+
+
+/* =========================================================
+   LEAF IMAGE
+   ========================================================= */
+
+/*
+    The leaf itself always remains its full size.
+
+    It is anchored to the BOTTOM of its mask so that
+    increasing the mask height reveals the image
+    from bottom -> top rather than resizing the image.
+*/
+
+.boot-logo__leaf-image {
+    width: 80px;
+    height: 140px;
+
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    background-repeat: no-repeat;
+
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+
+/* =========================================================
+   REVEALED STATE
+   ========================================================= */
+
+/*
+    Add this class to LogoArea.
+
+    All three leaf masks receive the new height
+    simultaneously.
+*/
+
+.boot-logo--revealed .boot-logo__leaf-mask {
+    height: 140px;
+}
+
+
+
+.boot-logo-leaf {
+    height: var(--boot-logo-leaf-size);
+    width: var(--boot-logo-leaf-size);
+    position: absolute;
+}
+
+
+
+/* -------------------- PROGRESS BAR -------------------- */
+.boot-progress {
+    width: var(--boot-progress-bar-width);
+    height: 5px;
+
+    margin-top: 100px;
+
+    background-color: rgba(255, 255, 255, 0.18);
+
+    border-radius: 2.5px;
+
+    overflow: hidden;
+}
+
+.boot-progress__fill {
+    width: 0%;
+    height: 100%;
+
+    background-color: rgb(255, 255, 255);
+
+    border-radius: 2.5px;
+
+    transition-property: width;
+    transition-duration: 150ms;
+    transition-timing-function: ease-out;
+}

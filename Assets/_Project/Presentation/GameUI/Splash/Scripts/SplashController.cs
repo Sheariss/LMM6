@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Atlas.Core.GameState;
+using Atlas.Development;
 
 namespace Atlas.Presentation.GameUI.Splash
 {
@@ -197,9 +198,11 @@ namespace Atlas.Presentation.GameUI.Splash
 
             view.Show(splashType);
 
+            float effectiveDuration = DevelopmentContext.GetSplashDuration(duration);
+
             float elapsedTime = 0f;
 
-            while (elapsedTime < duration)
+            while (elapsedTime < effectiveDuration)
             {
                 if (isSkippable && skipRequested)
                 {

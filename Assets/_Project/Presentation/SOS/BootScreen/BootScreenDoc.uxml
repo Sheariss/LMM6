@@ -1,0 +1,30 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/BootScreen/BootScreenStyle.uss?fileID=7433441132597879392&amp;guid=716a6fd6f3f3b914389707bf7dd976f7&amp;type=3#BootScreenStyle"/>
+    <ui:VisualElement class="fullscreen boot-screen">
+        <ui:Image class="boot-logo-placeholder" style="background-image: resource(&quot;Logos/Logo&quot;);"/>
+        <ui:VisualElement name="BootLogoArea" class="boot-logo-area" style="display: none;">
+            <ui:VisualElement class="boot-logo__leaf boot-logo__leaf--top">
+                <ui:VisualElement class="boot-logo__leaf-mask">
+                    <ui:Image class="boot-logo__leaf-image"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="boot-logo__leaf boot-logo__leaf--left">
+                <ui:VisualElement class="boot-logo__leaf-mask">
+                    <ui:Image class="boot-logo__leaf-image"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="boot-logo__leaf boot-logo__leaf--right">
+                <ui:VisualElement class="boot-logo__leaf-mask">
+                    <ui:Image class="boot-logo__leaf-image"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Label text="Welcome" name="BootTitle" class="spacing-reset boot-title"/>
+        <ui:VisualElement name="BootProgressBar" class="boot-progress">
+            <ui:VisualElement name="BootProgressFillBar" class="boot-progress__fill"/>
+        </ui:VisualElement>
+        <ui:Label text="Label" name="BootPrompt" class="spacing-reset"/>
+    </ui:VisualElement>
+</ui:UXML>
