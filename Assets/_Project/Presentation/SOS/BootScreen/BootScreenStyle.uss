@@ -4,6 +4,7 @@
     --boot-logo-leaf-size: 125px;
     --boot-screen-text-color: rgb(255, 255, 255);
     --boot-text-size: var(--text-2xl);
+    --boot-desc-text-size: var(--text-lg);
     --boot-progress-bar-width: 600px;
 }
 
@@ -193,4 +194,10 @@
     transition-property: width;
     transition-duration: 150ms;
     transition-timing-function: ease-out;
+}
+
+.boot-description{
+    color: var(--boot-screen-text-color);
+    font-size: var(--boot-desc-text-size);
+    margin-top: 30px;
 }

@@ -14,8 +14,6 @@ namespace Atlas.Presentation.SOS.BootScreen
         public VisualElement FillProgress { get; }
         public Label BootDescription { get; }
 
-        // -------------------- STATE --------------------
-        public bool IsValid { get; }
 
         // -------------------- CONSTRUCTOR --------------------
         public BootScreenBinder(VisualElement root)
@@ -23,7 +21,6 @@ namespace Atlas.Presentation.SOS.BootScreen
             if (root == null)
             {
                 Debug.LogError("[BootScreenBinder] Root VisualElement is null.");
-                IsValid = false;
                 return;
             }
 
@@ -31,8 +28,8 @@ namespace Atlas.Presentation.SOS.BootScreen
 
             LogoPlaceholder = Bind<Image>(root, "BootLogoPlaceholder");
             BootTitle = Bind<Label>(root, "BootTitle");
-            FillProgress = Bind<VisualElement>(root, "BootProgressBarFill");
-            BootDescription = Bind<Label>(root, "Description");
+            FillProgress = Bind<VisualElement>(root, "BootProgressFillBar");
+            BootDescription = Bind<Label>(root, "BootDescription");
         }
     }
 }

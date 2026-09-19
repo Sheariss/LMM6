@@ -225,19 +225,19 @@ namespace Atlas.Core.GameState
             // TO DO: Active Scene stays loaded > LoadingPanelController populates, redraws, shows, updates and hides the panel.
         }
 
-        public void PauseGame() 
+        public void PauseGame()
         {
             TryTransitionTo(GameFlowState.Paused);
             // TO DO: PauseMenuController reacts to the state change or is invoked through the presentation system.
         }
 
-        public void ResumeGame() 
+        public void ResumeGame()
         {
             TryTransitionTo(GameFlowState.Playing);
             // TODO: SOS scene remains loaded. > PauseMenuController hides the panel.
         }
 
-        public void EndGame() 
+        public void EndGame()
         {
             TryTransitionTo(GameFlowState.GameOver);
             ResetGameplayMode();

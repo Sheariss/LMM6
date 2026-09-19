@@ -137,8 +137,7 @@
           "pattern": "^[^\\S\\n]*private bool IsTransitionAllowed\\( GameFlowState current, GameFlowState target\\)",
           "text": "private bool IsTransitionAllowed( GameFlowState current, GameFlowState target)",
           "original": "private bool IsTransitionAllowed(",
-          "createdAt": "2026-09-15T01:32:27.604Z",
-          "witnessed": true
+          "createdAt": "2026-09-15T01:32:27.604Z"
         },
         {
           "type": "tag",

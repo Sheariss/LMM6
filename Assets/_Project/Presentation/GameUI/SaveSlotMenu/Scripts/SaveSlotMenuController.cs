@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Atlas.Core.Persistence;
+using Atlas.Core.GameState;
 
 namespace Atlas.Presentation.GameUI.SaveSlotMenu
 {
@@ -16,7 +17,9 @@ namespace Atlas.Presentation.GameUI.SaveSlotMenu
         private UIDocument uiDoc;
 
         // -------------------- RUNTIME DEPENDENCIES --------------------
+        private GameStateManager gameStateManager;
         private SaveManager saveManager;
+
 
         // -------------------- HELPERS --------------------
         private SaveSlotMenuBinder binder;
@@ -60,6 +63,14 @@ namespace Atlas.Presentation.GameUI.SaveSlotMenu
         // -------------------- DEPENDENCIES --------------------
         private bool ResolveDependencies()
         {
+            gameStateManager = GameStateManager.Instance;
+
+            if (gameStateManager == null)
+            {
+                Debug.LogError("[SaveSlotMenuController] GameStateManager instance was not found.");
+                return false;
+            }
+
             saveManager = SaveManager.Instance;
 
             if (saveManager == null)
@@ -154,7 +165,7 @@ namespace Atlas.Presentation.GameUI.SaveSlotMenu
 
             Hide();
 
-            // TODO: Tell GameStateManager to enter the beginning of the investigation flow.
+            gameStateManager.StartNewGame(slotNumber);
         }
 
 
