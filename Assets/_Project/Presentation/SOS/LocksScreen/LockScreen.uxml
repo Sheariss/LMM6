@@ -1,0 +1,91 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/LocksScreen/LockScreen.uss?fileID=7433441132597879392&amp;guid=015b21c8793efba44b6cda1dade431ec&amp;type=3#LockScreen"/>
+    <ui:VisualElement name="LSR-BackgroundImage" class="fullscreen background-image" style="background-image: url(&quot;project://database/Assets/Placeholders/Wallpapers/admin-wallpaper.jpg?fileID=21300000&amp;guid=b15e08dbab5e70b4e96239cd93086a0b&amp;type=3#admin-wallpaper&quot;);">
+        <ui:VisualElement/>
+        <ui:VisualElement class="fullscreen background-image" style="background-color: rgba(0, 0, 0, 0.102);"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="LockScreenRoot" class="fullscreen background white-text">
+        <ui:GroupBox name="DateTimeGroup" class="spacing-reset date-time-group">
+            <ui:Label text="12:00" name="TimeLabel" class="spacing-reset time-label"/>
+            <ui:Label text="Sunday, May 24" name="DateLabel" class="spacing-reset date-label"/>
+        </ui:GroupBox>
+        <ui:GroupBox name="" class="spacing-reset widget-status-group">
+            <ui:GroupBox name="WidgetGroup" class="spacing-reset widget-group flex-row">
+                <ui:Button text="" name="WeatherWidgetBtn" class="widget-button flex-column button-reset">
+                    <ui:Label text="San Juan" name="WWBTitle" class="widget-title spacing-reset"/>
+                    <ui:GroupBox class="flex-row widget-content spacing-reset">
+                        <ui:GroupBox class="flex-row image-temp-group spacing-reset">
+                            <ui:Image name="WeatherIconImage" class="weather-icon" style="background-image: url(&quot;project://database/Assets/Placeholders/WeatherIcons/kisspng-weather-forecasting-computer-icons-android-cloudy-5ac06fdd76cd15.5208351915225609894866.png?fileID=21300000&amp;guid=9800d0ec7429c984eb40a4d85f19dfb9&amp;type=3#kisspng-weather-forecasting-computer-icons-android-cloudy-5ac06fdd76cd15.5208351915225609894866&quot;); background-position-x: left 0;"/>
+                            <ui:GroupBox name="WWBTemp" class="flex-row spacing-reset weather-temp-group">
+                                <ui:Label text="31" class="spacing-reset weather-temp"/>
+                                <ui:Label text="°F" name="" class="spacing-reset weather-temp-f"/>
+                            </ui:GroupBox>
+                        </ui:GroupBox>
+                        <ui:GroupBox name="WWBDesc" class="spacing-reset">
+                            <ui:Label text="Heavy rain" name="Description" class="spacing-reset weather-desc-text"/>
+                            <ui:Label text="34° / 24°" name="Temp" class="spacing-reset weather-desc-text"/>
+                        </ui:GroupBox>
+                    </ui:GroupBox>
+                    <ui:Label text="See full forecast" name="WWBHyperlink" class="spacing-reset widget-hyperlink" style="color: rgb(128, 190, 245);"/>
+                </ui:Button>
+                <ui:Button text="" name="MarketsWidgetBtn" class="widget-button flex-column button-reset">
+                    <ui:Label text="Markets" name="MWBTitle" class="widget-title spacing-reset"/>
+                    <ui:GroupBox class="widget-content spacing-reset flex-row">
+                        <ui:GroupBox class="spacing-reset stock-group">
+                            <ui:Label text="DOW" name="StockName" class="spacing-reset markets-text"/>
+                            <ui:Label text="+0.72%" name="StockPercentChange" class="spacing-reset pos-percent-text markets-text"/>
+                            <ui:Label text="51,032.46" name="StockPrice" class="spacing-reset markets-text"/>
+                        </ui:GroupBox>
+                        <ui:GroupBox class="spacing-reset stock-group">
+                            <ui:Label text="S&amp;P 500" name="StockName" class="spacing-reset markets-text"/>
+                            <ui:Label text="+0.22%" name="StockPercentChange" class="spacing-reset pos-percent-text markets-text"/>
+                            <ui:Label text="7,580.06" name="StockPrice" class="spacing-reset markets-text"/>
+                        </ui:GroupBox>
+                        <ui:GroupBox class="spacing-reset stock-group">
+                            <ui:Label text="NASDAQ" name="StockName" class="spacing-reset markets-text"/>
+                            <ui:Label text="+0.20%" name="StockPercentChange" class="spacing-reset pos-percent-text markets-text"/>
+                            <ui:Label text="26,972.62" name="StockPrice" class="spacing-reset markets-text"/>
+                        </ui:GroupBox>
+                    </ui:GroupBox>
+                    <ui:Label text="See more in markets" name="MWBHyperlink" class="spacing-reset widget-hyperlink"/>
+                </ui:Button>
+                <ui:Button text="" name="TrafficWidgetBtn" class="widget-button flex-column button-reset">
+                    <ui:Label text="Traffic near you" name="TWBTitle" class="widget-title spacing-reset"/>
+                    <ui:GroupBox class="spacing-reset widget-content flex-row traffic-content-group">
+                        <ui:Image class="traffic-map-image" style="background-image: url(&quot;project://database/Assets/Placeholders/Map/san-juan-map.PNG?fileID=21300000&amp;guid=d7d49e7350cbca24c8bc6355c1e1b936&amp;type=3#san-juan-map&quot;);"/>
+                        <ui:GroupBox class="spacing-reset traffic-content-text-group">
+                            <ui:Label text="San Juan" class="spacing-reset traffic-location-text"/>
+                            <ui:Label text="Moderate traffic" class="spacing-reset traffic-desc-text"/>
+                        </ui:GroupBox>
+                    </ui:GroupBox>
+                    <ui:Label text="See more traffic updates" name="TWBHyperlink" class="widget-hyperlink spacing-reset"/>
+                </ui:Button>
+                <ui:Button text="" name="NewsWidgetBtn" class="widget-button flex-column button-reset">
+                    <ui:Label text="Daily News" name="NWBTitle" class="widget-title spacing-reset"/>
+                    <ui:GroupBox class="spacing-reset widget-content news-content-group flex-row">
+                        <ui:Image name="Image" class="news-image" style="background-image: url(&quot;project://database/Assets/Placeholders/News/breaking-news-header.jpg?fileID=21300000&amp;guid=4620459dd2abc7e43a6d0bd94abf8bbc&amp;type=3#breaking-news-header&quot;);"/>
+                        <ui:GroupBox class="spacing-reset news-title-text-group">
+                            <ui:Label text="This is a major headline!" name="Label" class="spacing-reset news-title-text"/>
+                            <ui:Label text="Subtitle" style="display: none;"/>
+                        </ui:GroupBox>
+                    </ui:GroupBox>
+                    <ui:Label text="Learn more" name="NWBHyperlink" class="spacing-reset widget-hyperlink"/>
+                </ui:Button>
+            </ui:GroupBox>
+            <ui:GroupBox name="StatusBtnGroup" class="flex-row spacing-reset status-btn-group">
+                <ui:Button text="" class="button-reset status-btn" style="background-image: none;">
+                    <ui:VisualElement class="status-icons status-wifi" style="background-image: url(&quot;project://database/Assets/Icons/System/Network/Wifi-3-Bar/wifi_32dp.png?fileID=21300000&amp;guid=a10565c8ee393264c80084c06ca6afe6&amp;type=3#wifi_32dp&quot;);"/>
+                </ui:Button>
+                <ui:Button text="" class="button-reset status-btn">
+                    <ui:VisualElement class="status-icons" style="background-image: url(&quot;project://database/Assets/Icons/System/Accessibility/accessibility_new_32dp.png?fileID=21300000&amp;guid=459f6e37cfebdf049842ec9084ea7976&amp;type=3#accessibility_new_32dp&quot;);"/>
+                </ui:Button>
+                <ui:Button text="" class="button-reset status-btn">
+                    <ui:VisualElement name="" class="status-icons status-battery" style="background-image: url(&quot;project://database/Assets/Icons/System/Battery/Full-Battery/battery_android_frame_full_32dp.png?fileID=21300000&amp;guid=80d71c9850bd36b4c8d36fd9039576b3&amp;type=3#battery_android_frame_full_32dp&quot;);"/>
+                </ui:Button>
+            </ui:GroupBox>
+        </ui:GroupBox>
+    </ui:VisualElement>
+</ui:UXML>

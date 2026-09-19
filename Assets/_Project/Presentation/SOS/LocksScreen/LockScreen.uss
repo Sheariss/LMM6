@@ -1,0 +1,211 @@
+.background-image {
+    align-items: center;
+    position: absolute;
+}
+
+.background {
+    padding: 2%;
+    align-items: center;
+    align-self: center;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.widget-group {
+    height: 32.5%;
+    width: 100%;
+    align-items: center;
+    align-self: center;
+    justify-content: space-evenly;
+    align-content: center;
+    padding-left: 6%;
+    padding-right: 6%;
+}
+
+.widget-button {
+    height: 95%;
+    width: 25%;
+    padding: 1.5%;
+    border-radius: 8px;
+    align-items: flex-start;
+    margin-left: 2%;
+    margin-right: 2%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: space-evenly;
+}
+
+.widget-title {
+    -unity-font-style: bold;
+    font-size: 18px;
+    -unity-text-align: upper-left;
+}
+
+.widget-hyperlink {
+    color: rgb(129, 190, 246);
+    align-self: center;
+    -unity-text-align: lower-center;
+}
+
+.widget-content {
+    height: 80%;
+    width: 100%;
+    align-items: center;
+    align-self: center;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.image-temp-group {
+    height: 100%;
+    width: 60%;
+    align-items: center;
+    justify-content: flex-start;
+    align-content: center;
+}
+
+.weather-icon {
+    height: 80%;
+    width: 40%;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.weather-temp-group {
+    margin: 15px;
+}
+
+.weather-temp {
+    font-size: 60px;
+    -unity-font-style: bold;
+}
+
+.weather-temp-f {
+    -unity-text-align: upper-center;
+    margin-top: 10%;
+    font-size: 18px;
+}
+
+.weather-description-group {
+}
+
+.weather-desc-text {
+    -unity-text-align: middle-right;
+}
+
+.stock-group {
+    height: 85%;
+    justify-content: space-evenly;
+}
+
+.markets-text {
+    font-size: 18px;
+    -unity-font-style: bold;
+}
+
+.pos-percent-text {
+    color: var(--success-text-strong);
+}
+
+.neg-percent-text {
+    color: var(--error-text-strong);
+}
+
+.traffic-content-group {
+    justify-content: flex-start;
+}
+
+.traffic-content-text-group {
+    margin: 15px;
+}
+
+.traffic-map-image {
+    height: 80%;
+    width: 40%;
+    border-radius: 6px;
+    -unity-background-scale-mode: scale-and-crop;
+}
+
+.traffic-location-text {
+    -unity-font-style: bold;
+    -unity-text-align: middle-left;
+    font-size: 18px;
+}
+
+.traffic-desc-text {
+    font-size: 18px;
+    color: var(--error-text-strong);
+}
+
+.news-content-group {
+    justify-content: flex-start;
+}
+
+.news-title-text-group {
+    margin-left: 15px;
+    width: 60%;
+}
+
+.news-image {
+    height: 80%;
+    width: 40%;
+    border-radius: 6px;
+    -unity-background-scale-mode: scale-and-crop;
+}
+
+.news-title-text {
+    -unity-font-style: bold;
+    -unity-text-align: middle-left;
+    font-size: 18px;
+    white-space: normal;
+}
+
+.status-btn-group {
+    height: 9.5%;
+    width: 100%;
+    align-items: flex-end;
+    justify-content: flex-end;
+    align-self: center;
+    align-content: flex-end;
+}
+
+.status-btn {
+    height: 100%;
+    width: 3%;
+    margin-left: 1%;
+    margin-right: 1%;
+    padding: .5%;
+}
+
+.status-icons {
+    height: 100%;
+    width: 100%;
+}
+
+.status-battery {
+}
+
+.status-wifi {
+}
+
+.date-time-group {
+    align-items: center;
+    align-self: center;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.date-label {
+    font-size: 30px;
+    -unity-font-style: bold;
+}
+
+.time-label {
+    font-size: 125px;
+    -unity-font-style: bold;
+}
+
+.widget-status-group {
+    height: 60%;
+    width: 100%;
+    align-content: flex-end;
+    justify-content: flex-end;
+}
