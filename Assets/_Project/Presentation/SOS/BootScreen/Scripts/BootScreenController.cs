@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Atlas.Core.SceneManagement;
+using Atlas.Core.GameState;
 
 namespace Atlas.Presentation.SOS.BootScreen
 {
@@ -95,6 +97,11 @@ namespace Atlas.Presentation.SOS.BootScreen
              * 6. Refresh desktop
              * 7. Initialize SOS session
              */
+
+            Coroutine sosLoadOperation =
+                SceneLoadManager.Instance.PreloadScene(
+                    GameScene.SOS
+                );
 
             float stageDuration = minimumBootDuration / 5f;
 
@@ -237,23 +244,9 @@ namespace Atlas.Presentation.SOS.BootScreen
         // -------------------- COMPLETE --------------------
         private void CompleteBoot()
         {
-            Debug.Log(
-                "[BootScreenController] Boot sequence completed."
-            );
+            Debug.Log("[BootScreenController] Boot sequence completed.");
 
-            /*
-             * TODO:
-             *
-             * Tell SOSManager that boot is complete.
-             *
-             * Example:
-             *
-             * sosManager.CompleteBoot();
-             *
-             * or:
-             *
-             * sosManager.ShowLockScreen();
-             */
+            GameStateManager.Instance.EnterPlaying();
         }
     }
 }

@@ -1,0 +1,16 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/SecurityScreen/WindowsSecurity.uss?fileID=7433441132597879392&amp;guid=2ff2faa448416bd498f890eb1bc13bbc&amp;type=3#WindowsSecurity"/>
+    <ui:VisualElement name="SecurityScreenRoot" class="fullscreen spacing-reset white-text ws-background">
+        <ui:GroupBox class="spacing-reset ws-options-group">
+            <ui:Button text="Lock" name="WS-LockButton" class="spacing-reset button-reset ws-options-text-btn"/>
+            <ui:Button text="Switch user" name="WS-SwitchUserButton" class="spacing-reset button-reset ws-options-text-btn"/>
+            <ui:Button text="Sign out" name="WS-SignOutButton" class="spacing-reset button-reset ws-options-text-btn"/>
+            <ui:Button text="Change password" name="WS-ChangePasswordButton" class="spacing-reset button-reset ws-options-text-btn" style="display: none;"/>
+            <ui:Button text="Task manager" name="WS-TaskManagerButton" class="spacing-reset button-reset ws-options-text-btn"/>
+            <ui:VisualElement class="spacer"/>
+            <ui:Button text="Cancel" name="WS-CancelButton" class="spacing-reset button-reset ws-cancel-btn"/>
+        </ui:GroupBox>
+    </ui:VisualElement>
+</ui:UXML>

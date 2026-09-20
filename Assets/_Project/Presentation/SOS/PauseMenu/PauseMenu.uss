@@ -1,0 +1,37 @@
+:root{
+    --pause-menu-bg: var(--gray-950);
+}
+
+.ws-background {
+    background-color: var(--pause-menu-bg);
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+
+.ws-options-group {
+    height: 650px;
+    width: 280px;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.ws-options-text-btn {
+    height: 50px;
+    width: 280px;
+    font-size: 32px;
+    -unity-text-align: middle-left;
+}
+
+.spacer {
+    height: 2px;
+}
+
+.ws-cancel-btn {
+    height: 60px;
+    width: 280px;
+    font-size: 32px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    align-self: center;
+}

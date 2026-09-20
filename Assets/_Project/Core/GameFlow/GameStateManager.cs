@@ -207,8 +207,6 @@ namespace Atlas.Core.GameState
         public void StartNewGame(int slot)
         {
             EnterLoading();
-            // TODO: Call the SaveManager.StartNewSaveFile or something
-            EnterPlaying();
         }
 
         public void LoadGame(int slotId)
