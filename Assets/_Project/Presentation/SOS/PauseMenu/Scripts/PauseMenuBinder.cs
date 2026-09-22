@@ -15,6 +15,7 @@ namespace Atlas.Presentation.GameUI.PauseMenu
         public Button AccessibilityButton { get; }
         public Button HelpButton { get; }
         public Button MainMenuButton { get; }
+        public Button ExitGameButton { get; }
 
         public PauseMenuBinder(VisualElement root)
         {
@@ -32,7 +33,8 @@ namespace Atlas.Presentation.GameUI.PauseMenu
             SettingsButton = Bind<Button>(root, "PM-SettingsButton");
             AccessibilityButton = Bind<Button>(root, "PM-AccessibilityButton");
             HelpButton = Bind<Button>(root, "PM-HelpButton");
-            MainMenuButton = Bind<Button>(root, "PM-ResumeButton");
+            MainMenuButton = Bind<Button>(root, "PM-MainMenuButton");
+            ExitGameButton = Bind<Button>(root, "PM-ExitGameButton");
         }
     }
 }

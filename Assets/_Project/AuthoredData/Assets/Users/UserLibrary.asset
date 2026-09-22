@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 911726dd42bdf5f4e943f5bf1c1bda8c, type: 3}
+  m_Name: UserLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::Atlas.AuthoredData.Users.UserLibrarySO
+  users:
+  - userId: user1
+    displayName: Admin
+    profileImage: {fileID: 1881957229145821672, guid: 15c1734fc5e06f44f83917ee13fa1168, type: 3}
+    wallpaper: {fileID: 2291255577522125532, guid: fa6591e4fea68724295c121910327ccc, type: 3}
+    initiallyHidden: 0
+  - userId: user2
+    displayName: Guest
+    profileImage: {fileID: 3713408546367866918, guid: 6af99c888ef37f34da1052b090049bb3, type: 3}
+    wallpaper: {fileID: -5461434214798450734, guid: 71c02421752da1741a5cbab179c07a5c, type: 3}
+    initiallyHidden: 0

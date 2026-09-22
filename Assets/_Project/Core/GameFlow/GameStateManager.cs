@@ -108,6 +108,7 @@ namespace Atlas.Core.GameState
                     target == GameFlowState.MainMenu,
 
                 GameFlowState.Playing =>
+                    target == GameFlowState.Playing ||
                     target == GameFlowState.Paused ||
                     target == GameFlowState.Loading ||
                     target == GameFlowState.GameOver ||

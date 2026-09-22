@@ -44,6 +44,8 @@ namespace Atlas.Presentation.GameUI.PauseMenu
                 return;
             }
 
+            RegisterCallbacks();
+
             // TODO: Add ActionBinding and Callbacks
             Hide();
         }
@@ -66,13 +68,98 @@ namespace Atlas.Presentation.GameUI.PauseMenu
 
             if (gameStateManager == null)
             {
-                Debug.LogError("[SaveSlotMenuController] GameStateManager instance was not found.");
+                Debug.LogError("[PauseMenuController] GameStateManager instance was not found.");
                 return false;
             }
             return true;
         }
 
-        //
+        // -------------------- CALLBACKS --------------------
+        private void RegisterCallbacks()
+        {
+            binder.ResumeButton.clicked += OnResumePressed;
+            binder.SaveButton.clicked += OnSavePressed;
+            binder.LoadButton.clicked += OnLoadPressed;
+            binder.SettingsButton.clicked += OnSettingsPressed;
+            binder.AccessibilityButton.clicked += OnAccessibilityPressed;
+            binder.HelpButton.clicked += OnHelpPressed;
+            binder.MainMenuButton.clicked += OnMainMenuPressed;
+        }
+
+        private void UnregisterCallbacks()
+        {
+            if (binder == null)
+                return;
+
+            binder.ResumeButton.clicked -= OnResumePressed;
+            binder.SaveButton.clicked -= OnSavePressed;
+            binder.LoadButton.clicked -= OnLoadPressed;
+            binder.SettingsButton.clicked -= OnSettingsPressed;
+            binder.AccessibilityButton.clicked -= OnAccessibilityPressed;
+            binder.HelpButton.clicked -= OnHelpPressed;
+            binder.MainMenuButton.clicked -= OnMainMenuPressed;
+        }
+
+
+        private void OnDestroy()
+        {
+            UnregisterCallbacks();
+        }
+
+        // -------------------- BUTTON EVENTS --------------------
+        private void OnResumePressed()
+        {
+            Debug.Log("[PauseMenuController] Resume pressed.");
+
+            Hide();
+
+            gameStateManager.ResumeGame();
+        }
+
+        private void OnSavePressed()
+        {
+            Debug.Log("[PauseMenuController] Save pressed.");
+
+            // TODO: Call the SaveManager to actually save the game
+        }
+
+        private void OnLoadPressed()
+        {
+            Debug.Log("[PauseMenuController] Load pressed.");
+
+            gameStateManager.EnterMainMenu();
+            // TODO: SkipMainMenu to jsut show save slots.
+        }
+
+        private void OnSettingsPressed()
+        {
+            Debug.Log("[PauseMenuController] Settings pressed.");
+
+            // TODO: Show settings via MainMenu Controller or SettingsController
+        }
+
+        private void OnAccessibilityPressed()
+        {
+            Debug.Log("[PauseMenuController] Accessibility pressed.");
+
+            // TODO: Show Accessibility settings
+        }
+
+        private void OnHelpPressed()
+        {
+            Debug.Log("[PauseMenuController] Help pressed.");
+
+            // TODO: Help/Accessibility panel shown
+        }
+
+        private void OnMainMenuPressed()
+        {
+            Debug.Log("[PauseMenuController] Main Menu pressed.");
+
+            gameStateManager.EnterMainMenu();
+        }
+
+        // -------------------- PANEL VISIBILITY --------------------
         private void TogglePauseMenu()
         {
             if (isPaused)
@@ -102,6 +189,7 @@ namespace Atlas.Presentation.GameUI.PauseMenu
 
             Time.timeScale = 1f;
         }
+
 
     }
 }
