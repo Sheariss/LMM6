@@ -10,6 +10,7 @@ namespace Atlas.Presentation.SOS.LockScreen
         public VisualElement Root { get; }
 
         public VisualElement LockBackgroundImage { get; }
+        public VisualElement Content { get; }
 
         public Label TimeLabel { get; }
         public Label DateLabel { get; }
@@ -62,13 +63,16 @@ namespace Atlas.Presentation.SOS.LockScreen
 
 
             Root = Bind<VisualElement>(root, "LockScreenRoot");
+
             LockBackgroundImage = Bind<VisualElement>(root, "LSR-BackgroundImage");
 
-            TimeLabel = Bind<Label>(root, "TimeLabel");
-            DateLabel = Bind<Label>(root, "DateLabel");
+            Content = Bind<VisualElement>(root, "LockScreenContent");
+
+            TimeLabel = Bind<Label>(Content, "TimeLabel");
+            DateLabel = Bind<Label>(Content, "DateLabel");
 
             // Weather widget
-            WeatherWidgetBtn = Bind<Button>(root, "WeatherWidgetBtn");
+            WeatherWidgetBtn = Bind<Button>(Content, "WeatherWidgetBtn");
 
             WeatherIconImage = Bind<Image>(WeatherWidgetBtn, "WeatherIconImage");
             WeatherTempLabel = Bind<Label>(WeatherWidgetBtn, "WeatherTempLabel");
@@ -76,7 +80,7 @@ namespace Atlas.Presentation.SOS.LockScreen
             DescTempLabel = Bind<Label>(WeatherWidgetBtn, "DescTempLabel");
 
             // Market Widget
-            MarketsWidgetBtn = Bind<Button>(root, "MarketsWidgetBtn");
+            MarketsWidgetBtn = Bind<Button>(Content, "MarketsWidgetBtn");
             Stock1Group = Bind<GroupBox>(MarketsWidgetBtn, "Stock1Group");
             Stock1Name = Bind<Label>(Stock1Group, "StockName");
             Stock1PercentageChange = Bind<Label>(Stock1Group, "StockPercentChange");
@@ -93,20 +97,20 @@ namespace Atlas.Presentation.SOS.LockScreen
             Stock3Price = Bind<Label>(Stock3Group, "StockPrice");
 
             // Traffic Widget
-            TrafficWidgetBtn = Bind<Button>(root, "TrafficWidgetBtn");
+            TrafficWidgetBtn = Bind<Button>(Content, "TrafficWidgetBtn");
             TrafficMap = Bind<Image>(TrafficWidgetBtn, "TrafficMap");
             TrafficDescription = Bind<Label>(TrafficWidgetBtn, "TrafficDescription");
 
             // News widget
-            NewsWidgetBtn = Bind<Button>(root, "NewsWidgetBtn");
+            NewsWidgetBtn = Bind<Button>(Content, "NewsWidgetBtn");
             NewsImage = Bind<Image>(NewsWidgetBtn, "NewsImage");
             NewsHeadline = Bind<Label>(NewsWidgetBtn, "NewsHeadline");
             NewsSubtitle = Bind<Label>(NewsWidgetBtn, "NewsSubtitle");
 
             // Status buttons
-            LockWifiButton = Bind<Button>(root, "LockWifiButton");
-            LockAccessibilityButton = Bind<Button>(root, "LockAccessibilityButton");
-            LockBatteryButton = Bind<Button>(root, "LockBatteryButton");
+            LockWifiButton = Bind<Button>(Content, "LockWifiButton");
+            LockAccessibilityButton = Bind<Button>(Content, "LockAccessibilityButton");
+            LockBatteryButton = Bind<Button>(Content, "LockBatteryButton");
 
         }
     }

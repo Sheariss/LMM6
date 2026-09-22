@@ -143,7 +143,7 @@ namespace Atlas.Presentation.SOS.LoginScreen
 
 
         // -------------------- LOGIN ACTIONS --------------------
-
+        // TODO: Guest sign in vs admin sign in, how to hgandle password vs jsut regular sign in button
         private void OnSignInPressed()
         {
             if (selectedUser == null)
@@ -152,6 +152,8 @@ namespace Atlas.Presentation.SOS.LoginScreen
             }
 
             Debug.Log($"[LoginScreenController] Sign in requested for '{selectedUser.UserId}'.");
+
+            Hide();
 
             // Authentication/session logic goes here later.
         }
@@ -171,6 +173,18 @@ namespace Atlas.Presentation.SOS.LoginScreen
         private void OnPowerPressed()
         {
             Debug.Log("[LoginScreenController] Power pressed.");
+        }
+
+        // -------------------- PANEL VISIBILITY --------------------
+        private void Show()
+        {
+            binder.Root.style.display = DisplayStyle.Flex;
+        }
+
+        private void Hide()
+        {
+            Debug.Log("[LoginScreenController] Hide requested.");
+            binder.Root.style.display = DisplayStyle.None;
         }
     }
 }

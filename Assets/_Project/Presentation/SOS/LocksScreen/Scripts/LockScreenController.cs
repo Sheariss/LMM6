@@ -1,3 +1,4 @@
+using Atlas.Core.GameState;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -86,12 +87,21 @@ namespace Atlas.Presentation.SOS.LockScreen
 
         private void OpenSignIn()
         {
-            Debug.Log(
-                "[LockScreenController] Sign-in requested."
-            );
+            Debug.Log("[LockScreenController] Sign-in requested.");
+            Hide();
 
             // TODO: Sign-in transition later.
+        }
 
+        // -------------------- PANEL VISIBILITY --------------------
+        private void Show()
+        {
+            binder.Root.style.display = DisplayStyle.Flex;
+        }
+
+        private void Hide()
+        {
+            binder.Root.style.display = DisplayStyle.None;
         }
     }
 }

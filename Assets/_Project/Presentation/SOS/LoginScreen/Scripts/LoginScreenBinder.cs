@@ -10,7 +10,10 @@ namespace Atlas.Presentation.SOS.LoginScreen
         // -------------------- UI ELEMENTS --------------------
         public VisualElement Root { get; }
 
+
+
         public Image SelectedUserWallpaper { get; }
+        public VisualElement Content {  get; }
 
 
         public GroupBox UserListGroup { get; }
@@ -53,11 +56,13 @@ namespace Atlas.Presentation.SOS.LoginScreen
                 return;
             }
 
-            SelectedUserWallpaper = Bind<Image>(root, "UserWallpaper");
-
             Root = Bind<VisualElement>(root, "LoginScreenRoot");
 
-            UserListGroup = Bind<GroupBox>(Root, "UserListGroup");
+            SelectedUserWallpaper = Bind<Image>(root, "UserWallpaper");
+
+            Content = Bind<VisualElement>(root, "LoginScreenContent");
+
+            UserListGroup = Bind<GroupBox>(Content, "UserListGroup");
 
             SelectedUserButton = Bind<Button>(UserListGroup, "ULB-SelectedUser");
             SelectedProfilePic = Bind<Image>(SelectedUserButton, "ProfilePic");
@@ -71,19 +76,19 @@ namespace Atlas.Presentation.SOS.LoginScreen
             ProfilePic2 = Bind<Image>(User2Button, "ProfilePic");
             UserName2 = Bind<Label>(User2Button, "Username");
 
-            LoginUserImage = Bind<Image>(Root, "LoginUserImage");
-            LoginUserName = Bind<Label>(Root, " LoginUserName");
+            LoginUserImage = Bind<Image>(Content, "LoginUserImage");
+            LoginUserName = Bind<Label>(Content, " LoginUserName");
 
-            LoginMethod = Bind<GroupBox>(Root, "LoginMethod");
+            LoginMethod = Bind<GroupBox>(Content, "LoginMethod");
 
-            PasswordGroup = Bind<GroupBox>(Root, " PasswordGroup");
-            Password = Bind<TextField>(Root, "PasswordInputField");
-            ForgotPasswordButton = Bind<Button>(Root, "ForgotPasswordButton");
+            PasswordGroup = Bind<GroupBox>(Content, " PasswordGroup");
+            Password = Bind<TextField>(Content, "PasswordInputField");
+            ForgotPasswordButton = Bind<Button>(Content, "ForgotPasswordButton");
 
-            SignInButton = Bind<Button>(Root, "SignInButton");
+            SignInButton = Bind<Button>(Content, "SignInButton");
 
-            AccessibilityButton = Bind<Button>(Root, "AccessibilityButton");
-            PowerButton = Bind<Button>(Root, "PowerButton");
+            AccessibilityButton = Bind<Button>(Content, "AccessibilityButton");
+            PowerButton = Bind<Button>(Content, "PowerButton");
         }
 
         public void BindActions(

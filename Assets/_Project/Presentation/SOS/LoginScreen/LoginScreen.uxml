@@ -2,45 +2,47 @@
     <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3"/>
     <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3"/>
     <Style src="project://database/Assets/_Project/Presentation/SOS/LoginScreen/LoginScreen.uss?fileID=7433441132597879392&amp;guid=4a260c69a4cc64747859f07289f24c5a&amp;type=3#LoginScreen"/>
-    <ui:Image name="UserWallpaper" class="fullscreen background-image" style="background-image: resource(&quot;Wallpapers/admin-wallpaper&quot;);">
-        <ui:VisualElement class="fullscreen" style="background-color: rgba(0, 0, 0, 0.525);"/>
-    </ui:Image>
-    <ui:VisualElement name="LoginScreenRoot" class="fullscreen flex-row spacing-reset login-root white-text">
-        <ui:GroupBox name="UserListGroup" class="spacing-reset user-list">
-            <ui:Button text="" name="ULB-SelectedUser" class="user-list-btn button-reset spacing-reset flex-row">
-                <ui:Image name="ProfilePic" class="user-list-image" style="background-image: resource(&quot;UserProfilePictures/admin-pfp&quot;);"/>
-                <ui:Label text="Admin" name="Username" class="user-list-text"/>
-            </ui:Button>
-            <ui:Button text="" name="ULB-User1" class="user-list-btn button-reset spacing-reset flex-row">
-                <ui:Image name="ProfilePic" class="user-list-image" style="background-image: resource(&quot;UserProfilePictures/guest-pfp&quot;);"/>
-                <ui:Label text="Guest" name="Username" class="user-list-text"/>
-            </ui:Button>
-            <ui:Button text="" name="ULB-User2" class="user-list-btn button-reset spacing-reset flex-row" style="display: none;">
-                <ui:Image name="ProfilePic" class="user-list-image" style="background-image: resource(&quot;Logos/Logo&quot;);"/>
-                <ui:Label text="Secret" name="Username" class="user-list-text"/>
-            </ui:Button>
-        </ui:GroupBox>
-        <ui:GroupBox class="spacing-reset login-area">
-            <ui:Image name="LoginUserImage" class="login-user-image" style="background-image: resource(&quot;UserProfilePictures/admin-pfp&quot;);"/>
-            <ui:Label text="Admin" name="LoginUserName" class="spacing-reset login-area-text"/>
-            <ui:GroupBox name="LoginMethod" class="spacing-reset">
-                <ui:GroupBox name="PasswordGroup" class="spacing-reset" style="display: flex;">
-                    <ui:TextField label="" placeholder-text="Password" readonly="true" hide-placeholder-on-focus="false" password="true" name="PasswordInputField" class="password-field" style="-unity-background-image-tint-color: rgb(255, 255, 255); color: rgb(255, 255, 255);"/>
-                    <ui:Button text="Forgot password" name="ForgotPasswordButton" class="button-reset spacing-reset user-list-text forgotpassword-btn"/>
-                </ui:GroupBox>
-                <ui:Button text="Sign In" emoji-fallback-support="false" name="SignInButton" class="button-reset" style="display: none;"/>
+    <ui:VisualElement name="LoginScreenRoot" class="fullscreen">
+        <ui:Image name="UserWallpaper" class="fullscreen background-image" style="background-image: resource(&quot;Wallpapers/admin-wallpaper&quot;);">
+            <ui:VisualElement class="fullscreen" style="background-color: rgba(0, 0, 0, 0.525);"/>
+        </ui:Image>
+        <ui:VisualElement name="LoginScreenContent" class="fullscreen flex-row spacing-reset login-root white-text">
+            <ui:GroupBox name="UserListGroup" class="spacing-reset user-list">
+                <ui:Button text="" name="ULB-SelectedUser" class="user-list-btn button-reset spacing-reset flex-row">
+                    <ui:Image name="ProfilePic" class="user-list-image" style="background-image: resource(&quot;UserProfilePictures/admin-pfp&quot;);"/>
+                    <ui:Label text="Admin" name="Username" class="user-list-text"/>
+                </ui:Button>
+                <ui:Button text="" name="ULB-User1" class="user-list-btn button-reset spacing-reset flex-row">
+                    <ui:Image name="ProfilePic" class="user-list-image" style="background-image: resource(&quot;UserProfilePictures/guest-pfp&quot;);"/>
+                    <ui:Label text="Guest" name="Username" class="user-list-text"/>
+                </ui:Button>
+                <ui:Button text="" name="ULB-User2" class="user-list-btn button-reset spacing-reset flex-row" style="display: none;">
+                    <ui:Image name="ProfilePic" class="user-list-image" style="background-image: resource(&quot;Logos/Logo&quot;);"/>
+                    <ui:Label text="Secret" name="Username" class="user-list-text"/>
+                </ui:Button>
             </ui:GroupBox>
-        </ui:GroupBox>
-        <ui:GroupBox name="IconListGroup" class="spacing-reset icon-list flex-row">
-            <ui:Button text="" class="button-reset spacing-reset icon-button">
-                <ui:Image class="icon-image"/>
-            </ui:Button>
-            <ui:Button text="" name="AccessibilityButton" class="button-reset spacing-reset icon-button">
-                <ui:Image class="icon-image" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/System/Accessibility/accessibility_new_32dp.png?fileID=21300000&amp;guid=459f6e37cfebdf049842ec9084ea7976&amp;type=3#accessibility_new_32dp&quot;);"/>
-            </ui:Button>
-            <ui:Button text="" enable-rich-text="false" name="PowerButton" class="button-reset spacing-reset icon-button">
-                <ui:Image class="icon-image" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/System/Power/Shutdown/power_settings_new_32dp.png?fileID=21300000&amp;guid=48de41b67a162404fabbd3dbfb6c7bc6&amp;type=3#power_settings_new_32dp&quot;);"/>
-            </ui:Button>
-        </ui:GroupBox>
+            <ui:GroupBox class="spacing-reset login-area">
+                <ui:Image name="LoginUserImage" class="login-user-image" style="background-image: resource(&quot;UserProfilePictures/admin-pfp&quot;);"/>
+                <ui:Label text="Admin" name="LoginUserName" class="spacing-reset login-area-text"/>
+                <ui:GroupBox name="LoginMethod" class="spacing-reset">
+                    <ui:GroupBox name="PasswordGroup" class="spacing-reset" style="display: flex;">
+                        <ui:TextField label="" placeholder-text="Password" readonly="true" hide-placeholder-on-focus="false" password="true" name="PasswordInputField" class="password-field" style="-unity-background-image-tint-color: rgb(255, 255, 255); color: rgb(255, 255, 255);"/>
+                        <ui:Button text="Forgot password" name="ForgotPasswordButton" class="button-reset spacing-reset user-list-text forgotpassword-btn"/>
+                    </ui:GroupBox>
+                    <ui:Button text="Sign In" emoji-fallback-support="false" name="SignInButton" class="button-reset" style="display: none;"/>
+                </ui:GroupBox>
+            </ui:GroupBox>
+            <ui:GroupBox name="IconListGroup" class="spacing-reset icon-list flex-row">
+                <ui:Button text="" class="button-reset spacing-reset icon-button">
+                    <ui:Image class="icon-image"/>
+                </ui:Button>
+                <ui:Button text="" name="AccessibilityButton" class="button-reset spacing-reset icon-button">
+                    <ui:Image class="icon-image" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/System/Accessibility/accessibility_new_32dp.png?fileID=21300000&amp;guid=459f6e37cfebdf049842ec9084ea7976&amp;type=3#accessibility_new_32dp&quot;);"/>
+                </ui:Button>
+                <ui:Button text="" enable-rich-text="false" name="PowerButton" class="button-reset spacing-reset icon-button">
+                    <ui:Image class="icon-image" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/System/Power/Shutdown/power_settings_new_32dp.png?fileID=21300000&amp;guid=48de41b67a162404fabbd3dbfb6c7bc6&amp;type=3#power_settings_new_32dp&quot;);"/>
+                </ui:Button>
+            </ui:GroupBox>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
