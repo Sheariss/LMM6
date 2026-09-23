@@ -1,0 +1,14 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Desktop/Desktop.uss?fileID=7433441132597879392&amp;guid=43b9bcfe73e62c64b8f753a3d4815e14&amp;type=3#Desktop"/>
+    <ui:VisualElement name="DesktopRoot" class="fullscreen">
+        <ui:Image name="DesktopWallpaper" class="background-image" style="background-image: resource(&quot;Wallpapers/guest-wallpaper&quot;);"/>
+        <ui:VisualElement name="DesktopTaskbar" class="taskbar flex-row">
+            <ui:GroupBox name="WidgetGroup"/>
+            <ui:GroupBox name="AppGroup"/>
+            <ui:GroupBox name="StatusGroup"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

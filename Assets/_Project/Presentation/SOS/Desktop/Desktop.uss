@@ -1,0 +1,12 @@
+.background-image {
+    height:100%;
+    width: 100%;
+}
+
+.taskbar {
+    height: 52px;
+    width: 100%;
+    background-color: var(--desktop-taskbar-bg);
+    border-color: var(--desktop-taskbar-border);
+    border-top-width: 1px;
+}

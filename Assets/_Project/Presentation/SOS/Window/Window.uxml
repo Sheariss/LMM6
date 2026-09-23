@@ -1,0 +1,26 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Global/Global-Colors.uss?fileID=7433441132597879392&amp;guid=90297b69b426779468cf33e1cbd20f53&amp;type=3#Global-Colors"/>
+    <Style src="project://database/Assets/UI/Global/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=6faf066b8f6df4e4cb58c66b1ce874ae&amp;type=3#Global-Tokens"/>
+    <Style src="project://database/Assets/UI/Prefabs/Window/Window.uss?fileID=7433441132597879392&amp;guid=c1a899e7f35f2c94e818e460ac29fe02&amp;type=3#Window"/>
+    <Style src="project://database/Assets/UI/ATLAS/ATLAS.uss?fileID=7433441132597879392&amp;guid=e59bc457ecbf80a47a03ca4019225af6&amp;type=3#ATLAS"/>
+    <ui:VisualElement name="WindowRoot" class="window">
+        <ui:VisualElement name="WindowHeader" class="flex-row header" style="opacity: 1;">
+            <ui:VisualElement name="WindowIcon" class="header-icon"/>
+            <ui:Label text="" name="WindowTitle" class="spacing-reset header-title"/>
+            <ui:GroupBox name="WindowControls" class="flex-row spacing-reset window-controls">
+                <ui:Button text="" name="MinimizeBtn" class="button-reset wc-button">
+                    <ui:Image name="MinimizeIcon" class="wc-btn-icon minimize-icon" style="background-image: url(&quot;project://database/Assets/Icons/UI/Minimize/remove_32dp_.png?fileID=21300000&amp;guid=8ba13ee49df28774c813618f06427c37&amp;type=3#remove_32dp_&quot;);"/>
+                </ui:Button>
+                <ui:Button text="" name="MaximizeBtn" class="button-reset wc-button">
+                    <ui:Image name="FullscreenIcon" class="wc-btn-icon window-maximize-icon" style="background-image: url(&quot;project://database/Assets/Icons/UI/Maximize-Exit/crop_square_32dp.png?fileID=21300000&amp;guid=2fe5b0aec98d3e84387083094b2987e4&amp;type=3#crop_square_32dp&quot;); display: flex;"/>
+                    <ui:Image name="ExitFullscreenIcon" class="wc-btn-icon window-maximize-icon" style="display: none; background-image: url(&quot;project://database/Assets/Icons/UI/Maximize/filter_none_32dp.png?fileID=21300000&amp;guid=40a6434316977444baf5ceb2ad0f4953&amp;type=3#filter_none_32dp&quot;);"/>
+                </ui:Button>
+                <ui:Button text="" name="CloseBtn" class="button-reset wc-button window-close-button">
+                    <ui:Image name="CloseIcon" class="wc-btn-icon" style="background-image: url(&quot;project://database/Assets/Icons/UI/Close/close_32dp.png?fileID=21300000&amp;guid=f388726a89c92bb42abb8d4656bb544d&amp;type=3#close_32dp&quot;);"/>
+                </ui:Button>
+            </ui:GroupBox>
+        </ui:VisualElement>
+        <ui:VisualElement name="WindowContent" class="content"/>
+        <ui:VisualElement name="WindowFooter" class="footer"/>
+    </ui:VisualElement>
+</ui:UXML>
