@@ -1,0 +1,199 @@
+﻿:root{
+	--calculator-button-bg: rgba(255, 255, 255, 0.25);
+    --calculator-darker-bg:  rgba(255, 255, 255, 0.15);
+}
+
+.calculator {
+    flex-grow: 1;
+    flex-direction: column;
+    padding: var(--space-2);
+}
+
+.calculator-display-area {
+    flex-direction: column;
+    padding: var(--space-3);
+    min-height: 120px;
+}
+
+.calculator-expression {
+    height:var(--control-xs);
+    font-size: var(--text-sm);
+    color: rgb(160, 160, 160);
+    -unity-text-align: middle-right;
+    margin-bottom: var(--space-1);
+}
+
+.calculator-display {
+    flex-grow: 1;
+    border-width: 0px;
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 42px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-right;
+}
+
+/*
+ * TextField contains its own internal input element.
+ * This removes Unity's normal text field box styling.
+ */
+
+.calculator-display > .unity-text-field__input {
+    background-color: rgba(0, 0, 0, 0);
+
+    border-width: 0px;
+
+    padding-left: 0px;
+    padding-right: 0px;
+
+    color: rgb(255, 255, 255);
+
+    font-size: 42px;
+
+    -unity-text-align: middle-right;
+}
+
+
+/* Remove the normal focused input appearance */
+
+.calculator-display:focus > .unity-text-field__input {
+    border-width: 0px;
+}
+
+.calc-button-area{
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+/* Each horizontal calculator row */
+
+.calculator-row {
+    flex-grow: 1;
+
+    flex-direction: row;
+
+    min-height: 54px;
+}
+
+.calculator-button {
+    flex-grow: 1;
+    flex-basis: 0;
+
+    min-width: 48px;
+    min-height: 48px;
+
+    margin: 2px;
+
+    border-radius: var(--radius-md);
+    background-color: var(--calculator-button-bg);
+    color: rgb(255, 255, 255);
+    font-size: var(--text-2xl);
+    -unity-font-style: normal;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ------------------------------------------------------------
+   HOVER
+   ------------------------------------------------------------ */
+
+.calculator-button:hover {
+    background-color: rgb(60, 60, 60);
+}
+
+
+/* ------------------------------------------------------------
+   PRESSED
+   ------------------------------------------------------------ */
+
+.calculator-button:active {
+    background-color: rgb(72, 72, 72);
+}
+
+
+/* ------------------------------------------------------------
+   KEYBOARD FOCUS
+   Important for accessibility
+   ------------------------------------------------------------ */
+
+.calculator-button:focus {
+    border-color: rgb(220, 220, 220);
+    border-width: var(--border-medium);
+}
+
+
+/* ============================================================
+   NUMBER BUTTONS
+   Slightly brighter than function buttons
+   ============================================================ */
+
+.calculator-button--number {
+    background-color: rgb(59, 59, 59);
+}
+
+.calculator-button--number:hover {
+    background-color: rgb(68, 68, 68);
+}
+
+.calculator-button--number:active {
+    background-color: rgb(78, 78, 78);
+}
+
+
+/* ============================================================
+   UTILITY BUTTONS
+   %, CE, C, backspace, +/-
+   ============================================================ */
+
+.calculator-button--utility {
+    background-color: var(--calculator-darker-bg);
+
+    color: rgb(235, 235, 235);
+}
+
+.calculator-button--utility:hover {
+    background-color: rgb(59, 59, 59);
+}
+
+
+/* ============================================================
+   OPERATOR BUTTONS
+   ÷ × − +
+   ============================================================ */
+
+.calculator-button--operator {
+    background-color: var(--calculator-darker-bg);
+    font-size: var(--text-3xl);
+}
+
+.calculator-button--operator:hover {
+    background-color: rgb(59, 59, 59);
+}
+
+
+/* ============================================================
+   EQUALS BUTTON
+   Primary action
+   ============================================================ */
+
+.calculator-button--equals {
+    background-color: rgb(255, 205, 45);
+
+    color: rgb(20, 20, 20);
+
+    border-color: rgb(255, 205, 45);
+}
+
+.calculator-button--equals:hover {
+    background-color: rgb(255, 215, 75);
+}
+
+.calculator-button--equals:active {
+    background-color: rgb(230, 180, 30);
+}
+
+
+.calculator-button-icon{
+    height: 40%;
+    width:  50%;
+    -unity-background-scale-mode: scale-to-fit;
+}

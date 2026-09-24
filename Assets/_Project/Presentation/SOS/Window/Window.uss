@@ -1,10 +1,23 @@
 .window {
-    height: 720px;
-    width: 1280px;
+    min-height: 120px;
+    min-width: 140px;
     background-color: var(--surface-primary);
     border-color: var(--border-primary);
     border-radius: 6px;
     border-width: 1px;
+}
+
+.window {
+    position: absolute;
+}
+
+.window--focused {
+}
+
+.window-maximize-button {
+}
+
+.window-maximize-button.window-button--restore {
 }
 
 .header {
@@ -16,11 +29,21 @@
     border-bottom-width: 1px;
 }
 
-.header-icon {
+.header-icon-area {
     height: 35px;
     width: 35px;
     margin-right: 6px;
+    padding: 6px;
 }
+
+.header-icon {
+    height: 100%;
+    width: 100%;
+    margin-right: 6px;
+    padding: 6px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
 
 .header-title {
     flex-grow: 1;
@@ -55,7 +78,7 @@
     background-color: var(--error-button-pressed);
 }
 
-.window-maximize-icon{
+.window-maximize-icon {
     height: 20px;
     width: 20px;
 }
