@@ -549,8 +549,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1636917579}
   - component: {fileID: 1636917578}
-  - component: {fileID: 1636917577}
   - component: {fileID: 1636917580}
+  - component: {fileID: 1636917581}
   m_Layer: 0
   m_Name: App Test
   m_TagString: Untagged
@@ -558,18 +558,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1636917577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1636917576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3da8ede4e00533842b3b5d32f3ceea3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Calculator.CalculatorController
 --- !u!114 &1636917578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,7 +572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
   m_PanelSettings: {fileID: 11400000, guid: 27fc1ce62ca719640945830e14293fc2, type: 2}
   m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: d5a229084ddf61942bba38c4d7f16b52, type: 3}
+  sourceAsset: {fileID: 9197481963319205126, guid: ee01e11e846d7f043905845eb0592176, type: 3}
   m_SortingOrder: 99999
   m_Position: 0
   m_WorldSpaceSizeMode: 1
@@ -620,6 +608,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddad4a79761d2141985a4c2a2b56004, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Windows.WindowController
+--- !u!114 &1636917581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636917576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47a0a242ffb373d42b77dc6ad24a9ec2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.CommandPrompt.CMDController
+  commandLibrary: {fileID: 11400000, guid: 92a7c625c0fad4f459b4cc4bc5fdae4d, type: 2}
 --- !u!1 &1648936009
 GameObject:
   m_ObjectHideFlags: 0

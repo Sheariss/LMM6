@@ -24,13 +24,13 @@
             </ui:GroupBox>
         </ui:VisualElement>
         <ui:VisualElement name="WindowContent" class="content cmd-content">
-            <ui:VisualElement class="cmd-background">
+            <ui:VisualElement name="CMDBackground" class="cmd-background">
                 <ui:ScrollView name="ScrollView" class="cmd-scroll-view"/>
                 <ui:GroupBox class="spacing-reset cmd-input-area text-field-container">
                     <ui:VisualElement name="">
                         <ui:Image class="text-field-icon" style="background-image: resource(&quot;Icons/Arrows 1/More/arrow_forward_ios_64dp&quot;);"/>
                     </ui:VisualElement>
-                    <ui:TextField label="" placeholder-text="" class="spacing-reset button-reset clean-text-field"/>
+                    <ui:TextField label="" placeholder-text="" name="CommandInput" class="spacing-reset button-reset clean-text-field"/>
                 </ui:GroupBox>
             </ui:VisualElement>
         </ui:VisualElement>
