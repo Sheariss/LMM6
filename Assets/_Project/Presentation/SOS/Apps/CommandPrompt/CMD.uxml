@@ -1,12 +1,15 @@
-<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3"/>
     <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3"/>
     <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3"/>
-    <Style src="project://database/Assets/_Project/Presentation/SOS/Window/Window.uss?fileID=7433441132597879392&amp;guid=00c704ca2f7eb4f469f7b2b139bf1194&amp;type=3#Window"/>
-    <ui:VisualElement name="WindowRoot" class="window">
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Window/Window.uss?fileID=7433441132597879392&amp;guid=00c704ca2f7eb4f469f7b2b139bf1194&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/CommandPrompt/CMD.uss?fileID=7433441132597879392&amp;guid=0342cc249412e78408ae57f01fe7a7c5&amp;type=3#CMD"/>
+    <ui:VisualElement name="WindowRoot" class="window cmd-window">
         <ui:VisualElement name="WindowHeader" class="flex-row header" style="opacity: 1;">
-            <ui:VisualElement name="WindowIcon" class="header-icon"/>
-            <ui:Label text="Window Name" name="WindowTitle" class="spacing-reset header-title"/>
+            <ui:VisualElement name="WindowIcon" class="header-icon-area" style="background-image: none;">
+                <ui:Image class="header-icon" style="background-image: resource(&quot;AppIcons/command-prompt&quot;);"/>
+            </ui:VisualElement>
+            <ui:Label text="Command Prompt" name="WindowTitle" class="spacing-reset header-title"/>
             <ui:GroupBox name="WindowControls" class="flex-row spacing-reset window-controls">
                 <ui:Button text="" name="WindowMinimizeButton" class="button-reset wc-button">
                     <ui:Image name="MinimizeIcon" class="wc-btn-icon minimize-icon" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Minimize/remove_32dp_.png?fileID=21300000&amp;guid=8ba13ee49df28774c813618f06427c37&amp;type=3#remove_32dp_&quot;);"/>
@@ -20,7 +23,17 @@
                 </ui:Button>
             </ui:GroupBox>
         </ui:VisualElement>
-        <ui:VisualElement name="WindowContent" class="content"/>
-        <ui:VisualElement name="WindowFooter" class="footer"/>
+        <ui:VisualElement name="WindowContent" class="content cmd-content">
+            <ui:VisualElement class="cmd-background">
+                <ui:ScrollView name="ScrollView" class="cmd-scroll-view"/>
+                <ui:GroupBox class="spacing-reset cmd-input-area text-field-container">
+                    <ui:VisualElement name="">
+                        <ui:Image class="text-field-icon" style="background-image: resource(&quot;Icons/Arrows 1/More/arrow_forward_ios_64dp&quot;);"/>
+                    </ui:VisualElement>
+                    <ui:TextField label="" placeholder-text="" class="spacing-reset button-reset clean-text-field"/>
+                </ui:GroupBox>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="WindowFooter" class="footer" style="display: none;"/>
     </ui:VisualElement>
 </ui:UXML>

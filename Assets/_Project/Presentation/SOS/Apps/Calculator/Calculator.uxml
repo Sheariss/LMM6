@@ -11,14 +11,14 @@
             </ui:VisualElement>
             <ui:Label text="Calculator" name="WindowTitle" class="spacing-reset header-title"/>
             <ui:GroupBox name="WindowControls" class="flex-row spacing-reset window-controls">
-                <ui:Button text="" name="MinimizeBtn" class="button-reset wc-button">
+                <ui:Button text="" name="WindowMinimizeButton" class="button-reset wc-button">
                     <ui:Image name="MinimizeIcon" class="wc-btn-icon minimize-icon" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Minimize/remove_32dp_.png?fileID=21300000&amp;guid=8ba13ee49df28774c813618f06427c37&amp;type=3#remove_32dp_&quot;);"/>
                 </ui:Button>
-                <ui:Button text="" name="MaximizeBtn" class="button-reset wc-button">
+                <ui:Button text="" name="WindowMaximizeButton" class="button-reset wc-button">
                     <ui:Image name="FullscreenIcon" class="wc-btn-icon window-maximize-icon" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Maximize-Exit/crop_square_32dp.png?fileID=21300000&amp;guid=2fe5b0aec98d3e84387083094b2987e4&amp;type=3#crop_square_32dp&quot;); display: flex;"/>
                     <ui:Image name="ExitFullscreenIcon" class="wc-btn-icon window-maximize-icon" style="display: none; background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Maximize/filter_none_32dp.png?fileID=21300000&amp;guid=40a6434316977444baf5ceb2ad0f4953&amp;type=3#filter_none_32dp&quot;);"/>
                 </ui:Button>
-                <ui:Button text="" name="CloseBtn" class="button-reset wc-button window-close-button">
+                <ui:Button text="" name="WindowCloseButton" class="button-reset wc-button window-close-button">
                     <ui:Image name="CloseIcon" class="wc-btn-icon" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Close/close_32dp.png?fileID=21300000&amp;guid=f388726a89c92bb42abb8d4656bb544d&amp;type=3#close_32dp&quot;);"/>
                 </ui:Button>
             </ui:GroupBox>

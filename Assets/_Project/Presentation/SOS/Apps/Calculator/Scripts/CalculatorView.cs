@@ -26,10 +26,7 @@ namespace Atlas.Presentation.SOS.Calculator
             SetErrorState(state.IsError);
         }
 
-
         // -------------------- DISPLAY --------------------
-
-
         private void SetDisplay(string value)
         {
             if (binder.DisplayField == null)
@@ -54,8 +51,7 @@ namespace Atlas.Presentation.SOS.Calculator
         }
 
         // -------------------- EXPRESSION --------------------
-        private void SetExpression(
-            string expression)
+        private void SetExpression(string expression)
         {
             if (binder.ExpressionLabel == null)
                 return;
@@ -63,22 +59,16 @@ namespace Atlas.Presentation.SOS.Calculator
             binder.ExpressionLabel.text = expression ?? string.Empty;
         }
 
-
         // -------------------- ERROR VISUAL --------------------
         private void SetErrorState(bool isError)
         {
             if (binder.DisplayField == null)
                 return;
 
-            binder.DisplayField
-                .EnableInClassList(
-                    ErrorClass,
-                    isError);
+            binder.DisplayField.EnableInClassList(ErrorClass, isError);
         }
 
-
-        // FOCUS
-
+        // -------------------- FOCUS --------------------
         public void FocusDisplay()
         {
             binder.DisplayField?.Focus();

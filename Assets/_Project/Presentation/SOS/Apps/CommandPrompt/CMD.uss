@@ -1,0 +1,91 @@
+:root{
+    --cmd-background-color: #000000;
+    --cmd-input-height: 42px;
+}
+
+.cmd-window {
+    min-height: 240px;
+    min-width: 300px;
+}
+
+.cmd-content{
+    flex-grow: 1;
+    flex-direction: column;
+    padding: var(--space-2);
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius:6px;
+}
+
+.cmd-background{
+    height: 100%;
+    width: 100%;
+    background-color: var(--cmd-background-color);
+}
+
+.cmd-scroll-view{
+    flex-grow: 1;
+    flex-direction: column;
+    padding: var(--space-2);
+}
+
+.cmd-input-area{
+    flex-direction: row;
+}
+
+.text-field-container {
+    flex-direction: row;
+    align-items: center;
+    height: var(--cmd-input-height);
+}
+
+.text-field-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+
+    flex-shrink: 0;
+}
+
+.clean-text-field {
+    flex-grow: 1;
+
+    background-color: transparent;
+
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+
+    padding: 0;
+    margin: 0;
+}
+
+/* The actual editable area inside the TextField */
+.clean-text-field > .unity-text-field__input {
+    background-color: transparent;
+
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    color: white;
+
+    padding: 0;
+    margin: 0;
+}
+
+/* Remove Unity's focus styling */
+.clean-text-field:focus-within > .unity-text-field__input {
+    background-color: transparent;
+
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}

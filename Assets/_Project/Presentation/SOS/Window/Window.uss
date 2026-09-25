@@ -44,7 +44,6 @@
     -unity-background-scale-mode: scale-to-fit;
 }
 
-
 .header-title {
     flex-grow: 1;
     color: var(--text-primary);
