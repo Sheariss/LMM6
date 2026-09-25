@@ -41,13 +41,15 @@
 .text-field-icon {
     width: 20px;
     height: 20px;
-    margin-right: 8px;
+    margin-right: var(--space-2);
+    margin-left: var(--space-2);
 
     flex-shrink: 0;
 }
 
 .clean-text-field {
     flex-grow: 1;
+    height: 100%;
 
     background-color: transparent;
 
