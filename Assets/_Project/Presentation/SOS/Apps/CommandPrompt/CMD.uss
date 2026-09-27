@@ -6,6 +6,8 @@
 .cmd-window {
     min-height: 240px;
     min-width: 300px;
+    height: 450px;
+    width: 700px;
 }
 
 .cmd-content{
@@ -23,13 +25,21 @@
 }
 
 .cmd-scroll-view{
-    flex-grow: 1;
+    height: 100%;
+    width: 100%;
     flex-direction: column;
     padding: var(--space-2);
 }
 
 .cmd-input-area{
     flex-direction: row;
+}
+
+.cmd-prompt {
+    color: white;
+    flex-shrink: 0;
+    margin-right: var(--space-2);
+    margin-left: var(--space-2);
 }
 
 .text-field-container {
@@ -82,12 +92,91 @@
     margin: 0;
 }
 
-/* Remove Unity's focus styling */
-.clean-text-field:focus-within > .unity-text-field__input {
+/* =========================================================
+   CMD SCROLLBAR
+   Thin floating macOS-style scrollbar
+   ========================================================= */
+
+/* Vertical scrollbar container */
+.cmd-scroll-view .unity-scroll-view__vertical-scroller {
+    width: 10px;
+    min-width: 10px;
     background-color: transparent;
 
     border-top-width: 0;
     border-right-width: 0;
     border-bottom-width: 0;
     border-left-width: 0;
+
+    margin-right: 3px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+/* Remove traditional scrollbar arrow buttons */
+.cmd-scroll-view .unity-scroller__low-button,
+.cmd-scroll-view .unity-scroller__high-button {
+    display: none;
+}
+
+/* Slider that contains the scrollbar track/thumb */
+.cmd-scroll-view .unity-scroller__slider {
+    flex-grow: 1;
+    background-color: transparent;
+
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+/* Area the thumb travels inside */
+.cmd-scroll-view .unity-base-slider__drag-container {
+    background-color: transparent;
+}
+
+/* Remove Unity's normal visible track */
+.cmd-scroll-view .unity-base-slider__tracker {
+    background-color: transparent;
+
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+/* Scrollbar thumb */
+.cmd-scroll-view .unity-base-slider__dragger {
+    width: 6px;
+
+    background-color: rgba(255, 255, 255, 0.35);
+
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+/* Unity adds another element around the actual dragger */
+.cmd-scroll-view .unity-base-slider__dragger-border {
+    background-color: transparent;
+
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+/* Slightly brighter when interacting */
+.cmd-scroll-view .unity-base-slider__dragger:hover {
+    background-color: rgba(255, 255, 255, 0.55);
+}
+
+.cmd-scroll-view .unity-base-slider__dragger:active {
+    background-color: rgba(255, 255, 255, 0.70);
 }

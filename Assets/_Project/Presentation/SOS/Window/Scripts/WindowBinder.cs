@@ -29,7 +29,7 @@ namespace Atlas.Presentation.SOS.Windows
 
             Root = Bind<VisualElement>(root, "WindowRoot");
 
-            TitleBar = Bind<VisualElement>(root, "WindowTitleBar");
+            TitleBar = Bind<VisualElement>(root, "WindowTitle");
 
             Icon = Bind<Image>(root, "WindowIcon");
             Title = Bind<Label>(root, "WindowTitle");

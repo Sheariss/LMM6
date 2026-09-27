@@ -9,6 +9,7 @@ namespace Atlas.Presentation.SOS.CommandPrompt
         public VisualElement Root { get; }
         public VisualElement Background { get; }
         public ScrollView ScrollView { get; }
+        public Label CommandPrompt { get; }
         public TextField CommandInput { get; }
 
         public CMDBinder(VisualElement root)
@@ -22,6 +23,7 @@ namespace Atlas.Presentation.SOS.CommandPrompt
             Root = Bind<VisualElement>(root, "WindowRoot");
             Background = Bind<VisualElement>(root, "CMDBackground");
             ScrollView = Bind<ScrollView>(root, "ScrollView");
+            CommandPrompt = Bind<Label>(root, "CommandPropmt");
             CommandInput = Bind<TextField>(root, "CommandInput");
         }
     }

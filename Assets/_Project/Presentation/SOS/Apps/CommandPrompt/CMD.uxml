@@ -6,8 +6,8 @@
     <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/CommandPrompt/CMD.uss?fileID=7433441132597879392&amp;guid=0342cc249412e78408ae57f01fe7a7c5&amp;type=3#CMD"/>
     <ui:VisualElement name="WindowRoot" class="window cmd-window">
         <ui:VisualElement name="WindowHeader" class="flex-row header" style="opacity: 1;">
-            <ui:VisualElement name="WindowIcon" class="header-icon-area" style="background-image: none;">
-                <ui:Image class="header-icon" style="background-image: resource(&quot;AppIcons/command-prompt&quot;);"/>
+            <ui:VisualElement name="" class="header-icon-area" style="background-image: none;">
+                <ui:Image name="WindowIcon" class="header-icon" style="background-image: resource(&quot;AppIcons/command-prompt&quot;);"/>
             </ui:VisualElement>
             <ui:Label text="Command Prompt" name="WindowTitle" class="spacing-reset header-title"/>
             <ui:GroupBox name="WindowControls" class="flex-row spacing-reset window-controls">
@@ -27,9 +27,7 @@
             <ui:VisualElement name="CMDBackground" class="cmd-background">
                 <ui:ScrollView name="ScrollView" class="cmd-scroll-view"/>
                 <ui:GroupBox class="spacing-reset cmd-input-area text-field-container">
-                    <ui:VisualElement name="">
-                        <ui:Image class="text-field-icon" style="background-image: resource(&quot;Icons/Arrows 1/More/arrow_forward_ios_64dp&quot;);"/>
-                    </ui:VisualElement>
+                    <ui:Label text="C:\Users\Guest&gt; " class="cmd-prompt spacing-reset"/>
                     <ui:TextField label="" placeholder-text="" name="CommandInput" class="spacing-reset button-reset clean-text-field"/>
                 </ui:GroupBox>
             </ui:VisualElement>

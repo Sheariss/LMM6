@@ -1,0 +1,59 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Window/Window.uss?fileID=7433441132597879392&amp;guid=00c704ca2f7eb4f469f7b2b139bf1194&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/WebBrowser/WebBrowser.uss?fileID=7433441132597879392&amp;guid=d1177304087e5d74eaf28e87c2337084&amp;type=3#WebBrowser"/>
+    <ui:VisualElement name="WindowRoot" class="window">
+        <ui:VisualElement name="WindowHeader" class="flex-row header browser-tab-bar" style="opacity: 1;">
+            <ui:VisualElement name="BrowserTabBar" class="browser-tab-bar">
+                <ui:VisualElement name="BrowserTabsContainer" class="browser-tabs-container">
+                    <ui:VisualElement name="BrowserTab" class="browser-tab browser-tab--active">
+                        <ui:VisualElement name="BrowserTabFavicon" class="browser-tab-favicon"/>
+                        <ui:Label name="BrowserTabTitle" text="New Tab" class="browser-tab-title spacing-reset"/>
+                        <ui:Button name="BrowserTabCloseButton" text="×" class="browser-tab-close-button spacing-reset"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:Button name="BrowserAddTabButton" text="+" class="browser-add-tab-button spacing-reset"/>
+                <ui:VisualElement name="BrowserTabBarSpacer" class="browser-tab-bar-spacer"/>
+            </ui:VisualElement>
+            <ui:GroupBox name="WindowControls" class="flex-row spacing-reset window-controls">
+                <ui:Button text="" name="WindowMinimizeButton" class="button-reset wc-button">
+                    <ui:Image name="MinimizeIcon" class="wc-btn-icon minimize-icon" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Minimize/remove_32dp_.png?fileID=21300000&amp;guid=8ba13ee49df28774c813618f06427c37&amp;type=3#remove_32dp_&quot;);"/>
+                </ui:Button>
+                <ui:Button text="" name="WindowMaximizeButton" class="button-reset wc-button">
+                    <ui:Image name="FullscreenIcon" class="wc-btn-icon window-maximize-icon" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Maximize-Exit/crop_square_32dp.png?fileID=21300000&amp;guid=2fe5b0aec98d3e84387083094b2987e4&amp;type=3#crop_square_32dp&quot;); display: flex;"/>
+                    <ui:Image name="ExitFullscreenIcon" class="wc-btn-icon window-maximize-icon" style="display: none; background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Maximize/filter_none_32dp.png?fileID=21300000&amp;guid=40a6434316977444baf5ceb2ad0f4953&amp;type=3#filter_none_32dp&quot;);"/>
+                </ui:Button>
+                <ui:Button text="" name="WindowCloseButton" class="button-reset wc-button window-close-button">
+                    <ui:Image name="CloseIcon" class="wc-btn-icon" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Close/close_32dp.png?fileID=21300000&amp;guid=f388726a89c92bb42abb8d4656bb544d&amp;type=3#close_32dp&quot;);"/>
+                </ui:Button>
+            </ui:GroupBox>
+        </ui:VisualElement>
+        <ui:VisualElement name="WindowContent" class="content">
+            <ui:VisualElement name="BrowserNavigationBar" class="browser-navigation-bar">
+                <ui:Button name="BrowserBackButton" text="←" tooltip="Back" class="browser-navigation-button spacing-reset"/>
+                <ui:Button name="BrowserForwardButton" text="→" tooltip="Forward" class="browser-navigation-button spacing-reset"/>
+                <ui:Button name="BrowserReloadButton" text="↻" tooltip="Reload" class="browser-navigation-button spacing-reset"/>
+                <ui:VisualElement name="BrowserAddressBar" class="browser-address-bar">
+                    <ui:VisualElement name="BrowserSiteIcon" class="browser-site-icon"/>
+                    <ui:TextField name="BrowserAddressField" class="browser-address-field spacing-reset"/>
+                    <ui:Button name="BrowserBookmarkButton" text="☆" tooltip="Bookmark this page" class="browser-address-button spacing-reset"/>
+                </ui:VisualElement>
+                <ui:Button name="BrowserMenuButton" text="⋮" tooltip="Browser Menu" class="browser-menu-button spacing-reset"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="BrowserBookmarksBar" class="browser-bookmarks-bar">
+                <ui:VisualElement name="BrowserBookmarksContainer" class="browser-bookmarks-container">
+                    <ui:Button name="BookmarkAshfordHerald" text="Ashford Herald" class="browser-bookmark-button spacing-reset"/>
+                    <ui:Button name="BookmarkAshfordPD" text="Ashford PD" class="browser-bookmark-button spacing-reset"/>
+                    <ui:Button name="BookmarkTown" text="Town of Ashford" class="browser-bookmark-button spacing-reset"/>
+                </ui:VisualElement>
+                <ui:Button name="BrowserBookmarksOverflowButton" text="»" tooltip="More bookmarks" class="browser-bookmarks-overflow-button spacing-reset"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="BrowserPageViewport" class="browser-page-viewport">
+                <ui:VisualElement name="BrowserPageContainer" class="browser-page-container"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="WindowFooter" class="footer" style="display: none;"/>
+    </ui:VisualElement>
+</ui:UXML>

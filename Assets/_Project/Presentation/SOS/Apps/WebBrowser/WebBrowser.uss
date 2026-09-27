@@ -1,0 +1,301 @@
+/* ==================== ROOT ==================== */
+
+.browser-root {
+    flex-grow: 1;
+    flex-direction: column;
+    background-color: var(--surface-primary);
+    overflow: hidden;
+}
+
+/* ==================== TAB BAR ==================== */
+
+.browser-tab-bar {
+    height: 42px;
+    min-height: 42px;
+    flex-direction: row;
+    align-items: flex-end;
+    padding-left: 8px;
+    padding-right: 8px;
+    background-color: var(--surface-secondary);
+    border-bottom-color: var(--border-primary);
+    border-bottom-width: 1px;
+}
+
+.browser-tabs-container {
+    height: 100%;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.browser-tab {
+    width: 220px;
+    height: 34px;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 12px;
+    padding-right: 6px;
+    margin-right: 2px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    background-color: transparent;
+}
+
+.browser-tab:hover {
+    background-color: var(--surface-primary);
+}
+
+.browser-tab--active {
+    background-color: var(--surface-primary);
+}
+
+.browser-tab-favicon {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    margin-right: 8px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.browser-tab-title {
+    flex-grow: 1;
+    color: var(--text-primary);
+    font-size: 12px;
+    -unity-text-align: middle-left;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.browser-tab-close-button {
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    margin-left: 4px;
+    padding: 0;
+    border-width: 0;
+    border-radius: 4px;
+    background-color: transparent;
+    color: var(--text-primary);
+    font-size: 17px;
+    -unity-text-align: middle-center;
+}
+
+.browser-tab-close-button:hover {
+    background-color: var(--surface-secondary);
+}
+
+.browser-add-tab-button {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    margin-left: 4px;
+    margin-bottom: 2px;
+    padding: 0;
+    border-width: 0;
+    border-radius: 4px;
+    background-color: transparent;
+    color: var(--text-primary);
+    font-size: 20px;
+    -unity-text-align: middle-center;
+}
+
+.browser-add-tab-button:hover {
+    background-color: var(--surface-primary);
+}
+
+.browser-tab-bar-spacer {
+    flex-grow: 1;
+    height: 100%;
+}
+
+/* ==================== NAVIGATION BAR ==================== */
+
+.browser-navigation-bar {
+    height: 46px;
+    min-height: 46px;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 8px;
+    padding-right: 8px;
+    background-color: var(--surface-primary);
+}
+
+.browser-navigation-button,
+.browser-menu-button {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    margin-right: 2px;
+    padding: 0;
+    border-width: 0;
+    border-radius: 4px;
+    background-color: transparent;
+    color: var(--text-primary);
+    font-size: 18px;
+    -unity-text-align: middle-center;
+}
+
+.browser-navigation-button:hover,
+.browser-menu-button:hover {
+    background-color: var(--surface-secondary);
+}
+
+.browser-navigation-button:active,
+.browser-menu-button:active {
+    opacity: 0.7;
+}
+
+.browser-navigation-button:disabled {
+    opacity: 0.35;
+}
+
+/* ==================== ADDRESS BAR ==================== */
+
+.browser-address-bar {
+    height: 34px;
+    flex-grow: 1;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 6px;
+    margin-right: 6px;
+    padding-left: 10px;
+    padding-right: 4px;
+    border-color: var(--border-primary);
+    border-width: 1px;
+    border-radius: 6px;
+    background-color: var(--surface-secondary);
+}
+
+.browser-address-bar:hover {
+    border-color: var(--text-secondary);
+}
+
+.browser-site-icon {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    margin-right: 8px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.browser-address-field {
+    flex-grow: 1;
+    height: 30px;
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    background-color: transparent;
+    color: var(--text-primary);
+    font-size: 13px;
+}
+
+.browser-address-field > .unity-text-input {
+    margin: 0;
+    padding-left: 0;
+    padding-right: 4px;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-width: 0;
+    background-color: transparent;
+    color: var(--text-primary);
+}
+
+.browser-address-button {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    padding: 0;
+    border-width: 0;
+    border-radius: 4px;
+    background-color: transparent;
+    color: var(--text-primary);
+    font-size: 19px;
+    -unity-text-align: middle-center;
+}
+
+.browser-address-button:hover {
+    background-color: var(--surface-primary);
+}
+
+/* ==================== BOOKMARKS BAR ==================== */
+
+.browser-bookmarks-bar {
+    height: 34px;
+    min-height: 34px;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 8px;
+    padding-right: 8px;
+    background-color: var(--surface-primary);
+    border-bottom-color: var(--border-primary);
+    border-bottom-width: 1px;
+}
+
+.browser-bookmarks-container {
+    height: 100%;
+    flex-grow: 1;
+    flex-direction: row;
+    align-items: center;
+    overflow: hidden;
+}
+
+.browser-bookmark-button {
+    height: 28px;
+    margin-right: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-width: 0;
+    border-radius: 4px;
+    background-color: transparent;
+    color: var(--text-primary);
+    font-size: 12px;
+    -unity-text-align: middle-center;
+}
+
+.browser-bookmark-button:hover {
+    background-color: var(--surface-secondary);
+}
+
+.browser-bookmark-button:active {
+    opacity: 0.7;
+}
+
+.browser-bookmarks-overflow-button {
+    width: 30px;
+    height: 28px;
+    min-width: 30px;
+    padding: 0;
+    border-width: 0;
+    border-radius: 4px;
+    background-color: transparent;
+    color: var(--text-primary);
+    font-size: 16px;
+    -unity-text-align: middle-center;
+}
+
+.browser-bookmarks-overflow-button:hover {
+    background-color: var(--surface-secondary);
+}
+
+/* ==================== PAGE VIEWPORT ==================== */
+
+.browser-page-viewport {
+    flex-grow: 1;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--surface-primary);
+}
+
+.browser-page-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+/* ==================== SHARED ==================== */
+
+.spacing-reset {
+    margin: 0;
+}

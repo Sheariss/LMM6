@@ -5,19 +5,23 @@ namespace Atlas.Presentation.SOS.CommandPrompt
 {
     public sealed class CMDViewState
     {
-        public IReadOnlyList<string> OutputLines { get; }
+        public IReadOnlyList<string> OutputEntries { get; }
+        public string Prompt { get; }
         public Color BackgroundColor { get; }
         public Color ForegroundColor { get; }
 
         public CMDViewState(
-            IReadOnlyList<string> outputLines,
+            IReadOnlyList<string> outputEntries,
+            string prompt,
             Color backgroundColor,
             Color foregroundColor)
         {
-            OutputLines = outputLines;
+            OutputEntries = outputEntries;
+            Prompt = prompt;
             BackgroundColor = backgroundColor;
             ForegroundColor = foregroundColor;
         }
+
     }
 
     public sealed class CMDViewBuilder
@@ -28,14 +32,16 @@ namespace Atlas.Presentation.SOS.CommandPrompt
             {
                 return new CMDViewState(
                     new List<string>(),
+                    @"C:\Users\Guest>",
                     GetColor('0'),
                     GetColor('7'));
             }
 
             return new CMDViewState(
-                outputLines: engine.OutputLines,
-                backgroundColor: GetColor(engine.BackgroundColor),
-                foregroundColor: GetColor(engine.ForegroundColor));
+                engine.OutputEntries,
+                engine.Prompt,
+                GetColor(engine.BackgroundColor),
+                GetColor(engine.ForegroundColor));
         }
 
         private Color GetColor(char value)

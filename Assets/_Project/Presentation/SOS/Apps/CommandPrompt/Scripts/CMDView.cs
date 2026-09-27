@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -18,34 +19,46 @@ namespace Atlas.Presentation.SOS.CommandPrompt
             if (state == null)
                 return;
 
-            SetOutput(state.OutputLines);
+            SetOutput(state.OutputEntries);
+            SetPrompt(state.Prompt);
+
             SetColors(
                 state.BackgroundColor,
                 state.ForegroundColor);
         }
 
         // -------------------- OUTPUT --------------------
-        private void SetOutput(
-            System.Collections.Generic.IReadOnlyList<string> lines)
+        private void SetOutput(IReadOnlyList<string> entries)
         {
             if (binder.ScrollView == null)
                 return;
 
             binder.ScrollView.Clear();
 
-            if (lines == null)
+            if (entries == null)
                 return;
 
-            foreach (string line in lines)
+            foreach (string entry in entries)
             {
-                Label label = new Label(line);
+                Label label = new Label(entry);
 
+                label.AddToClassList("spacing-reset");
                 label.AddToClassList("cmd-output");
 
                 binder.ScrollView.Add(label);
             }
 
             ScrollToBottom();
+        }
+
+        // -------------------- PROMPT --------------------
+        private void SetPrompt(string prompt)
+        {
+            if (binder.CommandPrompt == null)
+                return;
+
+            binder.CommandPrompt.text =
+                prompt ?? string.Empty;
         }
 
         // -------------------- COLORS --------------------
@@ -55,20 +68,22 @@ namespace Atlas.Presentation.SOS.CommandPrompt
         {
             if (binder.Background != null)
             {
-                binder.Background.style.backgroundColor =
-                    backgroundColor;
+                binder.Background.style.backgroundColor = backgroundColor;
             }
 
             if (binder.ScrollView != null)
             {
-                binder.ScrollView.style.color =
-                    foregroundColor;
+                binder.ScrollView.style.color = foregroundColor;
+            }
+
+            if (binder.CommandPrompt != null)
+            {
+                binder.CommandPrompt.style.color = foregroundColor;
             }
 
             if (binder.CommandInput != null)
             {
-                binder.CommandInput.style.color =
-                    foregroundColor;
+                binder.CommandInput.style.color = foregroundColor;
             }
         }
 
