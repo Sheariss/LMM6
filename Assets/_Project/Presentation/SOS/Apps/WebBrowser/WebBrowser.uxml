@@ -4,17 +4,21 @@
     <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3"/>
     <Style src="project://database/Assets/_Project/Presentation/SOS/Window/Window.uss?fileID=7433441132597879392&amp;guid=00c704ca2f7eb4f469f7b2b139bf1194&amp;type=3"/>
     <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/WebBrowser/WebBrowser.uss?fileID=7433441132597879392&amp;guid=d1177304087e5d74eaf28e87c2337084&amp;type=3#WebBrowser"/>
-    <ui:VisualElement name="WindowRoot" class="window">
+    <ui:VisualElement name="WindowRoot" class="window browser-root">
         <ui:VisualElement name="WindowHeader" class="flex-row header browser-tab-bar" style="opacity: 1;">
             <ui:VisualElement name="BrowserTabBar" class="browser-tab-bar">
                 <ui:VisualElement name="BrowserTabsContainer" class="browser-tabs-container">
                     <ui:VisualElement name="BrowserTab" class="browser-tab browser-tab--active">
-                        <ui:VisualElement name="BrowserTabFavicon" class="browser-tab-favicon"/>
+                        <ui:VisualElement name="BrowserTabFavicon" class="browser-tab-favicon" style="background-image: resource(&quot;AppIcons/browser&quot;);"/>
                         <ui:Label name="BrowserTabTitle" text="New Tab" class="browser-tab-title spacing-reset"/>
-                        <ui:Button name="BrowserTabCloseButton" text="×" class="browser-tab-close-button spacing-reset"/>
+                        <ui:Button name="BrowserTabCloseButton" text="" class="browser-tab-close-button spacing-reset">
+                            <ui:Image name="Image" class="browser-navigation-button-icon" style="background-image: resource(&quot;Icons/Math/Multiplication/close_small_32dp&quot;); display: flex;"/>
+                        </ui:Button>
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:Button name="BrowserAddTabButton" text="+" class="browser-add-tab-button spacing-reset"/>
+                <ui:Button name="BrowserAddTabButton" text="" class="browser-add-tab-button spacing-reset">
+                    <ui:Image class="browser-navigation-button-icon" style="background-image: resource(&quot;Icons/Math/Add/add_2_32dp&quot;);"/>
+                </ui:Button>
                 <ui:VisualElement name="BrowserTabBarSpacer" class="browser-tab-bar-spacer"/>
             </ui:VisualElement>
             <ui:GroupBox name="WindowControls" class="flex-row spacing-reset window-controls">
@@ -32,15 +36,25 @@
         </ui:VisualElement>
         <ui:VisualElement name="WindowContent" class="content">
             <ui:VisualElement name="BrowserNavigationBar" class="browser-navigation-bar">
-                <ui:Button name="BrowserBackButton" text="←" tooltip="Back" class="browser-navigation-button spacing-reset"/>
-                <ui:Button name="BrowserForwardButton" text="→" tooltip="Forward" class="browser-navigation-button spacing-reset"/>
-                <ui:Button name="BrowserReloadButton" text="↻" tooltip="Reload" class="browser-navigation-button spacing-reset"/>
+                <ui:Button name="BrowserBackButton" text="" tooltip="Back" class="browser-navigation-button spacing-reset">
+                    <ui:Image class="browser-navigation-button-icon" style="background-image: resource(&quot;Icons/Arrows 1/Arrow-Back/arrow_back_32dp&quot;);"/>
+                </ui:Button>
+                <ui:Button name="BrowserForwardButton" text="" tooltip="Forward" class="browser-navigation-button spacing-reset">
+                    <ui:Image class="browser-navigation-button-icon" style="background-image: resource(&quot;Icons/Arrows 1/Arrow-Foward/arrow_forward_32dp&quot;);"/>
+                </ui:Button>
+                <ui:Button name="BrowserReloadButton" text="" tooltip="Reload" class="browser-navigation-button spacing-reset">
+                    <ui:Image class="browser-navigation-button-icon" style="background-image: resource(&quot;Icons/System/Power/Restart/refresh_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40&quot;);"/>
+                </ui:Button>
                 <ui:VisualElement name="BrowserAddressBar" class="browser-address-bar">
                     <ui:VisualElement name="BrowserSiteIcon" class="browser-site-icon"/>
                     <ui:TextField name="BrowserAddressField" class="browser-address-field spacing-reset"/>
-                    <ui:Button name="BrowserBookmarkButton" text="☆" tooltip="Bookmark this page" class="browser-address-button spacing-reset"/>
+                    <ui:Button name="BrowserBookmarkButton" text="" tooltip="Bookmark this page" class="browser-address-button spacing-reset">
+                        <ui:Image class="browser-navigation-button-icon" style="background-image: resource(&quot;Icons/Apps/Browser/Star/star_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40&quot;);"/>
+                    </ui:Button>
                 </ui:VisualElement>
-                <ui:Button name="BrowserMenuButton" text="⋮" tooltip="Browser Menu" class="browser-menu-button spacing-reset"/>
+                <ui:Button name="BrowserMenuButton" text="" tooltip="Browser Menu" class="browser-menu-button spacing-reset">
+                    <ui:Image class="browser-navigation-button-icon" style="background-image: resource(&quot;Icons/Apps/Browser/More Vert/more_vert_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40&quot;);"/>
+                </ui:Button>
             </ui:VisualElement>
             <ui:VisualElement name="BrowserBookmarksBar" class="browser-bookmarks-bar">
                 <ui:VisualElement name="BrowserBookmarksContainer" class="browser-bookmarks-container">
@@ -48,10 +62,14 @@
                     <ui:Button name="BookmarkAshfordPD" text="Ashford PD" class="browser-bookmark-button spacing-reset"/>
                     <ui:Button name="BookmarkTown" text="Town of Ashford" class="browser-bookmark-button spacing-reset"/>
                 </ui:VisualElement>
-                <ui:Button name="BrowserBookmarksOverflowButton" text="»" tooltip="More bookmarks" class="browser-bookmarks-overflow-button spacing-reset"/>
+                <ui:Button name="BrowserBookmarksOverflowButton" text="" tooltip="More bookmarks" class="browser-bookmarks-overflow-button spacing-reset">
+                    <ui:Image class="browser-navigation-button-icon"/>
+                </ui:Button>
             </ui:VisualElement>
             <ui:VisualElement name="BrowserPageViewport" class="browser-page-viewport">
-                <ui:VisualElement name="BrowserPageContainer" class="browser-page-container"/>
+                <ui:VisualElement name="BrowserPageContainer" class="browser-page-container">
+                    <ui:ScrollView name="BrowserPageScrollView" class="browser-scroll-view"/>
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="WindowFooter" class="footer" style="display: none;"/>

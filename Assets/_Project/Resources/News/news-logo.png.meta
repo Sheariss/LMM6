@@ -1,0 +1,1794 @@
+fileFormatVersion: 2
+guid: 74e0052eb463c0c4485f1205878f0531
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5674431552805302366
+    second: news-logo_0
+  - first:
+      213: 285002938471872773
+    second: news-logo_1
+  - first:
+      213: -3067850394963054890
+    second: news-logo_2
+  - first:
+      213: -876363712067608512
+    second: news-logo_3
+  - first:
+      213: 8088660562265631832
+    second: news-logo_4
+  - first:
+      213: 7363597853806897187
+    second: news-logo_5
+  - first:
+      213: 5241896275747124389
+    second: news-logo_6
+  - first:
+      213: 6036920788199402918
+    second: news-logo_7
+  - first:
+      213: 4099955130744568935
+    second: news-logo_8
+  - first:
+      213: -8712700927723398649
+    second: news-logo_9
+  - first:
+      213: -2970969103541352421
+    second: news-logo_10
+  - first:
+      213: 799182574549124708
+    second: news-logo_11
+  - first:
+      213: 3738849158889600727
+    second: news-logo_12
+  - first:
+      213: -7426410589097633252
+    second: news-logo_13
+  - first:
+      213: 921366207302552031
+    second: news-logo_14
+  - first:
+      213: 2856534028717604709
+    second: news-logo_15
+  - first:
+      213: 5072376092722599747
+    second: news-logo_16
+  - first:
+      213: 8591907307758133555
+    second: news-logo_17
+  - first:
+      213: -8294879755898672355
+    second: news-logo_18
+  - first:
+      213: -2537845306832245534
+    second: news-logo_19
+  - first:
+      213: -2128854237613824940
+    second: news-logo_20
+  - first:
+      213: -4611638732172519397
+    second: news-logo_21
+  - first:
+      213: 8207609356357620793
+    second: news-logo_22
+  - first:
+      213: -1510587081661080993
+    second: news-logo_23
+  - first:
+      213: -100597230742261475
+    second: news-logo_24
+  - first:
+      213: 3744595340820535590
+    second: news-logo_25
+  - first:
+      213: -6812344438816450510
+    second: news-logo_26
+  - first:
+      213: 4021717950401494086
+    second: news-logo_27
+  - first:
+      213: -8416523721373189687
+    second: news-logo_28
+  - first:
+      213: -2620926028230741996
+    second: news-logo_29
+  - first:
+      213: 8933123209592969219
+    second: news-logo_30
+  - first:
+      213: -714776505110050456
+    second: news-logo_31
+  - first:
+      213: -5223310366172157025
+    second: news-logo_32
+  - first:
+      213: 165507365457235963
+    second: news-logo_33
+  - first:
+      213: 3423619389542414234
+    second: news-logo_34
+  - first:
+      213: -8245152800857104494
+    second: news-logo_35
+  - first:
+      213: 3210444225122714787
+    second: news-logo_36
+  - first:
+      213: -2394522937298247327
+    second: news-logo_37
+  - first:
+      213: -8424276406099891184
+    second: news-logo_38
+  - first:
+      213: 705937154919102972
+    second: news-logo_39
+  - first:
+      213: -6261542363534220358
+    second: news-logo_40
+  - first:
+      213: 1388196800928160423
+    second: news-logo_41
+  - first:
+      213: -6630055432258721273
+    second: news-logo_42
+  - first:
+      213: 6733602400252145224
+    second: news-logo_43
+  - first:
+      213: -6351525532653618525
+    second: news-logo_44
+  - first:
+      213: -7035550949563563966
+    second: news-logo_45
+  - first:
+      213: -2712222766993531123
+    second: news-logo_46
+  - first:
+      213: 4719437004586736956
+    second: news-logo_47
+  - first:
+      213: 8188165457953886806
+    second: news-logo_48
+  - first:
+      213: 2124612235700132952
+    second: news-logo_49
+  - first:
+      213: 6416475363555880223
+    second: news-logo_50
+  - first:
+      213: 6751974308297493471
+    second: news-logo_51
+  - first:
+      213: 8849966936181922026
+    second: news-logo_52
+  - first:
+      213: 6045510674408685874
+    second: news-logo_53
+  - first:
+      213: -6070545770871332029
+    second: news-logo_54
+  - first:
+      213: 1984435062526271184
+    second: news-logo_55
+  - first:
+      213: 5923053843956386978
+    second: news-logo_56
+  - first:
+      213: 379240369716719101
+    second: news-logo_57
+  - first:
+      213: -6450787919863709724
+    second: news-logo_58
+  - first:
+      213: -1678610386154152033
+    second: news-logo_59
+  - first:
+      213: 1654811387337329574
+    second: news-logo_60
+  - first:
+      213: 2206424135070448224
+    second: news-logo_61
+  - first:
+      213: 797602988355894826
+    second: news-logo_62
+  - first:
+      213: -2424398586287509290
+    second: news-logo_63
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: news-logo_0
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 557
+        width: 117
+        height: 114
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e507a3fce61afbe40800000000000000
+      internalID: 5674431552805302366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_1
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 581
+        width: 57
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 509fe8b99a884f300800000000000000
+      internalID: 285002938471872773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_2
+      rect:
+        serializedVersion: 2
+        x: 949
+        y: 599
+        width: 36
+        height: 114
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6de6f28e15ecc65d0800000000000000
+      internalID: -3067850394963054890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_3
+      rect:
+        serializedVersion: 2
+        x: 1004
+        y: 606
+        width: 28
+        height: 169
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 040ea28d8d786d3f0800000000000000
+      internalID: -876363712067608512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_4
+      rect:
+        serializedVersion: 2
+        x: 1048
+        y: 598
+        width: 46
+        height: 114
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85ced820de1b04070800000000000000
+      internalID: 8088660562265631832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_5
+      rect:
+        serializedVersion: 2
+        x: 1083
+        y: 582
+        width: 66
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3282df8eb31c03660800000000000000
+      internalID: 7363597853806897187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_6
+      rect:
+        serializedVersion: 2
+        x: 1114
+        y: 556
+        width: 121
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a4b959d3e4feb840800000000000000
+      internalID: 5241896275747124389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_7
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 531
+        width: 141
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6adebcdc87377c350800000000000000
+      internalID: 6036920788199402918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_8
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 504
+        width: 254
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76cf11b0877f5e830800000000000000
+      internalID: 4099955130744568935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_9
+      rect:
+        serializedVersion: 2
+        x: 1133
+        y: 533
+        width: 145
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70a94d80ba4461780800000000000000
+      internalID: -8712700927723398649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_10
+      rect:
+        serializedVersion: 2
+        x: 641
+        y: 518
+        width: 246
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b18c1c8575ff4c6d0800000000000000
+      internalID: -2970969103541352421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_11
+      rect:
+        serializedVersion: 2
+        x: 1143
+        y: 518
+        width: 243
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 466ceaa3154471b00800000000000000
+      internalID: 799182574549124708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_12
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 504
+        width: 492
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d6f160308f03e330800000000000000
+      internalID: 3738849158889600727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_13
+      rect:
+        serializedVersion: 2
+        x: 1147
+        y: 504
+        width: 493
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1ad2a08ae610f890800000000000000
+      internalID: -7426410589097633252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_14
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 452
+        width: 252
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd941561fa959cc00800000000000000
+      internalID: 921366207302552031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_15
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 395
+        width: 78
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56f3786809274a720800000000000000
+      internalID: 2856534028717604709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_16
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 395
+        width: 86
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3471ae58e23b46640800000000000000
+      internalID: 5072376092722599747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_17
+      rect:
+        serializedVersion: 2
+        x: 658
+        y: 395
+        width: 70
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 331a10eac269c3770800000000000000
+      internalID: 8591907307758133555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_18
+      rect:
+        serializedVersion: 2
+        x: 833
+        y: 395
+        width: 105
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1ba4176fcaa2ec80800000000000000
+      internalID: -8294879755898672355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_19
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 393
+        width: 88
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ec2f57b323c7ccd0800000000000000
+      internalID: -2537845306832245534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_20
+      rect:
+        serializedVersion: 2
+        x: 1099
+        y: 393
+        width: 87
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 454617c995ac472e0800000000000000
+      internalID: -2128854237613824940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_21
+      rect:
+        serializedVersion: 2
+        x: 1220
+        y: 394
+        width: 77
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b189c60b10b2000c0800000000000000
+      internalID: -4611638732172519397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_22
+      rect:
+        serializedVersion: 2
+        x: 1333
+        y: 395
+        width: 39
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9345edc493947e170800000000000000
+      internalID: 8207609356357620793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_23
+      rect:
+        serializedVersion: 2
+        x: 1410
+        y: 394
+        width: 77
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5a1c4b7d01590be0800000000000000
+      internalID: -1510587081661080993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_24
+      rect:
+        serializedVersion: 2
+        x: 1521
+        y: 393
+        width: 94
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1138340a5b9a9ef0800000000000000
+      internalID: -100597230742261475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_25
+      rect:
+        serializedVersion: 2
+        x: 1651
+        y: 454
+        width: 253
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 629d03d6f9977f330800000000000000
+      internalID: 3744595340820535590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_26
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 129
+        width: 203
+        height: 308
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 238dcb483d0b571a0800000000000000
+      internalID: -6812344438816450510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_27
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 143
+        width: 189
+        height: 227
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64c3e7cfa2300d730800000000000000
+      internalID: 4021717950401494086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_28
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 143
+        width: 210
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c9f6ef9440823b80800000000000000
+      internalID: -8416523721373189687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_29
+      rect:
+        serializedVersion: 2
+        x: 789
+        y: 140
+        width: 187
+        height: 230
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4103bb0e9a990abd0800000000000000
+      internalID: -2620926028230741996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_30
+      rect:
+        serializedVersion: 2
+        x: 999
+        y: 143
+        width: 192
+        height: 227
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 308169aba34d8fb70800000000000000
+      internalID: 8933123209592969219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_31
+      rect:
+        serializedVersion: 2
+        x: 1214
+        y: 143
+        width: 210
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 869ce1f3e8a9416f0800000000000000
+      internalID: -714776505110050456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_32
+      rect:
+        serializedVersion: 2
+        x: 1446
+        y: 138
+        width: 212
+        height: 232
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9b61b075e21387b0800000000000000
+      internalID: -5223310366172157025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_33
+      rect:
+        serializedVersion: 2
+        x: 1694
+        y: 137
+        width: 249
+        height: 296
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bff0acd62100c4200800000000000000
+      internalID: 165507365457235963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_34
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 91
+        width: 198
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a97b0d712b3238f20800000000000000
+      internalID: 3423619389542414234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_35
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 79
+        width: 28
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29f581a5635539d80800000000000000
+      internalID: -8245152800857104494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_36
+      rect:
+        serializedVersion: 2
+        x: 377
+        y: 79
+        width: 31
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a4c4a9530acd8c20800000000000000
+      internalID: 3210444225122714787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_37
+      rect:
+        serializedVersion: 2
+        x: 421
+        y: 79
+        width: 26
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16120d34312f4ced0800000000000000
+      internalID: -2394522937298247327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_38
+      rect:
+        serializedVersion: 2
+        x: 487
+        y: 78
+        width: 28
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01c26bc0e35f61b80800000000000000
+      internalID: -8424276406099891184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_39
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 79
+        width: 26
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf9f3b82a1efbc900800000000000000
+      internalID: 705937154919102972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_40
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 78
+        width: 44
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab3ab7b35688a19a0800000000000000
+      internalID: -6261542363534220358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_41
+      rect:
+        serializedVersion: 2
+        x: 625
+        y: 78
+        width: 23
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7aa18ada2add34310800000000000000
+      internalID: 1388196800928160423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_42
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 79
+        width: 32
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70ae11f36bf4df3a0800000000000000
+      internalID: -6630055432258721273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_43
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 78
+        width: 32
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84e2fb5f4bf827d50800000000000000
+      internalID: 6733602400252145224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_44
+      rect:
+        serializedVersion: 2
+        x: 778
+        y: 78
+        width: 29
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3aa7b5c0e29dad7a0800000000000000
+      internalID: -6351525532653618525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_45
+      rect:
+        serializedVersion: 2
+        x: 846
+        y: 78
+        width: 29
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2400a14ffa3bc5e90800000000000000
+      internalID: -7035550949563563966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_46
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 79
+        width: 31
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0f9f9d63cf3c5ad0800000000000000
+      internalID: -2712222766993531123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_47
+      rect:
+        serializedVersion: 2
+        x: 933
+        y: 78
+        width: 28
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3dd93673fece7140800000000000000
+      internalID: 4719437004586736956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_48
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 79
+        width: 28
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 652177be91532a170800000000000000
+      internalID: 8188165457953886806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_49
+      rect:
+        serializedVersion: 2
+        x: 1041
+        y: 78
+        width: 32
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85cda5a52932c7d10800000000000000
+      internalID: 2124612235700132952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_50
+      rect:
+        serializedVersion: 2
+        x: 1085
+        y: 78
+        width: 29
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1d2bc2e856eb0950800000000000000
+      internalID: 6416475363555880223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_51
+      rect:
+        serializedVersion: 2
+        x: 1128
+        y: 78
+        width: 24
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdbc2a22cd4d3bd50800000000000000
+      internalID: 6751974308297493471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_52
+      rect:
+        serializedVersion: 2
+        x: 1166
+        y: 79
+        width: 28
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae853111a0661da70800000000000000
+      internalID: 8849966936181922026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_53
+      rect:
+        serializedVersion: 2
+        x: 1239
+        y: 84
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23146f98de7f5e350800000000000000
+      internalID: 6045510674408685874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_54
+      rect:
+        serializedVersion: 2
+        x: 1306
+        y: 78
+        width: 23
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 343e676d8c611cba0800000000000000
+      internalID: -6070545770871332029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_55
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 79
+        width: 15
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0de55b5ec212a8b10800000000000000
+      internalID: 1984435062526271184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_56
+      rect:
+        serializedVersion: 2
+        x: 1373
+        y: 78
+        width: 28
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ac4882e61ae23250800000000000000
+      internalID: 5923053843956386978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_57
+      rect:
+        serializedVersion: 2
+        x: 1414
+        y: 78
+        width: 28
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfde3716b15534500800000000000000
+      internalID: 379240369716719101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_58
+      rect:
+        serializedVersion: 2
+        x: 1456
+        y: 79
+        width: 26
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ef742b80923a76a0800000000000000
+      internalID: -6450787919863709724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_59
+      rect:
+        serializedVersion: 2
+        x: 1524
+        y: 79
+        width: 19
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9f10095fb064b8e0800000000000000
+      internalID: -1678610386154152033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_60
+      rect:
+        serializedVersion: 2
+        x: 1562
+        y: 78
+        width: 26
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ab4380703217f610800000000000000
+      internalID: 1654811387337329574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_61
+      rect:
+        serializedVersion: 2
+        x: 1605
+        y: 79
+        width: 23
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06af8ba8f0bce9e10800000000000000
+      internalID: 2206424135070448224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_62
+      rect:
+        serializedVersion: 2
+        x: 1645
+        y: 78
+        width: 22
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2e3eb821b7a11b00800000000000000
+      internalID: 797602988355894826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: news-logo_63
+      rect:
+        serializedVersion: 2
+        x: 1752
+        y: 89
+        width: 198
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d0bf5ea45eca5ed0800000000000000
+      internalID: -2424398586287509290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      news-logo_0: 5674431552805302366
+      news-logo_1: 285002938471872773
+      news-logo_10: -2970969103541352421
+      news-logo_11: 799182574549124708
+      news-logo_12: 3738849158889600727
+      news-logo_13: -7426410589097633252
+      news-logo_14: 921366207302552031
+      news-logo_15: 2856534028717604709
+      news-logo_16: 5072376092722599747
+      news-logo_17: 8591907307758133555
+      news-logo_18: -8294879755898672355
+      news-logo_19: -2537845306832245534
+      news-logo_2: -3067850394963054890
+      news-logo_20: -2128854237613824940
+      news-logo_21: -4611638732172519397
+      news-logo_22: 8207609356357620793
+      news-logo_23: -1510587081661080993
+      news-logo_24: -100597230742261475
+      news-logo_25: 3744595340820535590
+      news-logo_26: -6812344438816450510
+      news-logo_27: 4021717950401494086
+      news-logo_28: -8416523721373189687
+      news-logo_29: -2620926028230741996
+      news-logo_3: -876363712067608512
+      news-logo_30: 8933123209592969219
+      news-logo_31: -714776505110050456
+      news-logo_32: -5223310366172157025
+      news-logo_33: 165507365457235963
+      news-logo_34: 3423619389542414234
+      news-logo_35: -8245152800857104494
+      news-logo_36: 3210444225122714787
+      news-logo_37: -2394522937298247327
+      news-logo_38: -8424276406099891184
+      news-logo_39: 705937154919102972
+      news-logo_4: 8088660562265631832
+      news-logo_40: -6261542363534220358
+      news-logo_41: 1388196800928160423
+      news-logo_42: -6630055432258721273
+      news-logo_43: 6733602400252145224
+      news-logo_44: -6351525532653618525
+      news-logo_45: -7035550949563563966
+      news-logo_46: -2712222766993531123
+      news-logo_47: 4719437004586736956
+      news-logo_48: 8188165457953886806
+      news-logo_49: 2124612235700132952
+      news-logo_5: 7363597853806897187
+      news-logo_50: 6416475363555880223
+      news-logo_51: 6751974308297493471
+      news-logo_52: 8849966936181922026
+      news-logo_53: 6045510674408685874
+      news-logo_54: -6070545770871332029
+      news-logo_55: 1984435062526271184
+      news-logo_56: 5923053843956386978
+      news-logo_57: 379240369716719101
+      news-logo_58: -6450787919863709724
+      news-logo_59: -1678610386154152033
+      news-logo_6: 5241896275747124389
+      news-logo_60: 1654811387337329574
+      news-logo_61: 2206424135070448224
+      news-logo_62: 797602988355894826
+      news-logo_63: -2424398586287509290
+      news-logo_7: 6036920788199402918
+      news-logo_8: 4099955130744568935
+      news-logo_9: -8712700927723398649
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

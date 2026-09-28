@@ -1,24 +1,26 @@
-/* ==================== ROOT ==================== */
+:root {
+    --browser-window-height: 90%;
+    --browser-window-width: 80%;
+}
 
 .browser-root {
     flex-grow: 1;
     flex-direction: column;
     background-color: var(--surface-primary);
     overflow: hidden;
+    height: var(--browser-window-height);
+    width: var(--browser-window-width);
 }
-
-/* ==================== TAB BAR ==================== */
 
 .browser-tab-bar {
     height: 42px;
     min-height: 42px;
     flex-direction: row;
     align-items: flex-end;
+    justify-content: space-between;
     padding-left: 8px;
     padding-right: 8px;
     background-color: var(--surface-secondary);
-    border-bottom-color: var(--border-primary);
-    border-bottom-width: 1px;
 }
 
 .browser-tabs-container {
@@ -53,7 +55,7 @@
     height: 16px;
     min-width: 16px;
     margin-right: 8px;
-    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-scale-mode: scale-to-fit;
 }
 
 .browser-tab-title {
@@ -70,7 +72,7 @@
     height: 26px;
     min-width: 26px;
     margin-left: 4px;
-    padding: 0;
+    padding: var(--space-1);
     border-width: 0;
     border-radius: 4px;
     background-color: transparent;
@@ -89,13 +91,14 @@
     min-width: 30px;
     margin-left: 4px;
     margin-bottom: 2px;
-    padding: 0;
+    padding: var(--space-2);
     border-width: 0;
     border-radius: 4px;
     background-color: transparent;
     color: var(--text-primary);
     font-size: 20px;
     -unity-text-align: middle-center;
+    align-self: center;
 }
 
 .browser-add-tab-button:hover {
@@ -107,13 +110,12 @@
     height: 100%;
 }
 
-/* ==================== NAVIGATION BAR ==================== */
-
 .browser-navigation-bar {
     height: 46px;
     min-height: 46px;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     padding-left: 8px;
     padding-right: 8px;
     background-color: var(--surface-primary);
@@ -125,7 +127,7 @@
     height: 34px;
     min-width: 34px;
     margin-right: 2px;
-    padding: 0;
+    padding: var(--space-2);
     border-width: 0;
     border-radius: 4px;
     background-color: transparent;
@@ -148,7 +150,12 @@
     opacity: 0.35;
 }
 
-/* ==================== ADDRESS BAR ==================== */
+.browser-navigation-button-icon {
+    height: 100%;
+    width: 100%;
+    -unity-background-image-scale-mode: scale-to-fit;
+    background-image: resource("Icons/Arrows 1/Double Right/double_arrow_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40");
+}
 
 .browser-address-bar {
     height: 34px;
@@ -161,7 +168,7 @@
     padding-right: 4px;
     border-color: var(--border-primary);
     border-width: 1px;
-    border-radius: 6px;
+    border-radius: 17px;
     background-color: var(--surface-secondary);
 }
 
@@ -199,11 +206,44 @@
     color: var(--text-primary);
 }
 
+.browser-address-field > .unity-text-input {
+    flex-grow: 1;
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-radius: 0;
+    background-color: transparent;
+    color: var(--text-primary);
+}
+
+.browser-address-field > .unity-text-input:hover {
+    border-width: 0;
+    background-color: transparent;
+}
+
+.browser-address-field > .unity-text-input:focus {
+    border-width: 0;
+    background-color: transparent;
+}
+
+.browser-address-field > .unity-text-input:active {
+    border-width: 0;
+    background-color: transparent;
+}
+
 .browser-address-button {
     width: 30px;
     height: 30px;
     min-width: 30px;
-    padding: 0;
+    padding: var(--space-2);
     border-width: 0;
     border-radius: 4px;
     background-color: transparent;
@@ -215,8 +255,6 @@
 .browser-address-button:hover {
     background-color: var(--surface-primary);
 }
-
-/* ==================== BOOKMARKS BAR ==================== */
 
 .browser-bookmarks-bar {
     height: 34px;
@@ -263,7 +301,7 @@
     width: 30px;
     height: 28px;
     min-width: 30px;
-    padding: 0;
+    padding: var(--space-2);
     border-width: 0;
     border-radius: 4px;
     background-color: transparent;
@@ -275,8 +313,6 @@
 .browser-bookmarks-overflow-button:hover {
     background-color: var(--surface-secondary);
 }
-
-/* ==================== PAGE VIEWPORT ==================== */
 
 .browser-page-viewport {
     flex-grow: 1;
@@ -294,8 +330,60 @@
     overflow: hidden;
 }
 
-/* ==================== SHARED ==================== */
+.browser-scroll-view {
+    height: 100%;
+    width: 100%;
+}
 
 .spacing-reset {
     margin: 0;
+}
+
+#BrowserAddressField {
+    flex-grow: 1;
+    height: 30px;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    background-image: none;
+    border-width: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    color: var(--text-primary);
+}
+
+#BrowserAddressField .unity-text-input {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    background-image: none;
+    border-width: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    color: var(--text-primary);
+}
+
+#BrowserAddressField .unity-base-text-field__input {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    background-image: none;
+    border-width: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    color: var(--text-primary);
 }
