@@ -507,7 +507,6 @@ namespace Atlas.Presentation.SOS.Calculator
         private static void ConsumeKeyEvent(
             KeyDownEvent evt)
         {
-            evt.PreventDefault();
             evt.StopPropagation();
         }
 

@@ -1,0 +1,524 @@
+.contacts-root {
+    flex-grow: 1;
+    flex-direction: row;
+    background-color: rgb(245, 246, 248);
+    color: rgb(32, 35, 40);
+    overflow: hidden;
+}
+
+/* ==================== SIDEBAR ==================== */
+
+.contacts-sidebar {
+    width: 210px;
+    min-width: 180px;
+    flex-shrink: 0;
+    background-color: rgb(238, 240, 244);
+    border-right-width: 1px;
+    border-right-color: rgb(216, 219, 225);
+    padding: 14px 10px 10px 10px;
+}
+
+.contacts-sidebar-header {
+    height: 42px;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-left: 8px;
+    padding-right: 4px;
+}
+
+.contacts-app-title {
+    flex-grow: 1;
+    font-size: 20px;
+    -unity-font-style: bold;
+    color: rgb(27, 30, 35);
+}
+
+.contacts-new-button {
+    width: 32px;
+    height: 32px;
+    border-width: 0;
+    border-radius: 7px;
+    background-color: rgb(46, 103, 190);
+    color: white;
+    font-size: 21px;
+    -unity-text-align: middle-center;
+    padding: 0;
+}
+
+.contacts-new-button:hover {
+    background-color: rgb(38, 89, 166);
+}
+
+.contacts-sidebar-section {
+    flex-shrink: 0;
+}
+
+.contacts-nav-button {
+    height: 38px;
+    flex-direction: row;
+    align-items: center;
+    border-width: 0;
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(57, 61, 68);
+    margin-bottom: 2px;
+    padding: 0 10px;
+    -unity-text-align: middle-left;
+}
+
+.contacts-nav-button:hover {
+    background-color: rgba(50, 70, 100, 0.07);
+}
+
+.contacts-nav-button--active {
+    background-color: rgb(216, 227, 245);
+    color: rgb(33, 80, 153);
+}
+
+.contacts-nav-button--active:hover {
+    background-color: rgb(210, 223, 243);
+}
+
+.contacts-nav-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+}
+
+.contacts-nav-label {
+    flex-grow: 1;
+    font-size: 13px;
+    -unity-text-align: middle-left;
+}
+
+.contacts-nav-count {
+    font-size: 11px;
+    color: rgb(112, 117, 125);
+}
+
+.contacts-divider {
+    height: 1px;
+    flex-shrink: 0;
+    background-color: rgb(215, 218, 224);
+    margin: 10px 8px;
+}
+
+.contacts-groups-section {
+    flex-grow: 1;
+    min-height: 80px;
+}
+
+.contacts-section-heading-row {
+    height: 30px;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 8px;
+}
+
+.contacts-section-heading {
+    flex-grow: 1;
+    font-size: 10px;
+    -unity-font-style: bold;
+    color: rgb(113, 118, 127);
+    letter-spacing: 1px;
+}
+
+.contacts-section-action {
+    width: 24px;
+    height: 24px;
+    border-width: 0;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(93, 98, 107);
+    font-size: 17px;
+    padding: 0;
+}
+
+.contacts-section-action:hover {
+    background-color: rgba(50, 70, 100, 0.08);
+}
+
+.contacts-groups-scroll {
+    flex-grow: 1;
+}
+
+.contacts-groups-container {
+    flex-grow: 1;
+}
+
+.contacts-sidebar-spacer {
+    flex-grow: 1;
+    min-height: 10px;
+}
+
+.contacts-settings-button {
+    flex-shrink: 0;
+}
+
+/* ==================== CONTACT LIST ==================== */
+
+.contacts-list-panel {
+    width: 310px;
+    min-width: 260px;
+    max-width: 380px;
+    flex-shrink: 0;
+    background-color: rgb(250, 250, 251);
+    border-right-width: 1px;
+    border-right-color: rgb(220, 222, 227);
+    position: relative;
+}
+
+.contacts-search-area {
+    padding: 16px 14px 10px 14px;
+}
+
+.contacts-search-box {
+    height: 38px;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(235, 237, 241);
+    border-radius: 8px;
+    padding-left: 11px;
+    padding-right: 5px;
+}
+
+.contacts-search-box:focus {
+    background-color: rgb(247, 248, 250);
+    border-width: 1px;
+    border-color: rgb(75, 121, 191);
+}
+
+.contacts-search-icon {
+    width: 21px;
+    color: rgb(105, 110, 118);
+    font-size: 17px;
+}
+
+.contacts-search-field {
+    flex-grow: 1;
+    height: 34px;
+    border-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 13px;
+    color: rgb(36, 39, 44);
+}
+
+.contacts-search-field > .unity-text-field__input {
+    border-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.contacts-search-clear {
+    width: 27px;
+    height: 27px;
+    border-width: 0;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(105, 110, 118);
+    font-size: 17px;
+    padding: 0;
+}
+
+.contacts-search-clear:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+.contacts-list-header {
+    height: 58px;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 16px 8px 16px;
+}
+
+.contacts-list-header > VisualElement {
+    flex-grow: 1;
+}
+
+.contacts-list-title {
+    font-size: 15px;
+    -unity-font-style: bold;
+    color: rgb(35, 38, 43);
+}
+
+.contacts-list-subtitle {
+    margin-top: 2px;
+    font-size: 11px;
+    color: rgb(117, 121, 129);
+}
+
+.contacts-sort-button {
+    height: 28px;
+    border-width: 0;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(87, 92, 100);
+    font-size: 11px;
+    padding: 0 7px;
+}
+
+.contacts-sort-button:hover {
+    background-color: rgb(235, 237, 241);
+}
+
+.contacts-list-divider {
+    height: 1px;
+    flex-shrink: 0;
+    background-color: rgb(226, 228, 232);
+}
+
+.contacts-scroll-view {
+    flex-grow: 1;
+}
+
+.contacts-list-container {
+    flex-grow: 1;
+    padding-top: 5px;
+    padding-bottom: 8px;
+}
+
+/* ==================== EMPTY LIST ==================== */
+
+.contacts-empty-state {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 130px;
+    bottom: 20px;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+
+.contacts-empty-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    background-color: rgb(230, 233, 238);
+    margin-bottom: 12px;
+}
+
+.contacts-empty-title {
+    font-size: 14px;
+    -unity-font-style: bold;
+    color: rgb(62, 66, 73);
+    margin-bottom: 5px;
+}
+
+.contacts-empty-description {
+    max-width: 220px;
+    font-size: 11px;
+    color: rgb(126, 130, 138);
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
+
+/* ==================== DETAILS ==================== */
+
+.contacts-details-panel {
+    flex-grow: 1;
+    min-width: 330px;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+}
+
+.contacts-details-scroll {
+    flex-grow: 1;
+}
+
+.contacts-details-content {
+    width: 100%;
+    max-width: 680px;
+    align-self: center;
+    padding: 12px 38px 40px 38px;
+}
+
+.contacts-profile-toolbar {
+    height: 36px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.contacts-profile-toolbar-spacer {
+    flex-grow: 1;
+}
+
+.contacts-toolbar-button {
+    width: 32px;
+    height: 32px;
+    border-width: 0;
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(83, 88, 96);
+    font-size: 17px;
+    margin-left: 3px;
+    padding: 0;
+}
+
+.contacts-toolbar-button:hover {
+    background-color: rgb(241, 243, 246);
+}
+
+.contacts-favorite-button {
+    font-size: 20px;
+}
+
+.contacts-profile-header {
+    align-items: center;
+    padding-top: 8px;
+    padding-bottom: 20px;
+}
+
+.contacts-profile-avatar {
+    width: 92px;
+    height: 92px;
+    border-radius: 46px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: rgb(219, 229, 245);
+    margin-bottom: 13px;
+}
+
+.contacts-profile-image {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    -unity-background-scale-mode: scale-and-crop;
+}
+
+.contacts-profile-initials {
+    font-size: 28px;
+    -unity-font-style: bold;
+    color: rgb(52, 89, 145);
+}
+
+.contacts-profile-name {
+    font-size: 22px;
+    -unity-font-style: bold;
+    color: rgb(28, 31, 36);
+    -unity-text-align: middle-center;
+}
+
+.contacts-profile-subtitle {
+    margin-top: 4px;
+    font-size: 12px;
+    color: rgb(112, 117, 125);
+    -unity-text-align: middle-center;
+}
+
+.contacts-profile-tags {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 9px;
+}
+
+/* ==================== QUICK ACTIONS ==================== */
+
+.contacts-quick-actions {
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 22px;
+}
+
+.contacts-action-button {
+    width: 84px;
+    height: 54px;
+    align-items: center;
+    justify-content: center;
+    border-width: 0;
+    border-radius: 8px;
+    background-color: rgb(242, 246, 252);
+    color: rgb(43, 91, 165);
+    margin-left: 4px;
+    margin-right: 4px;
+    padding: 5px;
+}
+
+.contacts-action-button:hover {
+    background-color: rgb(230, 238, 249);
+}
+
+.contacts-action-icon {
+    font-size: 17px;
+    margin-bottom: 2px;
+}
+
+.contacts-action-label {
+    font-size: 10px;
+}
+
+.contacts-detail-divider {
+    height: 1px;
+    background-color: rgb(229, 231, 235);
+    margin-bottom: 4px;
+}
+
+/* ==================== DETAIL SECTIONS ==================== */
+
+.contacts-detail-section {
+    padding-top: 20px;
+    padding-bottom: 4px;
+}
+
+.contacts-detail-heading {
+    font-size: 10px;
+    -unity-font-style: bold;
+    color: rgb(104, 109, 118);
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+
+.contacts-detail-fields {
+    width: 100%;
+}
+
+.contacts-notes {
+    font-size: 13px;
+    color: rgb(58, 62, 69);
+    white-space: normal;
+}
+
+.contacts-contact-groups {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+/* ==================== NO SELECTION ==================== */
+
+.contacts-no-selection {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 255, 255);
+}
+
+.contacts-no-selection-icon {
+    width: 76px;
+    height: 76px;
+    border-radius: 38px;
+    background-color: rgb(237, 240, 245);
+    margin-bottom: 16px;
+}
+
+.contacts-no-selection-title {
+    font-size: 17px;
+    -unity-font-style: bold;
+    color: rgb(65, 69, 76);
+    margin-bottom: 6px;
+}
+
+.contacts-no-selection-description {
+    max-width: 280px;
+    font-size: 12px;
+    color: rgb(128, 132, 140);
+    white-space: normal;
+    -unity-text-align: middle-center;
+}

@@ -6,7 +6,7 @@ namespace Atlas.AuthoredData.Users
 {
     [CreateAssetMenu(
         fileName = "UserLibrary",
-        menuName = "SOS/User Library")]
+        menuName = "ATLAS/SOS/User Library")]
     public class UserLibrarySO : ScriptableObject
     {
         public enum UserLoginMethod
