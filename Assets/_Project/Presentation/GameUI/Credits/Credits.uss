@@ -7,7 +7,7 @@
     position: relative;
     overflow: hidden;
     background-color: var(--bg-primary);
-    color: var(--text-primary);
+    color: white;
 }
 
 /* ================================================================
@@ -23,16 +23,31 @@
     overflow: hidden;
 }
 
-.credits-background-glow {
+.credits-background-glow-right {
     position: absolute;
-    width: 760px;
-    height: 760px;
-    right: -280px;
-    top: -340px;
+    width: 900px;
+    height: 900px;
+    right: -360px;
+    top: -420px;
+    background-color:transparent;
+}
 
-    border-radius: 380px;
 
-    background-color: rgba(255, 205, 40, 0.035);
+.credits-background-glow-center {
+    position: absolute;
+    width: 900px;
+    height: 900px;
+    align-self: center;
+    background-color: transparent;
+}
+
+.credits-background-glow-left {
+    position: absolute;
+    width: 900px;
+    height: 900px;
+    left: -360px;
+    bottom: -420px;
+    background-color:transparent;
 }
 
 .credits-background-grid {
@@ -45,8 +60,8 @@
     border-left-width: 1px;
     border-right-width: 1px;
 
-    border-left-color: rgba(255, 255, 255, 0.025);
-    border-right-color: rgba(255, 255, 255, 0.025);
+    border-left-color: rgba(255, 255, 255, 0.018);
+    border-right-color: rgba(255, 255, 255, 0.018);
 }
 
 /* ================================================================
@@ -64,7 +79,7 @@
     align-items: center;
     justify-content: space-between;
 
-    background-color: rgba(10, 13, 18, 0.92);
+    background-color: rgba(10, 13, 18, 0.94);
 }
 
 .credits-header-left {
@@ -79,7 +94,7 @@
 }
 
 .credits-brand {
-    color: var(--accent-primary);
+    color: white;
 
     font-size: 18px;
     -unity-font-style: bold;
@@ -90,16 +105,17 @@
 .credits-header-subtitle {
     margin-top: 3px;
 
-    color: var(--text-muted);
+    color: white;
 
-    font-size: 10px;
+    font-size: 11px;
+
     letter-spacing: 2px;
 }
 
 .credits-header-page {
-    color: var(--text-muted);
+    color: white;
 
-    font-size: 11px;
+    font-size: 12px;
     -unity-font-style: bold;
 
     letter-spacing: 3px;
@@ -109,51 +125,30 @@
     height: 1px;
     min-height: 1px;
 
-    background-color: var(--border-primary);
+    background-color: rgba(255, 255, 255, 0.12);
 }
 
 /* ================================================================
-   SCROLL VIEW
+   VIEWPORT
    ================================================================ */
 
-.credits-scroll {
+.credits-viewport {
     flex-grow: 1;
-
-    background-color: transparent;
-
-    border-width: 0;
-}
-
-.credits-scroll > .unity-scroll-view__content-viewport {
-    flex-grow: 1;
-
+    flex-shrink: 1;
     overflow: hidden;
 }
 
-.credits-scroll > .unity-scroll-view__content-container {
-    flex-grow: 0;
-}
-
-.credits-scroll .unity-scroller {
-    display: none;
-}
-
-.credits-scroll:focus {
-    border-width: 0;
-}
-
 /* ================================================================
-   GENERATED CONTENT CONTAINER
+   GENERATED CONTENT
    ================================================================ */
 
 .credits-content {
     width: 760px;
     max-width: 90%;
-
+    flex-direction: column;
+    flex-grow: 0;
+    flex-shrink: 0;
     align-self: center;
-
-    padding-top: 120px;
-    padding-bottom: 220px;
 }
 
 /* ================================================================
@@ -166,21 +161,10 @@
     margin-bottom: 110px;
 }
 
-.credits-hero-kicker {
-    margin-bottom: 18px;
-
-    color: var(--accent-primary);
-
-    font-size: 11px;
-    -unity-font-style: bold;
-
-    letter-spacing: 4px;
-
-    -unity-text-align: middle-center;
-}
-
 .credits-hero-title {
-    color: var(--text-primary);
+    margin: 0;
+
+    color: white;
 
     font-size: 46px;
     -unity-font-style: bold;
@@ -194,23 +178,37 @@
     color: var(--accent-primary);
 }
 
+.credits-hero-kicker {
+    margin-top: 18px;
+    margin-bottom: 0;
+
+    color: white;
+
+    font-size: 13px;
+    -unity-font-style: bold;
+
+    letter-spacing: 3px;
+
+    -unity-text-align: middle-center;
+}
+
 .credits-hero-school {
-    margin-top: 30px;
+    margin-top: 34px;
 
-    color: var(--text-secondary);
+    color: white;
 
-    font-size: 15px;
+    font-size: 17px;
     -unity-font-style: bold;
 
     -unity-text-align: middle-center;
 }
 
 .credits-hero-detail {
-    margin-top: 7px;
+    margin-top: 8px;
 
-    color: var(--text-muted);
+    color: white;
 
-    font-size: 12px;
+    font-size: 14px;
 
     letter-spacing: 1px;
 
@@ -222,22 +220,26 @@
    ================================================================ */
 
 .credits-section {
-    margin-bottom: 90px;
+    width: 100%;
+
+    margin-bottom: 58px;
 }
 
 .credits-section-title {
-    margin-bottom: 34px;
-    padding-bottom: 12px;
+    margin: 0;
+    margin-bottom: 18px;
+    padding: 0;
 
-    border-bottom-width: 1px;
-    border-bottom-color: var(--border-primary);
+    border-width: 0;
 
-    color: var(--accent-primary);
+    color: white;
 
-    font-size: 11px;
+    font-size: 18px;
     -unity-font-style: bold;
 
-    letter-spacing: 3px;
+    letter-spacing: 1px;
+
+    -unity-text-align: middle-center;
 }
 
 /* ================================================================
@@ -245,53 +247,102 @@
    ================================================================ */
 
 .credits-entry {
-    margin-bottom: 25px;
+    width: 100%;
 
+    margin: 0;
+    margin-bottom: 8px;
+
+    flex-direction: row;
     align-items: center;
-}
-
-.credits-entry--featured {
-    margin-top: 8px;
-    margin-bottom: 40px;
-}
-
-.credits-name {
-    color: var(--text-primary);
-
-    font-size: 18px;
-    -unity-font-style: bold;
-
-    -unity-text-align: middle-center;
+    justify-content: center;
 }
 
 .credits-role {
-    margin-top: 5px;
+    width: 50%;
 
-    color: var(--text-muted);
+    margin: 0;
+    padding: 0;
+    padding-right: 14px;
 
-    font-size: 12px;
+    color: white;
+
+    font-size: 15px;
+
+    -unity-text-align: middle-right;
+}
+
+.credits-name {
+    width: 50%;
+
+    margin: 0;
+    padding: 0;
+    padding-left: 14px;
+
+    color: white;
+
+    font-size: 15px;
+    -unity-font-style: normal;
+
+    -unity-text-align: middle-left;
+}
+
+/* ================================================================
+   FEATURED ENTRIES
+   ================================================================ */
+
+.credits-entry--featured {
+    margin-top: 4px;
+    margin-bottom: 38px;
+
+    flex-direction: column;
+    align-items: center;
+}
+
+.credits-entry--featured .credits-role {
+    width: auto;
+
+    margin: 0;
+    margin-bottom: 6px;
+    padding: 0;
+
+    color: white;
+
+    font-size: 16px;
+    -unity-font-style: bold;
+
+    letter-spacing: 1px;
 
     -unity-text-align: middle-center;
 }
 
-.credits-role--joke {
-    color: var(--text-secondary);
+.credits-entry--featured .credits-name {
+    width: auto;
+
+    margin: 0;
+    padding: 0;
+
+    color: white;
+
+    font-size: 15px;
+    -unity-font-style: normal;
+
+    letter-spacing: 0;
+
+    -unity-text-align: middle-center;
+}
+
+/* ================================================================
+   JOKE ENTRIES
+   ================================================================ */
+
+.credits-entry--joke .credits-role {
+    color: white;
 
     -unity-font-style: italic;
 }
 
-.credits-entry--featured .credits-name {
-    color: var(--accent-primary);
-
-    font-size: 23px;
-
-    letter-spacing: 1px;
-}
-
-.credits-entry--featured .credits-role {
-    color: var(--text-secondary);
-
-    font-size: 13px;
+.credits-entry--joke .credits-name {
+    color: white;
 }
 
 /* ================================================================
@@ -300,28 +351,31 @@
 
 .credits-special-thanks {
     align-items: center;
+
+    margin-top: 32px;
+    margin-bottom: 52px;
 }
 
 .credits-special-name {
-    margin-top: 24px;
+    margin-top: 16px;
 
-    color: var(--text-primary);
+    color: white;
 
-    font-size: 16px;
+    font-size: 15px;
     -unity-font-style: bold;
 
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 
     -unity-text-align: middle-center;
 }
 
 .credits-special-description {
-    margin-top: 5px;
-    margin-bottom: 16px;
+    margin-top: 6px;
+    margin-bottom: 14px;
 
-    color: var(--text-muted);
+    color: white;
 
-    font-size: 12px;
+    font-size: 14px;
 
     -unity-text-align: middle-center;
 }
@@ -331,44 +385,44 @@
    ================================================================ */
 
 .credits-ending {
-    min-height: 320px;
+    min-height: 360px;
 
     align-items: center;
     justify-content: center;
 }
 
 .credits-ending-title {
-    color: var(--text-primary);
+    color: white;
 
     font-size: 24px;
     -unity-font-style: bold;
 
-    letter-spacing: 3px;
+    letter-spacing: 2px;
 
     -unity-text-align: middle-center;
 }
 
 .credits-ending-subtitle {
-    margin-top: 12px;
+    margin-top: 10px;
 
-    color: var(--accent-primary);
+    color: white;
 
-    font-size: 11px;
+    font-size: 13px;
     -unity-font-style: bold;
 
-    letter-spacing: 4px;
+    letter-spacing: 3px;
 
     -unity-text-align: middle-center;
 }
 
 .credits-ending-meta {
-    margin-top: 48px;
+    margin-top: 42px;
 
-    color: var(--text-muted);
+    color: white;
 
-    font-size: 10px;
+    font-size: 11px;
 
-    letter-spacing: 3px;
+    letter-spacing: 2px;
 
     -unity-text-align: middle-center;
 }
@@ -384,9 +438,9 @@
     right: 0;
     top: 89px;
 
-    height: 70px;
+    height: 75px;
 
-    background-color: rgba(10, 13, 18, 0.72);
+    background-color: transparent;
 }
 
 .credits-bottom-fade {
@@ -396,9 +450,9 @@
     right: 0;
     bottom: 0;
 
-    height: 110px;
+    height: 175px;
 
-    background-color: rgba(10, 13, 18, 0.82);
+    background-color: transparent;
 }
 
 /* ================================================================
@@ -412,7 +466,7 @@
     right: 0;
     bottom: 0;
 
-    height: 72px;
+    height: 64px;
 
     align-items: center;
     justify-content: center;
@@ -434,12 +488,12 @@
 
 .credits-control-divider {
     width: 1px;
-    height: 22px;
+    height: 20px;
 
-    margin-left: 24px;
-    margin-right: 24px;
+    margin-left: 22px;
+    margin-right: 22px;
 
-    background-color: var(--border-primary);
+    background-color: rgba(255, 255, 255, 0.18);
 }
 
 /* ================================================================
@@ -453,23 +507,24 @@
     padding-left: 8px;
     padding-right: 8px;
 
-    margin-right: 9px;
+    margin-right: 8px;
 
     align-items: center;
     justify-content: center;
 
-    background-color: var(--surface-primary);
+    background-color: rgba(255, 255, 255, 0.08);
 
     border-width: 1px;
-    border-color: var(--border-secondary);
+    border-color: rgba(255, 255, 255, 0.22);
 
-    border-radius: 4px;
+    border-radius: 3px;
 }
 
 .credits-key-label {
-    padding: 0px;
-    margin: 0px;
-    color: var(--text-secondary);
+    padding: 0;
+    margin: 0;
+
+    color: white;
 
     font-size: 9px;
     -unity-font-style: bold;
@@ -480,7 +535,7 @@
 }
 
 .credits-control-label {
-    color: var(--text-muted);
+    color: white;
 
     font-size: 10px;
     -unity-font-style: bold;
@@ -491,23 +546,16 @@
 }
 
 /* ================================================================
-   FAST FORWARD ACTIVE CONTROL STATE
+   FAST FORWARD ACTIVE STATE
    ================================================================ */
 
-.credits-controls--fast-forward .credits-key {
+.credits-key--active {
     background-color: var(--accent-primary);
-
     border-color: var(--accent-primary);
 }
 
-.credits-controls--fast-forward .credits-key-label {
-    color: var(--text-inverse);
-}
-
-.credits-controls--fast-forward
-.credits-control-group:first-child
-.credits-control-label {
-    color: var(--text-primary);
+.credits-key--active .credits-key-label {
+    color: white;
 }
 
 /* ================================================================
@@ -518,61 +566,44 @@
     position: absolute;
 
     right: 40px;
-    bottom: 92px;
+    bottom: 84px;
 
-    height: 42px;
+    height: 36px;
 
-    padding-left: 13px;
-    padding-right: 13px;
+    padding-left: 11px;
+    padding-right: 11px;
 
     flex-direction: row;
     align-items: center;
     justify-content: center;
 
-    background-color: var(--surface-primary);
+    background-color: rgba(10, 13, 18, 0.80);
 
     border-width: 1px;
-    border-color: var(--border-primary);
+    border-color: rgba(255, 255, 255, 0.18);
 
-    border-radius: 4px;
+    border-radius: 3px;
 
     display: none;
 }
 
 .credits-fast-forward-glyph {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
 
-    margin-right: 8px;
+    margin-right: 7px;
 
     -unity-background-scale-mode: scale-to-fit;
-
-    /*
-     * Assign the actual fast-forward SVG/texture here once the
-     * project glyph asset exists.
-     *
-     * Example:
-     *
-     * background-image:
-     *     url("project://database/Assets/_Project/Presentation/Glyphs/Actions/FastForward.svg");
-     */
 }
 
 .credits-fast-forward-value {
-    color: var(--accent-primary);
+    color: white;
 
-    font-size: 12px;
+    font-size: 11px;
     -unity-font-style: bold;
 
     letter-spacing: 1px;
 }
-
-/* ================================================================
-   OPTIONAL ACTIVE INDICATOR CLASS
-
-   This gives us the option to toggle visibility using a USS class
-   instead of setting DisplayStyle directly from CreditsView.
-   ================================================================ */
 
 .credits-fast-forward-indicator--visible {
     display: flex;

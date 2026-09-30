@@ -34,9 +34,6 @@ namespace Atlas.Presentation.Credits
             VisualElement hero = new();
             hero.AddToClassList("credits-hero");
 
-            Label kicker = new(library.ProjectLabel);
-            kicker.AddToClassList("credits-hero-kicker");
-
             Label title = new(library.ProjectTitle);
             title.AddToClassList("credits-hero-title");
 
@@ -44,15 +41,18 @@ namespace Atlas.Presentation.Credits
             titleAccent.AddToClassList("credits-hero-title");
             titleAccent.AddToClassList("credits-hero-title--accent");
 
+            Label kicker = new(library.ProjectLabel);
+            kicker.AddToClassList("credits-hero-kicker");
+
             Label institution = new(library.Institution);
             institution.AddToClassList("credits-hero-school");
 
             Label description = new(library.ProjectDescription);
             description.AddToClassList("credits-hero-detail");
 
-            hero.Add(kicker);
             hero.Add(title);
             hero.Add(titleAccent);
+            hero.Add(kicker);
             hero.Add(institution);
             hero.Add(description);
             parent.Add(hero);
@@ -85,14 +85,14 @@ namespace Atlas.Presentation.Credits
             entry.AddToClassList("credits-entry");
             entry.AddToClassList(GetEntryStyleClass(entryData.Style));
 
-            Label name = new(entryData.Name);
-            name.AddToClassList("credits-name");
-
             Label role = new(entryData.Role);
             role.AddToClassList("credits-role");
 
-            entry.Add(name);
+            Label name = new(entryData.Name);
+            name.AddToClassList("credits-name");
+
             entry.Add(role);
+            entry.Add(name);
             parent.Add(entry);
         }
 

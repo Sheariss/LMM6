@@ -1,232 +1,54 @@
-﻿<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
     <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
     <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
     <Style src="project://database/Assets/_Project/Presentation/GameUI/Credits/Credits.uss?fileID=7433441132597879392&amp;guid=aff7ddca728eecd4bbb62febc64579cd&amp;type=3#Credits"/>
-
-<!-- =========================================================
-         ROOT
-         ========================================================= -->
-
-    <ui:VisualElement
-        name="CreditsRoot"
-        class="credits-root">
-
-        <!-- =====================================================
-             BACKGROUND
-             ===================================================== -->
-
-        <ui:VisualElement
-            name="Credits-Background"
-            class="credits-background"
-            picking-mode="Ignore">
-
-            <ui:VisualElement
-                class="credits-background-glow"
-                picking-mode="Ignore"/>
-
-            <ui:VisualElement
-                class="credits-background-grid"
-                picking-mode="Ignore"/>
-
+    <ui:VisualElement name="CreditsRoot" class="credits-root">
+        <ui:VisualElement name="Credits-Background" picking-mode="Ignore" class="credits-background">
+            <ui:VisualElement picking-mode="Ignore" name="VisualElement" class="credits-background-glow-right" style="background-color: rgba(255, 255, 255, 0); background-image: resource(&quot;Glow/Radial White Glow&quot;); -unity-background-image-tint-color: rgba(27, 43, 70, 0.745);"/>
+            <ui:VisualElement picking-mode="Ignore" name="VisualElement" class="credits-background-glow-center" style="background-color: rgba(255, 255, 255, 0); background-image: resource(&quot;Glow/Radial White Glow&quot;); -unity-background-image-tint-color: rgba(27, 43, 70, 0.271);"/>
+            <ui:VisualElement picking-mode="Ignore" name="VisualElement" class="credits-background-glow-left" style="background-color: rgba(255, 255, 255, 0); background-image: resource(&quot;Glow/Radial White Glow&quot;); -unity-background-image-tint-color: rgba(27, 43, 70, 0.745);"/>
+            <ui:VisualElement picking-mode="Ignore" class="credits-background-grid"/>
         </ui:VisualElement>
-
-        <!-- =====================================================
-             HEADER
-             ===================================================== -->
-
-        <ui:VisualElement
-            name="Credits-Header"
-            class="credits-header">
-
-            <ui:VisualElement
-                class="credits-header-left">
-
-                <ui:Label
-                    text="ATLAS"
-                    class="credits-brand"/>
-
-                <ui:Label
-                    text="SYSTEM CONTRIBUTORS"
-                    class="credits-header-subtitle"/>
-
+        <ui:VisualElement name="Credits-Header" class="credits-header">
+            <ui:VisualElement class="credits-header-left">
+                <ui:Label text="ATLAS" class="credits-brand"/>
+                <ui:Label text="SYSTEM CONTRIBUTORS" class="credits-header-subtitle"/>
             </ui:VisualElement>
-
-            <ui:VisualElement
-                class="credits-header-right">
-
-                <ui:Label
-                    text="CREDITS"
-                    class="credits-header-page"/>
-
+            <ui:VisualElement class="credits-header-right">
+                <ui:Label text="CREDITS" class="credits-header-page"/>
             </ui:VisualElement>
-
         </ui:VisualElement>
-
-        <ui:VisualElement
-            class="credits-header-divider"
-            picking-mode="Ignore"/>
-
-        <!-- =====================================================
-             CREDITS VIEWPORT
-             ===================================================== -->
-
-        <ui:ScrollView
-            name="Credits-ScrollView"
-            class="credits-scroll"
-            mode="Vertical"
-            horizontal-scroller-visibility="Hidden"
-            vertical-scroller-visibility="Hidden"
-            focusable="true">
-
-            <!--
-                CreditsViewBuilder populates this container.
-
-                Runtime structure:
-
-                Credits-Content
-                ├── Hero
-                ├── Development Team
-                ├── Engineering
-                ├── Design
-                ├── Narrative & Content
-                ├── Documentation
-                ├── Quality Assurance
-                ├── Special Thanks
-                └── Ending
-            -->
-
-            <ui:VisualElement
-                name="Credits-Content"
-                class="credits-content"/>
-
-        </ui:ScrollView>
-
-        <!-- =====================================================
-             VIEWPORT FADES
-             ===================================================== -->
-
-        <ui:VisualElement
-            name="Credits-TopFade"
-            class="credits-top-fade"
-            picking-mode="Ignore"/>
-
-        <ui:VisualElement
-            name="Credits-BottomFade"
-            class="credits-bottom-fade"
-            picking-mode="Ignore"/>
-
-        <!-- =====================================================
-             INPUT CONTROLS
-             ===================================================== -->
-
-        <ui:VisualElement
-            name="Credits-Controls"
-            class="credits-controls"
-            picking-mode="Ignore">
-
-            <ui:VisualElement
-                class="credits-controls-inner"
-                picking-mode="Ignore">
-
-                <!-- =============================================
-                     FAST FORWARD INPUT
-                     ============================================= -->
-
-                <ui:VisualElement
-                    class="credits-control-group"
-                    picking-mode="Ignore">
-
-                    <ui:VisualElement
-                        name="Credits-FastForwardKey"
-                        class="credits-key"
-                        picking-mode="Ignore">
-
-                        <ui:Label
-                            name="Credits-FastForwardKeyLabel"
-                            text="SPACE"
-                            class="credits-key-label"
-                            picking-mode="Ignore"/>
-
+        <ui:VisualElement picking-mode="Ignore" class="credits-header-divider"/>
+        <ui:VisualElement name="Credits-Viewport" class="credits-viewport">
+            <ui:VisualElement name="Credits-Content" class="credits-content"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="Credits-TopFade" picking-mode="Ignore" class="credits-top-fade" style="background-image: resource(&quot;Shadows/Top Black2&quot;);"/>
+        <ui:VisualElement name="Credits-BottomFade" picking-mode="Ignore" class="credits-bottom-fade" style="background-image: resource(&quot;Shadows/Bottom Black2&quot;);">
+            <ui:VisualElement name="Credits-BottomFade" picking-mode="Ignore" class="credits-bottom-fade" style="background-image: resource(&quot;Shadows/Bottom Black2&quot;);"/>
+            <ui:VisualElement name="Credits-BottomFade" picking-mode="Ignore" class="credits-bottom-fade" style="background-image: resource(&quot;Shadows/Bottom Black2&quot;); -unity-background-image-tint-color: rgba(0, 0, 0, 0);"/>
+            <ui:VisualElement name="Credits-BottomFade" picking-mode="Ignore" class="credits-bottom-fade" style="background-image: resource(&quot;Shadows/Bottom Black2&quot;); -unity-background-image-tint-color: rgba(0, 0, 0, 0);"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="Credits-Controls" picking-mode="Ignore" class="credits-controls" style="background-image: none;">
+            <ui:VisualElement picking-mode="Ignore" class="credits-controls-inner">
+                <ui:VisualElement picking-mode="Ignore" class="credits-control-group">
+                    <ui:VisualElement name="Credits-FastForwardKey" picking-mode="Ignore" class="credits-key">
+                        <ui:Label name="Credits-FastForwardKeyLabel" text="SPACE" picking-mode="Ignore" class="credits-key-label"/>
                     </ui:VisualElement>
-
-                    <ui:Label
-                        name="Credits-FastForwardControlLabel"
-                        text="HOLD TO FAST FORWARD"
-                        class="credits-control-label"
-                        picking-mode="Ignore"/>
-
+                    <ui:Label name="Credits-FastForwardControlLabel" text="HOLD TO FAST FORWARD" picking-mode="Ignore" class="credits-control-label"/>
                 </ui:VisualElement>
-
-                <!-- =============================================
-                     DIVIDER
-                     ============================================= -->
-
-                <ui:VisualElement
-                    class="credits-control-divider"
-                    picking-mode="Ignore"/>
-
-                <!-- =============================================
-                     SKIP INPUT
-                     ============================================= -->
-
-                <ui:VisualElement
-                    class="credits-control-group"
-                    picking-mode="Ignore">
-
-                    <ui:VisualElement
-                        name="Credits-SkipKey"
-                        class="credits-key"
-                        picking-mode="Ignore">
-
-                        <ui:Label
-                            name="Credits-SkipKeyLabel"
-                            text="ESC"
-                            class="credits-key-label"
-                            picking-mode="Ignore"/>
-
+                <ui:VisualElement picking-mode="Ignore" class="credits-control-divider"/>
+                <ui:VisualElement picking-mode="Ignore" class="credits-control-group">
+                    <ui:VisualElement name="Credits-SkipKey" picking-mode="Ignore" class="credits-key">
+                        <ui:Label name="Credits-SkipKeyLabel" text="ESC" picking-mode="Ignore" class="credits-key-label"/>
                     </ui:VisualElement>
-
-                    <ui:Label
-                        name="Credits-SkipControlLabel"
-                        text="SKIP"
-                        class="credits-control-label"
-                        picking-mode="Ignore"/>
-
+                    <ui:Label name="Credits-SkipControlLabel" text="SKIP" picking-mode="Ignore" class="credits-control-label"/>
                 </ui:VisualElement>
-
             </ui:VisualElement>
-
         </ui:VisualElement>
-
-        <!-- =====================================================
-             FAST FORWARD STATE INDICATOR
-             ===================================================== -->
-
-        <ui:VisualElement
-            name="Credits-FastForwardIndicator"
-            class="credits-fast-forward-indicator"
-            picking-mode="Ignore">
-
-            <!--
-                Actual Fast Forward glyph.
-                The SVG / texture should be assigned through USS
-                rather than using Unicode symbols as icons.
-            -->
-
-            <ui:VisualElement
-                name="Credits-FastForwardGlyph"
-                class="credits-fast-forward-glyph"
-                picking-mode="Ignore"/>
-
-            <ui:Label
-                name="Credits-FastForwardValue"
-                text="4×"
-                class="credits-fast-forward-value"
-                picking-mode="Ignore"/>
-
+        <ui:VisualElement name="Credits-FastForwardIndicator" picking-mode="Ignore" class="credits-fast-forward-indicator">
+            <ui:VisualElement name="Credits-FastForwardGlyph" picking-mode="Ignore" class="credits-fast-forward-glyph"/>
+            <ui:Label name="Credits-FastForwardValue" text="4×" picking-mode="Ignore" class="credits-fast-forward-value"/>
         </ui:VisualElement>
-
     </ui:VisualElement>
-
 </ui:UXML>

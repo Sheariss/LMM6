@@ -7,9 +7,13 @@ namespace Atlas.Presentation.Credits
     public sealed class CreditsView
     {
         private readonly CreditsBinder binder;
+
         private Action fastForwardStarted;
         private Action fastForwardEnded;
         private Action skipPressed;
+
+        private float scrollPosition;
+        private bool isFastForwardKeyHeld;
 
         public VisualElement Content => binder.Content;
 
@@ -23,50 +27,61 @@ namespace Atlas.Presentation.Credits
             fastForwardStarted = onFastForwardStarted;
             fastForwardEnded = onFastForwardEnded;
             skipPressed = onSkipPressed;
-            binder.ScrollView.RegisterCallback<KeyDownEvent>(OnKeyDown);
-            binder.ScrollView.RegisterCallback<KeyUpEvent>(OnKeyUp);
-            binder.ScrollView.focusable = true;
-            binder.ScrollView.Focus();
+
+            binder.Root.RegisterCallback<KeyDownEvent>(OnKeyDown);
+            binder.Root.RegisterCallback<KeyUpEvent>(OnKeyUp);
+
+            binder.Root.focusable = true;
+            binder.Root.Focus();
         }
 
         public void UnregisterCallbacks()
         {
-            binder.ScrollView.UnregisterCallback<KeyDownEvent>(OnKeyDown);
-            binder.ScrollView.UnregisterCallback<KeyUpEvent>(OnKeyUp);
+            binder.Root.UnregisterCallback<KeyDownEvent>(OnKeyDown);
+            binder.Root.UnregisterCallback<KeyUpEvent>(OnKeyUp);
+
             fastForwardStarted = null;
             fastForwardEnded = null;
             skipPressed = null;
+            isFastForwardKeyHeld = false;
         }
 
-        public void ScrollToTop()
+        public void InitializePosition()
         {
-            binder.ScrollView.scrollOffset = Vector2.zero;
+            float viewportHeight = binder.Viewport.resolvedStyle.height;
+
+            scrollPosition = viewportHeight;
+            ApplyPosition();
         }
 
         public void Scroll(float amount)
         {
-            Vector2 offset = binder.ScrollView.scrollOffset;
-            offset.y += amount;
-            binder.ScrollView.scrollOffset = offset;
+            scrollPosition -= amount;
+            ApplyPosition();
         }
 
         public bool HasReachedEnd()
         {
-            float viewportHeight = binder.ScrollView.contentViewport.layout.height;
-            float contentHeight = binder.ScrollView.contentContainer.layout.height;
+            float contentHeight = binder.Content.resolvedStyle.height;
 
-            if (contentHeight <= viewportHeight)
+            if (contentHeight <= 0f)
                 return false;
 
-            float maxScroll = contentHeight - viewportHeight;
-            return binder.ScrollView.scrollOffset.y >= maxScroll - 1f;
+            return scrollPosition <= -contentHeight;
         }
 
         public void SetFastForwarding(bool active, float multiplier)
         {
-            binder.FastForwardIndicator.style.display = active ? DisplayStyle.Flex : DisplayStyle.None;
+            binder.FastForwardIndicator.style.display = active
+                ? DisplayStyle.Flex
+                : DisplayStyle.None;
+
             binder.FastForwardValue.text = $"×{multiplier:0.#}";
-            binder.Controls.EnableInClassList("credits-controls--fast-forward", active);
+
+            binder.FastForwardKey.EnableInClassList(
+                "credits-key--active",
+                active
+            );
         }
 
         public void ShowControls()
@@ -81,15 +96,27 @@ namespace Atlas.Presentation.Credits
 
         public void Focus()
         {
-            binder.ScrollView.Focus();
+            binder.Root.Focus();
+        }
+
+        private void ApplyPosition()
+        {
+            binder.Content.transform.position = new Vector3(
+                0f,
+                scrollPosition,
+                0f
+            );
         }
 
         private void OnKeyDown(KeyDownEvent evt)
         {
             if (evt.keyCode == KeyCode.Space || evt.keyCode == KeyCode.Return)
             {
-                if (!evt.repeat)
+                if (!isFastForwardKeyHeld)
+                {
+                    isFastForwardKeyHeld = true;
                     fastForwardStarted?.Invoke();
+                }
 
                 evt.StopPropagation();
                 return;
@@ -107,7 +134,12 @@ namespace Atlas.Presentation.Credits
             if (evt.keyCode != KeyCode.Space && evt.keyCode != KeyCode.Return)
                 return;
 
-            fastForwardEnded?.Invoke();
+            if (isFastForwardKeyHeld)
+            {
+                isFastForwardKeyHeld = false;
+                fastForwardEnded?.Invoke();
+            }
+
             evt.StopPropagation();
         }
     }

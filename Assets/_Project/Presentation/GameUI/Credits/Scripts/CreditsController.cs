@@ -18,7 +18,7 @@ namespace Atlas.Presentation.Credits
 
         // -------------------- SCROLLING --------------------
         [Header("Scrolling")]
-        [SerializeField] private float scrollSpeed = 35f;
+        [SerializeField] private float scrollSpeed = 100f;
         [SerializeField] private float fastForwardMultiplier = 4f;
         [SerializeField] private float startDelay = 1.5f;
         [SerializeField] private float endDelay = 2.5f;
@@ -53,16 +53,15 @@ namespace Atlas.Presentation.Credits
             }
 
             binder = new CreditsBinder(uiDoc.rootVisualElement);
-
             view = new CreditsView(binder);
-
             builder = new CreditsViewBuilder(view, creditsLibrary);
 
             builder.Build();
             BindActions();
-            InitializeView();
 
-            isInitialized = true;
+            binder.Viewport.RegisterCallback<GeometryChangedEvent>(
+                OnViewportReady
+            );
         }
 
         private void Update()
@@ -106,12 +105,17 @@ namespace Atlas.Presentation.Credits
 
         private void OnDestroy()
         {
-            if (view == null)
+            if (binder != null)
             {
-                return;
+                binder.Viewport.UnregisterCallback<GeometryChangedEvent>(
+                    OnViewportReady
+                );
             }
 
-            view.UnregisterCallbacks();
+            if (view != null)
+            {
+                view.UnregisterCallbacks();
+            }
         }
 
         // -------------------- DEPENDENCIES --------------------
@@ -136,6 +140,22 @@ namespace Atlas.Presentation.Credits
             return valid;
         }
 
+        // -------------------- INITIALIZATION --------------------
+        private void OnViewportReady(GeometryChangedEvent evt)
+        {
+            if (isInitialized || evt.newRect.height <= 0f)
+            {
+                return;
+            }
+
+            binder.Viewport.UnregisterCallback<GeometryChangedEvent>(
+                OnViewportReady
+            );
+
+            InitializeView();
+            isInitialized = true;
+        }
+
         // -------------------- ACTION BINDING --------------------
         private void BindActions()
         {
@@ -147,7 +167,6 @@ namespace Atlas.Presentation.Credits
         }
 
         // -------------------- VIEW --------------------
-
         private void InitializeView()
         {
             startTimer = startDelay;
@@ -156,18 +175,13 @@ namespace Atlas.Presentation.Credits
             hasReachedEnd = false;
             isExiting = false;
 
-            view.SetFastForwarding(
-                false,
-                fastForwardMultiplier
-            );
-
+            view.InitializePosition();
+            view.SetFastForwarding(false, fastForwardMultiplier);
             view.ShowControls();
-            view.ScrollToTop();
             view.Focus();
         }
 
         // -------------------- ACTIONS --------------------
-
         private void OnFastForwardStarted()
         {
             if (hasReachedEnd || isExiting || isFastForwarding)
@@ -177,7 +191,10 @@ namespace Atlas.Presentation.Credits
 
             isFastForwarding = true;
 
-            view.SetFastForwarding(true, fastForwardMultiplier);
+            view.SetFastForwarding(
+                true,
+                fastForwardMultiplier
+            );
         }
 
         private void OnFastForwardEnded()
@@ -189,7 +206,10 @@ namespace Atlas.Presentation.Credits
 
             isFastForwarding = false;
 
-            view.SetFastForwarding(false, fastForwardMultiplier);
+            view.SetFastForwarding(
+                false,
+                fastForwardMultiplier
+            );
         }
 
         private void OnSkipPressed()
@@ -208,13 +228,15 @@ namespace Atlas.Presentation.Credits
             isFastForwarding = false;
             endTimer = 0f;
 
-            view.SetFastForwarding(false, fastForwardMultiplier);
+            view.SetFastForwarding(
+                false,
+                fastForwardMultiplier
+            );
 
             view.HideControls();
         }
 
         // -------------------- NAVIGATION --------------------
-
         private void ReturnToMainMenu()
         {
             if (isExiting)
@@ -223,6 +245,7 @@ namespace Atlas.Presentation.Credits
             }
 
             isExiting = true;
+
             gameStateManager.EnterMainMenu();
         }
     }

@@ -1,10 +1,12 @@
 using UnityEngine.UIElements;
+using Atlas.Utils;
 
 namespace Atlas.Presentation.Credits
 {
     public sealed class CreditsBinder : UIBinder
     {
-        public ScrollView ScrollView { get; }
+        public VisualElement Root { get; }
+        public VisualElement Viewport { get; }
         public VisualElement Content { get; }
         public VisualElement Controls { get; }
         public VisualElement FastForwardKey { get; }
@@ -19,7 +21,9 @@ namespace Atlas.Presentation.Credits
 
         public CreditsBinder(VisualElement root)
         {
-            ScrollView = Bind<ScrollView>(root, "Credits-ScrollView");
+            Root = root;
+
+            Viewport = Bind<VisualElement>(root, "Credits-Viewport");
             Content = Bind<VisualElement>(root, "Credits-Content");
             Controls = Bind<VisualElement>(root, "Credits-Controls");
             FastForwardKey = Bind<VisualElement>(root, "Credits-FastForwardKey");

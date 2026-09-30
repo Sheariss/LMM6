@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Atlas.Core
+namespace Atlas.Core.Settings
 {
     [Serializable]
     public sealed class SettingsData

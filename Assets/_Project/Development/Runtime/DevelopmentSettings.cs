@@ -7,7 +7,8 @@ namespace Atlas.Development
         Normal,
         MainMenu,
         NewGame,
-        SOS
+        SOS,
+        Credits
     }
 
     [CreateAssetMenu(

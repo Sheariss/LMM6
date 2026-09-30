@@ -94,7 +94,10 @@ namespace Atlas.Core.GameState
             return current switch
             {
                 GameFlowState.Booting =>
-                    target == GameFlowState.Splash,
+                    target == GameFlowState.Splash ||
+                    // For dev only
+                    // TODO Removr after degv or make a matrix specifically for dev
+                    target == GameFlowState.Credits,
 
                 GameFlowState.Splash =>
                     target == GameFlowState.MainMenu,

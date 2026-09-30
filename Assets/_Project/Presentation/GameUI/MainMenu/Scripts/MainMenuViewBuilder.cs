@@ -7,7 +7,7 @@ namespace Atlas.Presentation.GameUI.MainMenu
     public sealed class MainMenuViewBuilder
     {
         private readonly SaveManager saveManager;
-        private readonly ProgressionManager progressionManager;
+        //private readonly ProgressionManager progressionManager;
 
         public MainMenuViewBuilder(SaveManager saveManager/*, ProgressionManager progressionManager*/)
         {

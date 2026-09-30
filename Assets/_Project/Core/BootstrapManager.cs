@@ -149,6 +149,10 @@ namespace Atlas.Core
                     case DevelopmentStartPoint.SOS:
                         //StartDevelopmentSOS();
                         return;
+                    case DevelopmentStartPoint.Credits:
+                        gameStateManager.EnterCredits();
+                        return;
+
                 }
             }
 

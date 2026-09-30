@@ -1,0 +1,124 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e868bf8f21a44b446bff5b7c16601068, type: 3}
+  m_Name: CreditsLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.Credits.CreditsLibrary
+  projectLabel: A TEAM ATLAS PROJECT
+  projectTitle: 'INTERACTIVE INVESTIGATION '
+  projectSubtitle: SIMULATOR
+  institution: Polytechnic University of Puerto Rico
+  projectDescription: Computer Science Capstone Project
+  sections:
+  - title: DEVELOPMENT TEAM
+    entries:
+    - name: Karla V. Torres Casiano
+      role: PROJECT LEAD
+      style: 1
+    - name: Team Atlas
+      role: DEVELOPMENT TEAM
+      style: 1
+  - title: ENGINEERING
+    entries:
+    - name: Karla V. Torres Casiano
+      role: LEAD PROGRAMMER
+      style: 0
+    - name: Karla V. Torres Casiano
+      role: SYSTEMS  PROGRAMMER
+      style: 0
+    - name: Karla V. Torres Casiano
+      role: UI PROGRAMMER
+      style: 0
+    - name: Karla V. Torres Casiano
+      role: TOOLS PROGRAMMER
+      style: 0
+    - name: Karla V. Torres Casiano
+      role: THE PERSON WHO FIXES IT WHEN IT BREAKS
+      style: 2
+  - title: DESIGN
+    entries:
+    - name: Karla V. Torres Casiano
+      role: GAME DESIGN
+      style: 0
+    - name: Karla V. Torres Casiano
+      role: UX / UI DESIGN
+      style: 0
+    - name: Karla V. Torres Casiano
+      role: ACCESSIBILITY DESIGN
+      style: 0
+    - name: Karla V. Torres Casiano
+      role: SYSTEMS ARCHITECTURE
+      style: 0
+  - title: ' NARRATIVE & CONTENT'
+    entries:
+    - name: Karla V. Torres Casiano
+      role: NARRATIVE DESIGN
+      style: 0
+    - name: Karla V. Torres Casiano
+      role: WORLDBUILDING
+      style: 0
+    - name: Karla V. Torres Casiano
+      role: MYSTERY DESIGN
+      style: 0
+    - name: Karla V. Torres Casiano
+      role: PERSON RESPONSIBLE FOR ALL SUSPICIOUS FILES
+      style: 2
+  - title: DOCUMENTATION
+    entries:
+    - name: Karla V. Torres Casiano
+      role: ARCHITECTURE DOCUMENTATION
+      style: 0
+    - name: Karla V. Torres Casiano
+      role: TESTING DOCUMENTATION
+      style: 0
+    - name: Karla V. Torres Casiano
+      role: ACCESSIBILITY DESIGN
+      style: 0
+    - name: Karla V. Torres Casiano
+      role: KEEPER OF THE 298-PAGE DESIGN DOCUMENT
+      style: 2
+  - title: QUALITY ASSURANCE
+    entries:
+    - name: Karla V. Torres Casiano
+      role: QUALITY ASSURANCE
+      style: 0
+    - name: Karla V. Torres Casiano
+      role: ACCESSIBILITY TESTING
+      style: 0
+    - name: Karla V. Torres Casiano
+      role: BUG CREATOR
+      style: 2
+    - name: Karla V. Torres Casiano
+      role: BUG INVESTIGATOR
+      style: 2
+    - name: Karla V. Torres Casiano
+      role: BUG FIXER
+      style: 2
+  - title: SPECIAL THANKS
+    entries:
+    - name: Unity Engine 6.3 LTS
+      role: FOR ONLY BREAKING THINGS OCCASIONALLY
+      style: 3
+    - name: CTRL + Z
+      role: FOR SERVICES RENDERED.
+      style: 3
+    - name: GIT
+      role: FOR MAKING BAD DECISIONS REVERSIBLE.
+      style: 3
+    - name: CAFFEINE
+      role: RUNTIME DEPENDENCY
+      style: 3
+    - name: SLEEP DEPRIVATION
+      role: POWERING QUESTIONABLE DEVELOPMENT HOURS SINCE 2026.
+      style: 3
+  endingTitle: THANK YOU FOR INVESTIGATING
+  endingSubtitle: THE TRUTH IS IN THE DETAILS.
+  endingMeta: "TEAM <s>ATLAS</s> KARLA  \u2022  2026"
