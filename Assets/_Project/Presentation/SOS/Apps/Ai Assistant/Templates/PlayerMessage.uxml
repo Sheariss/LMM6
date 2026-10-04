@@ -1,0 +1,17 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/Ai%20Assistant/Assistant.uss?fileID=7433441132597879392&amp;guid=20968ee16b179894d8fe1409a795679e&amp;type=3#Assistant"/>
+    <ui:VisualElement name="MessageRoot" class="assistant-message-row assistant-message-row--user">
+        <ui:VisualElement class="assistant-message-column">
+            <ui:VisualElement name="MessageBubble" class="assistant-message-bubble assistant-message-bubble--user">
+                <ui:Label name="MessageText" text="Message" class="assistant-message-text"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="assistant-message-meta">
+                <ui:Label name="MessageTime" text="9:49 PM" class="assistant-message-time"/>
+                <ui:Label name="MessageReadIcon" text="✓✓" class="assistant-message-read"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

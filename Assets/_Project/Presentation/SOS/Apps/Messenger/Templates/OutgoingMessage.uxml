@@ -1,0 +1,41 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ui="UnityEngine.UIElements"
+         xmlns:uie="UnityEditor.UIElements"
+         noNamespaceSchemaLocation="../../../../../../../UIElementsSchema/UIElements.xsd"
+         editor-extension-mode="False">
+
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/Messages/Messages.uss"/>
+
+    <ui:VisualElement name="MessageRoot"
+                      class="messages-message-row messages-message-row--outgoing">
+
+        <ui:VisualElement class="messages-message-column">
+
+            <ui:VisualElement name="MessageBubble"
+                              class="messages-message-bubble messages-message-bubble--outgoing">
+
+                <ui:Label name="MessageText"
+                          text="Message"
+                          class="messages-message-text"/>
+
+            </ui:VisualElement>
+
+            <ui:VisualElement class="messages-message-meta">
+
+                <ui:Label name="MessageTime"
+                          text="9:49 PM"
+                          class="messages-message-time"/>
+
+                <ui:Label name="MessageReadIcon"
+                          text="✓✓"
+                          class="messages-message-read"/>
+
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+
+</ui:UXML>

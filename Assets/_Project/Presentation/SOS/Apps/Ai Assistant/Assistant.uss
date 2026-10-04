@@ -1,0 +1,493 @@
+.assistant-root {
+    flex-grow: 1;
+    flex-direction: column;
+    background-color: #f5f6f8;
+    overflow: hidden;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.assistant-header {
+    height: 72px;
+    min-height: 72px;
+    padding-left: 20px;
+    padding-right: 20px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff;
+    border-bottom-width: 1px;
+    border-bottom-color: #e3e6ea;
+}
+
+.assistant-profile {
+    flex-direction: row;
+    align-items: center;
+}
+
+.assistant-avatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 12px;
+    border-radius: 20px;
+    background-color: #f4c542;
+    background-size: cover;
+    background-position: center;
+}
+
+.assistant-profile-text {
+    justify-content: center;
+}
+
+.assistant-name {
+    color: #1b1d21;
+    font-size: 15px;
+    -unity-font-style: bold;
+}
+
+.assistant-subtitle {
+    margin-top: 2px;
+    color: #7b8088;
+    font-size: 11px;
+}
+
+.assistant-status {
+    flex-direction: row;
+    align-items: center;
+}
+
+.assistant-status-dot {
+    width: 7px;
+    height: 7px;
+    margin-right: 6px;
+    border-radius: 4px;
+    background-color: #58a66b;
+}
+
+.assistant-status-label {
+    color: #747981;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+/* =========================================================
+   MESSAGE AREA
+   ========================================================= */
+
+.assistant-message-scroll {
+    flex-grow: 1;
+    background-color: #f5f6f8;
+}
+
+.assistant-message-scroll .unity-scroll-view__content-container {
+    flex-grow: 1;
+}
+
+.assistant-message-list {
+    flex-grow: 1;
+    padding: 22px 24px 26px 24px;
+}
+
+/* =========================================================
+   MESSAGE ROWS
+   These classes are intended for dynamically generated
+   message elements.
+   ========================================================= */
+
+.assistant-message-row {
+    width: 100%;
+    margin-bottom: 18px;
+    flex-direction: row;
+}
+
+.assistant-message-row--assistant {
+    justify-content: flex-start;
+}
+
+.assistant-message-row--user {
+    justify-content: flex-end;
+}
+
+/* =========================================================
+   ASSISTANT MESSAGE
+   ========================================================= */
+
+.assistant-message-avatar {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    margin-right: 10px;
+    border-radius: 14px;
+    background-color: #f4c542;
+    background-size: cover;
+    background-position: center;
+}
+
+.assistant-message-column {
+    max-width: 72%;
+}
+
+.assistant-message-bubble {
+    padding: 11px 14px 11px 14px;
+}
+
+.assistant-message-bubble--assistant {
+    background-color: #e5e9ee;
+
+    border-top-left-radius: 4px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.assistant-message-bubble--user {
+    background-color: #202226;
+
+    border-top-left-radius: 12px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.assistant-message-text {
+    font-size: 13px;
+    white-space: normal;
+}
+
+.assistant-message-bubble--assistant .assistant-message-text {
+    color: #30343a;
+}
+
+.assistant-message-bubble--user .assistant-message-text {
+    color: #ffffff;
+}
+
+/* =========================================================
+   MESSAGE METADATA
+   ========================================================= */
+
+.assistant-message-meta {
+    margin-top: 5px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.assistant-message-row--assistant .assistant-message-meta {
+    justify-content: flex-start;
+}
+
+.assistant-message-row--user .assistant-message-meta {
+    justify-content: flex-end;
+}
+
+.assistant-message-time {
+    color: #9ba0a7;
+    font-size: 9px;
+}
+
+.assistant-message-sender {
+    margin-right: 6px;
+    color: #7f858d;
+    font-size: 9px;
+    -unity-font-style: bold;
+}
+
+/* =========================================================
+   TYPING INDICATOR
+   ========================================================= */
+
+.assistant-typing-row {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.assistant-typing-bubble {
+    height: 36px;
+    padding-left: 14px;
+    padding-right: 14px;
+    flex-direction: row;
+    align-items: center;
+
+    background-color: #e5e9ee;
+
+    border-top-left-radius: 4px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.assistant-typing-dot {
+    width: 5px;
+    height: 5px;
+    margin-right: 4px;
+    border-radius: 3px;
+    background-color: #8e949c;
+}
+
+/* =========================================================
+   COMPOSER
+   ========================================================= */
+
+.assistant-composer {
+    min-height: 70px;
+    padding: 12px 16px;
+    flex-direction: row;
+    align-items: flex-end;
+    background-color: #ffffff;
+    border-top-width: 1px;
+    border-top-color: #e3e6ea;
+}
+
+.assistant-icon-button {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    padding: 0;
+    margin: 0 10px 0 0;
+
+    border-width: 0;
+    border-radius: 19px;
+
+    background-color: transparent;
+    color: #737981;
+
+    font-size: 22px;
+    -unity-text-align: middle-center;
+}
+
+.assistant-icon-button:hover {
+    background-color: #eef0f3;
+    color: #202226;
+}
+
+/* =========================================================
+   MESSAGE INPUT
+   ========================================================= */
+
+.assistant-input-container {
+    position: relative;
+    flex-grow: 1;
+    min-height: 40px;
+}
+
+.assistant-message-input {
+    flex-grow: 1;
+    min-height: 40px;
+    max-height: 100px;
+    margin: 0;
+}
+
+.assistant-message-input > .unity-text-input {
+    min-height: 40px;
+    padding: 10px 14px;
+
+    background-color: #f2f4f6;
+    color: #24272b;
+
+    border-width: 1px;
+    border-color: #e2e5e9;
+
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+
+    font-size: 12px;
+}
+
+.assistant-message-input:hover > .unity-text-input {
+    border-color: #cdd1d6;
+}
+
+.assistant-message-input:focus > .unity-text-input {
+    border-color: #d6ad32;
+}
+
+.assistant-input-placeholder {
+    position: absolute;
+    left: 15px;
+    top: 11px;
+
+    color: #92979e;
+    font-size: 12px;
+}
+
+/* =========================================================
+   SEND BUTTON
+   ========================================================= */
+
+.assistant-send-button {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+
+    margin: 0 0 0 10px;
+    padding: 0;
+
+    background-color: #f4c542;
+    color: #1d1d1d;
+
+    border-width: 0;
+
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+    font-size: 15px;
+    -unity-text-align: middle-center;
+}
+
+.assistant-send-button:hover {
+    background-color: #e8b92f;
+}
+
+.assistant-send-button:active {
+    translate: 0 1px;
+}
+
+.assistant-send-button:disabled {
+    opacity: 0.45;
+}
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.assistant-empty-state {
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.assistant-empty-avatar {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
+    border-radius: 32px;
+    background-color: #f4c542;
+}
+
+.assistant-empty-title {
+    margin-bottom: 6px;
+    color: #25282c;
+    font-size: 18px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.assistant-empty-description {
+    max-width: 360px;
+    color: #7b8088;
+    font-size: 12px;
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
+
+.assistant-message-sender {
+    margin-bottom: 5px;
+    color: #6f747c;
+    font-size: 10px;
+    -unity-font-style: bold;
+}
+
+.assistant-message-read {
+    margin-left: 5px;
+    color: #777d85;
+    font-size: 9px;
+}
+
+.assistant-message-row--user .assistant-message-column {
+    align-items: flex-end;
+}
+
+.assistant-message-row--assistant .assistant-message-column {
+    align-items: flex-start;
+}
+
+.assistant-message-row--user .assistant-message-meta {
+    justify-content: flex-end;
+}
+
+.assistant-message-row--assistant .assistant-message-meta {
+    justify-content: flex-start;
+}
+
+.assistant-message-meta {
+    margin-top: 5px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.assistant-message-text {
+    white-space: normal;
+}
+
+.assistant-message-bubble {
+    max-width: 440px;
+}
+
+.assistant-message-bubble--assistant {
+    background-color: #e7ebef;
+    padding: 11px 14px;
+
+    border-top-left-radius: 4px;
+    border-top-right-radius: 13px;
+    border-bottom-left-radius: 13px;
+    border-bottom-right-radius: 13px;
+}
+
+.assistant-message-bubble--user {
+    background-color: #202226;
+    padding: 11px 14px;
+
+    border-top-left-radius: 13px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 13px;
+    border-bottom-right-radius: 13px;
+}
+
+.assistant-message-bubble--assistant .assistant-message-text {
+    color: #2e3237;
+}
+
+.assistant-message-bubble--user .assistant-message-text {
+    color: #ffffff;
+}
+
+.assistant-typing-row {
+    width: 100%;
+    margin-bottom: 16px;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.assistant-typing-bubble {
+    height: 34px;
+    padding-left: 12px;
+    padding-right: 8px;
+    flex-direction: row;
+    align-items: center;
+
+    background-color: #e7ebef;
+
+    border-top-left-radius: 4px;
+    border-top-right-radius: 13px;
+    border-bottom-left-radius: 13px;
+    border-bottom-right-radius: 13px;
+}
+
+.assistant-typing-dot {
+    width: 5px;
+    height: 5px;
+
+    margin-right: 4px;
+
+    background-color: #858b93;
+
+    border-radius: 3px;
+}

@@ -1,0 +1,809 @@
+:root {
+    --options-focus-color: rgb(91, 180, 235);
+    --options-surface-color: rgba(255, 255, 255, 0.08);
+    --options-surface-hover-color: rgba(255, 255, 255, 0.14);
+    --options-surface-active-color: rgba(255, 255, 255, 0.20);
+    --options-divider-color: rgba(255, 255, 255, 0.35);
+    --options-control-bg: rgba(255, 255, 255, 0.12);
+    --options-control-hover-bg: rgba(255, 255, 255, 0.20);
+    --options-preview-bg: rgb(238, 246, 252);
+    --options-preview-surface: rgb(255, 255, 255);
+    --options-preview-text: rgb(32, 54, 70);
+    --options-preview-muted: rgb(92, 111, 125);
+    --options-preview-divider: rgb(190, 207, 219);
+    --options-back-button-size: var(--control-xl);
+}
+
+/* ========================================================= */
+/* SHELL                                                     */
+/* ========================================================= */
+
+.settings-shell {
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+    flex-direction: column;
+    padding: 80px;
+    padding-bottom: 25px;
+    background-color: var(--windows-blue-bg);
+    color: rgb(255, 255, 255);
+}
+
+/* ========================================================= */
+/* HEADER                                                    */
+/* ========================================================= */
+
+.settings-shell__header {
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.settings-shell__header-navigation {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.settings-shell__back-button {
+    height: var(--options-back-button-size);
+    width: var(--options-back-button-size);
+    min-height: var(--options-back-button-size);
+    min-width: var(--options-back-button-size);
+    flex-shrink: 0;
+    border-radius: var(--radius-full);
+    border-width: var(--border-thick);
+    border-color: rgb(255, 255, 255);
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--space-5);
+    padding: 0;
+    background-color: transparent;
+}
+
+.settings-shell__back-button:hover {
+    background-color: var(--options-surface-hover-color);
+}
+
+.settings-shell__back-button:active {
+    background-color: var(--options-focus-color);
+}
+
+.settings-shell__back-button:focus {
+    border-color: var(--options-focus-color);
+}
+
+.settings-shell__back-button-icon {
+    height: var(--icon-2xl);
+    width: var(--icon-2xl);
+    flex-shrink: 0;
+    background-image: resource("Icons/Arrows/Arrow Back/arrow_back_48dp_FFFFFF_FILL0_wght400_GRAD0_opsz48");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.settings-shell__header-copy {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: var(--space-7);
+}
+
+.settings-shell__title {
+    margin: 0;
+    padding: 0;
+    font-size: 72px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-left;
+}
+
+.settings-shell__subtitle {
+    margin: 0;
+    margin-bottom: var(--space-5);
+    padding: 0;
+    font-size: 32px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-left;
+}
+
+/* ========================================================= */
+/* SEARCH                                                    */
+/* ========================================================= */
+
+.settings-shell__search-group {
+    width: 450px;
+    height: 58px;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--options-surface-color);
+    border-width: var(--border-thin);
+    border-color: rgb(255, 255, 255);
+    border-radius: var(--radius-lg);
+}
+
+.settings-shell__search-group:hover {
+    background-color: var(--options-surface-hover-color);
+}
+
+.settings-shell__search-icon {
+    width: 50px;
+    min-width: 50px;
+    font-size: 22px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-center;
+}
+
+.settings-shell__search-field {
+    flex-grow: 1;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+}
+
+.settings-shell__search-field > .unity-text-field__input {
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border-width: 0;
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+}
+
+.settings-shell__search-clear {
+    width: 50px;
+    min-width: 50px;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border-width: 0;
+    font-size: 24px;
+    color: rgb(255, 255, 255);
+}
+
+.settings-shell__search-clear:hover {
+    background-color: var(--options-surface-hover-color);
+}
+
+.settings-shell__search-clear:active {
+    background-color: var(--options-surface-active-color);
+}
+
+/* ========================================================= */
+/* DIVIDERS                                                  */
+/* ========================================================= */
+
+.settings-shell__divider {
+    height: 1px;
+    min-height: 1px;
+    flex-shrink: 0;
+    background-color: var(--options-divider-color);
+}
+
+.settings-shell__vertical-divider {
+    width: 1px;
+    min-width: 1px;
+    flex-shrink: 0;
+    background-color: var(--options-divider-color);
+}
+
+/* ========================================================= */
+/* BODY                                                      */
+/* ========================================================= */
+
+.settings-shell__body {
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+    flex-direction: row;
+}
+
+/* ========================================================= */
+/* SIDEBAR                                                   */
+/* ========================================================= */
+
+.settings-shell__sidebar {
+    width: 260px;
+    min-width: 260px;
+    flex-shrink: 0;
+    flex-direction: column;
+    padding-top: var(--space-6);
+    padding-right: var(--space-5);
+    padding-bottom: var(--space-6);
+}
+
+.settings-shell__navigation-title {
+    margin: 0;
+    margin-bottom: var(--space-5);
+    padding: 0 var(--space-4);
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+}
+
+.settings-shell__navigation-scroll {
+    flex-grow: 1;
+    min-height: 0;
+}
+
+.settings-shell__navigation {
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.settings-shell__nav-button {
+    height: 54px;
+    min-height: 54px;
+    flex-shrink: 0;
+    margin: 0;
+    margin-bottom: var(--space-2);
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+    background-color: transparent;
+    border-width: var(--border-thin);
+    border-color: transparent;
+    border-radius: var(--radius-lg);
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-left;
+}
+
+.settings-shell__nav-button:hover {
+    background-color: var(--options-surface-hover-color);
+    border-color: rgba(255, 255, 255, 0.45);
+}
+
+.settings-shell__nav-button:active {
+    background-color: var(--options-surface-active-color);
+}
+
+.settings-shell__nav-button--selected {
+    background-color: var(--options-focus-color);
+    border-color: var(--options-focus-color);
+    color: rgb(255, 255, 255);
+}
+
+.settings-shell__nav-button--selected:hover {
+    background-color: var(--options-focus-color);
+    border-color: rgb(255, 255, 255);
+}
+
+/* ========================================================= */
+/* WORKSPACE                                                 */
+/* ========================================================= */
+
+.settings-shell__workspace {
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+    flex-direction: row;
+}
+
+/* ========================================================= */
+/* SETTINGS AREA                                             */
+/* ========================================================= */
+
+.settings-shell__settings-area {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 400px;
+    min-height: 0;
+    flex-direction: column;
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
+}
+
+.settings-shell__content-header {
+    min-height: 100px;
+    flex-shrink: 0;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.settings-shell__category-title {
+    margin: 0;
+    padding: 0;
+    font-size: 32px;
+    color: rgb(255, 255, 255);
+}
+
+.settings-shell__category-description {
+    margin: 0;
+    margin-top: var(--space-2);
+    padding: 0;
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+    white-space: normal;
+}
+
+.settings-shell__content-divider {
+    height: 1px;
+    min-height: 1px;
+    flex-shrink: 0;
+    margin-bottom: var(--space-5);
+    background-color: var(--options-divider-color);
+}
+
+.settings-shell__content-scroll {
+    flex-grow: 1;
+    min-height: 0;
+}
+
+.settings-shell__content {
+    flex-direction: column;
+    padding-right: var(--space-4);
+    padding-bottom: var(--space-8);
+}
+
+/* ========================================================= */
+/* SECTIONS                                                  */
+/* ========================================================= */
+
+.settings-section {
+    flex-shrink: 0;
+    flex-direction: column;
+    margin-bottom: var(--space-7);
+}
+
+.settings-section__header {
+    flex-direction: column;
+    margin-bottom: var(--space-4);
+}
+
+.settings-section__title {
+    margin: 0;
+    padding: 0;
+    font-size: 26px;
+    color: rgb(255, 255, 255);
+}
+
+.settings-section__description {
+    margin: 0;
+    margin-top: var(--space-1);
+    padding: 0;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    white-space: normal;
+}
+
+.settings-section__body {
+    flex-direction: column;
+    background-color: var(--options-surface-color);
+    border-width: var(--border-thin);
+    border-color: var(--options-divider-color);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+}
+
+/* ========================================================= */
+/* SETTING ROWS                                              */
+/* ========================================================= */
+
+.settings-row {
+    min-height: 72px;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
+    padding-top: var(--space-3);
+    padding-bottom: var(--space-3);
+    border-bottom-width: var(--border-thin);
+    border-bottom-color: var(--options-divider-color);
+}
+
+.settings-row:hover {
+    background-color: var(--options-surface-hover-color);
+}
+
+.settings-row--last {
+    border-bottom-width: 0;
+}
+
+.settings-row__info {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    flex-direction: column;
+    margin-right: var(--space-6);
+}
+
+.settings-row__title {
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+}
+
+.settings-row__description {
+    margin: 0;
+    margin-top: var(--space-1);
+    padding: 0;
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+    white-space: normal;
+}
+
+.settings-row__control {
+    width: 220px;
+    min-width: 220px;
+    flex-shrink: 0;
+}
+
+.settings-row__toggle {
+    width: 56px;
+    min-width: 56px;
+    flex-shrink: 0;
+}
+
+.settings-row__slider-group {
+    width: 260px;
+    min-width: 260px;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+}
+
+.settings-row__slider {
+    flex-grow: 1;
+    margin-right: var(--space-4);
+}
+
+.settings-row__value {
+    width: 54px;
+    min-width: 54px;
+    font-size: 17px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-right;
+}
+
+/* ========================================================= */
+/* DROPDOWNS                                                 */
+/* ========================================================= */
+
+.settings-row__control.unity-base-field {
+    margin: 0;
+}
+
+.settings-row__control > .unity-base-field__input {
+    height: 42px;
+    min-height: 42px;
+    background-color: var(--options-control-bg);
+    border-width: var(--border-thin);
+    border-color: rgb(255, 255, 255);
+    border-radius: var(--radius-lg);
+    color: rgb(255, 255, 255);
+}
+
+.settings-row__control > .unity-base-field__input:hover {
+    background-color: var(--options-control-hover-bg);
+    border-color: var(--options-focus-color);
+}
+
+.settings-row__control .unity-base-popup-field__text {
+    font-size: 17px;
+    color: rgb(255, 255, 255);
+}
+
+/* ========================================================= */
+/* TOGGLES                                                   */
+/* ========================================================= */
+.settings-row__toggle-group {
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+}
+
+.settings-row__toggle-label {
+    width: 36px;
+    min-width: 36px;
+    margin: 0;
+    margin-right: var(--space-3);
+    padding: 0;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-right;
+}
+
+.settings-row__toggle {
+    width: 58px;
+    height: 28px;
+    min-width: 58px;
+    min-height: 28px;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Track */
+.settings-row__toggle > .unity-toggle__input {
+    width: 58px;
+    height: 28px;
+    min-width: 58px;
+    min-height: 28px;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border-width: 2px;
+    border-color: rgb(255, 255, 255);
+    border-radius: 14px;
+}
+
+/* Thumb */
+.settings-row__toggle > .unity-toggle__input > .unity-toggle__checkmark {
+    width: 18px;
+    height: 18px;
+    margin-left: 3px;
+    margin-right: 0;
+    background-image: none;
+    background-color: rgb(255, 255, 255);
+    border-width: 0;
+    border-radius: 9px;
+    -unity-background-image-tint-color: transparent;
+}
+
+/* ON track */
+.settings-row__toggle:checked > .unity-toggle__input {
+    background-color: var(--options-focus-color);
+    border-color: var(--options-focus-color);
+}
+
+/* ON thumb */
+.settings-row__toggle:checked > .unity-toggle__input > .unity-toggle__checkmark {
+    margin-left: 33px;
+    background-color: rgb(255, 255, 255);
+}
+
+/* Hover */
+.settings-row__toggle:hover > .unity-toggle__input {
+    border-color: var(--options-focus-color);
+}
+
+/* Keyboard focus */
+.settings-row__toggle:focus > .unity-toggle__input {
+    border-color: rgb(255, 255, 255);
+}
+
+/* ========================================================= */
+/* SLIDERS                                                   */
+/* ========================================================= */
+
+.settings-row__slider {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.settings-row__slider .unity-base-slider__tracker {
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.35);
+}
+
+.settings-row__slider .unity-base-slider__dragger {
+    width: 18px;
+    height: 18px;
+    background-color: rgb(255, 255, 255);
+    border-width: var(--border-thin);
+    border-color: var(--options-focus-color);
+    border-radius: var(--radius-full);
+}
+
+/* ========================================================= */
+/* PREVIEW                                                   */
+/* ========================================================= */
+
+.settings-shell__preview-area {
+    width: 34%;
+    min-width: 340px;
+    max-width: 520px;
+    min-height: 0;
+    flex-shrink: 0;
+    flex-direction: column;
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-6);
+    padding: var(--space-6);
+    background-color: var(--options-preview-bg);
+    border-radius: var(--radius-xl);
+}
+
+.settings-shell__preview-header {
+    flex-shrink: 0;
+    flex-direction: column;
+}
+
+.settings-shell__preview-title {
+    margin: 0;
+    padding: 0;
+    font-size: 28px;
+    color: var(--options-preview-text);
+}
+
+.settings-shell__preview-description {
+    margin: 0;
+    margin-top: var(--space-2);
+    padding: 0;
+    font-size: 16px;
+    color: var(--options-preview-muted);
+    white-space: normal;
+}
+
+.settings-shell__preview-divider {
+    height: 1px;
+    min-height: 1px;
+    flex-shrink: 0;
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-5);
+    background-color: var(--options-preview-divider);
+}
+
+.settings-shell__preview {
+    flex-grow: 1;
+    min-height: 220px;
+    flex-direction: column;
+    background-color: var(--options-preview-surface);
+    border-width: var(--border-thin);
+    border-color: var(--options-preview-divider);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.settings-shell__preview-placeholder {
+    flex-grow: 1;
+    min-height: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-7);
+}
+
+.settings-shell__preview-placeholder-title {
+    margin: 0;
+    margin-bottom: var(--space-3);
+    padding: 0;
+    font-size: 20px;
+    color: var(--options-preview-text);
+    -unity-text-align: middle-center;
+}
+
+.settings-shell__preview-placeholder-description {
+    max-width: 280px;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    color: var(--options-preview-muted);
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
+
+.settings-shell__preview-footer {
+    flex-shrink: 0;
+    padding-top: var(--space-4);
+}
+
+.settings-shell__preview-hint {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    color: var(--options-preview-muted);
+    white-space: normal;
+}
+
+/* ========================================================= */
+/* FOOTER                                                    */
+/* ========================================================= */
+
+.settings-shell__footer {
+    height: 80px;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.settings-shell__footer-status {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    margin-right: var(--space-6);
+}
+
+.settings-shell__status-label {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+}
+
+.settings-shell__footer-actions {
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+}
+
+.settings-shell__button {
+    height: 48px;
+    min-width: 120px;
+    margin: 0;
+    margin-left: var(--space-3);
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
+    border-width: var(--border-thin);
+    border-radius: var(--radius-lg);
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+}
+
+.settings-shell__button--secondary {
+    background-color: transparent;
+    border-color: rgb(255, 255, 255);
+}
+
+.settings-shell__button--secondary:hover {
+    background-color: var(--options-surface-hover-color);
+}
+
+.settings-shell__button--secondary:active {
+    background-color: var(--options-surface-active-color);
+}
+
+.settings-shell__button--primary {
+    background-color: var(--options-focus-color);
+    border-color: var(--options-focus-color);
+}
+
+.settings-shell__button--primary:hover {
+    border-color: rgb(255, 255, 255);
+}
+
+.settings-shell__button--primary:active {
+    background-color: var(--options-surface-active-color);
+}
+
+/* ========================================================= */
+/* SCROLL VIEWS                                              */
+/* ========================================================= */
+
+.settings-shell__navigation-scroll > .unity-scroll-view__content-and-vertical-scroll-container,
+.settings-shell__content-scroll > .unity-scroll-view__content-and-vertical-scroll-container {
+    flex-grow: 1;
+    min-height: 0;
+}
+
+.settings-shell__navigation-scroll > .unity-scroll-view__content-and-vertical-scroll-container > .unity-scroll-view__content-viewport,
+.settings-shell__content-scroll > .unity-scroll-view__content-and-vertical-scroll-container > .unity-scroll-view__content-viewport {
+    flex-grow: 1;
+}
+
+.settings-shell__navigation-scroll .unity-scroller--horizontal,
+.settings-shell__content-scroll .unity-scroller--horizontal {
+    display: none;
+}
+
+/* ========================================================= */
+/* FOCUS                                                     */
+/* ========================================================= */
+
+.settings-shell__nav-button:focus,
+.settings-shell__button:focus {
+    border-width: var(--border-thick);
+    border-color: rgb(255, 255, 255);
+}
+
+/* ========================================================= */
+/* DISABLED                                                  */
+/* ========================================================= */
+
+.settings-shell Button:disabled,
+.settings-shell TextField:disabled,
+.settings-shell DropdownField:disabled,
+.settings-shell Slider:disabled,
+.settings-shell Toggle:disabled {
+    opacity: 0.5;
+}

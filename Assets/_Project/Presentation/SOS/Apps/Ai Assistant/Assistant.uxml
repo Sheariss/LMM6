@@ -1,0 +1,32 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/Ai%20Assistant/Assistant.uss?fileID=7433441132597879392&amp;guid=20968ee16b179894d8fe1409a795679e&amp;type=3#Assistant"/>
+    <ui:VisualElement name="AssistantRoot" class="assistant-root">
+        <ui:VisualElement name="AssistantHeader" class="assistant-header">
+            <ui:VisualElement class="assistant-profile">
+                <ui:VisualElement name="AssistantAvatar" class="assistant-avatar"/>
+                <ui:VisualElement class="assistant-profile-text">
+                    <ui:Label name="AssistantName" text="ATLAS Assistant" class="assistant-name"/>
+                    <ui:Label name="AssistantSubtitle" text="Investigation Support" class="assistant-subtitle"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="assistant-status">
+                <ui:VisualElement name="AssistantStatusDot" class="assistant-status-dot"/>
+                <ui:Label name="AssistantStatusLabel" text="ONLINE" class="assistant-status-label"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:ScrollView name="AssistantMessageScrollView" mode="Vertical" class="assistant-message-scroll">
+            <ui:VisualElement name="AssistantMessageList" class="assistant-message-list"/>
+        </ui:ScrollView>
+        <ui:VisualElement name="AssistantComposer" class="assistant-composer">
+            <ui:Button name="AssistantAttachmentButton" text="+" class="assistant-icon-button assistant-attachment-button"/>
+            <ui:VisualElement class="assistant-input-container">
+                <ui:TextField name="AssistantMessageInput" multiline="true" class="assistant-message-input"/>
+                <ui:Label name="AssistantInputPlaceholder" text="Write a message..." picking-mode="Ignore" class="assistant-input-placeholder"/>
+            </ui:VisualElement>
+            <ui:Button name="AssistantSendButton" text="➤" class="assistant-send-button"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

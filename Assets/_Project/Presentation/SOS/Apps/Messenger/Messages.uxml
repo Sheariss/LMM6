@@ -1,0 +1,59 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/Messenger/Messages.uss?fileID=7433441132597879392&amp;guid=aedd1ca4dc387654ab5c1235b0e016e7&amp;type=3#Messages"/>
+    <ui:VisualElement name="Messages-Root" class="messages-root">
+        <ui:VisualElement name="Messages-Sidebar" class="messages-sidebar">
+            <ui:VisualElement class="messages-sidebar-header">
+                <ui:Label text="Messages" class="messages-title"/>
+                <ui:Button name="Messages-NewConversationButton" tooltip="New conversation" class="messages-icon-button">
+                    <ui:VisualElement class="messages-icon messages-icon--new"/>
+                </ui:Button>
+            </ui:VisualElement>
+            <ui:VisualElement class="messages-search">
+                <ui:VisualElement class="messages-search-icon"/>
+                <ui:TextField name="Messages-SearchField" class="messages-search-field"/>
+            </ui:VisualElement>
+            <ui:ScrollView name="Messages-ConversationList" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Auto" class="messages-conversation-list"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="Messages-ChatPanel" class="messages-chat-panel">
+            <ui:VisualElement name="Messages-ChatHeader" class="messages-chat-header">
+                <ui:VisualElement class="messages-contact-info">
+                    <ui:VisualElement name="Messages-ContactAvatar" class="messages-avatar messages-avatar--header"/>
+                    <ui:VisualElement class="messages-contact-text">
+                        <ui:Label name="Messages-ContactName" text="Contact" class="messages-contact-name"/>
+                        <ui:Label name="Messages-ContactStatus" text="" class="messages-contact-status"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="messages-header-actions">
+                    <ui:Button name="Messages-SearchConversationButton" tooltip="Search conversation" class="messages-icon-button">
+                        <ui:VisualElement class="messages-icon messages-icon--search"/>
+                    </ui:Button>
+                    <ui:Button name="Messages-MoreButton" tooltip="More" class="messages-icon-button">
+                        <ui:VisualElement class="messages-icon messages-icon--more"/>
+                    </ui:Button>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="messages-history-container">
+                <ui:ScrollView name="Messages-History" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Auto" class="messages-history">
+                    <ui:VisualElement name="Messages-HistoryContent" class="messages-history-content"/>
+                </ui:ScrollView>
+            </ui:VisualElement>
+            <ui:VisualElement name="Messages-Composer" class="messages-composer">
+                <ui:Button name="Messages-AttachmentButton" tooltip="Attach" class="messages-icon-button messages-composer-button">
+                    <ui:VisualElement class="messages-icon messages-icon--attachment"/>
+                </ui:Button>
+                <ui:TextField name="Messages-InputField" multiline="true" class="messages-input"/>
+                <ui:Button name="Messages-SendButton" tooltip="Send message" class="messages-send-button">
+                    <ui:VisualElement class="messages-icon messages-icon--send"/>
+                </ui:Button>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Messages-EmptyState" class="messages-empty-state">
+            <ui:VisualElement class="messages-empty-icon"/>
+            <ui:Label text="Messages" class="messages-empty-title"/>
+            <ui:Label text="Select a conversation to start messaging." class="messages-empty-description"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

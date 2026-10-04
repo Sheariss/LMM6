@@ -1,0 +1,190 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/FileExplorer/FileExplorer.uss?fileID=7433441132597879392&amp;guid=00fbcb08e91d14a4c849c85cf4087ea2&amp;type=3#FileExplorer"/>
+
+    <ui:VisualElement name="FileExplorerRoot" class="file-explorer">
+
+    <!-- Tabs -->
+    <ui:VisualElement name="FE-TabBar" class="fe-tab-bar">
+        <ui:VisualElement name="FE-TabsContainer" class="fe-tabs"/>
+        <ui:Button
+            name="FE-NewTabButton"
+            text="+"
+            tooltip="New tab"
+            class="fe-new-tab-button"/>
+    </ui:VisualElement>
+
+    <!-- Navigation -->
+    <ui:VisualElement name="FE-NavigationBar" class="fe-navigation-bar">
+
+        <ui:VisualElement class="fe-navigation-controls">
+            <ui:Button name="FE-BackButton" text="‹" class="fe-nav-button"/>
+            <ui:Button name="FE-ForwardButton" text="›" class="fe-nav-button"/>
+            <ui:Button name="FE-UpButton" text="↑" class="fe-nav-button"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement
+            name="FE-BreadcrumbContainer"
+            class="fe-breadcrumb-container"/>
+
+        <ui:VisualElement class="fe-search-container">
+            <ui:Label text="⌕" class="fe-search-icon"/>
+            <ui:TextField
+                name="FE-SearchField"
+                class="fe-search-field"/>
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+
+    <!-- Commands -->
+    <ui:VisualElement name="FE-CommandBar" class="fe-command-bar">
+
+        <ui:Button
+            name="FE-NewButton"
+            text="New"
+            class="fe-command-button fe-command-button--primary"/>
+
+        <ui:VisualElement class="fe-command-spacer"/>
+
+        <ui:Button
+            name="FE-SortButton"
+            text="Sort"
+            class="fe-command-button"/>
+
+        <ui:Button
+            name="FE-ViewButton"
+            text="View"
+            class="fe-command-button"/>
+
+        <ui:Button
+            name="FE-FilterButton"
+            text="Filter"
+            class="fe-command-button"/>
+
+        <ui:Button
+            name="FE-RefreshButton"
+            text="↻"
+            class="fe-command-icon-button"/>
+
+    </ui:VisualElement>
+
+    <!-- Workspace -->
+    <ui:VisualElement class="fe-workspace">
+
+        <!-- Sidebar -->
+        <ui:ScrollView
+            name="FE-SidebarScrollView"
+            class="fe-sidebar">
+
+            <ui:Button
+                name="FE-HomeButton"
+                text="Home"
+                class="fe-sidebar-item fe-sidebar-item--active"/>
+
+            <ui:Button
+                name="FE-RecentButton"
+                text="Recent"
+                class="fe-sidebar-item"/>
+
+            <ui:Button
+                name="FE-StarredButton"
+                text="Starred"
+                class="fe-sidebar-item"/>
+
+            <ui:Label
+                text="LOCATIONS"
+                class="fe-sidebar-heading"/>
+
+            <ui:Button
+                name="FE-DesktopButton"
+                text="Desktop"
+                class="fe-sidebar-item"/>
+
+            <ui:Button
+                name="FE-DocumentsButton"
+                text="Documents"
+                class="fe-sidebar-item"/>
+
+            <ui:Button
+                name="FE-PicturesButton"
+                text="Pictures"
+                class="fe-sidebar-item"/>
+
+            <ui:Button
+                name="FE-DownloadsButton"
+                text="Downloads"
+                class="fe-sidebar-item"/>
+
+        </ui:ScrollView>
+
+        <!-- Main -->
+        <ui:VisualElement class="fe-main">
+
+            <ui:VisualElement class="fe-directory-header">
+
+                <ui:VisualElement>
+                    <ui:Label
+                        name="FE-DirectoryTitle"
+                        text="Documents"
+                        class="fe-directory-title"/>
+
+                    <ui:Label
+                        name="FE-DirectorySubtitle"
+                        text="18 items"
+                        class="fe-directory-subtitle"/>
+                </ui:VisualElement>
+
+                <ui:VisualElement class="fe-directory-actions">
+                    <ui:Label
+                        name="FE-SortStatus"
+                        text="Name • Ascending"
+                        class="fe-sort-status"/>
+                </ui:VisualElement>
+
+            </ui:VisualElement>
+
+            <ui:ScrollView
+                name="FE-ContentScrollView"
+                class="fe-content-scroll">
+
+                <ui:VisualElement
+                    name="FE-ContentContainer"
+                    class="fe-content fe-content--grid"/>
+
+            </ui:ScrollView>
+
+            <ui:VisualElement
+                name="FE-EmptyState"
+                class="fe-empty-state">
+
+                <ui:Label
+                    text="This folder is empty."
+                    class="fe-empty-title"/>
+
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+
+    <!-- Status -->
+    <ui:VisualElement
+        name="FE-StatusBar"
+        class="fe-status-bar">
+
+        <ui:Label
+            name="FE-ItemCount"
+            text="18 items"
+            class="fe-status-text"/>
+
+        <ui:Label
+            name="FE-SelectionStatus"
+            text=""
+            class="fe-status-text"/>
+
+    </ui:VisualElement>
+
+</ui:VisualElement>
+</ui:UXML>
