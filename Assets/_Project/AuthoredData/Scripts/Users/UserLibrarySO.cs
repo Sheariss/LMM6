@@ -30,6 +30,9 @@ namespace Atlas.AuthoredData.Users
             [Header("Availability")]
             [SerializeField] private bool initiallyHidden;
 
+            [Header("Authentication")]
+            [SerializeField] private string password;
+
             public string UserId => userId;
             public string DisplayName => displayName;
             public UserLoginMethod LoginMethod => loginMethod;
@@ -38,6 +41,8 @@ namespace Atlas.AuthoredData.Users
             public Sprite Wallpaper => wallpaper;
 
             public bool InitiallyHidden => initiallyHidden;
+
+            public string Password => password;
         }
 
         [SerializeField]

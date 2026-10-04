@@ -12,4 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5d6ca27962edd044b4cf04a27d69471, type: 3}
   m_Name: FileSystemLibrary
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.SOS.FileSystem.FileSystemLibrary
-  profiles: []
+  profiles:
+  - userId: admin
+    displayName: admin
+    homeFolderId: 
+    locations: []
+    rootFolders:
+    - id: 
+      name: 
+      hidden: 0
+      readOnly: 0
+      folders: []
+      files:
+      - id: 
+        name: 
+        fileType: 0
+        size: 0
+        modifiedDate: 
+        hidden: 0
+        readOnly: 0
+        starred: 0
+        textContent: 
+        previewImage: {fileID: 0}
+        contentId: 
+        progressionEventId: 

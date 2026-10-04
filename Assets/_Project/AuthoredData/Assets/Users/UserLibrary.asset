@@ -13,13 +13,17 @@ MonoBehaviour:
   m_Name: UserLibrary
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.AuthoredData.Users.UserLibrarySO
   users:
-  - userId: user1
+  - userId: admin
     displayName: Admin
+    loginMethod: 0
     profileImage: {fileID: 1881957229145821672, guid: 15c1734fc5e06f44f83917ee13fa1168, type: 3}
     wallpaper: {fileID: 2291255577522125532, guid: fa6591e4fea68724295c121910327ccc, type: 3}
     initiallyHidden: 0
-  - userId: user2
+    password: Password123
+  - userId: guest
     displayName: Guest
+    loginMethod: 0
     profileImage: {fileID: 3713408546367866918, guid: 6af99c888ef37f34da1052b090049bb3, type: 3}
     wallpaper: {fileID: -5461434214798450734, guid: 71c02421752da1741a5cbab179c07a5c, type: 3}
     initiallyHidden: 0
+    password: 
