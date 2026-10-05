@@ -1,0 +1,87 @@
+.bsod {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    background-color:var(--windows-blue-bg);
+    color: white;
+    -unity-font-style: normal;
+}
+
+.bsod-content {
+    position: absolute;
+    left: 10.8%;
+    top: 14.8%;
+    width: 79%;
+}
+
+.bsod Label {
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    flex-shrink: 0;
+    white-space: normal;
+    -unity-text-align: upper-left;
+}
+
+.bsod .bsod-face {
+    height: 222px;
+    margin-bottom: 14px;
+    font-size: 200px;
+    white-space: nowrap;
+}
+
+.bsod .bsod-message {
+    font-size: 40px;
+    -unity-paragraph-spacing: 10px;
+    margin-bottom: 40px;
+}
+
+.bsod .bsod-progress {
+    font-size: 40px;
+    margin-bottom: 44px;
+}
+
+.bsod-details {
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.bsod-qr {
+    width: 116px;
+    height: 116px;
+    flex-shrink: 0;
+    margin-right: 20px;
+    background-color: white;
+    -unity-background-scale-mode: scale-to-fit;
+
+    /* Uncomment after adding your QR image beside this stylesheet. */
+    /* background-image: url("StopCodeQR.png"); */
+}
+
+.bsod-support {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    min-height: 116px;
+    justify-content: space-between;
+}
+
+.bsod .bsod-help {
+    font-size: 20px;
+}
+
+.bsod-error-info {
+    margin-top: 34px;
+}
+
+.bsod .bsod-caption {
+    font-size: 16px;
+}
+
+.bsod .bsod-stop-code {
+    margin-top: 12px;
+    font-size: 16px;
+}
