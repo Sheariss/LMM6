@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: DevelopmentSettings
   m_EditorClassIdentifier: Assembly-CSharp-Editor::Atlas.Development.DevelopmentSettings
   enabled: 1
-  startPoint: 4
+  startPoint: 0
   splashDurationMultiplier: 0

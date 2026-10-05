@@ -26,6 +26,8 @@ namespace Atlas.AuthoredData.Users
             [Header("Appearance")]
             [SerializeField] private Sprite profileImage;
             [SerializeField] private Sprite wallpaper;
+            [SerializeField] private Sprite blurWallpaperHD;
+            [SerializeField] private Sprite blurWallpaperBig;
 
             [Header("Availability")]
             [SerializeField] private bool initiallyHidden;
@@ -39,6 +41,8 @@ namespace Atlas.AuthoredData.Users
 
             public Sprite ProfileImage => profileImage;
             public Sprite Wallpaper => wallpaper;
+            public Sprite BlurWallpaperHD => blurWallpaperHD;
+            public Sprite BlurWallpaperBig => blurWallpaperBig;
 
             public bool InitiallyHidden => initiallyHidden;
 

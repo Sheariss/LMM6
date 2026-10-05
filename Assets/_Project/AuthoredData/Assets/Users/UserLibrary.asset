@@ -15,15 +15,19 @@ MonoBehaviour:
   users:
   - userId: admin
     displayName: Admin
-    loginMethod: 0
+    loginMethod: 1
     profileImage: {fileID: 1881957229145821672, guid: 15c1734fc5e06f44f83917ee13fa1168, type: 3}
-    wallpaper: {fileID: 2291255577522125532, guid: fa6591e4fea68724295c121910327ccc, type: 3}
+    wallpaper: {fileID: 21300000, guid: fa6591e4fea68724295c121910327ccc, type: 3}
+    blurWallpaperHD: {fileID: 21300000, guid: 51e8fe5d54f90944a874c718cd0ecd7c, type: 3}
+    blurWallpaperBig: {fileID: 21300000, guid: e92b42bcb8e804e4ebc2ecd1a914be73, type: 3}
     initiallyHidden: 0
     password: Password123
   - userId: guest
     displayName: Guest
     loginMethod: 0
     profileImage: {fileID: 3713408546367866918, guid: 6af99c888ef37f34da1052b090049bb3, type: 3}
-    wallpaper: {fileID: -5461434214798450734, guid: 71c02421752da1741a5cbab179c07a5c, type: 3}
+    wallpaper: {fileID: 21300000, guid: 71c02421752da1741a5cbab179c07a5c, type: 3}
+    blurWallpaperHD: {fileID: 21300000, guid: be5d70b442effff44b61be66a76a04fa, type: 3}
+    blurWallpaperBig: {fileID: 21300000, guid: 78ddd8cbca7145044bb3b83cabda0977, type: 3}
     initiallyHidden: 0
     password: 
