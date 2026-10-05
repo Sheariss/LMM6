@@ -1,190 +1,257 @@
-using Atlas.AuthoredData.Users;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
-using static Atlas.AuthoredData.Users.UserLibrarySO;
 
 namespace Atlas.Presentation.SOS.LoginScreen
 {
     public sealed class LoginScreenController : MonoBehaviour
     {
-        // -------------------- UI DOCUMENT --------------------
-        private UIDocument uiDoc;
+        [SerializeField] private UIDocument uiDocument;
+        [SerializeField] private Atlas.SOS.Authentication.AuthenticationManager authenticationManager;
 
-        // -------------------- AUTHORED DATA --------------------
-        [Header("User Data")]
-        [SerializeField]
-        private UserLibrarySO userLibrary;
+        [Header("System Actions")]
+        [SerializeField] private UnityEvent accessibilityRequested = new UnityEvent();
+        [SerializeField] private UnityEvent powerRequested = new UnityEvent();
 
-        [SerializeField]
-        private string defaultUserId = "admin";
-
-        // -------------------- HELPERS --------------------
         private LoginScreenBinder binder;
         private LoginScreenView view;
+        private LoginScreenEngine engine;
         private LoginScreenViewBuilder builder;
+        private LoginScreenView.ViewState currentState;
+        private VisualElement boundDocumentRoot;
 
-        // -------------------- STATE --------------------
-        private UserInfo selectedUser;
+        private bool started;
+        private bool callbacksRegistered;
 
         // -------------------- LIFECYCLE --------------------
+
         private void Start()
         {
-            uiDoc = GetComponentInParent<UIDocument>();
+            started = true;
+            Initialize();
+        }
 
-            if (uiDoc == null)
+        private void OnEnable()
+        {
+            if (started)
+                Initialize();
+        }
+
+        private void OnDisable()
+        {
+            UnregisterCallbacks();
+            view?.ClearInputs();
+
+            binder = null;
+            view = null;
+            boundDocumentRoot = null;
+        }
+
+        private void Initialize()
+        {
+            if (uiDocument == null)
+                uiDocument = GetComponentInParent<UIDocument>();
+
+            if (authenticationManager == null)
+                authenticationManager = Atlas.SOS.Authentication.AuthenticationManager.Instance;
+
+            if (uiDocument == null || authenticationManager == null || authenticationManager.UserLibrary == null)
             {
-                Debug.LogError("[LoginScreenController] UIDocument was not found in parent hierarchy.");
+                Debug.LogError("[LoginScreenController] UIDocument, AuthenticationManager, and UserLibrary are required.");
                 return;
             }
 
-            if (userLibrary == null)
+            if (engine == null)
             {
-                Debug.LogError("[LoginScreenController] UserLibrarySO was not assigned.");
-                return;
+                engine = new LoginScreenEngine(authenticationManager);
+                builder = new LoginScreenViewBuilder();
             }
 
-            binder = new LoginScreenBinder(uiDoc.rootVisualElement);
+            engine.Initialize();
+            BindDocument();
+        }
+
+        private void BindDocument()
+        {
+            UnregisterCallbacks();
+
+            boundDocumentRoot = uiDocument.rootVisualElement;
+            binder = new LoginScreenBinder(boundDocumentRoot);
 
             if (!binder.IsValid)
             {
+                view = null;
                 return;
             }
 
             view = new LoginScreenView(binder);
 
-            builder = new LoginScreenViewBuilder(userLibrary);
-
-            BindActions();
-
-            InitializeSelectedUser();
-
+            RegisterCallbacks();
             RefreshView();
+            view.SetVisible(!authenticationManager.IsSignedIn);
+
+            if (!authenticationManager.IsSignedIn)
+                view.FocusPrimary(currentState);
         }
 
+        // -------------------- CALLBACKS --------------------
 
-        // -------------------- INITIALIZATION --------------------
-        private void InitializeSelectedUser()
+        private void RegisterCallbacks()
         {
-            selectedUser =
-                userLibrary.GetUser(defaultUserId);
+            binder.User1Button.clicked += OnUser1Pressed;
+            binder.User2Button.clicked += OnUser2Pressed;
 
-            if (selectedUser != null)
-            {
-                return;
-            }
+            binder.PasswordSubmitButton.clicked += OnSignInPressed;
+            binder.SignInButton.clicked += OnSignInPressed;
+            binder.ForgotPasswordButton.clicked += OnForgotPasswordPressed;
+            binder.LoginMessageOkButton.clicked += OnMessageOkPressed;
 
-            selectedUser =
-                builder.GetFirstVisibleUser();
+            binder.AccessibilityButton.clicked += OnAccessibilityPressed;
+            binder.PowerButton.clicked += OnPowerPressed;
 
-            if (selectedUser == null)
-            {
-                Debug.LogError(
-                    "[LoginScreenController] No visible users are available."
-                );
-            }
+            binder.Password.RegisterCallback<KeyDownEvent>(OnPasswordKeyDown, TrickleDown.TrickleDown);
+
+            callbacksRegistered = true;
         }
 
-
-        // -------------------- ACTION BINDING --------------------
-        private void BindActions()
+        private void UnregisterCallbacks()
         {
-            binder.BindActions(
-                OnUser1Pressed,
-                OnUser2Pressed,
-                OnSignInPressed,
-                OnForgotPasswordPressed,
-                OnAccessibilityPressed,
-                OnPowerPressed
-            );
+            if (!callbacksRegistered)
+                return;
+
+            binder.User1Button.clicked -= OnUser1Pressed;
+            binder.User2Button.clicked -= OnUser2Pressed;
+
+            binder.PasswordSubmitButton.clicked -= OnSignInPressed;
+            binder.SignInButton.clicked -= OnSignInPressed;
+            binder.ForgotPasswordButton.clicked -= OnForgotPasswordPressed;
+            binder.LoginMessageOkButton.clicked -= OnMessageOkPressed;
+
+            binder.AccessibilityButton.clicked -= OnAccessibilityPressed;
+            binder.PowerButton.clicked -= OnPowerPressed;
+
+            binder.Password.UnregisterCallback<KeyDownEvent>(OnPasswordKeyDown, TrickleDown.TrickleDown);
+
+            callbacksRegistered = false;
         }
 
-
-        // -------------------- VIEW --------------------
-        public void RefreshView()
-        {
-            if (builder == null || view == null)
-            {
-                return;
-            }
-
-            LoginScreenView.ViewState state = builder.Build(selectedUser);
-
-            view.Apply(state);
-        }
-
-
-        // -------------------- USER SELECTION --------------------
-        private void SelectUser(UserInfo user)
-        {
-            if (user == null)
-            {
-                return;
-            }
-
-            if (!builder.IsUserVisible(user))
-            {
-                return;
-            }
-
-            selectedUser = user;
-
-            RefreshView();
-        }
+        // -------------------- ACCOUNT SELECTION --------------------
 
         private void OnUser1Pressed()
         {
-            SelectUser(builder.GetVisibleUser(0));
+            SelectUser(currentState.User1?.UserId);
         }
 
         private void OnUser2Pressed()
         {
-            SelectUser(builder.GetVisibleUser(1));
+            SelectUser(currentState.User2?.UserId);
         }
 
+        private void SelectUser(string userId)
+        {
+            if (!engine.SelectUser(userId))
+                return;
+
+            view.ClearInputs();
+            RefreshView();
+            view.FocusPrimary(currentState);
+        }
 
         // -------------------- LOGIN ACTIONS --------------------
-        // TODO: Guest sign in vs admin sign in, how to hgandle password vs jsut regular sign in button
+
         private void OnSignInPressed()
         {
-            if (selectedUser == null)
+            if (engine.Section != LoginScreenSection.Credentials || !currentState.CanSubmit)
+                return;
+
+            bool succeeded = engine.TrySignIn(binder.Password.value);
+
+            view.ClearInputs();
+            RefreshView();
+
+            if (succeeded)
             {
+                view.SetVisible(false);
                 return;
             }
 
-            Debug.Log($"[LoginScreenController] Sign in requested for '{selectedUser.UserId}'.");
-
-            Hide();
-
-            // Authentication/session logic goes here later.
+            view.FocusPrimary(currentState);
         }
 
         private void OnForgotPasswordPressed()
         {
-            Debug.Log("[LoginScreenController] Forgot Password pressed.");
+            engine.RequestRecovery();
+            view.ClearInputs();
+            RefreshView();
+            view.FocusPrimary(currentState);
         }
 
+        private void OnMessageOkPressed()
+        {
+            engine.DismissMessage();
+            RefreshView();
+            view.FocusPrimary(currentState);
+        }
+
+        private void OnPasswordKeyDown(KeyDownEvent evt)
+        {
+            if (evt.keyCode != KeyCode.Return && evt.keyCode != KeyCode.KeypadEnter)
+                return;
+
+            if (!currentState.ShowPassword || !binder.PasswordSubmitButton.enabledInHierarchy)
+                return;
+
+            evt.StopPropagation();
+            OnSignInPressed();
+        }
 
         // -------------------- SYSTEM ACTIONS --------------------
+
         private void OnAccessibilityPressed()
         {
-            Debug.Log("[LoginScreenController] Accessibility pressed.");
+            accessibilityRequested.Invoke();
         }
 
         private void OnPowerPressed()
         {
-            Debug.Log("[LoginScreenController] Power pressed.");
+            powerRequested.Invoke();
         }
 
-        // -------------------- PANEL VISIBILITY --------------------
-        private void Show()
+        // -------------------- PRESENTATION --------------------
+
+        public void RefreshView()
         {
-            binder.Root.style.display = DisplayStyle.Flex;
+            if (view == null)
+                return;
+
+            currentState = builder.Build(engine);
+            view.Apply(currentState);
         }
 
-        private void Hide()
+        public void Show()
         {
-            Debug.Log("[LoginScreenController] Hide requested.");
-            binder.Root.style.display = DisplayStyle.None;
+            if (engine == null || authenticationManager.IsSignedIn)
+                return;
+
+            engine.Initialize();
+
+            // Rebind if the UIDocument recreated its visual tree.
+            if (view == null || boundDocumentRoot != uiDocument.rootVisualElement || binder.Root.panel == null)
+            {
+                BindDocument();
+                return;
+            }
+
+            view.ClearInputs();
+            RefreshView();
+            view.SetVisible(true);
+            view.FocusPrimary(currentState);
+        }
+
+        public void Hide()
+        {
+            view?.ClearInputs();
+            view?.SetVisible(false);
         }
     }
 }

@@ -101,7 +101,7 @@ namespace Atlas.Presentation.Credits
 
         private void ApplyPosition()
         {
-            binder.Content.transform.position = new Vector3(
+            binder.Content.style.translate = new Translate(
                 0f,
                 scrollPosition,
                 0f

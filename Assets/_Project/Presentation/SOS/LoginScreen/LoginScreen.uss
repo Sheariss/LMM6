@@ -1,82 +1,265 @@
 .login-root {
-    padding: 25px;
-    justify-content: space-between;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
 }
 
 .background-image {
     position: absolute;
+    left: 0;
+    top: 0;
 }
 
-.user-list {
-    width: 300px;
-    align-items: flex-start;
-    justify-content: flex-end;
-}
-
-.user-list-btn {
-    height: 120px;
-    width: 100%;
-    border-radius: 6px;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.user-list-image {
-    height: 90px;
-    width: 90px;
-    border-radius: 50%;
-}
-
-.user-list-text {
-    font-size: 28px;
-}
-
+/* Center independently of the corner controls. */
 .login-area {
+    width: 440px;
     align-items: center;
     justify-content: center;
 }
 
 .login-user-image {
-    height: 275px;
-    width: 275px;
-    border-radius: 50%;
-    margin: 15px;
+    width: 240px;
+    height: 240px;
+    flex-shrink: 0;
+    border-radius: 120px;
+    overflow: hidden;
+    margin: 0 0 24px 0;
 }
 
 .login-area-text {
-    font-size: 32px;
+    font-size: 40px;
+    -unity-font-style: normal;
     -unity-text-align: middle-center;
-    -unity-font-style: bold;
-    margin: 15px;
+    margin: 0 0 32px 0;
 }
 
-.password-field{
-    height: 55px;
+#LoginMethod,
+#PasswordGroup {
+    width: 100%;
+    align-items: center;
+}
+
+/* Style the input surface, not only its wrapper. */
+/* Shared outline around the password and arrow. */
+.password-row {
     width: 400px;
+    height: 48px;
+    flex-direction: row;
+    align-items: stretch;
+    background-color: rgba(20, 24, 35, 0.45);
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.25);
+    border-bottom-width: 2px;
+    border-bottom-color: rgba(255, 255, 255, 0.65);
     border-radius: 6px;
-    background-color: rgba(0,0,0,0.25);
-    margin: 15px;
+    overflow: hidden;
 }
 
-.forgotpassword-btn{
-    font-size: 24px;
-    margin: 15px;
+.password-row:hover {
+    background-color: rgba(20, 24, 35, 0.55);
+    border-color: rgba(255, 255, 255, 0.45);
+    border-bottom-color: rgba(255, 255, 255, 0.85);
 }
 
-.icon-list {
+.password-field {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    background-color: transparent;
+}
+
+.password-field .unity-base-text-field__input {
+    margin: 0;
+    padding: 0 12px;
+    border-width: 0;
+    border-radius: 0;
+    background-color: transparent;
+    font-size: 18px;
+    color: white;
+}
+
+.password-field .unity-base-text-field__input:focus {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.password-field .unity-base-text-field__input--placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.password-submit-button {
+    width: 46px;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    border-radius: 0;
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 26px;
+    -unity-font-style: normal;
+    -unity-text-align: middle-center;
+}
+
+.password-submit-button:hover,
+.password-submit-button:focus {
+    background-color: rgba(255, 255, 255, 0.14);
+    color: white;
+}
+
+.password-submit-button:active {
+    background-color: rgba(255, 255, 255, 0.22);
+}
+
+/* Standalone button for accounts without a password. */
+.sign-in-button {
     width: 150px;
-    align-items: flex-end;
-    justify-content: space-between;
+    height: 42px;
+    margin: 0;
+    padding: 0 20px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 18px;
+    -unity-font-style: normal;
+    -unity-text-align: middle-center;
 }
 
-.icon-button{
+.sign-in-button:hover,
+.sign-in-button:focus {
+    background-color: rgba(255, 255, 255, 0.28);
+    border-color: rgba(255, 255, 255, 0.45);
+}
+
+.sign-in-button:active {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.forgotpassword-btn {
     height: 40px;
-    width: 40px;
+    margin: 22px 0 0 0;
+    padding: 0 12px;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.85);
+    border-radius: 4px;
+}
+
+.forgotpassword-btn:hover,
+.forgotpassword-btn:focus {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Account switcher. */
+.user-list {
+    position: absolute;
+    left: 32px;
+    bottom: 32px;
+    width: 300px;
+    align-items: stretch;
+}
+
+.user-list-btn {
+    width: 100%;
+    height: 80px;
+    flex-shrink: 0;
+    padding: 8px 12px;
+    margin-bottom: 4px;
+    border-radius: 4px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.user-list-btn:hover,
+.user-list-btn:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#ULB-SelectedUser {
+    background-color: rgba(255, 255, 255, 0.16);
+}
+
+.user-list-image {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    margin-right: 16px;
+    border-radius: 32px;
+    overflow: hidden;
+}
+
+.user-list-text {
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    color: white;
+}
+
+/* Bottom-right system controls. */
+.icon-list {
+    position: absolute;
+    right: 32px;
+    bottom: 32px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.icon-button {
+    width: 48px;
+    height: 48px;
+    margin-left: 12px;
+    border-radius: 4px;
     align-items: center;
     justify-content: center;
 }
 
-.icon-image{
-    height: 32px;
-    width: 32px;
+.icon-button:hover,
+.icon-button:focus {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.icon-image {
+    width: 28px;
+    height: 28px;
+    -unity-background-image-tint-color: white;
+}
+
+.login-section {
+    width: 100%;
+    align-items: center;
+}
+
+.login-message {
+    width: 400px;
+    margin: 0 0 24px 0;
+    padding: 0;
+    white-space: normal;
+    font-size: 18px;
+    color: white;
+    -unity-text-align: middle-center;
+}
+
+.recovery-questions {
+    width: 400px;
+    margin-bottom: 24px;
+}
+
+.recovery-question {
+    margin: 0 0 8px 0;
+    white-space: normal;
+    font-size: 18px;
+    color: white;
+}
+
+.recovery-answer-row {
+    margin-bottom: 20px;
+}
+
+.reset-confirm-row {
+    margin-top: 16px;
+    margin-bottom: 24px;
 }

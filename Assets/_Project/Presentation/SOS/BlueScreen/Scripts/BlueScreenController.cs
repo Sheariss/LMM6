@@ -33,14 +33,9 @@ namespace Atlas.Presentation.SOS.BlueScreen
 
         public bool IsRunning => engine.IsRunning;
 
-        private readonly BlueScreenEngine engine =
-            new BlueScreenEngine();
-
-        private readonly BlueScreenViewBuilder viewBuilder =
-            new BlueScreenViewBuilder();
-
-        private readonly QRCodeEngine qrEngine =
-            new QRCodeEngine();
+        private readonly BlueScreenEngine engine = new BlueScreenEngine();
+        private readonly BlueScreenViewBuilder viewBuilder = new BlueScreenViewBuilder();
+        private readonly QRCodeEngine qrEngine = new QRCodeEngine();
 
         private UIDocument uiDocument;
         private BlueScreenView view;
@@ -117,7 +112,7 @@ namespace Atlas.Presentation.SOS.BlueScreen
             {
                 try
                 {
-                    nextImage = qrEngine.Generate(payload);
+                   nextImage = qrEngine.Generate(payload);
                 }
                 catch (Exception exception)
                 {

@@ -1,80 +1,83 @@
-using Atlas.AuthoredData.Users;
-using System.Collections.Generic;
-using UnityEngine;
+using Atlas.SOS.Authentication;
 using static Atlas.AuthoredData.Users.UserLibrarySO;
 
 namespace Atlas.Presentation.SOS.LoginScreen
 {
-    public class LoginScreenViewBuilder : MonoBehaviour
+    public sealed class LoginScreenViewBuilder
     {
-        // -------------------- AUTHORED DATA --------------------
-        private readonly UserLibrarySO userLibrary;
-
-        // -------------------- CONSTRUCTOR --------------------
-        public LoginScreenViewBuilder(UserLibrarySO userLibrary)
+        public LoginScreenView.ViewState Build(LoginScreenEngine engine)
         {
-            this.userLibrary = userLibrary;
-        }
+            UserInfo selectedUser = engine.SelectedUser;
+            bool credentialsVisible = engine.Section == LoginScreenSection.Credentials;
 
-        // -------------------- BUILD --------------------
-        public LoginScreenView.ViewState Build(UserInfo selectedUser)
-        {
-            List<UserInfo> visibleUsers = GetVisibleUsers();
+            bool requiresPassword = selectedUser != null && selectedUser.LoginMethod == UserLoginMethod.Password;
+            bool passwordFree = selectedUser != null && selectedUser.LoginMethod == UserLoginMethod.None;
 
-            return new LoginScreenView.ViewState
+            var state = new LoginScreenView.ViewState
             {
                 SelectedUser = selectedUser,
-                User1 = GetUserAtIndex(visibleUsers, 0),
-                User2 = GetUserAtIndex(visibleUsers, 1)
+                Section = engine.Section,
+                ShowPassword = credentialsVisible && requiresPassword,
+                ShowSignIn = credentialsVisible && passwordFree,
+                CanSubmit = credentialsVisible && (requiresPassword || passwordFree),
+                Message = GetMessage(engine),
+                InlineError = GetInlineError(engine)
             };
-        }
 
-        // -------------------- USER VISIBILITY --------------------
-        public bool IsUserVisible(UserInfo user)
-        {
-            if (user == null)
+            // The selected account already occupies its own row.
+            foreach (UserInfo user in engine.AvailableUsers)
             {
-                return false;
-            }
-            return !user.InitiallyHidden;
-            // Later: return !user.InitiallyHidden || progressionManager.IsUserUnlocked(user.UserId);
-        }
+                if (selectedUser != null && user.UserId == selectedUser.UserId)
+                    continue;
 
-        private List<UserInfo> GetVisibleUsers()
-        {
-            List<UserInfo> visibleUsers = new List<UserInfo>();
-
-            foreach (UserInfo user in userLibrary.Users)
-            {
-                if (!IsUserVisible(user))
+                if (state.User1 == null)
                 {
+                    state.User1 = user;
                     continue;
                 }
-                visibleUsers.Add(user);
+
+                state.User2 = user;
+                break;
             }
-            return visibleUsers;
+
+            return state;
         }
 
-        // -------------------- USER LOOKUP --------------------
-        public UserInfo GetVisibleUser(int index)
+        private static string GetMessage(LoginScreenEngine engine)
         {
-            List<UserInfo> visibleUsers = GetVisibleUsers();
+            if (engine.RecoveryUnavailable)
+                return "Password recovery is not available for this account.";
 
-            return GetUserAtIndex(visibleUsers, index);
-        }
-
-        public UserInfo GetFirstVisibleUser()
-        {
-            return GetVisibleUser(0);
-        }
-
-        private static UserInfo GetUserAtIndex(List<UserInfo> users, int index)
-        {
-            if (index < 0 || index >= users.Count)
+            switch (engine.LastResult)
             {
-                return null;
+                case AuthenticationResult.IncorrectPassword:
+                    return "The password is incorrect. Try again.";
+
+                case AuthenticationResult.AccountUnavailable:
+                    return "This account is unavailable.";
+
+                case AuthenticationResult.AccountNotConfigured:
+                    return "This account is not configured for sign-in.";
+
+                default:
+                    return string.Empty;
             }
-            return users[index];
+        }
+
+        private static string GetInlineError(LoginScreenEngine engine)
+        {
+            if (engine.Section != LoginScreenSection.Credentials)
+                return string.Empty;
+
+            if (engine.SelectedUser == null)
+                return "No accounts are available.";
+
+            if (engine.SelectedUser.LoginMethod != UserLoginMethod.Password && engine.SelectedUser.LoginMethod != UserLoginMethod.None)
+                return "This sign-in method is not supported.";
+
+            return engine.LastResult == AuthenticationResult.PasswordRequired
+                ? "Enter your password."
+                : string.Empty;
         }
     }
 }

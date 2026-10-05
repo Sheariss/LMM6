@@ -1,48 +1,396 @@
-<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+<ui:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ui="UnityEngine.UIElements"
+    xmlns:uie="UnityEditor.UIElements"
+    noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd"
+    editor-extension-mode="False">
+
     <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3"/>
     <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3"/>
     <Style src="project://database/Assets/_Project/Presentation/SOS/LoginScreen/LoginScreen.uss?fileID=7433441132597879392&amp;guid=4a260c69a4cc64747859f07289f24c5a&amp;type=3#LoginScreen"/>
+
     <ui:VisualElement name="LoginScreenRoot" class="fullscreen">
-        <ui:Image name="UserWallpaper" class="fullscreen background-image" style="background-image: resource(&quot;Wallpapers/admin-wallpaper&quot;);">
-            <ui:VisualElement class="fullscreen" style="background-color: rgba(0, 0, 0, 0.525);"/>
+
+        <!-- Wallpaper and dark overlay. -->
+        <ui:Image
+            name="UserWallpaper"
+            class="fullscreen background-image"
+            picking-mode="Ignore"
+            style="background-image: resource(&quot;Wallpapers/admin-wallpaper&quot;);">
+
+            <ui:VisualElement
+                class="fullscreen"
+                picking-mode="Ignore"
+                style="background-color: rgba(0, 0, 0, 0.525);"/>
+
         </ui:Image>
-        <ui:VisualElement name="LoginScreenContent" class="fullscreen flex-row spacing-reset login-root white-text">
-            <ui:GroupBox name="UserListGroup" class="spacing-reset user-list">
-                <ui:Button text="" name="ULB-SelectedUser" class="user-list-btn button-reset spacing-reset flex-row">
-                    <ui:Image name="ProfilePic" class="user-list-image" style="background-image: resource(&quot;UserProfilePictures/admin-pfp&quot;);"/>
-                    <ui:Label text="Admin" name="Username" class="user-list-text"/>
+
+        <ui:VisualElement
+            name="LoginScreenContent"
+            class="fullscreen spacing-reset login-root white-text">
+
+            <!-- Bottom-left account switcher. -->
+            <ui:GroupBox
+                name="UserListGroup"
+                class="spacing-reset user-list">
+
+                <ui:Button
+                    name="ULB-SelectedUser"
+                    text=""
+                    class="user-list-btn button-reset spacing-reset flex-row">
+
+                    <ui:Image
+                        name="ProfilePic"
+                        class="user-list-image"
+                        style="background-image: resource(&quot;UserProfilePictures/admin-pfp&quot;);"/>
+
+                    <ui:Label
+                        name="Username"
+                        text="Admin"
+                        class="user-list-text"/>
+
                 </ui:Button>
-                <ui:Button text="" name="ULB-User1" class="user-list-btn button-reset spacing-reset flex-row">
-                    <ui:Image name="ProfilePic" class="user-list-image" style="background-image: resource(&quot;UserProfilePictures/guest-pfp&quot;);"/>
-                    <ui:Label text="Guest" name="Username" class="user-list-text"/>
+
+                <ui:Button
+                    name="ULB-User1"
+                    text=""
+                    class="user-list-btn button-reset spacing-reset flex-row">
+
+                    <ui:Image
+                        name="ProfilePic"
+                        class="user-list-image"
+                        style="background-image: resource(&quot;UserProfilePictures/guest-pfp&quot;);"/>
+
+                    <ui:Label
+                        name="Username"
+                        text="Guest"
+                        class="user-list-text"/>
+
                 </ui:Button>
-                <ui:Button text="" name="ULB-User2" class="user-list-btn button-reset spacing-reset flex-row" style="display: none;">
-                    <ui:Image name="ProfilePic" class="user-list-image" style="background-image: resource(&quot;Logos/Logo&quot;);"/>
-                    <ui:Label text="Secret" name="Username" class="user-list-text"/>
+
+                <ui:Button
+                    name="ULB-User2"
+                    text=""
+                    class="user-list-btn button-reset spacing-reset flex-row"
+                    style="display: none;">
+
+                    <ui:Image
+                        name="ProfilePic"
+                        class="user-list-image"
+                        style="background-image: resource(&quot;Logos/Logo&quot;);"/>
+
+                    <ui:Label
+                        name="Username"
+                        text="Secret"
+                        class="user-list-text"/>
+
                 </ui:Button>
+
             </ui:GroupBox>
-            <ui:GroupBox class="spacing-reset login-area">
-                <ui:Image name="LoginUserImage" class="login-user-image" style="background-image: resource(&quot;UserProfilePictures/admin-pfp&quot;);"/>
-                <ui:Label text="Admin" name="LoginUserName" class="spacing-reset login-area-text"/>
-                <ui:GroupBox name="LoginMethod" class="spacing-reset">
-                    <ui:GroupBox name="PasswordGroup" class="spacing-reset" style="display: flex;">
-                        <ui:TextField label="" placeholder-text="Password" readonly="true" hide-placeholder-on-focus="false" password="true" name="PasswordInputField" class="password-field" style="-unity-background-image-tint-color: rgb(255, 255, 255); color: rgb(255, 255, 255);"/>
-                        <ui:Button text="Forgot password" name="ForgotPasswordButton" class="button-reset spacing-reset user-list-text forgotpassword-btn"/>
+
+            <!-- Central account identity and login sections. -->
+            <ui:GroupBox
+                name="LoginArea"
+                class="spacing-reset login-area">
+
+                <ui:Image
+                    name="LoginUserImage"
+                    class="login-user-image"
+                    style="background-image: resource(&quot;UserProfilePictures/admin-pfp&quot;);"/>
+
+                <ui:Label
+                    name="LoginUserName"
+                    text="Admin"
+                    class="spacing-reset login-area-text"/>
+
+                <ui:GroupBox
+                    name="LoginMethod"
+                    class="spacing-reset">
+
+                    <!-- Normal login. -->
+                    <ui:GroupBox
+                        name="CredentialsSection"
+                        class="spacing-reset login-section">
+
+                        <ui:GroupBox
+                            name="PasswordGroup"
+                            class="spacing-reset">
+
+                            <ui:VisualElement class="password-row">
+
+                                <ui:TextField
+                                    name="PasswordInputField"
+                                    label=""
+                                    placeholder-text="Password"
+                                    readonly="false"
+                                    hide-placeholder-on-focus="false"
+                                    password="true"
+                                    class="password-field"/>
+
+                                <ui:Button
+                                    name="PasswordSubmitButton"
+                                    text="&#x2192;"
+                                    tooltip="Sign in"
+                                    class="button-reset password-submit-button"/>
+
+                            </ui:VisualElement>
+
+                            <ui:Button
+                                name="ForgotPasswordButton"
+                                text="Forgot password"
+                                class="button-reset spacing-reset forgotpassword-btn"/>
+
+                        </ui:GroupBox>
+
+                        <!-- Inline validation, such as an empty password. -->
+                        <ui:Label
+                            name="LoginErrorLabel"
+                            text=""
+                            class="login-message"
+                            style="display: none;"/>
+
+                        <!-- Shown for accounts that do not require a password. -->
+                        <ui:Button
+                            name="SignInButton"
+                            text="Sign in"
+                            class="button-reset sign-in-button"
+                            style="display: none;"/>
+
                     </ui:GroupBox>
-                    <ui:Button text="Sign In" emoji-fallback-support="false" name="SignInButton" class="button-reset" style="display: none;"/>
+
+                    <!-- Shared by incorrect-password and locked-account states. -->
+                    <ui:GroupBox
+                        name="LoginMessageSection"
+                        class="spacing-reset login-section"
+                        style="display: none;">
+
+                        <ui:Label
+                            name="LoginMessageLabel"
+                            text="The password is incorrect. Try again."
+                            class="login-message"/>
+
+                        <ui:Button
+                            name="LoginMessageOkButton"
+                            text="OK"
+                            class="button-reset login-confirm-button"/>
+
+                    </ui:GroupBox>
+
+                    <!-- Challenge after too many incorrect attempts. -->
+                    <ui:GroupBox
+                        name="AttemptsSection"
+                        class="spacing-reset login-section"
+                        style="display: none;">
+
+                        <ui:Label
+                            name="AttemptsMessageLabel"
+                            text="You have entered an incorrect password several times."
+                            class="login-message"/>
+
+                        <!-- The view supplies the actual challenge phrase. -->
+                        <ui:Label
+                            name="ChallengePromptLabel"
+                            text="To try again, enter the challenge phrase below."
+                            class="login-message"/>
+
+                        <ui:VisualElement class="password-row">
+
+                            <ui:TextField
+                                name="ChallengeInputField"
+                                label=""
+                                placeholder-text="Challenge phrase"
+                                hide-placeholder-on-focus="false"
+                                class="password-field"/>
+
+                            <ui:Button
+                                name="ChallengeSubmitButton"
+                                text="&#x2192;"
+                                tooltip="Continue"
+                                class="button-reset password-submit-button"/>
+
+                        </ui:VisualElement>
+
+                        <ui:Label
+                            name="ChallengeErrorLabel"
+                            text=""
+                            class="login-message"
+                            style="display: none;"/>
+
+                    </ui:GroupBox>
+
+                    <!-- Account recovery. Question text is supplied by the view. -->
+                    <ui:GroupBox
+                        name="RecoverySection"
+                        class="spacing-reset login-section"
+                        style="display: none;">
+
+                        <ui:VisualElement
+                            name="RecoveryQuestionsContainer"
+                            class="recovery-questions">
+
+                            <ui:Label
+                                name="RecoveryQuestion1Label"
+                                text="Security question 1"
+                                class="recovery-question"/>
+
+                            <ui:VisualElement
+                                class="password-row recovery-answer-row">
+
+                                <ui:TextField
+                                    name="RecoveryAnswer1Field"
+                                    label=""
+                                    placeholder-text="Security answer 1"
+                                    hide-placeholder-on-focus="false"
+                                    class="password-field"/>
+
+                            </ui:VisualElement>
+
+                            <ui:Label
+                                name="RecoveryQuestion2Label"
+                                text="Security question 2"
+                                class="recovery-question"/>
+
+                            <ui:VisualElement
+                                class="password-row recovery-answer-row">
+
+                                <ui:TextField
+                                    name="RecoveryAnswer2Field"
+                                    label=""
+                                    placeholder-text="Security answer 2"
+                                    hide-placeholder-on-focus="false"
+                                    class="password-field"/>
+
+                            </ui:VisualElement>
+
+                            <ui:Label
+                                name="RecoveryQuestion3Label"
+                                text="Security question 3"
+                                class="recovery-question"/>
+
+                            <ui:VisualElement
+                                class="password-row recovery-answer-row">
+
+                                <ui:TextField
+                                    name="RecoveryAnswer3Field"
+                                    label=""
+                                    placeholder-text="Security answer 3"
+                                    hide-placeholder-on-focus="false"
+                                    class="password-field"/>
+
+                                <ui:Button
+                                    name="RecoverySubmitButton"
+                                    text="&#x2192;"
+                                    tooltip="Verify answers"
+                                    class="button-reset password-submit-button"/>
+
+                            </ui:VisualElement>
+
+                        </ui:VisualElement>
+
+                        <ui:Label
+                            name="RecoveryErrorLabel"
+                            text=""
+                            class="login-message"
+                            style="display: none;"/>
+
+                        <ui:Button
+                            name="RecoveryCancelButton"
+                            text="Cancel"
+                            class="button-reset spacing-reset forgotpassword-btn"/>
+
+                    </ui:GroupBox>
+
+                    <!-- Password reset after successful recovery. -->
+                    <ui:GroupBox
+                        name="ResetPasswordSection"
+                        class="spacing-reset login-section"
+                        style="display: none;">
+
+                        <ui:Label
+                            text="Choose a new password."
+                            class="login-message"/>
+
+                        <ui:VisualElement class="password-row">
+
+                            <ui:TextField
+                                name="NewPasswordInputField"
+                                label=""
+                                placeholder-text="New password"
+                                hide-placeholder-on-focus="false"
+                                password="true"
+                                class="password-field"/>
+
+                        </ui:VisualElement>
+
+                        <ui:VisualElement
+                            class="password-row reset-confirm-row">
+
+                            <ui:TextField
+                                name="ConfirmPasswordInputField"
+                                label=""
+                                placeholder-text="Confirm password"
+                                hide-placeholder-on-focus="false"
+                                password="true"
+                                class="password-field"/>
+
+                        </ui:VisualElement>
+
+                        <ui:Label
+                            name="ResetPasswordErrorLabel"
+                            text=""
+                            class="login-message"
+                            style="display: none;"/>
+
+                        <ui:Button
+                            name="ResetPasswordSubmitButton"
+                            text="Save password"
+                            class="button-reset sign-in-button"/>
+
+                        <ui:Button
+                            name="ResetPasswordCancelButton"
+                            text="Cancel"
+                            class="button-reset spacing-reset forgotpassword-btn"/>
+
+                    </ui:GroupBox>
+
                 </ui:GroupBox>
+
             </ui:GroupBox>
-            <ui:GroupBox name="IconListGroup" class="spacing-reset icon-list flex-row">
-                <ui:Button text="" class="button-reset spacing-reset icon-button">
-                    <ui:Image class="icon-image"/>
+
+            <!-- Bottom-right system controls. -->
+            <ui:GroupBox
+                name="IconListGroup"
+                class="spacing-reset icon-list flex-row">
+
+                <ui:Button
+                    name="AccessibilityButton"
+                    text=""
+                    tooltip="Accessibility"
+                    class="button-reset spacing-reset icon-button">
+
+                    <ui:Image
+                        class="icon-image"
+                        style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/System/Accessibility/accessibility_new_32dp.png?fileID=21300000&amp;guid=459f6e37cfebdf049842ec9084ea7976&amp;type=3#accessibility_new_32dp&quot;);"/>
+
                 </ui:Button>
-                <ui:Button text="" name="AccessibilityButton" class="button-reset spacing-reset icon-button">
-                    <ui:Image class="icon-image" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/System/Accessibility/accessibility_new_32dp.png?fileID=21300000&amp;guid=459f6e37cfebdf049842ec9084ea7976&amp;type=3#accessibility_new_32dp&quot;);"/>
+
+                <ui:Button
+                    name="PowerButton"
+                    text=""
+                    tooltip="Power"
+                    enable-rich-text="false"
+                    class="button-reset spacing-reset icon-button">
+
+                    <ui:Image
+                        class="icon-image"
+                        style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/System/Power/Shutdown/power_settings_new_32dp.png?fileID=21300000&amp;guid=48de41b67a162404fabbd3dbfb6c7bc6&amp;type=3#power_settings_new_32dp&quot;);"/>
+
                 </ui:Button>
-                <ui:Button text="" enable-rich-text="false" name="PowerButton" class="button-reset spacing-reset icon-button">
-                    <ui:Image class="icon-image" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/System/Power/Shutdown/power_settings_new_32dp.png?fileID=21300000&amp;guid=48de41b67a162404fabbd3dbfb6c7bc6&amp;type=3#power_settings_new_32dp&quot;);"/>
-                </ui:Button>
+
             </ui:GroupBox>
+
         </ui:VisualElement>
+
     </ui:VisualElement>
+
 </ui:UXML>
