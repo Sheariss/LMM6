@@ -1,0 +1,397 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4551a3e093ea0e428668d967393eca5, type: 3}
+  m_Name: SettingsCatalog
+  m_EditorClassIdentifier: Assembly-CSharp::Atlas.Core.Settings.SettingsCatalog
+  categories:
+  - id: displau
+    label: Display & Graphics
+    description: Customize your display settings and balance visual quality with
+      performance.
+    sections:
+    - id: display
+      label: Display
+      description: Adjust screen resolution, display mode, and other screen settings.
+      settings:
+      - id: taget-display
+        label: Target Display
+        description: Choose which monitor to display the game on.
+        controlType: 2
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options:
+        - id: monitor-1
+          label: '1: EM2FPAf24B'
+        - id: monitor-2
+          label: '2: Modern AM242'
+        defaultOptionId: monitor-1
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: display-mode
+        label: Display Mode
+        description: Set the game to run in Fullscreen, Borderles Windowed or Windowed
+          mode.
+        controlType: 2
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options:
+        - id: fullscreen
+          label: Fullscreen
+        - id: borderless
+          label: Borderless Windowed
+        - id: windowed
+          label: Windowed
+        defaultOptionId: borderless
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: aspect-ratio
+        label: Aspect Ratio
+        description: Aspect ratio configures your screen's display proportions for
+          optimal gamaing visuals.
+        controlType: 2
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options:
+        - id: 32:9
+          label: 32:9
+        - id: 21:9
+          label: 21:9
+        - id: 16:10
+          label: 16:10
+        - id: 16:9
+          label: 16:9
+        - id: 4:3
+          label: 4:3
+        defaultOptionId: 16:9
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: display-resolution
+        label: Display Resolution
+        description: Adjust the resolution to fine-tune game graphics. A lower settings
+          eases the load on your GPU.
+        controlType: 2
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options:
+        - id: 4k
+          label: 3840 x 2160
+        - id: 1440p
+          label: 2560 x 1440
+        - id: 1080p
+          label: 1920 x 1080
+        - id: 720p
+          label: 1280 x 720
+        - id: 480p
+          label: 640 x 480
+        defaultOptionId: 1080p
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: brightness
+        label: Brightness
+        description: Adjust how light or dark the game appears.
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 50
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: '%'
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: contrast
+        label: Contrast
+        description: Adjust the difference between light and dark areas.
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 50
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: '%'
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: fps-cap
+        label: FPS Cap
+        description: Set the maximum framerate for the game.
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options:
+        - id: 4k
+          label: 3840 x 2160
+        - id: 1440p
+          label: 2560 x 1440
+        - id: 1080p
+          label: 1920 x 1080
+        - id: 720p
+          label: 1280 x 720
+        - id: 480p
+          label: 640 x 480
+        defaultOptionId: 1080p
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: show-fps
+        label: Show FPS
+        description: When enabled, the frame rate will be displayed at a fixed position
+          on the screen.
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options:
+        - id: 4k
+          label: 3840 x 2160
+        - id: 1440p
+          label: 2560 x 1440
+        - id: 1080p
+          label: 1920 x 1080
+        - id: 720p
+          label: 1280 x 720
+        - id: 480p
+          label: 640 x 480
+        defaultOptionId: 1080p
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: v-sync
+        label: V-Sync
+        description: Turn V-Sync on to prevent screen tearing.
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options:
+        - id: 4k
+          label: 3840 x 2160
+        - id: 1440p
+          label: 2560 x 1440
+        - id: 1080p
+          label: 1920 x 1080
+        - id: 720p
+          label: 1280 x 720
+        - id: 480p
+          label: 640 x 480
+        defaultOptionId: 1080p
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: anti-aliasing
+        label: Anti-Aliasing and Super Resolution Type
+        description: Different anti-aliasing and super resolution modes have different
+          effects on graphics and performance.
+        controlType: 2
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options:
+        - id: dlss
+          label: NVIDIA DLSS
+        - id: tsr
+          label: EPIC TSR
+        - id: fsr3
+          label: AMD FSR3
+        - id: xess
+          label: Intel XeSS
+        - id: tauu
+          label: TAUU
+        - id: off
+          label: Off
+        defaultOptionId: off
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+    - id: graphics
+      label: Graphics
+      description: Balance visual detail and performance.
+      settings: []
+    - id: post-processing
+      label: Post-Processing
+      description: Adjunt post-processing features to suit your needs.
+      settings:
+      - id: bloom
+        label: Bloom
+        description: Adjust the glow around bright areas.
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 50
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: '%'
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: motion-blur
+        label: Motion Blur
+        description: Adjust the blur produced by movement.
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 50
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: '%'
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: vignette
+        label: Vignette
+        description: Adjust the darkening around the edges of the screen.
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 50
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: '%'
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: film-grain
+        label: Film Grain
+        description: Adjust the grainy texture over the image.
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 50
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: '%'
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: depth-of-field
+        label: Depth of Field
+        description: "Enable blur outside the camera\u2019s focus area."
+        controlType: 0
+        defaultToggleValue: 1
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: chromatic-aberration
+        label: Chromatic Aberration
+        description: Enable color fringing around object edges.
+        controlType: 0
+        defaultToggleValue: 1
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: lens-flare
+        label: Lens Flare
+        description: Enable flare effects from bright light sources.
+        controlType: 0
+        defaultToggleValue: 1
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+  - id: 
+    label: 
+    description: 
+    sections: []
+  - id: 
+    label: 
+    description: 
+    sections: []
+  - id: 
+    label: 
+    description: 
+    sections: []
+  - id: 
+    label: 
+    description: 
+    sections: []

@@ -95,8 +95,8 @@
                                             <ui:Label text="Render Scale" class="settings-row__title"/>
                                             <ui:Label text="Adjust the internal rendering resolution." class="settings-row__description"/>
                                         </ui:VisualElement>
+                                        <ui:Slider name="ExampleRenderScaleSlider" low-value="50" high-value="200" value="100" show-input-field="true" class="settings-row__slider"/>
                                         <ui:VisualElement class="settings-row__slider-group">
-                                            <ui:Slider name="ExampleRenderScaleSlider" low-value="50" high-value="200" value="100" class="settings-row__slider"/>
                                             <ui:Label text="100%" class="settings-row__value"/>
                                         </ui:VisualElement>
                                     </ui:VisualElement>

@@ -1,35 +1,29 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 using Atlas.Core.GameState;
 using Atlas.SOS.Authentication;
+using Atlas.Presentation.SOS.Desktop;
 
 namespace Atlas.Presentation.SOS.LoginScreen
 {
     public sealed class LoginScreenController : MonoBehaviour
     {
         // -------------------- UI DOCUMENT --------------------
-
         private UIDocument uiDocument;
 
         // -------------------- RUNTIME DEPENDENCIES --------------------
-
         private AuthenticationManager authenticationManager;
         private GameStateManager gameStateManager;
 
         // -------------------- SYSTEM ACTIONS --------------------
-
         [SerializeField] private UnityEvent accessibilityRequested = new UnityEvent();
         [SerializeField] private UnityEvent powerRequested = new UnityEvent();
 
-        // -------------------- WELCOME --------------------
-
-        private const float WelcomeDurationSeconds = 4f;
-        private Coroutine welcomeRoutine;
+        // -------------------- DESKTOP --------------------
+        [SerializeField] private DesktopManager desktopManager;
 
         // -------------------- HELPERS --------------------
-
         private LoginScreenBinder binder;
         private LoginScreenView view;
         private LoginScreenEngine engine;
@@ -41,7 +35,6 @@ namespace Atlas.Presentation.SOS.LoginScreen
         private bool callbacksRegistered;
 
         // -------------------- LIFECYCLE --------------------
-
         private void Start()
         {
             started = true;
@@ -56,7 +49,6 @@ namespace Atlas.Presentation.SOS.LoginScreen
 
         private void OnDisable()
         {
-            CancelWelcomeDelay();
             UnregisterCallbacks();
 
             view?.ClearInputs();
@@ -93,7 +85,6 @@ namespace Atlas.Presentation.SOS.LoginScreen
         }
 
         // -------------------- DEPENDENCIES --------------------
-
         private bool ResolveDependencies()
         {
             authenticationManager = AuthenticationManager.Instance;
@@ -128,7 +119,6 @@ namespace Atlas.Presentation.SOS.LoginScreen
         }
 
         // -------------------- DOCUMENT BINDING --------------------
-
         private void BindDocument()
         {
             UnregisterCallbacks();
@@ -153,7 +143,6 @@ namespace Atlas.Presentation.SOS.LoginScreen
         }
 
         // -------------------- CALLBACKS --------------------
-
         private void RegisterCallbacks()
         {
             binder.User1Button.clicked += OnUser1Pressed;
@@ -200,7 +189,6 @@ namespace Atlas.Presentation.SOS.LoginScreen
         }
 
         // -------------------- ACCOUNT SELECTION --------------------
-
         private void OnUser1Pressed()
         {
             SelectUser(currentState.User1?.UserId);
@@ -222,7 +210,6 @@ namespace Atlas.Presentation.SOS.LoginScreen
         }
 
         // -------------------- LOGIN ACTIONS --------------------
-
         private void OnSignInPressed()
         {
             if (engine.Section != LoginScreenSection.Credentials ||
@@ -238,30 +225,11 @@ namespace Atlas.Presentation.SOS.LoginScreen
 
             if (succeeded)
             {
-                CancelWelcomeDelay();
-                welcomeRoutine = StartCoroutine(FinishSignIn());
+
                 return;
             }
 
             view.FocusPrimary(currentState);
-        }
-
-        private IEnumerator FinishSignIn()
-        {
-            // Keep Welcome and its spinner visible during the simulated load.
-            yield return new WaitForSecondsRealtime(WelcomeDurationSeconds);
-
-            welcomeRoutine = null;
-            view?.SetVisible(false);
-        }
-
-        private void CancelWelcomeDelay()
-        {
-            if (welcomeRoutine == null)
-                return;
-
-            StopCoroutine(welcomeRoutine);
-            welcomeRoutine = null;
         }
 
         private void OnForgotPasswordPressed()
@@ -344,7 +312,6 @@ namespace Atlas.Presentation.SOS.LoginScreen
 
         public void Hide()
         {
-            CancelWelcomeDelay();
             view?.ClearInputs();
             view?.SetVisible(false);
         }
