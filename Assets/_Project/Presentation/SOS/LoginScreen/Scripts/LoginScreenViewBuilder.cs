@@ -8,25 +8,50 @@ namespace Atlas.Presentation.SOS.LoginScreen
         public LoginScreenView.ViewState Build(LoginScreenEngine engine)
         {
             UserInfo selectedUser = engine.SelectedUser;
-            bool credentialsVisible = engine.Section == LoginScreenSection.Credentials;
 
-            bool requiresPassword = selectedUser != null && selectedUser.LoginMethod == UserLoginMethod.Password;
-            bool passwordFree = selectedUser != null && selectedUser.LoginMethod == UserLoginMethod.None;
+            bool showWelcome = engine.Section == LoginScreenSection.Welcome;
+            bool showCredentials = engine.Section == LoginScreenSection.Credentials;
+            bool showMessage = engine.Section == LoginScreenSection.Message;
+            bool canInteract = !showWelcome;
+
+            bool requiresPassword =
+                selectedUser != null &&
+                selectedUser.LoginMethod == UserLoginMethod.Password;
+
+            bool passwordFree =
+                selectedUser != null &&
+                selectedUser.LoginMethod == UserLoginMethod.None;
 
             var state = new LoginScreenView.ViewState
             {
                 SelectedUser = selectedUser,
                 Section = engine.Section,
-                ShowPassword = credentialsVisible && requiresPassword,
-                ShowSignIn = credentialsVisible && passwordFree,
-                CanSubmit = credentialsVisible && (requiresPassword || passwordFree),
-                Message = GetMessage(engine),
-                InlineError = GetInlineError(engine)
+
+                ShowCredentials = showCredentials,
+                ShowMessage = showMessage,
+                ShowWelcome = showWelcome,
+
+                ShowPassword = showCredentials && requiresPassword,
+                ShowSignIn = showCredentials && passwordFree,
+
+                CanInteract = canInteract,
+                CanSubmit =
+                    canInteract &&
+                    showCredentials &&
+                    (requiresPassword || passwordFree),
+
+                Message = showMessage ? GetMessage(engine) : string.Empty,
+                InlineError = showCredentials
+                    ? GetInlineError(engine)
+                    : string.Empty
             };
 
             // The selected account already occupies its own row.
             foreach (UserInfo user in engine.AvailableUsers)
             {
+                if (user == null)
+                    continue;
+
                 if (selectedUser != null && user.UserId == selectedUser.UserId)
                     continue;
 
@@ -66,14 +91,14 @@ namespace Atlas.Presentation.SOS.LoginScreen
 
         private static string GetInlineError(LoginScreenEngine engine)
         {
-            if (engine.Section != LoginScreenSection.Credentials)
-                return string.Empty;
-
             if (engine.SelectedUser == null)
                 return "No accounts are available.";
 
-            if (engine.SelectedUser.LoginMethod != UserLoginMethod.Password && engine.SelectedUser.LoginMethod != UserLoginMethod.None)
+            if (engine.SelectedUser.LoginMethod != UserLoginMethod.Password &&
+                engine.SelectedUser.LoginMethod != UserLoginMethod.None)
+            {
                 return "This sign-in method is not supported.";
+            }
 
             return engine.LastResult == AuthenticationResult.PasswordRequired
                 ? "Enter your password."

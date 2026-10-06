@@ -1,17 +1,34 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
+using Atlas.Core.GameState;
+using Atlas.SOS.Authentication;
 
 namespace Atlas.Presentation.SOS.LoginScreen
 {
     public sealed class LoginScreenController : MonoBehaviour
     {
-        [SerializeField] private UIDocument uiDocument;
-        [SerializeField] private Atlas.SOS.Authentication.AuthenticationManager authenticationManager;
+        // -------------------- UI DOCUMENT --------------------
 
-        [Header("System Actions")]
+        private UIDocument uiDocument;
+
+        // -------------------- RUNTIME DEPENDENCIES --------------------
+
+        private AuthenticationManager authenticationManager;
+        private GameStateManager gameStateManager;
+
+        // -------------------- SYSTEM ACTIONS --------------------
+
         [SerializeField] private UnityEvent accessibilityRequested = new UnityEvent();
         [SerializeField] private UnityEvent powerRequested = new UnityEvent();
+
+        // -------------------- WELCOME --------------------
+
+        private const float WelcomeDurationSeconds = 4f;
+        private Coroutine welcomeRoutine;
+
+        // -------------------- HELPERS --------------------
 
         private LoginScreenBinder binder;
         private LoginScreenView view;
@@ -39,8 +56,11 @@ namespace Atlas.Presentation.SOS.LoginScreen
 
         private void OnDisable()
         {
+            CancelWelcomeDelay();
             UnregisterCallbacks();
+
             view?.ClearInputs();
+            view?.SetVisible(false);
 
             binder = null;
             view = null;
@@ -49,17 +69,18 @@ namespace Atlas.Presentation.SOS.LoginScreen
 
         private void Initialize()
         {
+            uiDocument = GetComponentInParent<UIDocument>();
+
             if (uiDocument == null)
-                uiDocument = GetComponentInParent<UIDocument>();
-
-            if (authenticationManager == null)
-                authenticationManager = Atlas.SOS.Authentication.AuthenticationManager.Instance;
-
-            if (uiDocument == null || authenticationManager == null || authenticationManager.UserLibrary == null)
             {
-                Debug.LogError("[LoginScreenController] UIDocument, AuthenticationManager, and UserLibrary are required.");
+                Debug.LogError(
+                    "[LoginScreenController] UIDocument was not found in parent hierarchy."
+                );
                 return;
             }
+
+            if (!ResolveDependencies())
+                return;
 
             if (engine == null)
             {
@@ -70,6 +91,43 @@ namespace Atlas.Presentation.SOS.LoginScreen
             engine.Initialize();
             BindDocument();
         }
+
+        // -------------------- DEPENDENCIES --------------------
+
+        private bool ResolveDependencies()
+        {
+            authenticationManager = AuthenticationManager.Instance;
+            gameStateManager = GameStateManager.Instance;
+
+            bool valid = true;
+
+            if (authenticationManager == null)
+            {
+                Debug.LogError(
+                    "[LoginScreenController] AuthenticationManager instance was not found."
+                );
+                valid = false;
+            }
+            else if (authenticationManager.UserLibrary == null)
+            {
+                Debug.LogError(
+                    "[LoginScreenController] AuthenticationManager UserLibrary was not assigned."
+                );
+                valid = false;
+            }
+
+            if (gameStateManager == null)
+            {
+                Debug.LogError(
+                    "[LoginScreenController] GameStateManager instance was not found."
+                );
+                valid = false;
+            }
+
+            return valid;
+        }
+
+        // -------------------- DOCUMENT BINDING --------------------
 
         private void BindDocument()
         {
@@ -109,7 +167,10 @@ namespace Atlas.Presentation.SOS.LoginScreen
             binder.AccessibilityButton.clicked += OnAccessibilityPressed;
             binder.PowerButton.clicked += OnPowerPressed;
 
-            binder.Password.RegisterCallback<KeyDownEvent>(OnPasswordKeyDown, TrickleDown.TrickleDown);
+            binder.Password.RegisterCallback<KeyDownEvent>(
+                OnPasswordKeyDown,
+                TrickleDown.TrickleDown
+            );
 
             callbacksRegistered = true;
         }
@@ -130,7 +191,10 @@ namespace Atlas.Presentation.SOS.LoginScreen
             binder.AccessibilityButton.clicked -= OnAccessibilityPressed;
             binder.PowerButton.clicked -= OnPowerPressed;
 
-            binder.Password.UnregisterCallback<KeyDownEvent>(OnPasswordKeyDown, TrickleDown.TrickleDown);
+            binder.Password.UnregisterCallback<KeyDownEvent>(
+                OnPasswordKeyDown,
+                TrickleDown.TrickleDown
+            );
 
             callbacksRegistered = false;
         }
@@ -161,8 +225,11 @@ namespace Atlas.Presentation.SOS.LoginScreen
 
         private void OnSignInPressed()
         {
-            if (engine.Section != LoginScreenSection.Credentials || !currentState.CanSubmit)
+            if (engine.Section != LoginScreenSection.Credentials ||
+                !currentState.CanSubmit)
+            {
                 return;
+            }
 
             bool succeeded = engine.TrySignIn(binder.Password.value);
 
@@ -171,11 +238,30 @@ namespace Atlas.Presentation.SOS.LoginScreen
 
             if (succeeded)
             {
-                view.SetVisible(false);
+                CancelWelcomeDelay();
+                welcomeRoutine = StartCoroutine(FinishSignIn());
                 return;
             }
 
             view.FocusPrimary(currentState);
+        }
+
+        private IEnumerator FinishSignIn()
+        {
+            // Keep Welcome and its spinner visible during the simulated load.
+            yield return new WaitForSecondsRealtime(WelcomeDurationSeconds);
+
+            welcomeRoutine = null;
+            view?.SetVisible(false);
+        }
+
+        private void CancelWelcomeDelay()
+        {
+            if (welcomeRoutine == null)
+                return;
+
+            StopCoroutine(welcomeRoutine);
+            welcomeRoutine = null;
         }
 
         private void OnForgotPasswordPressed()
@@ -195,11 +281,17 @@ namespace Atlas.Presentation.SOS.LoginScreen
 
         private void OnPasswordKeyDown(KeyDownEvent evt)
         {
-            if (evt.keyCode != KeyCode.Return && evt.keyCode != KeyCode.KeypadEnter)
+            if (evt.keyCode != KeyCode.Return &&
+                evt.keyCode != KeyCode.KeypadEnter)
+            {
                 return;
+            }
 
-            if (!currentState.ShowPassword || !binder.PasswordSubmitButton.enabledInHierarchy)
+            if (!currentState.ShowPassword ||
+                !binder.PasswordSubmitButton.enabledInHierarchy)
+            {
                 return;
+            }
 
             evt.StopPropagation();
             OnSignInPressed();
@@ -221,7 +313,7 @@ namespace Atlas.Presentation.SOS.LoginScreen
 
         public void RefreshView()
         {
-            if (view == null)
+            if (builder == null || view == null)
                 return;
 
             currentState = builder.Build(engine);
@@ -236,7 +328,9 @@ namespace Atlas.Presentation.SOS.LoginScreen
             engine.Initialize();
 
             // Rebind if the UIDocument recreated its visual tree.
-            if (view == null || boundDocumentRoot != uiDocument.rootVisualElement || binder.Root.panel == null)
+            if (view == null ||
+                boundDocumentRoot != uiDocument.rootVisualElement ||
+                binder.Root.panel == null)
             {
                 BindDocument();
                 return;
@@ -250,6 +344,7 @@ namespace Atlas.Presentation.SOS.LoginScreen
 
         public void Hide()
         {
+            CancelWelcomeDelay();
             view?.ClearInputs();
             view?.SetVisible(false);
         }

@@ -48,6 +48,13 @@ namespace Atlas.Presentation.SOS.LoginScreen
         public Label LoginMessageLabel { get; }
         public Button LoginMessageOkButton { get; }
 
+        // -------------------- WELCOME --------------------
+
+        public VisualElement WelcomeSection { get; }
+        public VisualElement WelcomeSpinner { get; }
+        public Label WelcomeLabel { get; }
+
+
         // -------------------- ATTEMPT CHALLENGE --------------------
 
         public GroupBox AttemptsSection { get; }
@@ -137,6 +144,11 @@ namespace Atlas.Presentation.SOS.LoginScreen
             LoginMessageSection = Bind<GroupBox>(root, "LoginMessageSection");
             LoginMessageLabel = Bind<Label>(root, "LoginMessageLabel");
             LoginMessageOkButton = Bind<Button>(root, "LoginMessageOkButton");
+
+            // Welcome.
+            WelcomeSection = Bind<VisualElement>(root, "WelcomeSection");
+            WelcomeSpinner = Bind<VisualElement>(root, "WelcomeSpinner");
+            WelcomeLabel = Bind<Label>(root, "WelcomeLabel");
 
             // Attempt challenge.
             AttemptsSection = Bind<GroupBox>(root, "AttemptsSection");

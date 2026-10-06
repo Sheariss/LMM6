@@ -102,7 +102,24 @@
                     name="LoginUserName"
                     text="Admin"
                     class="spacing-reset login-area-text"/>
+                <!-- Shown while preparing the signed-in account's desktop. -->
+                <ui:VisualElement
+                    name="WelcomeSection"
+                    class="welcome-section"
+                    picking-mode="Ignore">
 
+                    <ui:VisualElement
+                        name="WelcomeSpinner"
+                        class="welcome-spinner"
+                        picking-mode="Ignore"/>
+
+                    <ui:Label
+                        name="WelcomeLabel"
+                        text="Welcome"
+                        class="spacing-reset welcome-label"
+                        picking-mode="Ignore"/>
+
+                </ui:VisualElement>
                 <ui:GroupBox
                     name="LoginMethod"
                     class="spacing-reset">

@@ -7,7 +7,8 @@ namespace Atlas.Presentation.SOS.LoginScreen
     public enum LoginScreenSection
     {
         Credentials,
-        Message
+        Message,
+        Welcome
     }
 
     public sealed class LoginScreenEngine
@@ -46,8 +47,12 @@ namespace Atlas.Presentation.SOS.LoginScreen
 
             foreach (UserInfo user in authentication.UserLibrary.Users)
             {
-                if (user != null && !user.InitiallyHidden && !string.IsNullOrWhiteSpace(user.UserId))
+                if (user != null &&
+                    !user.InitiallyHidden &&
+                    !string.IsNullOrWhiteSpace(user.UserId))
+                {
                     availableUsers.Add(user);
+                }
             }
         }
 
@@ -66,6 +71,9 @@ namespace Atlas.Presentation.SOS.LoginScreen
 
         public bool SelectUser(string userId)
         {
+            if (Section == LoginScreenSection.Welcome)
+                return false;
+
             RefreshAvailableUsers();
 
             UserInfo user = FindAvailableUser(userId);
@@ -95,16 +103,23 @@ namespace Atlas.Presentation.SOS.LoginScreen
                 return false;
             }
 
-            string submittedPassword = SelectedUser.LoginMethod == UserLoginMethod.Password
-                ? password
-                : string.Empty;
+            string submittedPassword =
+                SelectedUser.LoginMethod == UserLoginMethod.Password
+                    ? password
+                    : string.Empty;
 
-            AuthenticationResult result = authentication.TrySignIn(SelectedUser.UserId, submittedPassword);
+            AuthenticationResult result = authentication.TrySignIn(
+                SelectedUser.UserId,
+                submittedPassword
+            );
+
             LastResult = result;
 
             switch (result)
             {
                 case AuthenticationResult.Success:
+                    // The controller displays Welcome before hiding the login screen.
+                    Section = LoginScreenSection.Welcome;
                     return true;
 
                 case AuthenticationResult.PasswordRequired:
@@ -117,18 +132,31 @@ namespace Atlas.Presentation.SOS.LoginScreen
             }
         }
 
+        // -------------------- RECOVERY --------------------
+
         public void RequestRecovery()
         {
-            if (SelectedUser == null || SelectedUser.LoginMethod != UserLoginMethod.Password)
+            if (Section == LoginScreenSection.Welcome)
                 return;
+
+            if (SelectedUser == null ||
+                SelectedUser.LoginMethod != UserLoginMethod.Password)
+            {
+                return;
+            }
 
             LastResult = null;
             RecoveryUnavailable = true;
             Section = LoginScreenSection.Message;
         }
 
+        // -------------------- MESSAGES --------------------
+
         public void DismissMessage()
         {
+            if (Section == LoginScreenSection.Welcome)
+                return;
+
             RefreshAvailableUsers();
 
             SelectedUser = FindAvailableUser(SelectedUser?.UserId);
@@ -138,6 +166,8 @@ namespace Atlas.Presentation.SOS.LoginScreen
 
             ResetPresentation();
         }
+
+        // -------------------- PRESENTATION STATE --------------------
 
         private void ResetPresentation()
         {
