@@ -1,0 +1,676 @@
+/* All values and selectors belong to the accessibility document. */
+.accessibility {
+    --accessibility-background: rgb(13, 114, 206);
+    --accessibility-surface: rgb(10, 83, 151);
+    --accessibility-hover: rgb(8, 67, 123);
+    --accessibility-text: rgb(255, 255, 255);
+    --accessibility-focus: rgb(255, 222, 112);
+    --accessibility-border: rgba(255, 255, 255, 0.5);
+
+    position: relative;
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+    padding: 48px 48px 24px;
+    background-color: var(--accessibility-background);
+    color: var(--accessibility-text);
+    font-size: 18px;
+}
+
+.accessibility Label {
+    margin: 0;
+    padding: 0;
+    white-space: normal;
+}
+
+.accessibility-header {
+    flex-shrink: 0;
+    min-height: 132px;
+    padding-right: 440px;
+    padding-bottom: 20px;
+}
+
+.accessibility-header__navigation {
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.accessibility-header__copy {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    margin-left: 24px;
+}
+
+.accessibility-title {
+    font-size: 52px;
+}
+
+.accessibility-description {
+    margin-top: 8px;
+    font-size: 18px;
+}
+
+.accessibility-divider {
+    height: 1px;
+    flex-shrink: 0;
+    background-color: var(--accessibility-border);
+}
+
+/* Navigation and content */
+
+.accessibility-body {
+    flex-grow: 1;
+    flex-direction: row;
+    min-width: 0;
+    min-height: 0;
+}
+
+.accessibility-sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    padding: 24px 20px 24px 0;
+    border-right-width: 1px;
+    border-right-color: var(--accessibility-border);
+}
+
+.accessibility-sidebar__title {
+    margin-bottom: 16px;
+    font-size: 20px;
+}
+
+.accessibility-scroll {
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+}
+
+.accessibility-navigation {
+    padding-right: 8px;
+}
+
+.accessibility-nav-button {
+    min-height: 56px;
+    flex-shrink: 0;
+    margin: 0 0 8px;
+    padding: 12px;
+    background-image: none;
+    background-color: transparent;
+    border-width: 2px;
+    border-color: transparent;
+    border-radius: 8px;
+    color: var(--accessibility-text);
+    font-size: 20px;
+    white-space: normal;
+    -unity-text-align: middle-left;
+}
+
+.accessibility-nav-button:hover {
+    background-color: var(--accessibility-surface);
+}
+
+.accessibility-nav-button--selected {
+    background-color: var(--accessibility-surface);
+    border-left-width: 5px;
+    border-left-color: var(--accessibility-text);
+    -unity-font-style: bold;
+}
+
+.accessibility-workspace {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    min-height: 0;
+    padding: 24px;
+}
+
+.accessibility-content-header {
+    flex-shrink: 0;
+    padding-bottom: 20px;
+}
+
+.accessibility-category-title {
+    font-size: 30px;
+}
+
+.accessibility-content {
+    padding-right: 12px;
+    padding-bottom: 24px;
+}
+
+.accessibility-empty {
+    padding: 20px;
+    font-size: 18px;
+}
+
+/* Catalog-generated sections and rows */
+
+.accessibility-section {
+    flex-shrink: 0;
+    margin-bottom: 28px;
+}
+
+.accessibility-section__header {
+    margin-bottom: 12px;
+}
+
+.accessibility-section__title {
+    font-size: 24px;
+}
+
+.accessibility-section__description {
+    margin-top: 6px;
+    font-size: 17px;
+}
+
+.accessibility-section__body {
+    background-color: var(--accessibility-surface);
+    border-width: 1px;
+    border-color: var(--accessibility-border);
+    border-radius: 10px;
+}
+
+.accessibility-row {
+    flex-shrink: 0;
+    padding: 18px;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--accessibility-border);
+}
+
+.accessibility-row--last {
+    border-bottom-width: 0;
+}
+
+.accessibility-row__title {
+    font-size: 21px;
+    -unity-font-style: bold;
+}
+
+.accessibility-row__description {
+    margin-top: 6px;
+    font-size: 17px;
+}
+
+.accessibility-row__controls {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 14px;
+}
+
+.accessibility-control {
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 48px;
+    margin: 0;
+}
+
+.accessibility-control > .unity-base-field__input,
+.accessibility-color__hex > .unity-base-field__input {
+    min-height: 48px;
+    padding: 8px 12px;
+    background-color: var(--accessibility-hover);
+    border-width: 2px;
+    border-color: var(--accessibility-border);
+    border-radius: 6px;
+    color: var(--accessibility-text);
+    font-size: 18px;
+}
+
+.accessibility-control .unity-base-popup-field__text {
+    color: var(--accessibility-text);
+    font-size: 18px;
+}
+
+/* Toggle: retain a visible checkmark as well as the On/Off label. */
+
+.accessibility-toggle {
+    min-width: 48px;
+    min-height: 48px;
+    margin: 0;
+}
+
+.accessibility-toggle .unity-toggle__checkmark {
+    width: 28px;
+    height: 28px;
+}
+
+.accessibility-row__value {
+    min-width: 72px;
+    margin-left: 12px;
+    font-size: 18px;
+}
+
+/* Slider */
+
+.accessibility-slider {
+    flex-grow: 1;
+    min-width: 120px;
+    min-height: 48px;
+    margin: 0;
+    border-width: 2px;
+    border-color: transparent;
+    border-radius: 6px;
+}
+
+.accessibility-slider .unity-base-slider__tracker {
+    height: 6px;
+    background-color: var(--accessibility-border);
+}
+
+.accessibility-slider .unity-base-slider__dragger {
+    width: 24px;
+    height: 24px;
+    background-color: var(--accessibility-text);
+    border-width: 2px;
+    border-color: var(--accessibility-hover);
+    border-radius: 12px;
+}
+
+/* Runtime color control: swatches, hex field, optional alpha slider. */
+
+.accessibility-color {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.accessibility-color__editor {
+    flex-direction: row;
+    align-items: center;
+}
+
+.accessibility-color__sample {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    margin-right: 12px;
+    border-width: 2px;
+    border-color: var(--accessibility-text);
+    border-radius: 6px;
+}
+
+.accessibility-color__hex {
+    flex-grow: 1;
+    min-width: 0;
+    margin: 0;
+}
+
+.accessibility-color__presets {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.accessibility-color__preset {
+    min-width: 100px;
+    min-height: 48px;
+    margin: 0 8px 8px 0;
+    padding: 8px 12px;
+    background-color: var(--accessibility-hover);
+    border-width: 2px;
+    border-color: var(--accessibility-border);
+    border-radius: 6px;
+    color: var(--accessibility-text);
+    font-size: 17px;
+}
+
+.accessibility-color__preset--selected {
+    border-color: var(--accessibility-text);
+    -unity-font-style: bold;
+}
+
+.accessibility-color__error {
+    margin-top: 8px;
+    color: var(--accessibility-focus);
+    font-size: 17px;
+}
+
+.accessibility-font__sample {
+    margin-top: 12px;
+    padding: 12px;
+    font-size: 22px;
+}
+
+/* Optional preview */
+
+.accessibility-preview {
+    width: 300px;
+    flex-shrink: 0;
+    min-height: 0;
+    margin: 24px 0 24px 0;
+    padding: 20px;
+    background-color: rgb(238, 246, 252);
+    border-radius: 10px;
+    color: rgb(25, 44, 60);
+}
+
+.accessibility-preview__title {
+    font-size: 26px;
+}
+
+.accessibility-preview__description {
+    margin-top: 10px;
+    margin-bottom: 12px;
+    font-size: 17px;
+    color: rgb(52, 70, 86);
+}
+
+.accessibility-preview__sample {
+    min-height: 240px;
+    padding: 16px;
+    background-color: white;
+    border-radius: 6px;
+}
+
+.accessibility-preview__text {
+    font-size: 22px;
+    color: rgb(25, 44, 60);
+}
+
+.accessibility-preview__caption-background {
+    margin-top: 24px;
+    padding: 12px;
+    background-color: rgb(24, 27, 33);
+    border-radius: 6px;
+}
+
+.accessibility-preview__caption {
+    font-size: 20px;
+    color: white;
+}
+
+/* Footer and shared buttons */
+
+.accessibility-footer {
+    flex-shrink: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+}
+
+.accessibility-status {
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-right: 20px;
+    font-size: 18px;
+}
+
+.accessibility-footer__actions {
+    flex-direction: row;
+    flex-shrink: 0;
+}
+
+.accessibility-button {
+    min-width: 96px;
+    min-height: 48px;
+    margin: 0;
+    padding: 10px 18px;
+    background-image: none;
+    background-color: var(--accessibility-surface);
+    border-width: 2px;
+    border-color: var(--accessibility-border);
+    border-radius: 8px;
+    color: var(--accessibility-text);
+    font-size: 18px;
+    white-space: normal;
+}
+
+.accessibility-footer__actions > .accessibility-button {
+    margin-left: 12px;
+}
+
+.accessibility-button:hover,
+.accessibility-color__preset:hover {
+    background-color: var(--accessibility-hover);
+}
+
+.accessibility-button--primary {
+    background-color: white;
+    border-color: white;
+    color: rgb(10, 67, 118);
+}
+
+.accessibility-button--primary:hover {
+    background-color: rgb(220, 237, 250);
+}
+
+/* Search overlay */
+
+.accessibility-search {
+    position: absolute;
+    top: 48px;
+    right: 48px;
+    width: 400px;
+}
+
+.accessibility-search__bar {
+    flex-direction: row;
+    align-items: center;
+    padding: 4px;
+    background-color: var(--accessibility-surface);
+    border-width: 1px;
+    border-color: var(--accessibility-border);
+    border-radius: 8px;
+}
+
+.accessibility-search__field {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    margin: 0 8px 0 0;
+}
+
+.accessibility-search__field > .unity-text-field__input {
+    min-height: 48px;
+    padding: 8px;
+    background-color: transparent;
+    border-width: 2px;
+    border-color: transparent;
+    border-radius: 4px;
+    color: white;
+    font-size: 18px;
+}
+
+.accessibility-search__clear {
+    min-width: 72px;
+    padding: 8px;
+}
+
+.accessibility-search-results {
+    margin-top: 8px;
+    padding: 8px;
+    background-color: rgb(24, 27, 33);
+    border-width: 2px;
+    border-color: var(--accessibility-border);
+    border-radius: 8px;
+}
+
+.accessibility-search-results__status,
+.accessibility-search-results__hint {
+    padding: 8px;
+    font-size: 16px;
+    color: rgb(220, 228, 238);
+}
+
+.accessibility-search-results__scroll {
+    max-height: 320px;
+    min-height: 0;
+    flex-shrink: 1;
+}
+
+.accessibility-search-result {
+    flex-direction: column;
+    align-items: stretch;
+    flex-shrink: 0;
+    min-height: 64px;
+    margin: 2px 0;
+    padding: 12px;
+    background-image: none;
+    background-color: transparent;
+    border-width: 2px;
+    border-color: transparent;
+    border-radius: 6px;
+    -unity-text-align: middle-left;
+}
+
+.accessibility-search-result:hover {
+    background-color: rgb(42, 49, 60);
+}
+
+.accessibility-search-result__title {
+    font-size: 18px;
+    color: white;
+}
+
+.accessibility-search-result__path {
+    margin-top: 4px;
+    font-size: 16px;
+    color: rgb(220, 228, 238);
+}
+
+.accessibility-search-result--selected {
+    background-color: rgb(42, 49, 60);
+    border-color: var(--accessibility-focus);
+}
+
+/* Keyboard focus */
+
+.accessibility-button:focus,
+.accessibility-nav-button:focus,
+.accessibility-slider:focus,
+.accessibility-color__preset:focus,
+.accessibility-search-result:focus {
+    border-color: var(--accessibility-focus);
+}
+
+.accessibility-control:focus > .unity-base-field__input,
+.accessibility-color__hex:focus > .unity-base-field__input,
+.accessibility-search__field:focus > .unity-text-field__input {
+    border-color: var(--accessibility-focus);
+}
+
+.accessibility-toggle:focus .unity-toggle__checkmark {
+    border-width: 2px;
+    border-color: var(--accessibility-focus);
+}
+
+.accessibility Button:disabled,
+.accessibility TextField:disabled,
+.accessibility DropdownField:disabled,
+.accessibility Slider:disabled,
+.accessibility Toggle:disabled {
+    opacity: 0.5;
+}
+
+.accessibility-hidden {
+    display: none;
+}
+
+
+/* Dropdown arrow */
+.settings-row__control .unity-base-popup-field__arrow {
+    width: 20px;
+    height: 20px;
+    background-image: resource("Icons/Arrows 1/Expand-Arrow/keyboard_arrow_down_32dp");
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+/* Slim scrollbars */
+.settings-shell .unity-scroll-view__vertical-scroller {
+    width: 10px;
+    min-width: 10px;
+    margin: 3px;
+    background-color: transparent;
+    border-width: 0;
+}
+
+.settings-shell .unity-scroller__low-button,
+.settings-shell .unity-scroller__high-button {
+    display: none;
+}
+
+.settings-shell .unity-scroller__slider {
+    flex-grow: 1;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border-width: 0;
+}
+
+.settings-shell .unity-scroller__slider .unity-base-slider__drag-container,
+.settings-shell .unity-scroller__slider .unity-base-slider__tracker,
+.settings-shell .unity-scroller__slider .unity-base-slider__dragger-border {
+    background-color: transparent;
+    border-width: 0;
+}
+
+.settings-shell .unity-scroll-view__vertical-scroller .unity-base-slider__dragger {
+    width: 6px;
+    min-width: 6px;
+    background-image: none;
+    background-color: rgba(255, 255, 255, 0.35);
+    border-width: 0;
+    border-radius: 3px;
+}
+
+.settings-shell .unity-scroll-view__vertical-scroller .unity-base-slider__dragger:hover {
+    background-color: rgba(255, 255, 255, 0.55);
+}
+
+.settings-shell .unity-scroll-view__vertical-scroller .unity-base-slider__dragger:active {
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+
+.accessibility-font-control,
+.accessibility-color-control {
+    width: 320px;
+    min-width: 320px;
+    flex-shrink: 0;
+}
+
+.accessibility-font-control__sample {
+    margin: 12px 0 0;
+    padding: 0;
+    font-size: 20px;
+    color: white;
+    white-space: normal;
+}
+
+.accessibility-color-control__editor {
+    flex-direction: row;
+    align-items: center;
+}
+
+.accessibility-color-control__swatch {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    margin-right: 12px;
+    border-width: 1px;
+    border-color: white;
+    border-radius: 6px;
+}
+
+.accessibility-color-control__presets {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.accessibility-color-control__preset {
+    min-width: 80px;
+    margin: 0 8px 8px 0;
+    padding: 0 12px;
+}
+
+.accessibility-color-control__error {
+    margin: 8px 0 0;
+    padding: 0;
+    font-size: 15px;
+    color: white;
+    white-space: normal;
+}

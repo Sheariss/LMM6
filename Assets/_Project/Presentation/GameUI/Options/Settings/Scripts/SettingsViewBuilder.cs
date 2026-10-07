@@ -200,8 +200,8 @@ namespace Atlas.Presentation.Settings
                 valueLabel.text = FormatSlider(definition, value.SliderValue);
             });
 
+            group.Add(control);
             group.Add(valueLabel);
-            row.Add(control);
             row.Add(group);
         }
 

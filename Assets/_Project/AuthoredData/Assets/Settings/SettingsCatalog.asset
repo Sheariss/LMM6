@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SettingsCatalog
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Core.Settings.SettingsCatalog
   categories:
-  - id: display
+  - id: display-graphics
     label: Display & Graphics
     description: Customize your display settings and balance visual quality with
       performance.
@@ -496,7 +496,7 @@ MonoBehaviour:
       description: Choose your audio device and configure sound for your listening
         setup.
       settings:
-      - id: output-device
+      - id: device
         label: Output Device
         description: Choose the device used to play game audio.
         controlType: 2
@@ -729,28 +729,4 @@ MonoBehaviour:
     - id: actions
       label: Actions
       description: Customize the keybinds for the main actions in th egame
-      settings:
-      - id: 
-        label: 
-        description: 
-        controlType: 0
-        defaultToggleValue: 0
-        defaultSliderValue: 0
-        minimum: 0
-        maximum: 0
-        step: 0
-        valueFormat: 
-        options: []
-        defaultOptionId: 
-        actionId: 
-        allowKeyCombinations: 0
-        buttonLabel: 
-        commandId: 
-  - id: 
-    label: 
-    description: 
-    sections: []
-  - id: 
-    label: 
-    description: 
-    sections: []
+      settings: []
