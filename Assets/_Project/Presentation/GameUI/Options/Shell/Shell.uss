@@ -2,10 +2,10 @@
     --options-focus-color: rgb(91, 180, 235);
     --options-surface-color: rgba(255, 255, 255, 0.08);
     --options-surface-hover-color: rgba(255, 255, 255, 0.14);
-    --options-surface-active-color: rgba(255, 255, 255, 0.20);
+    --options-surface-active-color: rgba(255, 255, 255, 0.2);
     --options-divider-color: rgba(255, 255, 255, 0.35);
     --options-control-bg: rgba(255, 255, 255, 0.12);
-    --options-control-hover-bg: rgba(255, 255, 255, 0.20);
+    --options-control-hover-bg: rgba(255, 255, 255, 0.2);
     --options-preview-bg: rgb(238, 246, 252);
     --options-preview-surface: rgb(255, 255, 255);
     --options-preview-text: rgb(32, 54, 70);
@@ -13,10 +13,6 @@
     --options-preview-divider: rgb(190, 207, 219);
     --options-back-button-size: var(--control-xl);
 }
-
-/* ========================================================= */
-/* SHELL                                                     */
-/* ========================================================= */
 
 .settings-shell {
     flex-grow: 1;
@@ -28,10 +24,6 @@
     background-color: var(--windows-blue-bg);
     color: rgb(255, 255, 255);
 }
-
-/* ========================================================= */
-/* HEADER                                                    */
-/* ========================================================= */
 
 .settings-shell__header {
     flex-shrink: 0;
@@ -110,10 +102,6 @@
     -unity-text-align: middle-left;
 }
 
-/* ========================================================= */
-/* SEARCH                                                    */
-/* ========================================================= */
-
 .settings-shell__search-group {
     width: 450px;
     height: 58px;
@@ -178,10 +166,6 @@
     background-color: var(--options-surface-active-color);
 }
 
-/* ========================================================= */
-/* DIVIDERS                                                  */
-/* ========================================================= */
-
 .settings-shell__divider {
     height: 1px;
     min-height: 1px;
@@ -196,20 +180,12 @@
     background-color: var(--options-divider-color);
 }
 
-/* ========================================================= */
-/* BODY                                                      */
-/* ========================================================= */
-
 .settings-shell__body {
     flex-grow: 1;
     min-width: 0;
     min-height: 0;
     flex-direction: row;
 }
-
-/* ========================================================= */
-/* SIDEBAR                                                   */
-/* ========================================================= */
 
 .settings-shell__sidebar {
     width: 260px;
@@ -276,20 +252,12 @@
     border-color: rgb(255, 255, 255);
 }
 
-/* ========================================================= */
-/* WORKSPACE                                                 */
-/* ========================================================= */
-
 .settings-shell__workspace {
     flex-grow: 1;
     min-width: 0;
     min-height: 0;
     flex-direction: row;
 }
-
-/* ========================================================= */
-/* SETTINGS AREA                                             */
-/* ========================================================= */
 
 .settings-shell__settings-area {
     flex-grow: 1;
@@ -343,10 +311,6 @@
     padding-bottom: var(--space-8);
 }
 
-/* ========================================================= */
-/* SECTIONS                                                  */
-/* ========================================================= */
-
 .settings-section {
     flex-shrink: 0;
     flex-direction: column;
@@ -382,10 +346,6 @@
     border-radius: var(--radius-xl);
     overflow: hidden;
 }
-
-/* ========================================================= */
-/* SETTING ROWS                                              */
-/* ========================================================= */
 
 .settings-row {
     min-height: 72px;
@@ -465,10 +425,6 @@
     -unity-text-align: middle-right;
 }
 
-/* ========================================================= */
-/* DROPDOWNS                                                 */
-/* ========================================================= */
-
 .settings-row__control.unity-base-field {
     margin: 0;
 }
@@ -493,9 +449,6 @@
     color: rgb(255, 255, 255);
 }
 
-/* ========================================================= */
-/* TOGGLES                                                   */
-/* ========================================================= */
 .settings-row__toggle-group {
     flex-shrink: 0;
     flex-direction: row;
@@ -523,7 +476,6 @@
     padding: 0;
 }
 
-/* Track */
 .settings-row__toggle > .unity-toggle__input {
     width: 58px;
     height: 28px;
@@ -537,7 +489,6 @@
     border-radius: 14px;
 }
 
-/* Thumb */
 .settings-row__toggle > .unity-toggle__input > .unity-toggle__checkmark {
     width: 18px;
     height: 18px;
@@ -550,31 +501,23 @@
     -unity-background-image-tint-color: transparent;
 }
 
-/* ON track */
 .settings-row__toggle:checked > .unity-toggle__input {
     background-color: var(--options-focus-color);
     border-color: var(--options-focus-color);
 }
 
-/* ON thumb */
 .settings-row__toggle:checked > .unity-toggle__input > .unity-toggle__checkmark {
     margin-left: 33px;
     background-color: rgb(255, 255, 255);
 }
 
-/* Hover */
 .settings-row__toggle:hover > .unity-toggle__input {
     border-color: var(--options-focus-color);
 }
 
-/* Keyboard focus */
 .settings-row__toggle:focus > .unity-toggle__input {
     border-color: rgb(255, 255, 255);
 }
-
-/* ========================================================= */
-/* SLIDERS                                                   */
-/* ========================================================= */
 
 .settings-row__slider {
     margin-top: 0;
@@ -594,10 +537,6 @@
     border-color: var(--options-focus-color);
     border-radius: var(--radius-full);
 }
-
-/* ========================================================= */
-/* PREVIEW                                                   */
-/* ========================================================= */
 
 .settings-shell__preview-area {
     width: 34%;
@@ -695,10 +634,6 @@
     white-space: normal;
 }
 
-/* ========================================================= */
-/* FOOTER                                                    */
-/* ========================================================= */
-
 .settings-shell__footer {
     height: 80px;
     flex-shrink: 0;
@@ -766,10 +701,6 @@
     background-color: var(--options-surface-active-color);
 }
 
-/* ========================================================= */
-/* SCROLL VIEWS                                              */
-/* ========================================================= */
-
 .settings-shell__navigation-scroll > .unity-scroll-view__content-and-vertical-scroll-container,
 .settings-shell__content-scroll > .unity-scroll-view__content-and-vertical-scroll-container {
     flex-grow: 1;
@@ -786,19 +717,11 @@
     display: none;
 }
 
-/* ========================================================= */
-/* FOCUS                                                     */
-/* ========================================================= */
-
 .settings-shell__nav-button:focus,
 .settings-shell__button:focus {
     border-width: var(--border-thick);
     border-color: rgb(255, 255, 255);
 }
-
-/* ========================================================= */
-/* DISABLED                                                  */
-/* ========================================================= */
 
 .settings-shell Button:disabled,
 .settings-shell TextField:disabled,
@@ -807,3 +730,5 @@
 .settings-shell Toggle:disabled {
     opacity: 0.5;
 }
+
+

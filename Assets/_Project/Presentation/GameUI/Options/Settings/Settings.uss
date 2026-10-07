@@ -1,1 +1,221 @@
-VisualElement {}
+.settings-row__control .unity-base-popup-field__arrow {
+    width: 20px;
+    height: 20px;
+    background-image: resource("Icons/Arrows 1/Expand-Arrow/keyboard_arrow_down_32dp");
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.settings-row__button,
+.settings-row__keybind {
+    height: 42px;
+    min-width: 120px;
+    margin: 0;
+    padding: 0 16px;
+    background-color: var(--options-control-bg);
+    border-width: var(--border-thin);
+    border-color: rgb(255, 255, 255);
+    border-radius: var(--radius-lg);
+    font-size: 17px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-center;
+}
+
+.settings-row__button:hover,
+.settings-row__keybind:hover {
+    background-color: var(--options-control-hover-bg);
+}
+
+.settings-row__button:active,
+.settings-row__keybind:active {
+    background-color: var(--options-surface-active-color);
+}
+
+.settings-row__button:focus,
+.settings-row__keybind:focus,
+.settings-row__keybind--listening {
+    border-color: var(--options-focus-color);
+}
+
+.settings-row__keybind {
+    min-width: 90px;
+}
+
+/* Slim scrollbars */
+.settings-shell .unity-scroll-view__vertical-scroller {
+    width: 10px;
+    min-width: 10px;
+    margin: 3px;
+    background-color: transparent;
+    border-width: 0;
+}
+
+/* Hide arrow buttons */
+.settings-shell .unity-scroller__low-button,
+.settings-shell .unity-scroller__high-button {
+    display: none;
+}
+
+/* Clear Unity's default track and borders */
+.settings-shell .unity-scroller__slider {
+    flex-grow: 1;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border-width: 0;
+}
+
+.settings-shell .unity-scroller__slider .unity-base-slider__drag-container,
+.settings-shell .unity-scroller__slider .unity-base-slider__tracker,
+.settings-shell .unity-scroller__slider .unity-base-slider__dragger-border {
+    background-color: transparent;
+    border-width: 0;
+}
+
+/* Rounded thumb — height remains controlled by the ScrollView */
+.settings-shell .unity-scroll-view__vertical-scroller .unity-base-slider__dragger {
+    width: 6px;
+    min-width: 6px;
+    background-image: none;
+    background-color: rgba(255, 255, 255, 0.35);
+    border-width: 0;
+    border-radius: 3px;
+}
+
+.settings-shell .unity-scroll-view__vertical-scroller .unity-base-slider__dragger:hover {
+    background-color: rgba(255, 255, 255, 0.55);
+}
+
+.settings-shell .unity-scroll-view__vertical-scroller .unity-base-slider__dragger:active {
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+
+/* Anchor for the absolutely positioned results menu. */
+.settings-shell__search-group {
+    position: relative;
+    overflow: visible;
+}
+
+/* Allow the menu to extend below the header. */
+.settings-shell__header,
+.settings-shell__header-navigation {
+    overflow: visible;
+}
+
+.settings-search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    margin-top: 8px;
+    padding: 6px;
+
+    background-color: rgb(24, 27, 33);
+
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.18);
+
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    overflow: hidden;
+}
+
+.settings-search-results__status {
+    margin: 0;
+    padding: 6px 10px 8px;
+
+    font-size: 12px;
+    color: rgb(164, 172, 187);
+}
+
+.settings-search-results__scroll {
+    max-height: 320px;
+    flex-shrink: 1;
+}
+
+.settings-search-results__list {
+    flex-direction: column;
+}
+
+.settings-search-result {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    flex-shrink: 0;
+
+    min-height: 62px;
+    margin: 2px 0;
+    padding: 10px 12px;
+
+    background-color: transparent;
+    background-image: none;
+
+    border-width: 1px;
+    border-color: transparent;
+
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+
+    -unity-text-align: middle-left;
+}
+
+.settings-search-result:hover {
+    background-color: rgba(255, 255, 255, 0.07);
+}
+
+/* Controller applies this while navigating with arrow keys. */
+.settings-search-result--selected,
+.settings-search-result:focus {
+    background-color: rgba(110, 175, 255, 0.14);
+    border-color: rgb(110, 175, 255);
+}
+
+.settings-search-result:active {
+    background-color: rgba(110, 175, 255, 0.22);
+}
+
+.settings-search-result__title {
+    margin: 0;
+    padding: 0;
+
+    font-size: 15px;
+    color: rgb(240, 243, 248);
+    white-space: normal;
+}
+
+.settings-search-result__path {
+    margin: 4px 0 0;
+    padding: 0;
+
+    font-size: 12px;
+    color: rgb(164, 172, 187);
+    white-space: normal;
+}
+
+.settings-search-results__empty {
+    margin: 0;
+    padding: 18px 12px;
+
+    font-size: 14px;
+    color: rgb(164, 172, 187);
+    white-space: normal;
+}
+
+.settings-search-results__hint {
+    margin: 6px 0 0;
+    padding: 9px 10px 4px;
+
+    border-top-width: 1px;
+    border-top-color: rgba(255, 255, 255, 0.10);
+
+    font-size: 11px;
+    color: rgb(164, 172, 187);
+    white-space: normal;
+}

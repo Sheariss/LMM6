@@ -4,6 +4,7 @@ using Atlas.Core.Persistence;
 using Atlas.Core.GameState;
 using System;
 using Atlas.Presentation.GameUI.SaveSlotMenu;
+using Atlas.Presentation.Settings;
 
 namespace Atlas.Presentation.GameUI.MainMenu
 {
@@ -21,8 +22,8 @@ namespace Atlas.Presentation.GameUI.MainMenu
 
         // -------------------- MENU CONTROLLERS --------------------
 
-        [SerializeField]
-        private SaveSlotMenuController saveSlotMenuController;
+        [SerializeField] private SaveSlotMenuController saveSlotMenuController;
+        [SerializeField] private SettingsController settingsController;
 
 
 
@@ -165,7 +166,7 @@ namespace Atlas.Presentation.GameUI.MainMenu
 
         private void OnSettingsPressed()
         {
-            // settingsMenuController.Show();
+            settingsController.Show();
         }
 
         private void OnAccessibilityPressed()

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SettingsCatalog
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Core.Settings.SettingsCatalog
   categories:
-  - id: displau
+  - id: display
     label: Display & Graphics
     description: Customize your display settings and balance visual quality with
       performance.
@@ -262,7 +262,31 @@ MonoBehaviour:
     - id: graphics
       label: Graphics
       description: Balance visual detail and performance.
-      settings: []
+      settings:
+      - id: graphics-quality
+        label: Graphics Quality
+        description: Adjust the graphic's quality.
+        controlType: 2
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options:
+        - id: low
+          label: Low
+        - id: medium
+          label: Medium
+        - id: high
+          label: HIgh
+        - id: ultra
+          label: Ultra
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
     - id: post-processing
       label: Post-Processing
       description: Adjunt post-processing features to suit your needs.
@@ -379,14 +403,349 @@ MonoBehaviour:
         allowKeyCombinations: 0
         buttonLabel: 
         commandId: 
-  - id: 
-    label: 
-    description: 
-    sections: []
-  - id: 
-    label: 
-    description: 
-    sections: []
+  - id: audio
+    label: Audio
+    description: Manage volume, sound effects, and other audio preferences.
+    sections:
+    - id: volume
+      label: Volume
+      description: Adjust the volume of music, voices, effects, and other game sounds.
+      settings:
+      - id: master
+        label: Master Volume
+        description: Adjust the overall game volume.
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 50
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: music
+        label: Music Volume
+        description: Adjust the background music and soundtracks.
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 50
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: sfx
+        label: Sound Effects Volume
+        description: Adjust the gameplay and action sounds.
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 50
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: ui
+        label: UI Volume
+        description: Adjust the game ui clicks, selections, and interface sounds.
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 50
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: notif
+        label: Notification Volume
+        description: Adjust the system alerts volume.
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 50
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+    - id: audio-output
+      label: Audio Output
+      description: Choose your audio device and configure sound for your listening
+        setup.
+      settings:
+      - id: output-device
+        label: Output Device
+        description: Choose the device used to play game audio.
+        controlType: 2
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options:
+        - id: speakers
+          label: Speakers (DualSense Wireless Controller)
+        - id: monitor-1
+          label: '1: Modern AM242 (AMD High Definition Audio Device)'
+        - id: monitor-2
+          label: '2: EM2FPAF24B (NVIDIA High Definition Audio Device)'
+        defaultOptionId: speakers
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: playback-mode
+        label: Playback Mode
+        description: Select the llstening mode that best matches your device and
+          enviroment.
+        controlType: 2
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options:
+        - id: headphones
+          label: Headphones
+        - id: stereo-speakers
+          label: Stereo Speakers
+        - id: surround-sound
+          label: Surround Sound
+        - id: soundbar
+          label: Soundbar
+        - id: tv
+          label: TV
+        - id: night-mode
+          label: NIght Mode
+        defaultOptionId: headphones
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+    - id: accessibility
+      label: Accessibility
+      description: Customize audio balance, subtitles, and captions to suit your
+        needs.
+      settings:
+      - id: subtitles
+        label: Subtitles
+        description: Enable subtitles.
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: sfx-captions
+        label: Sound Effect Captions
+        description: Enable sound effect captions.
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: subtitle-text-size
+        label: Subtitle Text Size
+        description: Adjust subtitle text size.
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 25
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: '%'
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+    - id: playback
+      label: Playback
+      description: Control how audio behaves when the game is paused or out of focus.
+      settings:
+      - id: mute-unfocused
+        label: Mute When Unfocused
+        description: Mute all game audio when unfocused.
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: unfocused-volume
+        label: Unfocused Volume
+        description: Adjust the master volume when unfocused.
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 25
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: music-while-paused
+        label: Play Music While Paused
+        description: Enable or disable playing music while paused.
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+  - id: controls
+    label: Controls
+    description: Adjust the game controls.
+    sections:
+    - id: mouse
+      label: Mouse
+      description: 
+      settings:
+      - id: horiz-sensitivity
+        label: Mouse Horizontal Sensitivity
+        description: Adjust mouse horizontal sensitivity.
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 3
+        minimum: 0
+        maximum: 50
+        step: 0.01
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: vert-sensitivity
+        label: Mouse Vertical Sensitivity
+        description: Adjust mouse vertical sensitivity.
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 3
+        minimum: 0
+        maximum: 50
+        step: 0.01
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: smoothing
+        label: Mouse Smoothing
+        description: Enabling this will activate mouse smoothing, reducing jitter
+          and stuttering.
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+      - id: acceleration
+        label: Mouse Acceleration
+        description: Enablign this will activate mouse acceleration, dynamically
+          adjsuting the mouse sensitivity based on movement.
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
+    - id: actions
+      label: Actions
+      description: Customize the keybinds for the main actions in th egame
+      settings:
+      - id: 
+        label: 
+        description: 
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        actionId: 
+        allowKeyCombinations: 0
+        buttonLabel: 
+        commandId: 
   - id: 
     label: 
     description: 

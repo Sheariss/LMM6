@@ -1,22 +1,39 @@
+using Atlas.Presentation.Settings;
 using System;
 using UnityEngine;
 
 namespace Atlas.Core.Settings
 {
-    [Serializable]
-    public sealed class SettingsData
-    {
-        public bool Fullscreen = true;
-        public float MasterVolume = 1f;
-        public float MusicVolume = 1f;
-        public float SFXVolume = 1f;
-        public float NotificationVolume = 1f;
-    }
-
     public sealed class SettingsManager : MonoBehaviour
     {
         public static SettingsManager Instance { get; private set; }
-        public SettingsData Current { get; private set; } = new();
+
+        [SerializeField] private SettingsCatalog catalog;
+
+        private SettingsEngine engine;
+        private SettingsSaveData current;
+
+        public SettingsCatalog Catalog => catalog;
+
+        public SettingsEngine Engine
+        {
+            get
+            {
+                Initialize();
+                return engine;
+            }
+        }
+
+        // Return a copy so callers cannot mutate committed settings.
+        public SettingsSaveData Current
+        {
+            get
+            {
+                Initialize();
+                return current.Clone();
+            }
+        }
+
         public event Action SettingsChanged;
 
         private void Awake()
@@ -29,21 +46,54 @@ namespace Atlas.Core.Settings
 
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            try
+            {
+                Initialize();
+            }
+            catch (Exception exception)
+            {
+                Debug.LogException(exception, this);
+            }
         }
 
-        public void Apply(SettingsData settings)
+        public void Initialize()
         {
-            if (settings == null)
+            if (engine != null)
                 return;
 
-            Current = settings;
+            SettingsEngine newEngine = new(catalog);
+            SettingsSaveData defaults = newEngine.CreateDefaults();
+
+            engine = newEngine;
+            current = defaults;
+        }
+
+        public void Apply(SettingsSaveData proposed)
+        {
+            if (proposed == null)
+                throw new ArgumentNullException(nameof(proposed));
+
+            Initialize();
+
+            SettingsSaveData validated = engine.Normalize(proposed);
+
+            if (engine.AreEqual(current, validated))
+                return;
+
+            current = validated;
             SettingsChanged?.Invoke();
         }
 
         public void ResetToDefaults()
         {
-            Current = new SettingsData();
-            SettingsChanged?.Invoke();
+            Apply(Engine.CreateDefaults());
+        }
+
+        private void OnDestroy()
+        {
+            if (Instance == this)
+                Instance = null;
         }
     }
 }

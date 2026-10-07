@@ -1,9 +1,147 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ui:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ui="UnityEngine.UIElements"
-    xmlns:uie="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd"
->
-    
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
+    <Style src="project://database/Assets/_Project/Presentation/GameUI/Options/Shell/Shell.uss?fileID=7433441132597879392&amp;guid=e69a9f0cc73f1c345b3c94c908aea39e&amp;type=3#Shell"/>
+    <Style src="project://database/Assets/_Project/Presentation/GameUI/Options/Settings/Settings.uss?fileID=7433441132597879392&amp;guid=ab3a3bcb1074bc24ebc58d8ccd5a5ce3&amp;type=3#Settings"/>
+    <ui:VisualElement name="SettingsShellRoot" class="settings-shell">
+        <ui:VisualElement name="ShellHeader" class="settings-shell__header">
+            <ui:VisualElement name="ShellHeaderNavigation" class="settings-shell__header-navigation">
+                <ui:Button name="ShellBackButton" class="button-reset spacing-reset settings-shell__back-button">
+                    <ui:VisualElement name="ShellBackButtonIcon" class="settings-shell__back-button-icon" style="background-image: resource(&quot;Icons/Arrows/Arrow Back/arrow_back_48dp_FFFFFF_FILL0_wght400_GRAD0_opsz48&quot;);"/>
+                </ui:Button>
+                <ui:VisualElement class="settings-shell__header-copy">
+                    <ui:Label name="ShellTitle" text="Settings" class="spacing-reset settings-shell__title"/>
+                    <ui:Label name="ShellSubtitle" text="Configure system preferences" class="spacing-reset settings-shell__subtitle"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="ShellSearchGroup" class="settings-shell__search-group">
+                <ui:Label name="ShellSearchIcon" text="⌕" class="settings-shell__search-icon" style="background-image: resource(&quot;Icons/UI/Search/search_32dp&quot;); -unity-background-scale-mode: scale-to-fit;"/>
+                <ui:TextField name="ShellSearchField" placeholder-text="Search settings..." class="settings-shell__search-field"/>
+                <ui:Button name="ShellSearchClearButton" text="×" tooltip="Clear search" class="button-reset settings-shell__search-clear"/>
+                <ui:VisualElement name="SettingsSearchResults" class="settings-search-results" style="display: none;">
+                    <ui:Label name="SettingsSearchResultsStatus" text="3 results" class="settings-search-results__status"/>
+                    <ui:ScrollView name="SettingsSearchResultsScroll" mode="Vertical" horizontal-scroller-visibility="Hidden" class="settings-search-results__scroll">
+                        <ui:VisualElement name="SettingsSearchResultsList" class="settings-search-results__list"/>
+                    </ui:ScrollView>
+                    <ui:Label name="SettingsSearchEmpty" text="No matching settings." class="settings-search-results__empty" style="display: none;"/>
+                    <ui:Label text="↑ ↓ Navigate · Enter Select · Esc Close" class="settings-search-results__hint"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="settings-shell__divider"/>
+        <ui:VisualElement name="ShellBody" class="settings-shell__body">
+            <ui:VisualElement name="ShellSidebar" class="settings-shell__sidebar">
+                <ui:Label name="ShellNavigationTitle" text="CATEGORIES" class="settings-shell__navigation-title"/>
+                <ui:ScrollView name="ShellNavigationScrollView" mode="Vertical" class="settings-shell__navigation-scroll">
+                    <ui:VisualElement name="ShellNavigation" class="settings-shell__navigation">
+                        <ui:Button name="ExampleDisplayButton" text="Display &amp; Graphics" class="settings-shell__nav-button settings-shell__nav-button--selected"/>
+                        <ui:Button name="ExampleAudioButton" text="Audio" class="settings-shell__nav-button"/>
+                        <ui:Button name="ExampleControlsButton" text="Controls" class="settings-shell__nav-button"/>
+                        <ui:Button name="ExampleGameplayButton" text="Gameplay" class="settings-shell__nav-button"/>
+                        <ui:Button name="ExampleLanguageButton" text="Language" class="settings-shell__nav-button"/>
+                    </ui:VisualElement>
+                </ui:ScrollView>
+            </ui:VisualElement>
+            <ui:VisualElement class="settings-shell__vertical-divider"/>
+            <ui:VisualElement name="ShellWorkspace" class="settings-shell__workspace">
+                <ui:VisualElement name="ShellSettingsArea" class="settings-shell__settings-area">
+                    <ui:VisualElement name="ShellContentHeader" class="settings-shell__content-header">
+                        <ui:Label name="ShellCategoryTitle" text="Display &amp; Graphics" class="settings-shell__category-title"/>
+                        <ui:Label name="ShellCategoryDescription" text="Configure display, rendering, and visual effects." class="settings-shell__category-description"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="settings-shell__content-divider"/>
+                    <ui:ScrollView name="ShellContentScrollView" mode="Vertical" class="settings-shell__content-scroll">
+                        <ui:VisualElement name="ShellContent" class="settings-shell__content">
+                            <ui:VisualElement class="settings-section">
+                                <ui:VisualElement class="settings-section__header">
+                                    <ui:Label text="Display" class="settings-section__title"/>
+                                    <ui:Label text="Configure your display and presentation settings." class="settings-section__description"/>
+                                </ui:VisualElement>
+                                <ui:VisualElement class="settings-section__body">
+                                    <ui:VisualElement class="settings-row">
+                                        <ui:VisualElement class="settings-row__info">
+                                            <ui:Label text="Resolution" class="settings-row__title"/>
+                                            <ui:Label text="Select the output resolution." class="settings-row__description"/>
+                                        </ui:VisualElement>
+                                        <ui:DropdownField name="ExampleResolutionDropdown" class="settings-row__control"/>
+                                    </ui:VisualElement>
+                                    <ui:VisualElement class="settings-row">
+                                        <ui:VisualElement class="settings-row__info">
+                                            <ui:Label text="Display Mode" class="settings-row__title"/>
+                                            <ui:Label text="Choose how the game is displayed." class="settings-row__description"/>
+                                        </ui:VisualElement>
+                                        <ui:DropdownField name="ExampleDisplayModeDropdown" class="settings-row__control"/>
+                                    </ui:VisualElement>
+                                    <ui:VisualElement class="settings-row settings-row--last">
+                                        <ui:VisualElement class="settings-row__info">
+                                            <ui:Label text="VSync" class="settings-row__title"/>
+                                            <ui:Label text="Synchronize rendering with the display refresh rate." class="settings-row__description"/>
+                                        </ui:VisualElement>
+                                        <ui:VisualElement class="settings-row__toggle-group">
+                                            <ui:Toggle name="ExampleVSyncToggle" class="settings-row__toggle"/>
+                                            <ui:Label text="On" class="settings-row__toggle-label"/>
+                                        </ui:VisualElement>
+                                    </ui:VisualElement>
+                                    <ui:VisualElement/>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                            <ui:VisualElement class="settings-section">
+                                <ui:VisualElement class="settings-section__header">
+                                    <ui:Label text="Graphics" class="settings-section__title"/>
+                                    <ui:Label text="Adjust rendering quality and performance." class="settings-section__description"/>
+                                </ui:VisualElement>
+                                <ui:VisualElement class="settings-section__body">
+                                    <ui:VisualElement class="settings-row">
+                                        <ui:VisualElement class="settings-row__info">
+                                            <ui:Label text="Graphics Preset" class="settings-row__title"/>
+                                            <ui:Label text="Set the overall rendering quality." class="settings-row__description"/>
+                                        </ui:VisualElement>
+                                        <ui:DropdownField name="ExampleGraphicsPresetDropdown" class="settings-row__control"/>
+                                    </ui:VisualElement>
+                                    <ui:VisualElement class="settings-row settings-row--last">
+                                        <ui:VisualElement class="settings-row__info">
+                                            <ui:Label text="Render Scale" class="settings-row__title"/>
+                                            <ui:Label text="Adjust the internal rendering resolution." class="settings-row__description"/>
+                                        </ui:VisualElement>
+                                        <ui:Slider name="ExampleRenderScaleSlider" low-value="50" high-value="200" value="100" show-input-field="false" class="settings-row__slider"/>
+                                        <ui:VisualElement class="settings-row__slider-group">
+                                            <ui:Label text="100%" class="settings-row__value"/>
+                                        </ui:VisualElement>
+                                    </ui:VisualElement>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:ScrollView>
+                </ui:VisualElement>
+                <ui:VisualElement name="ShellPreviewArea" class="settings-shell__preview-area" style="display: none;">
+                    <ui:VisualElement name="ShellPreviewHeader" class="settings-shell__preview-header">
+                        <ui:Label name="ShellPreviewTitle" text="Display Preview" class="settings-shell__preview-title"/>
+                        <ui:Label name="ShellPreviewDescription" text="Changes to the selected setting are reflected here." class="settings-shell__preview-description"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="settings-shell__preview-divider"/>
+                    <ui:VisualElement name="ShellPreview" class="settings-shell__preview">
+                        <ui:VisualElement class="settings-shell__preview-placeholder">
+                            <ui:Label text="LIVE PREVIEW" class="settings-shell__preview-placeholder-title"/>
+                            <ui:Label text="Select or adjust a setting to view its effect." class="settings-shell__preview-placeholder-description"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="ShellPreviewFooter" class="settings-shell__preview-footer">
+                        <ui:Label name="ShellPreviewHint" text="Preview updates as settings are changed." class="settings-shell__preview-hint"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="settings-shell__divider"/>
+        <ui:VisualElement name="ShellFooter" class="settings-shell__footer">
+            <ui:VisualElement name="ShellFooterStatus" class="settings-shell__footer-status">
+                <ui:Label name="ShellStatusLabel" text="" class="settings-shell__status-label"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="ShellFooterActions" class="settings-shell__footer-actions">
+                <ui:Button name="ShellResetButton" text="Reset" class="settings-shell__button settings-shell__button--secondary"/>
+                <ui:Button name="ShellApplyButton" text="Apply" class="settings-shell__button settings-shell__button--secondary"/>
+                <ui:Button name="ShellDoneButton" text="Done" class="settings-shell__button settings-shell__button--primary"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>
