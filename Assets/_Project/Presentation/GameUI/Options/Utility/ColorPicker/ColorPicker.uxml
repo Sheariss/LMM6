@@ -1,0 +1,98 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/GameUI/Options/Utility/ColorPicker/ColorPicker.uss?fileID=7433441132597879392&amp;guid=aa320c971a251fb4fb1bebb5875590b3&amp;type=3#ColorPicker"/>
+    <ui:VisualElement name="color-picker" class="color-picker color-picker--dark">
+        <ui:VisualElement class="color-picker__header">
+            <ui:Label name="picker-title" text="Color Picker" class="color-picker__title"/>
+            <ui:Button name="close-button" text="" tooltip="Close color picker" class="color-picker__button color-picker__close">
+                <ui:Image class="color-picker__close-icon" style="background-image: resource(&quot;Icons/UI/Close/close_32dp&quot;);"/>
+            </ui:Button>
+        </ui:VisualElement>
+        <ui:ScrollView name="picker-scroll" mode="Vertical" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Auto" class="color-picker__scroll">
+            <ui:VisualElement class="color-picker__body">
+                <ui:VisualElement name="sv-area" focusable="true" tabindex="0" tooltip="Saturation and value" class="color-picker__sv-area">
+                    <ui:VisualElement name="sv-gradient" picking-mode="Ignore" class="color-picker__fill color-picker__sv-gradient"/>
+                    <ui:VisualElement name="sv-selector" picking-mode="Ignore" class="color-picker__sv-selector">
+                        <ui:VisualElement picking-mode="Ignore" class="color-picker__sv-selector-ring"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="color-picker__slider-section">
+                    <ui:Label text="Hue" class="color-picker__caption"/>
+                    <ui:VisualElement class="color-picker__slider-stack">
+                        <ui:VisualElement name="hue-gradient" picking-mode="Ignore" class="color-picker__track color-picker__hue-gradient"/>
+                        <ui:Slider name="hue-slider" low-value="0" high-value="360" value="203" tooltip="Hue in degrees" class="color-picker__slider"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="color-picker__slider-section">
+                    <ui:Label text="Opacity" class="color-picker__caption"/>
+                    <ui:VisualElement class="color-picker__slider-stack">
+                        <ui:VisualElement name="alpha-checkerboard" picking-mode="Ignore" class="color-picker__track color-picker__checkerboard"/>
+                        <ui:VisualElement name="alpha-gradient" picking-mode="Ignore" class="color-picker__track color-picker__alpha-gradient"/>
+                        <ui:Slider name="alpha-slider" low-value="0" high-value="100" value="100" tooltip="Opacity percentage" class="color-picker__slider"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="color-picker__manual">
+                    <ui:Label text="Color value" class="color-picker__caption"/>
+                    <ui:VisualElement class="color-picker__input-row">
+                        <ui:DropdownField name="format-dropdown" label="Format" choices="HEX,RGB,HSL,HSV,OKLCH" index="1" tooltip="Color format" class="color-picker__field color-picker__format"/>
+                        <ui:VisualElement name="hex-fields" class="color-picker__channels color-picker__hidden">
+                            <ui:TextField name="hex-input" label="HEX" value="#5BB4EB" max-length="9" tooltip="Hexadecimal color: #RRGGBB or #RRGGBBAA" class="color-picker__field color-picker__hex"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="rgb-fields" class="color-picker__channels">
+                            <ui:TextField name="rgb-r" label="R" value="91" tooltip="Red: 0 to 255" class="color-picker__field"/>
+                            <ui:TextField name="rgb-g" label="G" value="180" tooltip="Green: 0 to 255" class="color-picker__field"/>
+                            <ui:TextField name="rgb-b" label="B" value="235" tooltip="Blue: 0 to 255" class="color-picker__field"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="hsl-fields" class="color-picker__channels color-picker__hidden">
+                            <ui:TextField name="hsl-h" label="H°" tooltip="Hue in degrees" class="color-picker__field"/>
+                            <ui:TextField name="hsl-s" label="S%" tooltip="Saturation percentage" class="color-picker__field"/>
+                            <ui:TextField name="hsl-l" label="L%" tooltip="Lightness percentage" class="color-picker__field"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="hsv-fields" class="color-picker__channels color-picker__hidden">
+                            <ui:TextField name="hsv-h" label="H°" tooltip="Hue in degrees" class="color-picker__field"/>
+                            <ui:TextField name="hsv-s" label="S%" tooltip="Saturation percentage" class="color-picker__field"/>
+                            <ui:TextField name="hsv-v" label="V%" tooltip="Value percentage" class="color-picker__field"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="oklch-fields" class="color-picker__channels color-picker__hidden">
+                            <ui:TextField name="oklch-l" label="L%" tooltip="OKLCH lightness percentage" class="color-picker__field"/>
+                            <ui:TextField name="oklch-c" label="C" tooltip="OKLCH chroma" class="color-picker__field"/>
+                            <ui:TextField name="oklch-h" label="H°" tooltip="OKLCH hue in degrees" class="color-picker__field"/>
+                        </ui:VisualElement>
+                        <ui:TextField name="alpha-input" label="A%" value="100" tooltip="Opacity: 0 to 100 percent" class="color-picker__field color-picker__alpha-field"/>
+                    </ui:VisualElement>
+                    <ui:Label name="input-error" text="Enter a valid color value." class="color-picker__error color-picker__hidden"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="preset-section" class="color-picker__palette">
+                    <ui:VisualElement class="color-picker__section-header">
+                        <ui:Label text="Preset colors" class="color-picker__section-title"/>
+                        <ui:Button name="edit-presets-button" text="Edit" tooltip="Edit preset colors" class="color-picker__button color-picker__edit"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="preset-swatches" class="color-picker__swatches">
+                        <ui:Button name="preset-coral" tooltip="Coral, #EB686C" class="color-picker__swatch" style="background-color: rgb(235, 104, 108);"/>
+                        <ui:Button name="preset-orange" tooltip="Orange, #F2A166" class="color-picker__swatch" style="background-color: rgb(242, 161, 102);"/>
+                        <ui:Button name="preset-yellow" tooltip="Yellow, #F3D56B" class="color-picker__swatch" style="background-color: rgb(243, 213, 107);"/>
+                        <ui:Button name="preset-green" tooltip="Green, #438C70" class="color-picker__swatch" style="background-color: rgb(67, 140, 112);"/>
+                        <ui:Button name="preset-blue" tooltip="Blue, #5BB4EB" class="color-picker__swatch color-picker__swatch--selected" style="background-color: rgb(91, 180, 235);"/>
+                        <ui:Button name="add-preset-button" text="" tooltip="Add current color to presets" class="color-picker__button color-picker__swatch color-picker__add">
+                            <ui:Image class="color-picker__add-icon" style="background-image: resource(&quot;Icons/Math/Add/add_2_32dp&quot;);"/>
+                        </ui:Button>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="custom-section" class="color-picker__palette">
+                    <ui:VisualElement class="color-picker__section-header">
+                        <ui:Label text="My colors" class="color-picker__section-title"/>
+                        <ui:Button name="edit-custom-button" text="Edit" tooltip="Edit saved colors" class="color-picker__button color-picker__edit"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="custom-swatches" class="color-picker__swatches">
+                        <ui:Button name="add-custom-button" text="" tooltip="Save current color" class="color-picker__button color-picker__swatch color-picker__add">
+                            <ui:Image class="color-picker__add-icon"/>
+                        </ui:Button>
+                    </ui:VisualElement>
+                    <ui:Label name="custom-empty-message" text="Save a color with +" class="color-picker__hint"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,6 +1,7 @@
+using Atlas.Core.Accessibility;
+using Atlas.Presentation.ColorPicker;
 using System;
 using System.Collections;
-using Atlas.Core.Accessibility;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
@@ -10,8 +11,9 @@ namespace Atlas.Presentation.Accessibility
     public sealed class AccessibilityController : MonoBehaviour
     {
         [Header("Dependencies")]
-        [SerializeField] private UIDocument document;
-        [SerializeField] private AccessibilityManager accessibilityManager;
+        private UIDocument document;
+        private AccessibilityManager accessibilityManager;
+        [SerializeField] private ColorPickerController colorPicker;
 
         [Header("Events")]
         [SerializeField] private UnityEvent closed = new();
@@ -86,7 +88,8 @@ namespace Atlas.Presentation.Accessibility
                     view,
                     accessibilityManager.Catalog,
                     SelectCategory,
-                    ChangeValue);
+                    ChangeValue,
+                    OpenColorPicker);
 
                 view.SetHeader(
                     "Accessibility",
@@ -113,6 +116,24 @@ namespace Atlas.Presentation.Accessibility
                 Debug.LogException(exception, this);
                 enabled = false;
             }
+        }
+
+        private void OpenColorPicker(
+            AccessibilitySettingDefinition definition,
+            Color current,
+            VisualElement opener)
+        {
+            if (colorPicker == null)
+            {
+                Debug.LogError("Assign the ColorPickerController in the Inspector.", this);
+                return;
+            }
+
+            colorPicker.Open(
+                current,
+                definition.AllowAlpha,
+                definition.Label,
+                opener);
         }
 
         private AccessibilityCategoryDefinition GetFirstCategory()

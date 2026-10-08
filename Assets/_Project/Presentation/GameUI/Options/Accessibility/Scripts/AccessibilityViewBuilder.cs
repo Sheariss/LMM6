@@ -14,16 +14,23 @@ namespace Atlas.Presentation.Accessibility
         private readonly Action<AccessibilityCategoryDefinition> selectCategory;
         private readonly Action<AccessibilitySaveData.Entry> changeValue;
 
+        private readonly Action<
+            AccessibilitySettingDefinition,
+            Color,
+            VisualElement> openColorPicker;
+
         public AccessibilityViewBuilder(
             AccessibilityView view,
             AccessibilityCatalog catalog,
             Action<AccessibilityCategoryDefinition> selectCategory,
-            Action<AccessibilitySaveData.Entry> changeValue)
+            Action<AccessibilitySaveData.Entry> changeValue,
+            Action<AccessibilitySettingDefinition, Color, VisualElement> openColorPicker)
         {
             this.view = view;
             this.catalog = catalog;
             this.selectCategory = selectCategory;
             this.changeValue = changeValue;
+            this.openColorPicker = openColorPicker;
         }
 
         public void BuildNavigation()
@@ -342,7 +349,12 @@ namespace Atlas.Presentation.Accessibility
         {
             VisualElement group = Element("accessibility-color-control");
             VisualElement editor = Element("accessibility-color-control__editor");
-            VisualElement swatch = Element("accessibility-color-control__swatch");
+
+            Button swatch = new()
+            {
+                tooltip = $"Choose {definition.Label}"
+            };
+            swatch.AddToClassList("accessibility-color-control__swatch");
 
             TextField hex = new()
             {
@@ -357,6 +369,9 @@ namespace Atlas.Presentation.Accessibility
             error.style.display = DisplayStyle.None;
 
             Color current = definition.DefaultColorValue;
+
+            swatch.clicked += () =>
+                openColorPicker?.Invoke(definition, current, swatch);
 
             string FormatColor(Color value)
             {

@@ -12,4 +12,968 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eca92ed99564054f982263de543574d, type: 3}
   m_Name: AccessibilityCatalog
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Core.Accessibility.AccessibilityCatalog
-  categories: []
+  categories:
+  - id: vision
+    label: Vision & Readability
+    description: Adjust text, interface colors, and visual indicators to make information
+      easier to see.
+    keywords: []
+    sections:
+    - id: text-layout
+      label: Text & Layout
+      description: Customize text appearance and interface size.
+      keywords: []
+      settings:
+      - id: text-size
+        label: Text Size
+        description: Adjust the size of text in menus, messages, and documents.
+        keywords: []
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 25
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: '%'
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: ui-scale
+        label: UI Scale
+        description: Adjust the size of interface panels, buttons, and icons.
+        keywords: []
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 25
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: '%'
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: text-font
+        label: Text Font
+        description: Choose the font used for interface text.
+        keywords: []
+        controlType: 4
+        defaultToggleValue: 0
+        defaultSliderValue: 25
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: '%'
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions:
+        - id: inter
+          label: Inter
+          font: {fileID: 2230732570650464555, guid: a456dd165536c514bbc1ddb3456bc3f1, type: 3}
+        defaultFontId: 
+        fontPreviewText: 
+      - id: line-spacing
+        label: Line Spacing
+        description: Adjust the spacing between lines in messages and documents.
+        keywords: []
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 25
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: '%'
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions:
+        - id: inter
+          label: Inter
+          font: {fileID: 2230732570650464555, guid: a456dd165536c514bbc1ddb3456bc3f1, type: 3}
+        defaultFontId: 
+        fontPreviewText: 
+      - id: letter-spacing
+        label: Letter Spacing
+        description: Adjust the spacing between letters messages and documents.
+        keywords: []
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 25
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: '%'
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions:
+        - id: inter
+          label: Inter
+          font: {fileID: 2230732570650464555, guid: a456dd165536c514bbc1ddb3456bc3f1, type: 3}
+        defaultFontId: 
+        fontPreviewText: 
+    - id: color-contrast
+      label: Colors & Contrast
+      description: Adjust interface contrast and the colors used to communicate information.
+      keywords: []
+      settings:
+      - id: high-contrast
+        label: High Contrast Interface
+        description: Use stronger contrast between interface text, controls, and
+          backgrounds.
+        keywords: []
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+    - id: indicators
+      label: Visual Indicators
+      description: Make selected controls and interactive elements easier to identify.
+      keywords: []
+      settings:
+      - id: focus-highlight-color
+        label: Focus Highlight Color
+        description: Choose the outline color of the control selected with a keyboard
+          or controller.
+        keywords: []
+        controlType: 3
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: focus-highlight-thickness
+        label: Focus Highlight Thickness
+        description: Choose the outline thicknes of the control selected with a keyboard
+          or controller.
+        keywords: []
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 25
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: cursor-size
+        label: Cursor Size
+        description: Adjust the size of the in-game pointer.
+        keywords: []
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 25
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+  - id: captions
+    label: Subtitles & Captions
+    description: Display spoken dialogue and important sounds as text.
+    keywords: []
+    sections:
+    - id: caption-content
+      label: Caption Content
+      description: Choose which dialogue and sound information appears on screen.
+      keywords: []
+      settings:
+      - id: subtitles
+        label: Subtitles
+        description: Display spoken dialogue as text.
+        keywords: []
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: speaker-names
+        label: Speaker Names
+        description: "Show the speaker\u2019s name alongside dialogue subtitles."
+        keywords: []
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: sfx-captions
+        label: Sound Effect Captions
+        description: Display text descriptions of important sounds, such as alarms
+          and notifications.
+        keywords: []
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+    - id: caption appearance
+      label: Caption Appearance
+      description: Customize caption text and backgrounds.
+      keywords: []
+      settings:
+      - id: caption-text-size
+        label: Caption Text Size
+        description: Adjust the size of subtitle and sound caption text.
+        keywords: []
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 25
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: caption-text-color
+        label: Caption Text Color
+        description: Choose the color of subtitle and sound caption text.
+        keywords: []
+        controlType: 3
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: caption-background-color
+        label: Caption Background Color
+        description: Choose the color of the caption background.
+        keywords: []
+        controlType: 3
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: caption-background-opacity
+        label: Caption Background Opacity
+        description: Adjust how opaque the background behind captions appears.
+        keywords: []
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 25
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: caption-box-outline
+        label: Caption Box Outline
+        description: Add an outline around caption text box to separate it from the
+          scene.
+        keywords: []
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 25
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: caption-box-outline-color
+        label: Caption Box Outline Color
+        description: Choose the color for the caption text box outline.
+        keywords: []
+        controlType: 3
+        defaultToggleValue: 0
+        defaultSliderValue: 25
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: caption-box-outline-thickness
+        label: Caption Box Outline Thickness
+        description: Adjust the thickness of the outline around the caption text
+          boxl.
+        keywords: []
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 25
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+  - id: audio
+    label: Audio
+    description: Adjust sound balance and how important audio information is presented.
+    keywords: []
+    sections:
+    - id: sound-balance
+      label: Sound Balance
+      description: Customize audio channels and volume differences.
+      keywords: []
+      settings:
+      - id: mono-audio
+        label: Mono Audio
+        description: Play the same combined audio through the left and right channels.
+        keywords: []
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: left-right-balance
+        label: "Left\u2013Right Balance"
+        description: Adjust the balance between the left and right audio channels.
+        keywords: []
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 50
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+    - id: alerts-feedback
+      label: Alerts & Feedback
+      description: Add visual alternatives to audio alerts.
+      keywords: []
+      settings:
+      - id: visual-alerts
+        label: Visual Alerts
+        description: Show an on-screen indicator when an important audio alert plays.
+        keywords: []
+        controlType: 0
+        defaultToggleValue: 1
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: display-duration
+        label: Alert Display Duration
+        description: Adjust how long visual alerts remain on screen.
+        keywords: []
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 25
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+  - id: controls
+    label: Controls & Interaction
+    description: Adjust how controls respond and reduce the effort needed for repeated
+      actions.
+    keywords: []
+    sections:
+    - id: button-actions
+      label: Button Actions
+      description: Customize actions that require holding or repeatedly pressing
+        a button.
+      keywords: []
+      settings:
+      - id: hold-action-mode
+        label: Hold Action Mode
+        description: Choose whether supported actions require holding a button or
+          pressing it once to start and again to stop.
+        keywords: []
+        controlType: 2
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options:
+        - id: hold
+          label: Hold to Activate
+        - id: toggle
+          label: Toggle (Press Once to Start/Stop)
+        defaultOptionId: hold
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: repeated-press-mode
+        label: Repeated Press Mode
+        description: Choose whether supported repeated-press actions use repeated
+          presses, a held button, or a single press.
+        keywords: []
+        controlType: 2
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options:
+        - id: repeat-press
+          label: Repeated Presses to Repeat
+        - id: hold
+          label: Hold to Repeat
+        - id: single-press
+          label: Single Press to Repeat
+        defaultOptionId: repeat-press
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: hold-confirmation-duration
+        label: Hold Confirmation Duration
+        description: Adjust how long a button must be held to confirm an action.
+        keywords: []
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 0.5
+        minimum: 0.1
+        maximum: 3
+        step: 0.1
+        valueFormat: s
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+    - id: pointer-interactions
+      label: Pointer Interactions
+      description: Adjust the precision and movement needed to use interface controls.
+      keywords: []
+      settings:
+      - id: drag-mode
+        label: Drag Interaction Mode
+        description: Choose between holding the pointer button to drag or clicking
+          once to pick up and again to place.
+        keywords: []
+        controlType: 2
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options:
+        - id: hold
+          label: Hold to Drag
+        - id: click
+          label: Click to Pick Up/Place
+        defaultOptionId: hold
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: drag-active-distance
+        label: Drag Activation Distance
+        description: Adjust how far the pointer must move while holding a button
+          before a dragging action begins.
+        keywords: []
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 20
+        step: 1
+        valueFormat: px
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: active-click-mode
+        label: Activation Click Mode
+        description: Choose whether supported files, applications, and interface
+          elements open or activate with a single click or double-click.
+        keywords: []
+        controlType: 2
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options:
+        - id: single
+          label: Single-Click
+        - id: double
+          label: Double-Click
+        defaultOptionId: double
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: double-click-interval
+        label: Double-Click Interval
+        description: Adjust the maximum time between two clicks for them to count
+          as a double-click.
+        keywords: []
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 0.5
+        minimum: 0.2
+        maximum: 2
+        step: 0.1
+        valueFormat: s
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: larger-targets
+        label: Larger Interaction Targets
+        description: Increase the clickable area of supported buttons and interface
+          controls.
+        keywords: []
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+  - id: motion
+    label: Motion & Visual Effects
+    description: Reduce interface movement, camera effects, and decorative screen
+      effects.
+    keywords: []
+    sections:
+    - id: interface-motion
+      label: Interface Motion
+      description: Customize animated interface elements and text.
+      keywords: []
+      settings:
+      - id: reduce-interface-motion
+        label: Reduce Interface Motion
+        description: Replace sliding and zooming interface animations with simple
+          transitions.
+        keywords: []
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: reduce-anim-background
+        label: Reduce Animated Backgrounds
+        description: Replace animated backgrounds with simple ones.
+        keywords: []
+        controlType: 0
+        defaultToggleValue: 1
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: instant-text-display
+        label: Instant Text Display
+        description: Show complete messages immediately instead of revealing them
+          character by character.
+        keywords: []
+        controlType: 0
+        defaultToggleValue: 1
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+    - id: camara-screen
+      label: Camera & Screen Effects
+      description: Adjust camera movement and visual effects.
+      keywords: []
+      settings:
+      - id: shake-intensity
+        label: Screen Shake Intensity
+        description: Adjust the strength of camera shake during game events.
+        keywords: []
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 50
+        minimum: 0
+        maximum: 100
+        step: 1
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: reduce-flashing
+        label: Reduce Flashing Effects
+        description: Reduce rapid flashes in supported effects and interface alerts.
+        keywords: []
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+  - id: reading-guidance
+    label: Reading & Guidance
+    description: Customize reading time, reminders, and help during play.
+    keywords: []
+    sections:
+    - id: reading-timing
+      label: Reading & Timing
+      description: Adjust how long information stays visible and when text advances.
+      keywords: []
+      settings:
+      - id: notif-duration
+        label: Notification Duration
+        description: Adjust how long non-critical notifications remain on screen.
+        keywords: []
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 5
+        minimum: 2
+        maximum: 30
+        step: 1
+        valueFormat: s
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: dialogue-advancement
+        label: Dialogue Advancement
+        description: Choose whether dialogue text advances automatically or waits
+          for your input.
+        keywords: []
+        controlType: 2
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options:
+        - id: manual
+          label: Wait for Player Input
+        - id: automatic
+          label: Automatic
+        defaultOptionId: manual
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: extended-interaction-timers
+        label: Extended Interaction Timers
+        description: Allow additional time for supported timed interactions.
+        keywords: []
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+    - id: guidance-reminders
+      label: Guidance & Reminders
+      description: Control the help available for tasks and interface actions.
+      keywords: []
+      settings:
+      - id: persistent-objective
+        label: Persistent Objective
+        description: Keep the current objective visible during play.
+        keywords: []
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: context-hints
+        label: Contextual Hints
+        description: Show hints related to the current task or available interaction.
+        keywords: []
+        controlType: 0
+        defaultToggleValue: 1
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: control-reminders
+        label: Control Reminders
+        description: Show the buttons or keys used for available actions.
+        keywords: []
+        controlType: 0
+        defaultToggleValue: 0
+        defaultSliderValue: 0
+        minimum: 0
+        maximum: 0
+        step: 0
+        valueFormat: 
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
+      - id: tooltip-delay
+        label: Tooltip Delay
+        description: Adjust how long a control must stay hovered or focused before
+          its explanation appears.
+        keywords: []
+        controlType: 1
+        defaultToggleValue: 0
+        defaultSliderValue: 0.1
+        minimum: 0
+        maximum: 3
+        step: 0.1
+        valueFormat: s
+        options: []
+        defaultOptionId: 
+        defaultColorValue: {r: 0, g: 0, b: 0, a: 0}
+        allowAlpha: 0
+        colorPresets: []
+        fontOptions: []
+        defaultFontId: 
+        fontPreviewText: 
