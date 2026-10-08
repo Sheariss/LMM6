@@ -118,12 +118,15 @@
     background-color: var(--options-surface-hover-color);
 }
 
+.settings-shell__search-icon-area {
+    width: var(--icon-2xl);
+    height: var(--icon-2xl);
+    padding: var(--space-2);
+}
+
 .settings-shell__search-icon {
-    width: 50px;
-    min-width: 50px;
-    font-size: 22px;
-    color: rgb(255, 255, 255);
-    -unity-text-align: middle-center;
+    width: 100%;
+    height: 100%;
 }
 
 .settings-shell__search-field {

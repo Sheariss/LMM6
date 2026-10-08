@@ -337,6 +337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.GameUI.MainMenu.MainMenuController
   saveSlotMenuController: {fileID: 1148435692}
   settingsController: {fileID: 798572666}
+  accessibilityController: {fileID: 1547930255}
 --- !u!1 &1148435690
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using Atlas.Core.GameState;
 using System;
 using Atlas.Presentation.GameUI.SaveSlotMenu;
 using Atlas.Presentation.Settings;
+using Atlas.Presentation.Accessibility;
 
 namespace Atlas.Presentation.GameUI.MainMenu
 {
@@ -24,6 +25,7 @@ namespace Atlas.Presentation.GameUI.MainMenu
 
         [SerializeField] private SaveSlotMenuController saveSlotMenuController;
         [SerializeField] private SettingsController settingsController;
+        [SerializeField] private AccessibilityController accessibilityController;
 
 
 
@@ -118,6 +120,23 @@ namespace Atlas.Presentation.GameUI.MainMenu
                 valid = false;
             }
 
+            if (settingsController == null)
+            {
+                Debug.LogError(
+                    "[MainMenuController] SettingsController reference was not assigned."
+                );
+
+                valid = false;
+            }
+
+            if (accessibilityController == null)
+            {
+                Debug.LogError(
+                    "[MainMenuController] AccessibilityController reference was not assigned."
+                );
+
+                valid = false;
+            }
 
             return valid;
         }
@@ -171,7 +190,7 @@ namespace Atlas.Presentation.GameUI.MainMenu
 
         private void OnAccessibilityPressed()
         {
-            // accessibilityMenuController.Show();
+            accessibilityController.Show();
         }
 
         private void OnCreditsPressed()

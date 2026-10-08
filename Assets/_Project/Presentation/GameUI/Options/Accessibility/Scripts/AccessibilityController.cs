@@ -30,13 +30,16 @@ namespace Atlas.Presentation.Accessibility
 
         private void OnEnable()
         {
-            StartCoroutine(OpenNextFrame());
+            StartCoroutine(ResetAndHideNextFrame());
         }
 
-        private IEnumerator OpenNextFrame()
+        private IEnumerator ResetAndHideNextFrame()
         {
+            // Allow UIDocument to create its visual tree.
             yield return null;
             Open();
+            ResetView();
+            view?.Hide();
         }
 
         public void Open()
@@ -106,6 +109,12 @@ namespace Atlas.Presentation.Accessibility
                 binder.DoneButton.clicked += Done;
                 binder.SearchClearButton.clicked += ClearSearch;
                 binder.SearchField.RegisterValueChangedCallback(OnSearchChanged);
+
+                binder.SearchClearButton.style.visibility = Visibility.Hidden;
+
+                var searchGroup = binder.SearchField.parent;
+                searchGroup.RegisterCallback<FocusInEvent>(OnSearchFocusIn);
+                searchGroup.RegisterCallback<FocusOutEvent>(OnSearchFocusOut);
 
                 RebuildContent();
                 RefreshDirtyState();
@@ -243,6 +252,25 @@ namespace Atlas.Presentation.Accessibility
             RebuildContent();
         }
 
+        private void OnSearchFocusIn(FocusInEvent evt)
+        {
+            binder.SearchClearButton.style.visibility = Visibility.Visible;
+        }
+
+        private void OnSearchFocusOut(FocusOutEvent evt)
+        {
+            var searchGroup = binder.SearchField.parent;
+            var nextFocused = evt.relatedTarget as VisualElement;
+
+            // Keep the button visible when focus moves to the clear button.
+            bool staysInside = nextFocused != null &&
+                (nextFocused == searchGroup || searchGroup.Contains(nextFocused));
+
+            binder.SearchClearButton.style.visibility = staysInside
+                ? Visibility.Visible
+                : Visibility.Hidden;
+        }
+
         private void ClearSearch()
         {
             binder.SearchField.SetValueWithoutNotify(string.Empty);
@@ -264,6 +292,10 @@ namespace Atlas.Presentation.Accessibility
 
                 binder.SearchField.UnregisterValueChangedCallback(
                     OnSearchChanged);
+
+                var searchGroup = binder.SearchField.parent;
+                searchGroup.UnregisterCallback<FocusInEvent>(OnSearchFocusIn);
+                searchGroup.UnregisterCallback<FocusOutEvent>(OnSearchFocusOut);
             }
 
             if (view != null)

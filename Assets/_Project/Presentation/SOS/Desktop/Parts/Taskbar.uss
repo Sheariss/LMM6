@@ -1,0 +1,219 @@
+/* The host controls placement and available width. */
+.taskbar {
+    flex-direction: row;
+    align-items: center;
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: 52px;
+    min-height: 52px;
+    padding: 0 8px;
+
+    background-color: var(--desktop-taskbar-bg);
+    border-top-width: 1px;
+    border-top-color: var(--desktop-taskbar-border);
+    color: var(--text-primary);
+}
+
+.taskbar-group {
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+}
+
+.taskbar-button {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 40px;
+    height: 40px;
+    margin: 0 2px;
+    padding: 0;
+
+    border-width: 1px;
+    border-color: transparent;
+    border-radius: 8px;
+    background-color: transparent;
+    color: var(--text-primary);
+
+    font-size: 14px;
+    -unity-text-align: middle-center;
+
+    transition-property: background-color, border-color;
+    transition-duration: 0.1s;
+}
+
+.taskbar-button:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.taskbar-button:active {
+    background-color: rgba(255, 255, 255, 0.14);
+}
+
+.taskbar-button:focus {
+    border-color: var(--border-focus);
+}
+
+.taskbar-button:disabled {
+    opacity: 0.45;
+}
+
+/* Add this class while the associated panel is open. */
+.taskbar-button.is-open {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-bottom-color: var(--accent-primary);
+}
+
+.taskbar-widgets {
+    width: 80px;
+    margin-right: 8px;
+    font-size: 12px;
+}
+
+.taskbar-start {
+    font-size: 26px;
+}
+
+/* Rounded search surface echoes the browser address bar. */
+.taskbar-search {
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 1;
+
+    width: 220px;
+    min-width: 140px;
+    height: 34px;
+    margin: 0 10px 0 6px;
+    padding: 0 12px;
+
+    border-width: 1px;
+    border-color: var(--desktop-taskbar-border);
+    border-radius: 17px;
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.taskbar-search:hover {
+    background-color: rgba(255, 255, 255, 0.10);
+}
+
+.taskbar-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: var(--text-primary);
+}
+
+.taskbar-search-icon {
+    margin-right: 8px;
+    background-image: resource("Icons/UI/Search/search_24dp");
+}
+
+.taskbar-search-field {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    height: 28px;
+    margin: 0;
+    padding: 0;
+    color: var(--text-primary);
+    font-size: 12px;
+}
+
+.taskbar-search-field > .unity-base-field__label {
+    min-width: 0;
+    margin: 0 6px 0 0;
+    padding: 0;
+    color: var(--text-muted);
+    -unity-text-align: middle-left;
+}
+
+.taskbar-search-field > .unity-base-text-field__input {
+    min-width: 0;
+    margin: 0;
+    padding: 0 2px;
+
+    background-color: transparent;
+    border-width: 0;
+    border-bottom-width: 1px;
+    border-bottom-color: transparent;
+    border-radius: 0;
+
+    color: var(--text-primary);
+}
+
+.taskbar-search-field > .unity-base-text-field__input:focus {
+    border-bottom-color: var(--border-focus);
+}
+
+/* Expands between the search field and the system tray. */
+.taskbar-apps {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+.taskbar-status {
+    height: 100%;
+    margin-left: 8px;
+}
+
+.taskbar-status-button {
+    width: 32px;
+    font-size: 12px;
+}
+
+.taskbar-assistant {
+    font-size: 22px;
+    color: var(--accent-hover);
+}
+
+.taskbar-quick-settings {
+    margin: 0 4px;
+}
+
+.taskbar-clock {
+    flex-direction: column;
+    align-items: flex-end;
+    width: 94px;
+    padding: 0 8px;
+}
+
+.taskbar-time,
+.taskbar-date {
+    margin: 0;
+    padding: 0;
+    font-size: 11px;
+    -unity-text-align: middle-right;
+}
+
+.taskbar-date {
+    color: var(--text-secondary);
+}
+
+.taskbar-notifications-icon {
+    background-image: resource("Icons/System/Notifications/Notifications/notifications_24dp");
+}
+
+.taskbar-notification-dot {
+    display: none;
+    position: absolute;
+    top: 6px;
+    right: 5px;
+
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background-color: var(--accent-hover);
+}
+
+.taskbar-button.has-notifications .taskbar-notification-dot {
+    display: flex;
+}

@@ -16,8 +16,10 @@
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="ShellSearchGroup" class="settings-shell__search-group">
-                <ui:Label name="ShellSearchIcon" text="⌕" class="settings-shell__search-icon" style="background-image: resource(&quot;Icons/UI/Search/search_32dp&quot;); -unity-background-scale-mode: scale-to-fit;"/>
-                <ui:TextField name="ShellSearchField" placeholder-text="Search settings..." class="settings-shell__search-field"/>
+                <ui:VisualElement class="settings-shell__search-icon-area">
+                    <ui:Image name="ShellSearchIcon" class="settings-shell__search-icon" style="background-image: resource(&quot;Icons/UI/Search/search_32dp&quot;);"/>
+                </ui:VisualElement>
+                <ui:TextField name="ShellSearchField" placeholder-text="Search settings..." hide-placeholder-on-focus="true" class="settings-shell__search-field"/>
                 <ui:Button name="ShellSearchClearButton" text="×" tooltip="Clear search" class="button-reset settings-shell__search-clear"/>
                 <ui:VisualElement name="SettingsSearchResults" class="settings-search-results" style="display: none;">
                     <ui:Label name="SettingsSearchResultsStatus" text="3 results" class="settings-search-results__status"/>
