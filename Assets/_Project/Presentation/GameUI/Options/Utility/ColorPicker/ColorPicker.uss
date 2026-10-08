@@ -55,6 +55,11 @@
     --cp-error: rgb(255, 229, 133);
 }
 
+.color-picker {
+    scale: 0.6 0.6;
+    transform-origin: top left;
+}
+
 .color-picker Label {
     margin: 0;
     padding: 0;
@@ -427,7 +432,7 @@
 .color-picker__add-icon {
     height: 100%;
     width: 100%;
-    unity-background-image-scale-mode: scale-to-fit;
+    unity-background-scale-mode: scale-to-fit;
     background-image: resource("Icons/Math/Add/add_2_32dp");
 }
 
