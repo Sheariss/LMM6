@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 9c85dd9608a3a7d489535ba5fac58025
+guid: 1da12374350382a4dbe4911195e03a37
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7457689165106251574
-    second: keyboard_control_key_256dp_FFFFFF_FILL0_wght400_GRAD0_opsz48_0
+      213: -2917008595688922309
+    second: icons8-download-96_0
+  - first:
+      213: -709599812802800044
+    second: icons8-download-96_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: keyboard_control_key_256dp_FFFFFF_FILL0_wght400_GRAD0_opsz48_0
+      name: icons8-download-96_0
       rect:
         serializedVersion: 2
-        x: 55
-        y: 119
-        width: 146
-        height: 82
+        x: 5
+        y: 9
+        width: 86
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +131,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 637007b78c80f7760800000000000000
-      internalID: 7457689165106251574
+      spriteID: b33633f1324b487d0800000000000000
+      internalID: -2917008595688922309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icons8-download-96_1
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 33
+        width: 34
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4569439dabef626f0800000000000000
+      internalID: -709599812802800044
       vertices: []
       indices: 
       edges: []
@@ -138,7 +163,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      keyboard_control_key_256dp_FFFFFF_FILL0_wght400_GRAD0_opsz48_0: 7457689165106251574
+      icons8-download-96_0: -2917008595688922309
+      icons8-download-96_1: -709599812802800044
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2094f6bb6d67a914a9bf79085b87903c, type: 3}
+  m_Name: App Catalog
+  m_EditorClassIdentifier: Assembly-CSharp::Atlas.SOS.Apps.AppCatalog
+  apps:
+  - appID: file-explorer
+    displayName: File Explorer
+    appIcon48: {fileID: 21300000, guid: a66b174f4f44938489c5d2571412278d, type: 3}
+    appIcon96: {fileID: 21300000, guid: 20a76f0d7c016054cb6b10644201f821, type: 3}
+    appUXML: {fileID: 9197481963319205126, guid: 9e1e3912852bdb140ab857cfdd97c1ec, type: 3}
+    isResizable: 1
+    allowMultipleInstances: 1
+    defaultWindowSize: {x: 1200, y: 850}
+    minimumWindowSize: {x: 200, y: 200}
+    showDesktopShortcut: 0
+    pinToTaskbar: 1
+  - appID: asssitant
+    displayName: Assistant
+    appIcon48: {fileID: 21300000, guid: dd8dc4c562eca0c47862bbafc72b2c0f, type: 3}
+    appIcon96: {fileID: 21300000, guid: 0c851a9cc377be04a9b3e6b8938cd02c, type: 3}
+    appUXML: {fileID: 9197481963319205126, guid: 37ee9bded0bda734a8ed102cf2845e1e, type: 3}
+    isResizable: 0
+    allowMultipleInstances: 0
+    defaultWindowSize: {x: 420, y: 600}
+    minimumWindowSize: {x: 420, y: 600}
+    showDesktopShortcut: 1
+    pinToTaskbar: 0
+  - appID: calculator
+    displayName: Calculator
+    appIcon48: {fileID: 21300000, guid: f926d9de82c4ba949b10e86316bf62d3, type: 3}
+    appIcon96: {fileID: 21300000, guid: 83dbda71ba9d93e4b8f40f3738715ac4, type: 3}
+    appUXML: {fileID: 9197481963319205126, guid: d5a229084ddf61942bba38c4d7f16b52, type: 3}
+    isResizable: 0
+    allowMultipleInstances: 1
+    defaultWindowSize: {x: 320, y: 500}
+    minimumWindowSize: {x: 320, y: 500}
+    showDesktopShortcut: 1
+    pinToTaskbar: 1
+  - appID: cmd
+    displayName: Command Prompt
+    appIcon48: {fileID: 21300000, guid: bb58a9db844674b489cbc94d8013f57a, type: 3}
+    appIcon96: {fileID: 21300000, guid: b31f26589cd61574e9646cc479b16c5b, type: 3}
+    appUXML: {fileID: 9197481963319205126, guid: ee01e11e846d7f043905845eb0592176, type: 3}
+    isResizable: 1
+    allowMultipleInstances: 1
+    defaultWindowSize: {x: 800, y: 500}
+    minimumWindowSize: {x: 800, y: 500}
+    showDesktopShortcut: 1
+    pinToTaskbar: 1
+  - appID: contacts
+    displayName: Contacts
+    appIcon48: {fileID: 6960912526294278977, guid: 04a6b6755280ae4499980ec1518e0fc6, type: 3}
+    appIcon96: {fileID: -5128267248234359663, guid: 232094fca7c75cd4982d9f52f312031f, type: 3}
+    appUXML: {fileID: 9197481963319205126, guid: d32dcc097f035c94b9cc2b71c836844b, type: 3}
+    isResizable: 1
+    allowMultipleInstances: 0
+    defaultWindowSize: {x: 800, y: 600}
+    minimumWindowSize: {x: 600, y: 400}
+    showDesktopShortcut: 1
+    pinToTaskbar: 1
+  - appID: email
+    displayName: Email
+    appIcon48: {fileID: 6622987487043434500, guid: 52ab2f2743e198c4caf86640c0fb927e, type: 3}
+    appIcon96: {fileID: 8657413132315104106, guid: 03fc838232f60784892a2a0ceb30c384, type: 3}
+    appUXML: {fileID: 0}
+    isResizable: 1
+    allowMultipleInstances: 0
+    defaultWindowSize: {x: 1000, y: 700}
+    minimumWindowSize: {x: 700, y: 450}
+    showDesktopShortcut: 1
+    pinToTaskbar: 1
+  - appID: messenger
+    displayName: Messenger
+    appIcon48: {fileID: 6630927261847639050, guid: acb22d3ad13de9e45aeba62f6826c1f8, type: 3}
+    appIcon96: {fileID: -2265978824201132125, guid: 1a2f6b2d272a23e448ce04e78a170c14, type: 3}
+    appUXML: {fileID: 9197481963319205126, guid: 2142d17954aaca54c99768c68fb17706, type: 3}
+    isResizable: 1
+    allowMultipleInstances: 0
+    defaultWindowSize: {x: 800, y: 500}
+    minimumWindowSize: {x: 550, y: 400}
+    showDesktopShortcut: 1
+    pinToTaskbar: 1
+  - appID: news
+    displayName: News
+    appIcon48: {fileID: -8554027319003177030, guid: 93a31dccacc238348940aef3384d4555, type: 3}
+    appIcon96: {fileID: 7775220601029501873, guid: acaa9fc1699c87e409bfcd985088cd6c, type: 3}
+    appUXML: {fileID: 9197481963319205126, guid: a6d3332f4413ac4409dbdb9c528fb549, type: 3}
+    isResizable: 1
+    allowMultipleInstances: 0
+    defaultWindowSize: {x: 800, y: 500}
+    minimumWindowSize: {x: 550, y: 400}
+    showDesktopShortcut: 1
+    pinToTaskbar: 1
+  - appID: browser
+    displayName: Web Browser
+    appIcon48: {fileID: -8692082910617970706, guid: 8cb0174e302776b439aa815a8eb87bc5, type: 3}
+    appIcon96: {fileID: -3927905213550672675, guid: 9f529cfb89eb7cb47b7aa7d7ca5a6495, type: 3}
+    appUXML: {fileID: 9197481963319205126, guid: 9a31d5a082b52e741ba83e0a6fb05ccb, type: 3}
+    isResizable: 1
+    allowMultipleInstances: 1
+    defaultWindowSize: {x: 1100, y: 750}
+    minimumWindowSize: {x: 640, y: 450}
+    showDesktopShortcut: 1
+    pinToTaskbar: 1

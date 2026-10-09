@@ -16,7 +16,7 @@
         <ui:VisualElement name="MiddleSection" class="taskbar-section taskbar-middle-section">
             <ui:Button name="StartButton" text="" tooltip="Start" class="taskbar-button taskbar-start" style="background-image: resource(&quot;Logos/Logo&quot;);"/>
             <ui:VisualElement name="TaskbarSearchContainer" class="taskbar-search">
-                <ui:Image name="SearchIcon" picking-mode="Ignore" class="taskbar-icon taskbar-search-icon"/>
+                <ui:Image name="SearchIcon" picking-mode="Ignore" class="taskbar-icon taskbar-search-icon" style="background-image: resource(&quot;Icons/UI/Search/search_32dp&quot;);"/>
                 <ui:TextField name="TaskbarSearchField" label="Search" tooltip="Search apps and files" class="taskbar-search-field"/>
             </ui:VisualElement>
             <ui:GroupBox name="AppGroup" class="taskbar-section taskbar-apps"/>

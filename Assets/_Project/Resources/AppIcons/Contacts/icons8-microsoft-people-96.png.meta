@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 9c85dd9608a3a7d489535ba5fac58025
+guid: 232094fca7c75cd4982d9f52f312031f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7457689165106251574
-    second: keyboard_control_key_256dp_FFFFFF_FILL0_wght400_GRAD0_opsz48_0
+      213: -5128267248234359663
+    second: icons8-microsoft-people-96_0
+  - first:
+      213: -5667846405974387277
+    second: icons8-microsoft-people-96_1
+  - first:
+      213: 7135571970717453817
+    second: icons8-microsoft-people-96_2
+  - first:
+      213: -6329982706825359271
+    second: icons8-microsoft-people-96_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +122,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: keyboard_control_key_256dp_FFFFFF_FILL0_wght400_GRAD0_opsz48_0
+      name: icons8-microsoft-people-96_0
       rect:
         serializedVersion: 2
-        x: 55
-        y: 119
-        width: 146
-        height: 82
+        x: 13
+        y: 55
+        width: 22
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +137,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 637007b78c80f7760800000000000000
-      internalID: 7457689165106251574
+      spriteID: 19498b3cb1cb4d8b0800000000000000
+      internalID: -5128267248234359663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icons8-microsoft-people-96_1
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 63
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b51c6a29b3c751b0800000000000000
+      internalID: -5667846405974387277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icons8-microsoft-people-96_2
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 55
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fd09d7c6e4a60360800000000000000
+      internalID: 7135571970717453817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icons8-microsoft-people-96_3
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 11
+        width: 86
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9501f4d04426728a0800000000000000
+      internalID: -6329982706825359271
       vertices: []
       indices: 
       edges: []
@@ -138,7 +213,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +223,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      keyboard_control_key_256dp_FFFFFF_FILL0_wght400_GRAD0_opsz48_0: 7457689165106251574
+      icons8-microsoft-people-96_0: -5128267248234359663
+      icons8-microsoft-people-96_1: -5667846405974387277
+      icons8-microsoft-people-96_2: 7135571970717453817
+      icons8-microsoft-people-96_3: -6329982706825359271
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

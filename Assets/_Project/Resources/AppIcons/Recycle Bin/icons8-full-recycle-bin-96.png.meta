@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9c85dd9608a3a7d489535ba5fac58025
+guid: 017af73b973ac41468fcd5d681053da7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7457689165106251574
-    second: keyboard_control_key_256dp_FFFFFF_FILL0_wght400_GRAD0_opsz48_0
+      213: 1105386151961043771
+    second: icons8-full-recycle-bin-96_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: keyboard_control_key_256dp_FFFFFF_FILL0_wght400_GRAD0_opsz48_0
+      name: icons8-full-recycle-bin-96_0
       rect:
         serializedVersion: 2
-        x: 55
-        y: 119
-        width: 146
-        height: 82
+        x: 15
+        y: 9
+        width: 66
+        height: 87
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 637007b78c80f7760800000000000000
-      internalID: 7457689165106251574
+      spriteID: b33264f39de175f00800000000000000
+      internalID: 1105386151961043771
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      keyboard_control_key_256dp_FFFFFF_FILL0_wght400_GRAD0_opsz48_0: 7457689165106251574
+      icons8-full-recycle-bin-96_0: 1105386151961043771
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
