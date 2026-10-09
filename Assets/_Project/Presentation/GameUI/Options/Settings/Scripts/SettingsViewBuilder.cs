@@ -47,24 +47,53 @@ namespace Atlas.Presentation.Settings
         }
 
         public void BuildCategory(
-            SettingCategoryDefinition category,
+            SettingCategoryDefinition selectedCategory,
             SettingsSaveData values,
             string search)
         {
             view.ClearContent();
-            view.SetCategory(category);
             view.ContentScroll.scrollOffset = Vector2.zero;
 
-            if (category == null)
+            string query = search?.Trim() ?? string.Empty;
+            bool searching = query.Length > 0;
+            int count = 0;
+
+            if (searching)
             {
-                view.Content.Add(new Label("No settings are configured."));
-                return;
+                foreach (var category in catalog.Categories)
+                {
+                    if (category != null)
+                        count += BuildCategoryRows(category, query, true);
+                }
+
+                view.SetSearchResults(count);
+            }
+            else
+            {
+                view.SetCategory(selectedCategory);
+
+                if (selectedCategory != null)
+                    count = BuildCategoryRows(selectedCategory, query, false);
             }
 
-            string query = search?.Trim() ?? string.Empty;
-            int rowCount = 0;
+            if (count == 0)
+            {
+                view.Content.Add(new Label(searching
+                    ? "No matching settings."
+                    : "No settings are configured in this category."));
+            }
 
-            foreach (SettingSectionDefinition section in category.Sections)
+            view.RefreshValues(values);
+        }
+
+        private int BuildCategoryRows(
+    SettingCategoryDefinition category,
+    string query,
+    bool showCategory)
+        {
+            int count = 0;
+
+            foreach (var section in category.Sections)
             {
                 if (section == null)
                     continue;
@@ -72,14 +101,17 @@ namespace Atlas.Presentation.Settings
                 VisualElement body = Element("settings-section__body");
                 VisualElement lastRow = null;
 
-                foreach (SettingDefinition setting in section.Settings)
+                foreach (var setting in section.Settings)
                 {
-                    if (setting == null || !Matches(section, setting, query))
+                    if (setting == null ||
+                        !Matches(category, section, setting, query))
+                    {
                         continue;
+                    }
 
                     lastRow = BuildRow(setting);
                     body.Add(lastRow);
-                    rowCount++;
+                    count++;
                 }
 
                 if (lastRow == null)
@@ -87,25 +119,25 @@ namespace Atlas.Presentation.Settings
 
                 lastRow.AddToClassList("settings-row--last");
 
-                VisualElement sectionElement = Element("settings-section");
+                VisualElement container = Element("settings-section");
                 VisualElement header = Element("settings-section__header");
 
-                header.Add(Text(section.Label, "settings-section__title"));
+                string heading = showCategory
+                    ? $"{category.Label} / {section.Label}"
+                    : section.Label;
+
+                header.Add(Text(heading, "settings-section__title"));
                 header.Add(Text(
                     section.Description,
                     "settings-section__description"));
 
-                sectionElement.Add(header);
-                sectionElement.Add(body);
-                view.Content.Add(sectionElement);
+                container.Add(header);
+                container.Add(body);
+                view.Content.Add(container);
             }
 
-            if (rowCount == 0)
-                view.Content.Add(new Label("No matching settings."));
-
-            view.RefreshValues(values);
+            return count;
         }
-
         private VisualElement BuildRow(SettingDefinition definition)
         {
             VisualElement row = Element("settings-row");
@@ -299,12 +331,17 @@ namespace Atlas.Presentation.Settings
         }
 
         private static bool Matches(
-            SettingSectionDefinition section,
-            SettingDefinition setting,
-            string query)
+             SettingCategoryDefinition category,
+             SettingSectionDefinition section,
+             SettingDefinition setting,
+             string query)
         {
             return query.Length == 0 ||
+                Contains(category.Id, query) ||
+                Contains(category.Label, query) ||
+                Contains(category.Description, query) ||
                 Contains(section.Label, query) ||
+                Contains(section.Description, query) ||
                 Contains(setting.Id, query) ||
                 Contains(setting.Label, query) ||
                 Contains(setting.Description, query);

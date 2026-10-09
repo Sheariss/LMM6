@@ -79,6 +79,20 @@ namespace Atlas.Presentation.Settings
             }
         }
 
+        public void SetSearchResults(int count)
+        {
+            categoryTitle.text = "Search results";
+            categoryDescription.text =
+                $"{count} matching option{(count == 1 ? "" : "s")} across all categories.";
+
+            foreach (var pair in navigation)
+            {
+                pair.Value.EnableInClassList(
+                    "settings-shell__nav-button--selected",
+                    false);
+            }
+        }
+
         public void ClearNavigation()
         {
             navigation.Clear();

@@ -141,6 +141,7 @@ namespace Atlas.Presentation.Settings
         private void SelectCategory(SettingCategoryDefinition category)
         {
             selectedCategory = category;
+            binder.SearchField.SetValueWithoutNotify(string.Empty);
             RebuildContent();
         }
 
