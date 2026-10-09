@@ -1,27 +1,43 @@
-/* The host controls placement and available width. */
+/* =========================================================
+   TASKBAR
+   The host controls placement on the desktop.
+   ========================================================= */
+
 .taskbar {
-    flex-direction: row;
-    align-items: center;
-    flex-grow: 0;
-    flex-shrink: 0;
+    width: 100%;
     height: 52px;
     min-height: 52px;
-    padding: 0 8px;
+
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 0;
+    padding: 0;
 
     background-color: var(--desktop-taskbar-bg);
     border-top-width: 1px;
     border-top-color: var(--desktop-taskbar-border);
+
     color: var(--text-primary);
 }
 
-.taskbar-group {
+.taskbar-section {
     flex-direction: row;
     align-items: center;
+    flex-grow: 0;
     flex-shrink: 0;
+
     margin: 0;
     padding: 0;
     border-width: 0;
 }
+
+/* =========================================================
+   SHARED BUTTONS
+   ========================================================= */
 
 .taskbar-button {
     flex-direction: row;
@@ -31,12 +47,14 @@
 
     width: 40px;
     height: 40px;
+
     margin: 0 2px;
     padding: 0;
 
     border-width: 1px;
     border-color: transparent;
     border-radius: 8px;
+
     background-color: transparent;
     color: var(--text-primary);
 
@@ -63,23 +81,114 @@
     opacity: 0.45;
 }
 
-/* Add this class while the associated panel is open. */
+/* Apply while the button's associated panel is open. */
 .taskbar-button.is-open {
     background-color: rgba(255, 255, 255, 0.12);
     border-bottom-color: var(--accent-primary);
 }
 
-.taskbar-widgets {
-    width: 80px;
-    margin-right: 8px;
-    font-size: 12px;
+/* Controller-managed Image elements. */
+.taskbar-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+
+    -unity-image-size: contain;
+    -unity-image-tint-color: var(--text-primary);
+}
+
+/* =========================================================
+   LEFT: WIDGET SUMMARY
+   ========================================================= */
+
+.taskbar-widget-section {
+    height: 100%;
+}
+
+.taskbar-widget-button {
+    width: 168px;
+    height: 44px;
+
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    margin: 0;
+    padding: 0 12px;
+}
+
+.taskbar-widget-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    margin-right: 10px;
+
+    -unity-image: resource("WeatherIcons/sun-cloudy");
+    -unity-image-size: contain;
+    -unity-image-tint-color: white;
+}
+
+.taskbar-widget-content {
+    flex-direction: column;
+    justify-content: center;
+
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+.taskbar-widget-primary,
+.taskbar-widget-secondary {
+    margin: 0;
+    padding: 0;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    -unity-text-align: middle-left;
+}
+
+.taskbar-widget-primary {
+    font-size: 13px;
+    color: var(--text-primary);
+}
+
+.taskbar-widget-secondary {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+/* =========================================================
+   MIDDLE: START, SEARCH, AND APPS
+   ========================================================= */
+
+.taskbar-middle-section {
+    height: 100%;
+    min-width: 0;
+
+    flex-grow: 0;
+    flex-shrink: 1;
 }
 
 .taskbar-start {
     font-size: 26px;
 }
 
-/* Rounded search surface echoes the browser address bar. */
+.taskbar-apps {
+    height: 100%;
+    min-width: 0;
+
+    flex-grow: 0;
+    flex-shrink: 1;
+
+    overflow: hidden;
+}
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
 .taskbar-search {
     flex-direction: row;
     align-items: center;
@@ -88,12 +197,14 @@
     width: 220px;
     min-width: 140px;
     height: 34px;
+
     margin: 0 10px 0 6px;
     padding: 0 12px;
 
     border-width: 1px;
     border-color: var(--desktop-taskbar-border);
     border-radius: 17px;
+
     background-color: rgba(255, 255, 255, 0.06);
 }
 
@@ -101,44 +212,43 @@
     background-color: rgba(255, 255, 255, 0.10);
 }
 
-.taskbar-icon {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-    -unity-background-scale-mode: scale-to-fit;
-    -unity-background-image-tint-color: var(--text-primary);
-}
-
 .taskbar-search-icon {
     margin-right: 8px;
-    background-image: resource("Icons/UI/Search/search_24dp");
+    -unity-image: resource("Icons/UI/Search/search_24dp");
 }
 
 .taskbar-search-field {
     flex-grow: 1;
     flex-shrink: 1;
+
     min-width: 0;
     height: 28px;
+
     margin: 0;
     padding: 0;
+
     color: var(--text-primary);
     font-size: 12px;
 }
 
 .taskbar-search-field > .unity-base-field__label {
     min-width: 0;
+
     margin: 0 6px 0 0;
     padding: 0;
+
     color: var(--text-muted);
     -unity-text-align: middle-left;
 }
 
 .taskbar-search-field > .unity-base-text-field__input {
     min-width: 0;
+
     margin: 0;
     padding: 0 2px;
 
     background-color: transparent;
+
     border-width: 0;
     border-bottom-width: 1px;
     border-bottom-color: transparent;
@@ -151,18 +261,16 @@
     border-bottom-color: var(--border-focus);
 }
 
-/* Expands between the search field and the system tray. */
-.taskbar-apps {
-    flex-grow: 1;
-    flex-shrink: 1;
-    min-width: 0;
-    height: 100%;
-    overflow: hidden;
-}
+/* =========================================================
+   RIGHT: STATUS BUTTONS
+   ========================================================= */
 
 .taskbar-status {
     height: 100%;
-    margin-left: 8px;
+    flex-shrink: 0;
+
+    margin: 0;
+    padding: 0;
 }
 
 .taskbar-status-button {
@@ -170,18 +278,28 @@
     font-size: 12px;
 }
 
+.taskbar-status > .taskbar-button:last-child {
+    margin-right: 0;
+}
+
+.taskbar-hidden-icons {
+    font-size: 20px;
+}
+
 .taskbar-assistant {
     font-size: 22px;
     color: var(--accent-hover);
 }
 
-.taskbar-quick-settings {
-    margin: 0 4px;
-}
+/* =========================================================
+   CLOCK
+   ========================================================= */
 
 .taskbar-clock {
     flex-direction: column;
     align-items: flex-end;
+    justify-content: center;
+
     width: 94px;
     padding: 0 8px;
 }
@@ -190,30 +308,42 @@
 .taskbar-date {
     margin: 0;
     padding: 0;
+
     font-size: 11px;
     -unity-text-align: middle-right;
+}
+
+.taskbar-time {
+    color: var(--text-primary);
 }
 
 .taskbar-date {
     color: var(--text-secondary);
 }
 
-.taskbar-notifications-icon {
-    background-image: resource("Icons/System/Notifications/Notifications/notifications_24dp");
+/* =========================================================
+   NOTIFICATIONS
+   ========================================================= */
+
+#NotificationsIcon {
+    -unity-image: resource("Icons/System/Notifications/Notifications/notifications_24dp");
 }
 
 .taskbar-notification-dot {
     display: none;
     position: absolute;
+
     top: 6px;
     right: 5px;
 
     width: 6px;
     height: 6px;
+
     border-radius: 3px;
     background-color: var(--accent-hover);
 }
 
+/* Toggle this class on NotificationsButton from its controller. */
 .taskbar-button.has-notifications .taskbar-notification-dot {
     display: flex;
 }

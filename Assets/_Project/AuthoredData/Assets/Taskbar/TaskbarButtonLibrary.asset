@@ -1,0 +1,157 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d35302f26ed0274b86052298988732b, type: 3}
+  m_Name: TaskbarButtonLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Taskbar.TaskbarButtonLibrary
+  buttons:
+  - id: volume
+    displayName: Volume
+    defaultStateId: mid
+    states:
+    - id: mute
+      icon: {fileID: 21300000, guid: 56213300192ed3647b3eac875d23c82a, type: 3}
+      tooltip: Volume off
+      primaryText: 
+      secondaryText: 
+      showBadge: 0
+    - id: low
+      icon: {fileID: 21300000, guid: e98fabc964e22304db1f9a5f6fea9879, type: 3}
+      tooltip: Low volume
+      primaryText: 
+      secondaryText: 
+      showBadge: 0
+    - id: mid
+      icon: {fileID: 21300000, guid: 8f9e9cb5a9c43554299a8df69d6a9b17, type: 3}
+      tooltip: Medium volume
+      primaryText: 
+      secondaryText: 
+      showBadge: 0
+    - id: high
+      icon: {fileID: 21300000, guid: 942f7a415dfbacc42b44265a91d6518c, type: 3}
+      tooltip: High volume
+      primaryText: 
+      secondaryText: 
+      showBadge: 0
+  - id: network
+    displayName: Network
+    defaultStateId: good
+    states:
+    - id: disconnected
+      icon: {fileID: 21300000, guid: f8807e65e6ade9b4889cd8184eb19d15, type: 3}
+      tooltip: No network
+      primaryText: 
+      secondaryText: 
+      showBadge: 0
+    - id: low
+      icon: {fileID: 21300000, guid: 9c9aad38fdabe5f4a9296b5a90934c51, type: 3}
+      tooltip: Weak signal
+      primaryText: 
+      secondaryText: 
+      showBadge: 0
+    - id: mid
+      icon: {fileID: 21300000, guid: 810558c308d0d8641adee4cc9135c7ec, type: 3}
+      tooltip: Good signal
+      primaryText: 
+      secondaryText: 
+      showBadge: 0
+    - id: high
+      icon: {fileID: 21300000, guid: a10565c8ee393264c80084c06ca6afe6, type: 3}
+      tooltip: Strong signal
+      primaryText: 
+      secondaryText: 
+      showBadge: 0
+  - id: notifs
+    displayName: Notifications
+    defaultStateId: empty
+    states:
+    - id: empty
+      icon: {fileID: 21300000, guid: 5dfb877f010ec4e4cbbb0fa7a1ae1e96, type: 3}
+      tooltip: No notifications
+      primaryText: 
+      secondaryText: 
+      showBadge: 0
+    - id: disabled
+      icon: {fileID: 21300000, guid: c1fe6636645aee148800d4e5778c31a9, type: 3}
+      tooltip: Notifications off
+      primaryText: 
+      secondaryText: 
+      showBadge: 0
+    - id: unread
+      icon: {fileID: 21300000, guid: 765555afcc1ac9741b46fd06395b066c, type: 3}
+      tooltip: Unread notifications
+      primaryText: 
+      secondaryText: 
+      showBadge: 1
+    - id: paused
+      icon: {fileID: 21300000, guid: 0782a6b8f34fcf949a476543f3257fe0, type: 3}
+      tooltip: Do not disturb on
+      primaryText: 
+      secondaryText: 
+      showBadge: 0
+    - id: critical
+      icon: {fileID: 21300000, guid: 23488abb69475bd4f8d06ded5a135e8f, type: 3}
+      tooltip: Critical notifications
+      primaryText: 
+      secondaryText: 
+      showBadge: 0
+  - id: weather
+    displayName: Weather
+    defaultStateId: sunny
+    states:
+    - id: sunny
+      icon: {fileID: 21300000, guid: e4e1f0afd85e99b40863c386a4efafb6, type: 3}
+      tooltip: Clear skies
+      primaryText: Mostly clear skies with plenty of sunshine.
+      secondaryText: 
+      showBadge: 0
+    - id: partly-cloudy
+      icon: {fileID: 21300000, guid: 83575126e5b55e94f94f7692ad0b114b, type: 3}
+      tooltip: Partly cloudy
+      primaryText: A mix of sunshine and passing clouds.
+      secondaryText: 
+      showBadge: 0
+    - id: cloudy
+      icon: {fileID: 21300000, guid: 647eeaef1f0552f47a2f8ac0ae8fa547, type: 3}
+      tooltip: Cloudy
+      primaryText: Mostly cloudy skies with little direct sunshine.
+      secondaryText: Overcast skies
+      showBadge: 0
+    - id: rain
+      icon: {fileID: 21300000, guid: e8494b8960bdbe84fafaf1f7fbabfa50, type: 3}
+      tooltip: Rain expected
+      primaryText: Rain showers or steady rainfall.
+      secondaryText: 
+      showBadge: 0
+    - id: storm
+      icon: {fileID: 21300000, guid: be477458fa05a9847bd6e36f46ceed3b, type: 3}
+      tooltip: Thunderstorms
+      primaryText: Storms with lightning, thunder, and possible heavy rain.
+      secondaryText: Thunder and lightning
+      showBadge: 0
+    - id: windy
+      icon: {fileID: 21300000, guid: 9fcd2c7517d51cd45bd0407340fc5ef8, type: 3}
+      tooltip: Windy
+      primaryText: Strong or gusty winds throughout the area.
+      secondaryText: Strong winds
+      showBadge: 0
+    - id: cloudy-night
+      icon: {fileID: 21300000, guid: 0786dc0f8a520fd49a62dfa2819a37af, type: 3}
+      tooltip: Cloudy night
+      primaryText: Mostly cloudy night skies with little or no moonlight visible.
+      secondaryText: Clouds after dark
+      showBadge: 0
+    - id: night
+      icon: {fileID: 21300000, guid: bb3c0a7d2ff1b7a4da68a557d2a3eaf1, type: 3}
+      tooltip: Clear night skies
+      primaryText: Mostly clear skies with few or no clouds.
+      secondaryText: 
+      showBadge: 0
