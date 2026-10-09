@@ -1,132 +1,47 @@
-﻿<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
     <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
     <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
     <Style src="project://database/Assets/_Project/Presentation/SOS/Desktop/Parts/Taskbar.uss?fileID=7433441132597879392&amp;guid=55ca6db6a420cc540819dbb8ef290ec3&amp;type=3#Taskbar"/>
-
-      <ui:VisualElement name="DesktopTaskbar" class="taskbar">
-
-        <!-- LEFT: widget summary. Defaults to weather. -->
-        <ui:GroupBox name="WidgetGroup"
-                     class="taskbar-section taskbar-widget-section">
-
-            <ui:Button name="WidgetsButton"
-                       tooltip="Open widgets"
-                       class="taskbar-button taskbar-widget-button">
-
-                <ui:Image name="WidgetIcon"
-                          picking-mode="Ignore"
-                          class="taskbar-widget-icon"/>
-
-                <ui:VisualElement picking-mode="Ignore"
-                                  class="taskbar-widget-content">
-
-                    <ui:Label name="WidgetPrimaryLabel"
-                              text="28°C"
-                              picking-mode="Ignore"
-                              class="taskbar-widget-primary"/>
-
-                    <ui:Label name="WidgetSecondaryLabel"
-                              text="Partly cloudy"
-                              picking-mode="Ignore"
-                              class="taskbar-widget-secondary"/>
-
+    <ui:VisualElement name="DesktopTaskbar" class="taskbar">
+        <ui:GroupBox name="WidgetGroup" class="taskbar-section taskbar-widget-section">
+            <ui:Button name="WidgetsButton" tooltip="Open widgets" class="taskbar-button taskbar-widget-button">
+                <ui:Image name="WidgetIcon" picking-mode="Ignore" class="taskbar-widget-icon" style="background-image: resource(&quot;WeatherIcons/icons8-partly-cloudy-day-48&quot;);"/>
+                <ui:VisualElement picking-mode="Ignore" class="taskbar-widget-content">
+                    <ui:Label name="WidgetPrimaryLabel" text="28°C" picking-mode="Ignore" class="taskbar-widget-primary"/>
+                    <ui:Label name="WidgetSecondaryLabel" text="Partly cloudy" picking-mode="Ignore" class="taskbar-widget-secondary"/>
                 </ui:VisualElement>
             </ui:Button>
         </ui:GroupBox>
-
-        <!-- MIDDLE: Start, search, and pinned/running apps. -->
-        <ui:VisualElement name="MiddleSection"
-                          class="taskbar-section taskbar-middle-section">
-
-            <ui:Button name="StartButton"
-                       text="⊞"
-                       tooltip="Start"
-                       class="taskbar-button taskbar-start"/>
-
-            <ui:VisualElement name="TaskbarSearchContainer"
-                              class="taskbar-search">
-
-                <ui:Image name="SearchIcon"
-                          picking-mode="Ignore"
-                          class="taskbar-icon taskbar-search-icon"/>
-
-                <ui:TextField name="TaskbarSearchField"
-                              label="Search"
-                              tooltip="Search apps and files"
-                              class="taskbar-search-field"/>
+        <ui:VisualElement name="MiddleSection" class="taskbar-section taskbar-middle-section">
+            <ui:Button name="StartButton" text="" tooltip="Start" class="taskbar-button taskbar-start" style="background-image: resource(&quot;Logos/Logo&quot;);"/>
+            <ui:VisualElement name="TaskbarSearchContainer" class="taskbar-search">
+                <ui:Image name="SearchIcon" picking-mode="Ignore" class="taskbar-icon taskbar-search-icon"/>
+                <ui:TextField name="TaskbarSearchField" label="Search" tooltip="Search apps and files" class="taskbar-search-field"/>
             </ui:VisualElement>
-
-            <!-- Instantiate your existing app button template here. -->
-            <ui:GroupBox name="AppGroup"
-                         class="taskbar-section taskbar-apps"/>
-
+            <ui:GroupBox name="AppGroup" class="taskbar-section taskbar-apps"/>
         </ui:VisualElement>
-
-        <!-- RIGHT: status controls. -->
-        <ui:GroupBox name="StatusGroup"
-                     class="taskbar-section taskbar-status">
-
-            <ui:Button name="HiddenIconsButton"
-                       text="⌃"
-                       tooltip="Show hidden icons"
-                       class="taskbar-button taskbar-status-button taskbar-hidden-icons"/>
-
-            <ui:Button name="AssistantButton"
-                       text="✦"
-                       tooltip="Open assistant"
-                       class="taskbar-button taskbar-status-button taskbar-assistant"/>
-                       <ui:Image name="AssistantIcon"
-                          picking-mode="Ignore"
-                          class="taskbar-icon"/>
-
-            <ui:Button name="NetworkButton"
-                       tooltip="Network"
-                       class="taskbar-button taskbar-status-button">
-
-                <ui:Image name="NetworkIcon"
-                          picking-mode="Ignore"
-                          class="taskbar-icon"/>
+        <ui:GroupBox name="StatusGroup" class="taskbar-section taskbar-status">
+            <ui:Button name="HiddenIconsButton" text="" tooltip="Show hidden icons" class="taskbar-button taskbar-status-button taskbar-hidden-icons">
+                <ui:Image class="taskbar-icon" style="background-image: resource(&quot;Icons/Arrows 1/Collapse-Arrow/keyboard_control_key_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40&quot;);"/>
             </ui:Button>
-
-            <ui:Button name="VolumeButton"
-                       tooltip="Volume"
-                       class="taskbar-button taskbar-status-button">
-
-                <ui:Image name="VolumeIcon"
-                          picking-mode="Ignore"
-                          class="taskbar-icon"/>
+            <ui:Button name="AssistantButton" text="✦" tooltip="Open assistant" class="taskbar-button taskbar-status-button taskbar-assistant" style="color: rgb(255, 85, 79);">
+                <ui:Image name="AssistantIcon" picking-mode="Ignore" class="taskbar-icon" style="color: rgb(255, 85, 79);"/>
             </ui:Button>
-
-            <ui:Button name="DateTimeButton"
-                       tooltip="Open calendar"
-                       class="taskbar-button taskbar-clock">
-
-                <ui:Label name="TimeLabel"
-                          text="12:00 PM"
-                          picking-mode="Ignore"
-                          class="taskbar-time"/>
-
-                <ui:Label name="DateLabel"
-                          text="08/10/2026"
-                          picking-mode="Ignore"
-                          class="taskbar-date"/>
+            <ui:Button name="NetworkButton" tooltip="Network" class="taskbar-button taskbar-status-button">
+                <ui:Image name="NetworkIcon" picking-mode="Ignore" class="taskbar-icon" style="background-image: resource(&quot;Icons/System/Network/Wifi-3-Bar/wifi_32dp&quot;);"/>
             </ui:Button>
-
-            <ui:Button name="NotificationsButton"
-                       tooltip="Notifications"
-                       class="taskbar-button taskbar-status-button">
-
-                <ui:Image name="NotificationsIcon"
-                          picking-mode="Ignore"
-                          class="taskbar-icon"/>
-
-                <ui:VisualElement name="NotificationIndicator"
-                                  picking-mode="Ignore"
-                                  class="taskbar-notification-dot"/>
+            <ui:Button name="VolumeButton" tooltip="Volume" class="taskbar-button taskbar-status-button">
+                <ui:Image name="VolumeIcon" picking-mode="Ignore" class="taskbar-icon" style="background-image: resource(&quot;Icons/System/Volume/volume_down_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40&quot;);"/>
             </ui:Button>
-
+            <ui:Button name="DateTimeButton" tooltip="Open calendar" class="taskbar-button taskbar-clock">
+                <ui:Label name="TimeLabel" text="12:00 PM" picking-mode="Ignore" class="taskbar-time"/>
+                <ui:Label name="DateLabel" text="08/10/2026" picking-mode="Ignore" class="taskbar-date"/>
+            </ui:Button>
+            <ui:Button name="NotificationsButton" tooltip="Notifications" class="taskbar-button taskbar-status-button">
+                <ui:Image name="NotificationsIcon" picking-mode="Ignore" class="taskbar-icon" style="background-image: resource(&quot;Icons/System/Notifications/Notifications/notifications_32dp&quot;);"/>
+                <ui:VisualElement name="NotificationIndicator" picking-mode="Ignore" class="taskbar-notification-dot"/>
+            </ui:Button>
         </ui:GroupBox>
     </ui:VisualElement>
-
 </ui:UXML>
