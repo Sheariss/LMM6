@@ -16,6 +16,8 @@
 
     margin: 0;
     padding: 0;
+    padding-left: var(--space-2);
+    padding-right: var(--space-2);
 
     background-color: var(--desktop-taskbar-bg);
     border-top-width: 1px;
@@ -94,7 +96,7 @@
     flex-shrink: 0;
 
     -unity-image-size: contain;
-    -unity-image-tint-color: var(--text-primary);
+    -unity-background-image-tint-color: var(--text-primary);
 }
 
 /* =========================================================
@@ -123,9 +125,8 @@
     flex-shrink: 0;
     margin-right: 10px;
 
-    -unity-image: resource("WeatherIcons/sun-cloudy");
     -unity-image-size: contain;
-    -unity-image-tint-color: white;
+    -unity-background-image-tint-color: white;
 }
 
 .taskbar-widget-content {
@@ -214,7 +215,6 @@
 
 .taskbar-search-icon {
     margin-right: 8px;
-    -unity-image: resource("Icons/UI/Search/search_24dp");
 }
 
 .taskbar-search-field {
@@ -278,7 +278,7 @@
     font-size: 12px;
 }
 
-.taskbar-status > .taskbar-button:last-child {
+.taskbar-status > .taskbar-button.is-last {
     margin-right: 0;
 }
 
@@ -324,10 +324,6 @@
 /* =========================================================
    NOTIFICATIONS
    ========================================================= */
-
-#NotificationsIcon {
-    -unity-image: resource("Icons/System/Notifications/Notifications/notifications_24dp");
-}
 
 .taskbar-notification-dot {
     display: none;

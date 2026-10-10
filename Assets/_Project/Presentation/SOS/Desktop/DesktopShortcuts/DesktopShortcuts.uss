@@ -1,0 +1,39 @@
+.shortcut-button{
+	height: 128px;
+	width: 128px;
+	border-radius: 6px;
+	align-items: center;
+	justify-content: space-evenly;
+}
+
+.shortcut-arrow{
+	height: 18px;
+	width: 18px;
+	-unity-background-image-tint-color: var(--accent-primary);
+}
+
+.shortcut-square{
+	height: 24px;
+	width: 24px;
+	background-color: var(--true-white);
+	border-radius: 6px;
+	align-items: center;
+	justify-content: center;
+	border-width: 1px;
+	border-color:  var(--accent-primary);
+}
+
+.app-icon{
+	height: 96px;
+	width: 96px;
+	align-items: flex-start;
+	justify-content: flex-end;
+}
+
+.app-name{
+	font-size: 14px;
+}
+
+.app-name-shadow{
+	text-shadow: 1px 3px 30px var(--true-black);
+}

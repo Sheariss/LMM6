@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Desktop/DesktopShortcuts/DesktopShortcuts.uss?fileID=7433441132597879392&amp;guid=d5d2bd69964d1b34a82cf014a0d64cab&amp;type=3#DesktopShortcuts"/>
+    <ui:VisualElement name="DesktopShortcutRoot" class="shortcut-button white-text">
+        <ui:Button text="" name="ShortcutButton" class="spacing-reset button-reset shortcut-button">
+            <ui:Image name="ShortcutIcon" class="app-icon" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/Apps/Calculator/Calculate/calculate_64dp.png?fileID=21300000&amp;guid=8f9c6c31834d48c4eaee9da7db4ce9dd&amp;type=3#calculate_64dp&quot;);">
+                <ui:VisualElement name="ShortcutArrow" class="shortcut-square">
+                    <ui:Image class="shortcut-arrow" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/Arrows%201/Diagonal-Upper-Right/north_east_24dp.png?fileID=21300000&amp;guid=4a9840cf2ad19544f8502f173317922a&amp;type=3#north_east_24dp&quot;);"/>
+                </ui:VisualElement>
+            </ui:Image>
+            <ui:Label text="Calculator" name="ShortcutLabel" class="spacing-reset app-name app-name-shadow" style="-unity-text-generator: standard;"/>
+        </ui:Button>
+    </ui:VisualElement>
+</ui:UXML>

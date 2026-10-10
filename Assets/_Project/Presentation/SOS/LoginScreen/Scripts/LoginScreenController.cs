@@ -49,6 +49,8 @@ namespace Atlas.Presentation.SOS.LoginScreen
 
         private void OnDisable()
         {
+            UnsubscribeFromDesktop();
+
             UnregisterCallbacks();
 
             view?.ClearInputs();
@@ -73,6 +75,8 @@ namespace Atlas.Presentation.SOS.LoginScreen
 
             if (!ResolveDependencies())
                 return;
+
+            SubscribeToDesktop();
 
             if (engine == null)
             {
@@ -218,6 +222,15 @@ namespace Atlas.Presentation.SOS.LoginScreen
                 return;
             }
 
+            if (desktopManager == null)
+            {
+                Debug.LogError(
+                    "[LoginScreenController] DesktopManager is not assigned.",
+                    this);
+
+                return;
+            }
+
             bool succeeded = engine.TrySignIn(binder.Password.value);
 
             view.ClearInputs();
@@ -225,7 +238,9 @@ namespace Atlas.Presentation.SOS.LoginScreen
 
             if (succeeded)
             {
-
+                // RefreshView has applied Welcome. The desktop manager waits
+                // two frames before building the authenticated user's desktop.
+                desktopManager.LoadDesktop(authenticationManager.CurrentUser);
                 return;
             }
 
@@ -263,6 +278,48 @@ namespace Atlas.Presentation.SOS.LoginScreen
 
             evt.StopPropagation();
             OnSignInPressed();
+        }
+
+        // -------------------- DESKTOP ACTIONS --------------------
+        private void SubscribeToDesktop()
+        {
+            if (desktopManager == null)
+                return;
+
+            // Avoid duplicate subscriptions when Initialize runs again.
+            UnsubscribeFromDesktop();
+
+            desktopManager.DesktopReady += OnDesktopReady;
+            desktopManager.DesktopFailed += OnDesktopFailed;
+        }
+
+        private void UnsubscribeFromDesktop()
+        {
+            if (desktopManager == null)
+                return;
+
+            desktopManager.DesktopReady -= OnDesktopReady;
+            desktopManager.DesktopFailed -= OnDesktopFailed;
+        }
+
+        private void OnDesktopReady()
+        {
+            // Keep login visible unless the desktop was successfully revealed.
+            if (!desktopManager.ShowDesktop())
+                return;
+
+            Hide();
+        }
+
+        private void OnDesktopFailed(string message)
+        {
+            Debug.LogError(
+                $"[LoginScreenController] Desktop preparation failed: {message}",
+                this);
+
+            // Return to a usable login state.
+            authenticationManager.SignOut();
+            Show();
         }
 
         // -------------------- SYSTEM ACTIONS --------------------

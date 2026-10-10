@@ -1,0 +1,19 @@
+.taskbar-button{
+	height: 50px;
+	width: 50px;
+	border-radius: 6px;
+	align-items: center;
+	justify-content: space-evenly;
+}
+
+.app-icon{
+	height: 32px;
+	width: 32px;
+}
+
+.window-dot{
+	height: 2px;
+	width: 4px;
+	background-color: var(--desktop-taskbar-border);
+	border-radius: 1px;
+}

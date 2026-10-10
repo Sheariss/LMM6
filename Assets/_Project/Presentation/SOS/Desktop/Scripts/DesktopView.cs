@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -9,23 +10,18 @@ namespace Atlas.Presentation.SOS.Desktop
 
         public DesktopView(DesktopBinder binder)
         {
-            this.binder = binder;
+            this.binder = binder
+                ?? throw new ArgumentNullException(nameof(binder));
         }
 
-        public void Prepare(Sprite wallpaper)
+        public void SetWallpaper(Sprite wallpaper)
         {
-            Hide();
-
+            // Remove the wallpaper authored in the template.
             binder.Wallpaper.style.backgroundImage =
                 new StyleBackground(StyleKeyword.None);
 
             binder.Wallpaper.sprite = wallpaper;
             binder.Wallpaper.scaleMode = ScaleMode.ScaleAndCrop;
-
-            // The first version contains only the desktop shell.
-            binder.WidgetGroup.Clear();
-            binder.AppGroup.Clear();
-            binder.StatusGroup.Clear();
         }
 
         public void Show()
@@ -36,7 +32,6 @@ namespace Atlas.Presentation.SOS.Desktop
 
         public void Hide()
         {
-            // Also works when other required elements are missing.
             if (binder.Root == null)
                 return;
 
@@ -44,20 +39,15 @@ namespace Atlas.Presentation.SOS.Desktop
             binder.Root.style.visibility = Visibility.Hidden;
         }
 
-        public void Clear()
+        public void ClearWallpaper()
         {
-            Hide();
+            if (binder.Wallpaper == null)
+                return;
 
-            if (binder.Wallpaper != null)
-            {
-                binder.Wallpaper.sprite = null;
-                binder.Wallpaper.style.backgroundImage =
-                    new StyleBackground(StyleKeyword.None);
-            }
+            binder.Wallpaper.sprite = null;
 
-            binder.WidgetGroup?.Clear();
-            binder.AppGroup?.Clear();
-            binder.StatusGroup?.Clear();
+            binder.Wallpaper.style.backgroundImage =
+                new StyleBackground(StyleKeyword.None);
         }
     }
 }

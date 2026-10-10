@@ -22,6 +22,15 @@ MonoBehaviour:
     blurWallpaperBig: {fileID: 21300000, guid: e92b42bcb8e804e4ebc2ecd1a914be73, type: 3}
     initiallyHidden: 0
     password: Password123
+    availableAppIDs:
+    - calculator
+    - browser
+    - news
+    desktopShortcutAppIDs:
+    - calculator
+    - browser
+    pinnedAppIDs:
+    - browser
   - userId: guest
     displayName: Guest
     loginMethod: 0
@@ -31,3 +40,18 @@ MonoBehaviour:
     blurWallpaperBig: {fileID: 21300000, guid: 78ddd8cbca7145044bb3b83cabda0977, type: 3}
     initiallyHidden: 0
     password: 
+    availableAppIDs:
+    - assistant
+    - calculator
+    - file-explorer
+    - messenger
+    - news
+    - browser
+    desktopShortcutAppIDs:
+    - assistant
+    - messenger
+    - news
+    - browser
+    pinnedAppIDs:
+    - browser
+    - file-explorer

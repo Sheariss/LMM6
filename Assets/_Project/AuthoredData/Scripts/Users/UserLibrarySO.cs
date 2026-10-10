@@ -35,6 +35,13 @@ namespace Atlas.AuthoredData.Users
             [Header("Authentication")]
             [SerializeField] private string password;
 
+            [Header("App Access")]
+            [SerializeField] private List<string> availableAppIDs = new();
+
+            [Header("Desktop Placement")]
+            [SerializeField] private List<string> desktopShortcutAppIDs = new();
+            [SerializeField] private List<string> pinnedAppIDs = new();
+
             public string UserId => userId;
             public string DisplayName => displayName;
             public UserLoginMethod LoginMethod => loginMethod;
@@ -47,6 +54,17 @@ namespace Atlas.AuthoredData.Users
             public bool InitiallyHidden => initiallyHidden;
 
             public string Password => password;
+
+            public IReadOnlyList<string> AvailableAppIDs => availableAppIDs;
+            public IReadOnlyList<string> DesktopShortcutAppIDs =>
+                desktopShortcutAppIDs;
+            public IReadOnlyList<string> PinnedAppIDs => pinnedAppIDs;
+
+            public bool CanAccessApp(string appID)
+            {
+                return !string.IsNullOrWhiteSpace(appID) &&
+                       availableAppIDs.Contains(appID);
+            }
         }
 
         [SerializeField]

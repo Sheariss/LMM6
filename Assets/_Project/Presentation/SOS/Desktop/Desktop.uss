@@ -1,12 +1,61 @@
-.background-image {
-    height:100%;
+.desktop-root {
     width: 100%;
+    height: 100%;
+    flex-direction: column;
+    overflow: hidden;
 }
 
-.taskbar {
-    height: 52px;
-    width: 100%;
-    background-color: var(--desktop-taskbar-bg);
-    border-color: var(--desktop-taskbar-border);
-    border-top-width: 1px;
+.desktop-workspace {
+    position: relative;
+
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+
+    min-width: 0;
+    min-height: 0;
+
+    overflow: hidden;
+}
+
+/* Layers fill the workspace, excluding the taskbar. */
+.desktop-layer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.desktop-background {
+    background-color: rgb(25, 32, 45);
+
+    /* Replace with your wallpaper asset path. */
+    /* background-image: url("project://database/Assets/UI/Images/DesktopBackground.png"); */
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.desktop-shortcuts {
+    padding: 16px;
+}
+
+/* Controller positions shortcuts within this container. */
+.desktop-shortcut-grid {
+    position: relative;
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+}
+
+.desktop-windows {
+    overflow: hidden;
+}
+
+/* The existing taskbar visual tree determines its height. */
+.desktop-taskbar {
+    flex-grow: 0;
+    flex-shrink: 0;
 }
