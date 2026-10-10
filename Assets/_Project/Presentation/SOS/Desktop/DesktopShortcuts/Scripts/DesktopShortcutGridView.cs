@@ -11,6 +11,8 @@ namespace Atlas.Presentation.SOS.Desktop
         public Vector2 ItemSize { get; }
         public Vector2 Gap { get; }
 
+
+
         public int Columns { get; private set; }
         public int Rows { get; private set; }
 

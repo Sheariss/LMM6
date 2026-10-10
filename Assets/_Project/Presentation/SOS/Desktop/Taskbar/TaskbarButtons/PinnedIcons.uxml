@@ -1,12 +1,12 @@
-<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/Global/Global-Colors.uss?fileID=7433441132597879392&amp;guid=90297b69b426779468cf33e1cbd20f53&amp;type=3#Global-Colors"/>
-    <Style src="project://database/Assets/UI/Global/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=6faf066b8f6df4e4cb58c66b1ce874ae&amp;type=3#Global-Tokens"/>
-    <Style src="project://database/Assets/UI/ATLAS/ATLAS.uss?fileID=7433441132597879392&amp;guid=e59bc457ecbf80a47a03ca4019225af6&amp;type=3#ATLAS"/>
-    <Style src="project://database/Assets/UI/ATLAS/Parts/Desktop/Parts/PinnedIcons/PinnedIcons.uss?fileID=7433441132597879392&amp;guid=36229e1fe59b47e4b91d580414d3922e&amp;type=3#PinnedIcons"/>
-    <ui:VisualElement name="PinnedIconRoot" class="taskbar-button">
-        <ui:Button text="" class="spacing-reset button-reset taskbar-button flex-column">
-            <ui:Image name="AppIcon" class="app-icon" style="background-image: url(&quot;project://database/Assets/Icons/Apps/Calculator/Calculate/calculate_32dp.png?fileID=21300000&amp;guid=96e87e43441f3254787989ba2b812cef&amp;type=3#calculate_32dp&quot;);"/>
-            <ui:VisualElement name="WindowDot" class="window-dot"/>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Desktop/Taskbar/TaskbarButtons/PinnedIcons.uss?fileID=7433441132597879392&amp;guid=9fb86229cdf7e224e95fb614c32f5b78&amp;type=3#PinnedIcons"/>
+    <ui:VisualElement name="PinnedIconRoot" class="taskbar-pinned-root">
+        <ui:Button name="PinnedButton" class="taskbar-button taskbar-pinned-button">
+            <ui:Image name="AppIcon" picking-mode="Ignore" class="app-icon"/>
+            <ui:VisualElement name="WindowDot" picking-mode="Ignore" class="window-dot"/>
         </ui:Button>
     </ui:VisualElement>
 </ui:UXML>

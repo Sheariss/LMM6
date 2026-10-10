@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Desktop.DesktopManager
   desktopController: {fileID: 530810530}
+  minimumWelcomeDuration: 2.5
 --- !u!1 &315795957
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,8 +308,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Desktop.DesktopController
   appCatalog: {fileID: 11400000, guid: ab7cff7353a143742a455312169db2ea, type: 2}
   shortcutTemplate: {fileID: 9197481963319205126, guid: e7732217972d5a94a8ab501f97f07bfa, type: 3}
-  shortcutSize: {x: 128, y: 128}
-  shortcutGap: {x: 16, y: 16}
+  shortcutSize: {x: 75, y: 75}
+  shortcutGap: {x: 0, y: 0}
+  shortcutIconSize: {x: 48, y: 48}
+  shortcutLabelFontSize: 14
+  pinnedButtonTemplate: {fileID: 9197481963319205126, guid: 43aefdb6befc1f8408ec67900f2d6e82, type: 3}
 --- !u!1 &880322818
 GameObject:
   m_ObjectHideFlags: 0

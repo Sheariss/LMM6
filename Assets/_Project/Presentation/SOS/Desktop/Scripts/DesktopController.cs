@@ -5,6 +5,7 @@ using Atlas.SOS.Authentication;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static Atlas.AuthoredData.Users.UserLibrarySO;
+using Atlas.Presentation.SOS.Taskbar;
 
 namespace Atlas.Presentation.SOS.Desktop
 {
@@ -23,12 +24,24 @@ namespace Atlas.Presentation.SOS.Desktop
         private Vector2 shortcutGap =
             new Vector2(16f, 16f);
 
+        [SerializeField]
+        private Vector2 shortcutIconSize = new Vector2(48f, 48f);
+
+        [SerializeField, Min(1f)]
+        private float shortcutLabelFontSize = 14f;
+
+        [Header("Taskbar")]
+        [SerializeField] private VisualTreeAsset pinnedButtonTemplate;
+
+
         private DesktopBinder binder;
         private DesktopView view;
 
         private DesktopShortcutGridView gridView;
         private DesktopShortcutGridController gridController;
         private DesktopShortcutController shortcutController;
+        private TaskbarPinnedButtonController pinnedButtonController;
+
 
         private readonly List<AppDefinition> availableApps = new();
         private readonly List<AppDefinition> pinnedApps = new();
@@ -77,9 +90,13 @@ namespace Atlas.Presentation.SOS.Desktop
             if (!ValidateUser(user, out error))
                 return false;
 
-            if (appCatalog == null || shortcutTemplate == null)
+            if (appCatalog == null ||
+                shortcutTemplate == null ||
+                pinnedButtonTemplate == null)
             {
-                error = "The app catalog or shortcut template is missing.";
+                error = "The app catalog, shortcut template, " +
+                        "or pinned button template is missing.";
+
                 return false;
             }
 
@@ -121,8 +138,20 @@ namespace Atlas.Presentation.SOS.Desktop
 
                 shortcutController.Build(shortcutApps);
 
-                // Future taskbar controller:
-                // taskbarController.Build(pinnedApps);
+                var taskbarBinder = new TaskbarBinder(binder.Taskbar);
+
+                if (!taskbarBinder.IsValid)
+                {
+                    throw new InvalidOperationException(
+                        "The taskbar visual tree is missing required elements.");
+                }
+
+                pinnedButtonController = new TaskbarPinnedButtonController(
+                    pinnedButtonTemplate,
+                    taskbarBinder.AppGroup,
+                    RequestAppLaunch);
+
+                pinnedButtonController.Build(pinnedApps);
             }
             catch (Exception exception)
             {
@@ -203,6 +232,10 @@ namespace Atlas.Presentation.SOS.Desktop
             gridView = null;
 
             view?.ClearWallpaper();
+
+            pinnedButtonController?.Dispose();
+            pinnedButtonController = null;
+
 
             availableApps.Clear();
             pinnedApps.Clear();
@@ -380,6 +413,18 @@ namespace Atlas.Presentation.SOS.Desktop
 
             root.SetEnabled(false);
             root.style.visibility = Visibility.Hidden;
+        }
+
+        public void SetPinnedAppState(
+            string appID,
+            bool isOpen,
+            bool isFocused)
+        {
+            if (!IsPreparedForCurrentUser)
+                return;
+
+            pinnedButtonController?.SetAppState(
+                appID, isOpen, isFocused);
         }
     }
 }
