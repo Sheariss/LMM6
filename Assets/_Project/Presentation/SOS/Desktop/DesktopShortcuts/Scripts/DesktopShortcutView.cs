@@ -45,6 +45,15 @@ namespace Atlas.Presentation.SOS.Desktop
                 visible ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
+        public void SetAppearance(Vector2 iconSize, float labelFontSize)
+        {
+            binder.Icon.style.width = Mathf.Max(1f, iconSize.x);
+            binder.Icon.style.height = Mathf.Max(1f, iconSize.y);
+            binder.Icon.style.flexShrink = 0f;
+
+            binder.Label.style.fontSize = Mathf.Max(1f, labelFontSize);
+        }
+
         public void Remove()
         {
             // Remove the entire clone, including its template wrapper.

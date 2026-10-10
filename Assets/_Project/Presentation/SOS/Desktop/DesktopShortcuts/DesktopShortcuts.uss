@@ -1,6 +1,6 @@
 .shortcut-button{
-	height: 128px;
-	width: 128px;
+    width: 100%;
+    height: 100%;
 	border-radius: 6px;
 	align-items: center;
 	justify-content: space-evenly;
@@ -30,10 +30,34 @@
 	justify-content: flex-end;
 }
 
-.app-name{
-	font-size: 14px;
+.app-name {
+    width: 100%;
+    min-width: 0;
+    flex-shrink: 0;
+
+    font-size: 12px;
+    -unity-text-align: middle-center;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .app-name-shadow{
 	text-shadow: 1px 3px 30px var(--true-black);
+}
+
+Button.shortcut-button {
+    background-color: transparent;
+
+    transition-property: background-color;
+    transition-duration: 0.1s;
+}
+
+Button.shortcut-button:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+Button.shortcut-button:active {
+    background-color: rgba(255, 255, 255, 0.14);
 }

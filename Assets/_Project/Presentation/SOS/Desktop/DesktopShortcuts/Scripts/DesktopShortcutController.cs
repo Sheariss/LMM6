@@ -12,6 +12,9 @@ namespace Atlas.Presentation.SOS.Desktop
         private readonly DesktopShortcutGridController grid;
         private readonly Action<string> launchApp;
 
+        private readonly Vector2 iconSize;
+        private readonly float labelFontSize;
+
         private readonly List<ShortcutInstance> instances = new();
 
         private sealed class ShortcutInstance
@@ -24,7 +27,9 @@ namespace Atlas.Presentation.SOS.Desktop
         public DesktopShortcutController(
             VisualTreeAsset template,
             DesktopShortcutGridController grid,
-            Action<string> launchApp)
+            Action<string> launchApp,
+            Vector2 iconSize,
+            float labelFontSize)
         {
             this.template = template != null
                 ? template
@@ -35,6 +40,9 @@ namespace Atlas.Presentation.SOS.Desktop
 
             this.launchApp = launchApp
                 ?? throw new ArgumentNullException(nameof(launchApp));
+
+            this.iconSize = iconSize;
+            this.labelFontSize = labelFontSize;
         }
 
         public void Build(IReadOnlyList<AppDefinition> apps)
@@ -88,6 +96,7 @@ namespace Atlas.Presentation.SOS.Desktop
 
             var view = new DesktopShortcutView(binder);
             view.Populate(app);
+            view.SetAppearance(iconSize, labelFontSize);
 
             string appID = app.AppID;
             Action clickHandler = () => launchApp(appID);

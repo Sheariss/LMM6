@@ -2,7 +2,7 @@
     <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
     <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
     <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
-    <Style src="project://database/Assets/_Project/Presentation/SOS/Desktop/Parts/Taskbar.uss?fileID=7433441132597879392&amp;guid=55ca6db6a420cc540819dbb8ef290ec3&amp;type=3#Taskbar"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Desktop/Taskbar/Taskbar.uss?fileID=7433441132597879392&amp;guid=55ca6db6a420cc540819dbb8ef290ec3&amp;type=3#Taskbar"/>
     <ui:VisualElement name="DesktopTaskbar" class="taskbar">
         <ui:GroupBox name="WidgetGroup" class="taskbar-section taskbar-widget-section">
             <ui:Button name="WidgetsButton" tooltip="Open widgets" class="taskbar-button taskbar-widget-button">
@@ -25,8 +25,8 @@
             <ui:Button name="HiddenIconsButton" text="" tooltip="Show hidden icons" class="taskbar-button taskbar-status-button taskbar-hidden-icons">
                 <ui:Image class="taskbar-icon" style="background-image: resource(&quot;Icons/Arrows 1/Collapse-Arrow/keyboard_control_key_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40&quot;);"/>
             </ui:Button>
-            <ui:Button name="AssistantButton" text="✦" tooltip="Open assistant" class="taskbar-button taskbar-status-button taskbar-assistant" style="color: rgb(255, 85, 79);">
-                <ui:Image name="AssistantIcon" picking-mode="Ignore" class="taskbar-icon" style="color: rgb(255, 85, 79);"/>
+            <ui:Button name="AssistantButton" text="" tooltip="Open assistant" class="taskbar-button taskbar-status-button taskbar-assistant">
+                <ui:Image name="AssistantIcon" picking-mode="Ignore" class="taskbar-icon" style="background-image: resource(&quot;AppIcons/Assistant/icons8-sparkle-48&quot;);"/>
             </ui:Button>
             <ui:Button name="NetworkButton" tooltip="Network" class="taskbar-button taskbar-status-button">
                 <ui:Image name="NetworkIcon" picking-mode="Ignore" class="taskbar-icon" style="background-image: resource(&quot;Icons/System/Network/Wifi-3-Bar/wifi_32dp&quot;);"/>

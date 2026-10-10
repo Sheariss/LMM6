@@ -24,10 +24,10 @@ MonoBehaviour:
     minimumWindowSize: {x: 200, y: 200}
     showDesktopShortcut: 0
     pinToTaskbar: 1
-  - appID: asssitant
+  - appID: assistant
     displayName: Assistant
-    appIcon48: {fileID: 21300000, guid: dd8dc4c562eca0c47862bbafc72b2c0f, type: 3}
-    appIcon96: {fileID: 21300000, guid: 0c851a9cc377be04a9b3e6b8938cd02c, type: 3}
+    appIcon48: {fileID: 21300000, guid: 8181b436624566b419e3f18d75e710a2, type: 3}
+    appIcon96: {fileID: 21300000, guid: 9fc980fe4872d8d409c619573a6fd67f, type: 3}
     appUXML: {fileID: 9197481963319205126, guid: 37ee9bded0bda734a8ed102cf2845e1e, type: 3}
     isResizable: 0
     allowMultipleInstances: 0

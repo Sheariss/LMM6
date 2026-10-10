@@ -134,7 +134,9 @@ namespace Atlas.Presentation.SOS.Desktop
                 shortcutController = new DesktopShortcutController(
                     shortcutTemplate,
                     gridController,
-                    RequestAppLaunch);
+                    RequestAppLaunch,
+                    shortcutIconSize,
+                    shortcutLabelFontSize);
 
                 shortcutController.Build(shortcutApps);
 
