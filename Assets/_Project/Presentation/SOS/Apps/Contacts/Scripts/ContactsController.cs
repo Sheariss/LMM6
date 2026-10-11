@@ -1,15 +1,14 @@
+using System;
+using Atlas.Presentation.SOS.Apps;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Atlas.Presentation.SOS.Contacts
 {
-    [RequireComponent(typeof(UIDocument))]
-    public sealed class ContactsController : MonoBehaviour
+    public sealed class ContactsController : AppContentController
     {
         [Header("Data")]
         [SerializeField] private ContactLibrary contactLibrary;
 
-        private UIDocument document;
         private ContactsBinder binder;
         private ContactsViewBuilder viewBuilder;
         private ContactsView view;
@@ -21,31 +20,20 @@ namespace Atlas.Presentation.SOS.Contacts
         private ContactData selectedContact;
         private string currentSearch = string.Empty;
 
-        private void Awake()
+        protected override void OnInitialize()
         {
-            document = GetComponent<UIDocument>();
-
-            if (document == null)
-            {
-                Debug.LogError("[Contacts] UIDocument is missing.", this);
-                enabled = false;
-                return;
-            }
-
             if (contactLibrary == null)
             {
-                Debug.LogError("[Contacts] ContactLibrary is not assigned.", this);
-                enabled = false;
-                return;
+                throw new InvalidOperationException(
+                    "[Contacts] ContactLibrary is not assigned.");
             }
 
-            binder = new ContactsBinder(document.rootVisualElement);
+            binder = new ContactsBinder(InstanceRoot);
 
             if (!binder.IsValid)
             {
-                Debug.LogError("[Contacts] UI binding failed.", this);
-                enabled = false;
-                return;
+                throw new InvalidOperationException(
+                    "[Contacts] UI binding failed.");
             }
 
             engine = new ContactsEngine(contactLibrary);
@@ -57,10 +45,21 @@ namespace Atlas.Presentation.SOS.Contacts
             view.ShowNoSelection();
         }
 
-        private void OnDestroy()
+        protected override void OnShutdown()
         {
             UnregisterEvents();
             binder?.Dispose();
+
+            binder = null;
+            viewBuilder = null;
+            view = null;
+            engine = null;
+
+            selectedContact = null;
+            currentFilter = ContactsFilter.All;
+            currentSort = ContactsSortMode.FirstNameAscending;
+            currentGroup = ContactGroup.None;
+            currentSearch = string.Empty;
         }
 
         private void RegisterEvents()

@@ -1,0 +1,54 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/WebBrowser/Websites/Orbilo/Orbilo.uss?fileID=7433441132597879392&amp;guid=50289be03065f4141b16707434e27605&amp;type=3#Orbilo"/>
+    <ui:VisualElement name="OrbiloHome" class="orbilo-page">
+        <ui:VisualElement class="orbilo-content">
+            <ui:VisualElement class="orbilo-brand">
+                <ui:Image class="orbilo-symbol" style="background-image: resource(&quot;Logos/CustomLogos/orbito&quot;);"/>
+                <ui:VisualElement class="orbilo-wordmark">
+                    <ui:Label text="Orbi" class="orbilo-wordmark-main"/>
+                    <ui:Label text="lo" class="orbilo-wordmark-accent"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="orbilo-search-row">
+                <ui:Label text="⌕" class="orbilo-search-icon"/>
+                <ui:TextField name="SearchInput" value="" class="orbilo-search-input"/>
+                <ui:Button name="VoiceSearchButton" text="●" tooltip="Voice search" class="orbilo-search-tool"/>
+                <ui:VisualElement class="orbilo-search-divider"/>
+                <ui:Button name="ImageSearchButton" text="▣" tooltip="Image search" class="orbilo-search-tool"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="orbilo-actions">
+                <ui:Button name="SearchButton" text="Search" class="orbilo-action"/>
+                <ui:Button name="LuckyButton" text="I&apos;m Feeling Lucky" class="orbilo-action"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="orbilo-shortcuts">
+                <ui:VisualElement class="orbilo-shortcut">
+                    <ui:Button name="NewsShortcut" text="▤" class="orbilo-shortcut-icon shortcut-news"/>
+                    <ui:Label text="News" class="orbilo-shortcut-label"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="orbilo-shortcut">
+                    <ui:Button name="WeatherShortcut" text="☀" class="orbilo-shortcut-icon shortcut-weather"/>
+                    <ui:Label text="Weather" class="orbilo-shortcut-label"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="orbilo-shortcut">
+                    <ui:Button name="VideosShortcut" text="▶" class="orbilo-shortcut-icon shortcut-videos"/>
+                    <ui:Label text="Videos" class="orbilo-shortcut-label"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="orbilo-shortcut">
+                    <ui:Button name="ShoppingShortcut" text="▣" class="orbilo-shortcut-icon shortcut-shopping"/>
+                    <ui:Label text="Shopping" class="orbilo-shortcut-label"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="orbilo-shortcut">
+                    <ui:Button name="TravelShortcut" text="✈" class="orbilo-shortcut-icon shortcut-travel"/>
+                    <ui:Label text="Travel" class="orbilo-shortcut-label"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="orbilo-shortcut">
+                    <ui:Button name="AddShortcutButton" text="+" class="orbilo-shortcut-icon shortcut-add"/>
+                    <ui:Label text="Add shortcut" class="orbilo-shortcut-label"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

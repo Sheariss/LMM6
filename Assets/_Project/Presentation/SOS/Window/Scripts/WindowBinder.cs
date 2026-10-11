@@ -1,16 +1,15 @@
+using Atlas.Utils;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Atlas.Utils;
 
 namespace Atlas.Presentation.SOS.Windows
 {
     public sealed class WindowBinder : UIBinder
     {
         public VisualElement Root { get; }
-
         public VisualElement TitleBar { get; }
 
-        public Image Icon { get; }
+        public VisualElement Icon { get; }
         public Label Title { get; }
 
         public Button MinimizeButton { get; }
@@ -29,9 +28,10 @@ namespace Atlas.Presentation.SOS.Windows
 
             Root = Bind<VisualElement>(root, "WindowRoot");
 
-            TitleBar = Bind<VisualElement>(root, "WindowTitle");
+            // Bind the entire header, not just the title label.
+            TitleBar = Bind<VisualElement>(root, "WindowHeader");
 
-            Icon = Bind<Image>(root, "WindowIcon");
+            Icon = Bind<VisualElement>(root, "WindowIcon");
             Title = Bind<Label>(root, "WindowTitle");
 
             MinimizeButton = Bind<Button>(root, "WindowMinimizeButton");

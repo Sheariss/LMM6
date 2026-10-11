@@ -8,8 +8,10 @@ namespace Atlas.Presentation.SOS.Messages
     {
         public static MessagesManager Instance { get; private set; }
 
-        [SerializeField]
-        private List<MessageConversationData> conversations = new();
+        [Header("Data")]
+        [SerializeField] private MessagesLibrary messagesLibrary;
+
+        private readonly List<MessageConversationData> conversations = new();
 
         public IReadOnlyList<MessageConversationData> Conversations =>
             conversations;
@@ -28,7 +30,78 @@ namespace Atlas.Presentation.SOS.Messages
                 return;
             }
 
+            LoadLibrary();
             Instance = this;
+        }
+
+        private void OnDestroy()
+        {
+            if (Instance == this)
+                Instance = null;
+        }
+
+        private void LoadLibrary()
+        {
+            conversations.Clear();
+
+            if (messagesLibrary == null)
+            {
+                Debug.LogError(
+                    "[MessagesManager] MessagesLibrary is not assigned.",
+                    this);
+
+                return;
+            }
+
+            foreach (MessageConversationDefinition definition
+                     in messagesLibrary.Conversations)
+            {
+                if (definition == null)
+                    continue;
+
+                if (string.IsNullOrWhiteSpace(definition.Id))
+                {
+                    Debug.LogWarning(
+                        "[MessagesManager] Skipping a conversation with no ID.",
+                        this);
+
+                    continue;
+                }
+
+                if (GetConversation(definition.Id) != null)
+                {
+                    Debug.LogWarning(
+                        $"[MessagesManager] Duplicate conversation ID: {definition.Id}",
+                        this);
+
+                    continue;
+                }
+
+                MessageConversationData conversation = new(
+                    definition.Id,
+                    definition.ContactName,
+                    definition.ContactAvatar,
+                    definition.Status);
+
+                foreach (MessageDefinition messageDefinition
+                         in definition.InitialMessages)
+                {
+                    if (messageDefinition == null)
+                        continue;
+
+                    MessageData message = new(
+                        messageDefinition.Id,
+                        messageDefinition.SenderName,
+                        messageDefinition.Text,
+                        messageDefinition.Timestamp,
+                        messageDefinition.Direction,
+                        messageDefinition.InitialReadState);
+
+                    conversation.AddMessage(message);
+                }
+
+                conversations.Add(conversation);
+            }
         }
 
         public MessageConversationData GetConversation(string id)
@@ -36,13 +109,17 @@ namespace Atlas.Presentation.SOS.Messages
             if (string.IsNullOrWhiteSpace(id))
                 return null;
 
-            return conversations.Find(x => x.Id == id);
+            return conversations.Find(conversation =>
+                conversation.Id == id);
         }
 
         public void AddConversation(MessageConversationData conversation)
         {
-            if (conversation == null)
+            if (conversation == null ||
+                string.IsNullOrWhiteSpace(conversation.Id))
+            {
                 return;
+            }
 
             if (GetConversation(conversation.Id) != null)
                 return;

@@ -1,3 +1,8 @@
+:root{
+    --taskbar-pinned-dot-bg: #ff544f;
+}
+
+
 /* =========================================================
    TASKBAR
    The host controls placement on the desktop.
@@ -336,7 +341,7 @@
     height: 6px;
 
     border-radius: 3px;
-    background-color: var(--accent-hover);
+    background-color: var(--taskbar-pinned-dot-bg);
 }
 
 /* Toggle this class on NotificationsButton from its controller. */

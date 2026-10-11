@@ -1,7 +1,7 @@
 using Atlas.Utils;
 using UnityEngine.UIElements;
 
-namespace Atlas.Presentation.SOS.WebBrowser.News
+namespace Atlas.Presentation.SOS.News
 {
     public sealed class NewsSiteShellBinder : UIBinder
     {

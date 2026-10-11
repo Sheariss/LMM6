@@ -1,4 +1,4 @@
-namespace Atlas.Presentation.SOS.WebBrowser.News
+namespace Atlas.Presentation.SOS.News
 {
     public sealed class NewsSiteShellViewBuilder
     {

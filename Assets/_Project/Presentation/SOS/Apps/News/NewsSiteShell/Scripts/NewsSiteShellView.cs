@@ -1,6 +1,6 @@
 using UnityEngine.UIElements;
 
-namespace Atlas.Presentation.SOS.WebBrowser.News
+namespace Atlas.Presentation.SOS.News
 {
     public enum NewsSection
     {

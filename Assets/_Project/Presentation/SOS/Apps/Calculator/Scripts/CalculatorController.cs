@@ -1,28 +1,28 @@
-﻿using UnityEngine;
+﻿using Atlas.Presentation.SOS.Apps;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Atlas.Presentation.SOS.Calculator
 {
-    [RequireComponent(typeof(UIDocument))]
-    public sealed class CalculatorController : MonoBehaviour
+    public sealed class CalculatorController : AppContentController
     {
-        private UIDocument uiDocument;
-
         private CalculatorBinder binder;
-
         private CalculatorEngine engine;
-
         private CalculatorView view;
-
         private CalculatorViewBuilder viewBuilder;
 
-
         // -------------------- INITIALIZATION --------------------
-        private void Start()
-        {
-            uiDocument = GetComponent<UIDocument>();
 
-            binder = new CalculatorBinder(uiDocument.rootVisualElement);
+        protected override void OnInitialize()
+        {
+            binder = new CalculatorBinder(InstanceRoot);
+
+            if (!binder.IsValid)
+            {
+                throw new System.InvalidOperationException(
+                    "Calculator UI is missing required elements.");
+            }
+
             engine = new CalculatorEngine();
             view = new CalculatorView(binder);
             viewBuilder = new CalculatorViewBuilder();
@@ -30,493 +30,292 @@ namespace Atlas.Presentation.SOS.Calculator
             RegisterCallbacks();
 
             Refresh();
-
             view.FocusDisplay();
         }
 
+        protected override void OnShutdown()
+        {
+            // The base class unregisters callbacks before this runs.
+            binder = null;
+            engine = null;
+            view = null;
+            viewBuilder = null;
+        }
+
         // -------------------- CALLBACK REGISTRATION --------------------
+
         private void RegisterCallbacks()
         {
             RegisterNumberCallbacks();
-
             RegisterBinaryOperationCallbacks();
-
             RegisterUnaryOperationCallbacks();
-
             RegisterUtilityCallbacks();
-
             RegisterKeyboardCallbacks();
-
             RegisterDisplayCallbacks();
         }
 
-
         // -------------------- NUMBER BUTTONS --------------------
+
         private void RegisterNumberCallbacks()
         {
-            binder.ZeroButton.clicked += () => OnDigitPressed("0");
+            BindClick(binder.ZeroButton, () => OnDigitPressed("0"));
+            BindClick(binder.OneButton, () => OnDigitPressed("1"));
+            BindClick(binder.TwoButton, () => OnDigitPressed("2"));
+            BindClick(binder.ThreeButton, () => OnDigitPressed("3"));
+            BindClick(binder.FourButton, () => OnDigitPressed("4"));
+            BindClick(binder.FiveButton, () => OnDigitPressed("5"));
+            BindClick(binder.SixButton, () => OnDigitPressed("6"));
+            BindClick(binder.SevenButton, () => OnDigitPressed("7"));
+            BindClick(binder.EightButton, () => OnDigitPressed("8"));
+            BindClick(binder.NineButton, () => OnDigitPressed("9"));
 
-            binder.OneButton.clicked += () => OnDigitPressed("1");
-
-            binder.TwoButton.clicked += () => OnDigitPressed("2");
-
-            binder.ThreeButton.clicked += () => OnDigitPressed("3");
-
-            binder.FourButton.clicked += () => OnDigitPressed("4");
-
-            binder.FiveButton.clicked += () => OnDigitPressed("5");
-
-            binder.SixButton.clicked += () => OnDigitPressed("6");
-
-            binder.SevenButton.clicked += () => OnDigitPressed("7");
-
-            binder.EightButton.clicked += () => OnDigitPressed("8");
-
-            binder.NineButton.clicked += () => OnDigitPressed("9");
-
-            binder.DecimalButton.clicked += OnDecimalPressed;
+            BindClick(binder.DecimalButton, OnDecimalPressed);
         }
-
-
 
         // -------------------- BINARY OPERATIONS --------------------
+
         private void RegisterBinaryOperationCallbacks()
         {
-            binder.AddButton.clicked += () => OnOperatorPressed(CalculatorOperation.Add);
-            binder.SubtractButton.clicked += () => OnOperatorPressed(CalculatorOperation.Subtract);
-            binder.MultiplyButton.clicked += () => OnOperatorPressed(CalculatorOperation.Multiply);
-            binder.DivideButton.clicked += () => OnOperatorPressed(CalculatorOperation.Divide);
+            BindClick(
+                binder.AddButton,
+                () => OnOperatorPressed(CalculatorOperation.Add));
+
+            BindClick(
+                binder.SubtractButton,
+                () => OnOperatorPressed(CalculatorOperation.Subtract));
+
+            BindClick(
+                binder.MultiplyButton,
+                () => OnOperatorPressed(CalculatorOperation.Multiply));
+
+            BindClick(
+                binder.DivideButton,
+                () => OnOperatorPressed(CalculatorOperation.Divide));
         }
-
-
 
         // -------------------- UNARY OPERATIONS --------------------
 
-
         private void RegisterUnaryOperationCallbacks()
         {
-            binder.SquareButton.clicked +=
-                () => OnUnaryOperationPressed(
-                    CalculatorOperation.Squared);
+            BindClick(
+                binder.SquareButton,
+                () => OnUnaryOperationPressed(CalculatorOperation.Squared));
 
-            binder.RootButton.clicked +=
-                () => OnUnaryOperationPressed(
-                    CalculatorOperation.Root);
+            BindClick(
+                binder.RootButton,
+                () => OnUnaryOperationPressed(CalculatorOperation.Root));
 
-            binder.OneOverButton.clicked +=
-                () => OnUnaryOperationPressed(
-                    CalculatorOperation.OneOver);
+            BindClick(
+                binder.OneOverButton,
+                () => OnUnaryOperationPressed(CalculatorOperation.OneOver));
         }
-
-
 
         // -------------------- UTILITY --------------------
 
-
         private void RegisterUtilityCallbacks()
         {
-            binder.EqualButton.clicked +=
-                OnEqualsPressed;
-
-            binder.ClearButton.clicked +=
-                OnClearPressed;
-
-            binder.ClearEntryButton.clicked +=
-                OnClearEntryPressed;
-
-            binder.SignButton.clicked +=
-                OnSignPressed;
-
-            binder.PercentButton.clicked +=
-                OnPercentPressed;
-
-            binder.BackspaceButton.clicked +=
-                OnBackspacePressed;
+            BindClick(binder.EqualButton, OnEqualsPressed);
+            BindClick(binder.ClearButton, OnClearPressed);
+            BindClick(binder.ClearEntryButton, OnClearEntryPressed);
+            BindClick(binder.SignButton, OnSignPressed);
+            BindClick(binder.PercentButton, OnPercentPressed);
+            BindClick(binder.BackspaceButton, OnBackspacePressed);
         }
-
 
         // -------------------- DISPLAY INPUT --------------------
 
-
         private void RegisterDisplayCallbacks()
         {
-            binder.DisplayField
-                .RegisterValueChangedCallback(
-                    OnDisplayValueChanged);
+            BindCallback<ChangeEvent<string>>(
+                binder.DisplayField,
+                OnDisplayValueChanged);
         }
-
-
 
         // -------------------- KEYBOARD --------------------
 
-
         private void RegisterKeyboardCallbacks()
         {
-            /*
-             * TrickleDown lets us intercept keys before
-             * the TextField processes them normally.
-             *
-             * This is particularly useful for:
-             *
-             * +
-             * -
-             * *
-             * /
-             * Enter
-             *
-             * We don't want those characters inserted into
-             * the numeric display.
-             */
-
-            binder.Root.RegisterCallback<KeyDownEvent>(
+            // Intercept keys before the TextField inserts them.
+            BindCallback<KeyDownEvent>(
+                binder.Root,
                 OnKeyDown,
                 TrickleDown.TrickleDown);
         }
 
-
-
         // -------------------- DIGIT --------------------
 
-
-        private void OnDigitPressed(
-            string digit)
+        private void OnDigitPressed(string digit)
         {
             engine.InputDigit(digit);
-
             Refresh();
         }
 
-
-
         // -------------------- DECIMAL --------------------
-
 
         private void OnDecimalPressed()
         {
             engine.InputDecimal();
-
             Refresh();
         }
-
-
 
         // -------------------- BINARY OPERATOR --------------------
 
-
-        private void OnOperatorPressed(
-            CalculatorOperation operation)
+        private void OnOperatorPressed(CalculatorOperation operation)
         {
-            engine.InputOperator(
-                operation);
-
+            engine.InputOperator(operation);
             Refresh();
         }
-
-
 
         // -------------------- UNARY OPERATOR --------------------
 
-
-        private void OnUnaryOperationPressed(
-            CalculatorOperation operation)
+        private void OnUnaryOperationPressed(CalculatorOperation operation)
         {
-            engine.ApplyUnaryOperation(
-                operation);
-
+            engine.ApplyUnaryOperation(operation);
             Refresh();
         }
 
-
-
         // -------------------- EQUALS --------------------
-
 
         private void OnEqualsPressed()
         {
             engine.Equals();
-
             Refresh();
         }
 
-
-
         // -------------------- CLEAR --------------------
-
 
         private void OnClearPressed()
         {
             engine.Clear();
-
             Refresh();
         }
 
-
-
         // -------------------- CLEAR ENTRY --------------------
-
 
         private void OnClearEntryPressed()
         {
             engine.ClearEntry();
-
             Refresh();
         }
 
-
-
         // -------------------- SIGN --------------------
-
 
         private void OnSignPressed()
         {
             engine.ToggleSign();
-
             Refresh();
         }
-
-
 
         // -------------------- PERCENT --------------------
 
         private void OnPercentPressed()
         {
             engine.Percent();
-
             Refresh();
         }
 
-
-
         // -------------------- BACKSPACE --------------------
-
 
         private void OnBackspacePressed()
         {
             engine.Backspace();
-
             Refresh();
         }
-
-
 
         // -------------------- DIRECT TEXTFIELD INPUT --------------------
 
-
-        private void OnDisplayValueChanged(
-            ChangeEvent<string> evt)
+        private void OnDisplayValueChanged(ChangeEvent<string> evt)
         {
-            bool accepted =
-                engine.TrySetCurrentInput(
-                    evt.newValue);
+            engine.TrySetCurrentInput(evt.newValue);
 
-            /*
-             * Refresh either way.
-             *
-             * If the input was valid, this normalizes it.
-             *
-             * If it was invalid, this restores the last valid
-             * calculator value.
-             */
-
+            // Normalize accepted input or restore the last valid value.
             Refresh();
         }
 
-
         // -------------------- KEYBOARD INPUT --------------------
 
-
-        private void OnKeyDown(
-            KeyDownEvent evt)
+        private void OnKeyDown(KeyDownEvent evt)
         {
-            /*
-             * Don't interfere with Ctrl+C, Ctrl+V, etc.
-             */
+            // Preserve shortcuts such as Ctrl+C and Ctrl+V.
+            if (evt.ctrlKey || evt.commandKey)
+                return;
 
-            if (evt.ctrlKey ||
-                evt.commandKey)
+            char character = evt.character;
+
+            if (character >= '0' && character <= '9')
             {
+                OnDigitPressed(character.ToString());
+                ConsumeKeyEvent(evt);
                 return;
             }
 
-
-            char character =
-                evt.character;
-
-
-
-            // -------------------- DIGITS --------------------
-
-
-            if (character >= '0' &&
-                character <= '9')
+            switch (character)
             {
-                engine.InputDigit(
-                    character.ToString());
+                case '.':
+                case ',':
+                    OnDecimalPressed();
+                    ConsumeKeyEvent(evt);
+                    return;
 
-                Refresh();
+                case '+':
+                    OnOperatorPressed(CalculatorOperation.Add);
+                    ConsumeKeyEvent(evt);
+                    return;
 
-                ConsumeKeyEvent(evt);
+                case '-':
+                    OnOperatorPressed(CalculatorOperation.Subtract);
+                    ConsumeKeyEvent(evt);
+                    return;
 
-                return;
+                case '*':
+                    OnOperatorPressed(CalculatorOperation.Multiply);
+                    ConsumeKeyEvent(evt);
+                    return;
+
+                case '/':
+                    OnOperatorPressed(CalculatorOperation.Divide);
+                    ConsumeKeyEvent(evt);
+                    return;
+
+                case '=':
+                    OnEqualsPressed();
+                    ConsumeKeyEvent(evt);
+                    return;
             }
 
-
-
-            //  -------------------- DECIMAL --------------------
-
-
-            if (character == '.' ||
-                character == ',')
+            switch (evt.keyCode)
             {
-                engine.InputDecimal();
+                case KeyCode.Return:
+                case KeyCode.KeypadEnter:
+                    OnEqualsPressed();
+                    ConsumeKeyEvent(evt);
+                    return;
 
-                Refresh();
+                case KeyCode.Escape:
+                    OnClearPressed();
+                    ConsumeKeyEvent(evt);
+                    return;
 
-                ConsumeKeyEvent(evt);
-
-                return;
-            }
-
-
-
-            // -------------------- ADD --------------------
-
-
-            if (character == '+')
-            {
-                engine.InputOperator(
-                    CalculatorOperation.Add);
-
-                Refresh();
-
-                ConsumeKeyEvent(evt);
-
-                return;
-            }
-
-
-
-            // -------------------- SUBTRACT --------------------
-
-
-            if (character == '-')
-            {
-                engine.InputOperator(
-                    CalculatorOperation.Subtract);
-
-                Refresh();
-
-                ConsumeKeyEvent(evt);
-
-                return;
-            }
-
-
-
-            // -------------------- MULTIPLY --------------------
-
-
-            if (character == '*')
-            {
-                engine.InputOperator(
-                    CalculatorOperation.Multiply);
-
-                Refresh();
-
-                ConsumeKeyEvent(evt);
-
-                return;
-            }
-
-
-
-            // -------------------- DIVIDE --------------------
-
-
-            if (character == '/')
-            {
-                engine.InputOperator(
-                    CalculatorOperation.Divide);
-
-                Refresh();
-
-                ConsumeKeyEvent(evt);
-
-                return;
-            }
-
-
-
-            // -------------------- EQUALS --------------------
-
-
-            if (character == '=')
-            {
-                engine.Equals();
-
-                Refresh();
-
-                ConsumeKeyEvent(evt);
-
-                return;
-            }
-
-            // -------------------- ENTER --------------------
-
-
-            if (evt.keyCode == KeyCode.Return ||
-                evt.keyCode == KeyCode.KeypadEnter)
-            {
-                engine.Equals();
-
-                Refresh();
-
-                ConsumeKeyEvent(evt);
-
-                return;
-            }
-
-
-            // -------------------- ESCAPE = CLEAR ALL --------------------
-
-            if (evt.keyCode == KeyCode.Escape)
-            {
-                engine.Clear();
-
-                Refresh();
-
-                ConsumeKeyEvent(evt);
-
-                return;
-            }
-
-
-            // -------------------- DELETE = CLEAR ENTRY --------------------
-            if (evt.keyCode == KeyCode.Delete)
-            {
-                engine.ClearEntry();
-
-                Refresh();
-
-                ConsumeKeyEvent(evt);
+                case KeyCode.Delete:
+                    OnClearEntryPressed();
+                    ConsumeKeyEvent(evt);
+                    return;
             }
         }
 
-
         // -------------------- KEY EVENT UTILITY --------------------
-        private static void ConsumeKeyEvent(
-            KeyDownEvent evt)
+
+        private static void ConsumeKeyEvent(KeyDownEvent evt)
         {
+            // Prevent the TextField from also processing calculator keys.
             evt.StopPropagation();
         }
 
-
         // -------------------- REFRESH --------------------
+
         private void Refresh()
         {
-            CalculatorViewState state =
-                viewBuilder.Build(engine);
-
+            CalculatorViewState state = viewBuilder.Build(engine);
             view.Render(state);
         }
     }

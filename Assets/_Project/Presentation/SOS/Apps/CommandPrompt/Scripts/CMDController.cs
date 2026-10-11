@@ -1,73 +1,74 @@
+using System;
+using Atlas.Presentation.SOS.Apps;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Atlas.Presentation.SOS.CommandPrompt
 {
-    [RequireComponent(typeof(UIDocument))]
-    public sealed class CMDController : MonoBehaviour
+    public sealed class CMDController : AppContentController
     {
         [Header("Commands")]
         [SerializeField] private CMDCommandLibrary commandLibrary;
 
-        private UIDocument uiDocument;
         private CMDBinder binder;
         private CMDView view;
         private CMDViewBuilder viewBuilder;
         private CMDEngine engine;
 
-        private void Start()
+        // -------------------- INITIALIZATION --------------------
+
+        protected override void OnInitialize()
         {
-            uiDocument = GetComponent<UIDocument>();
+            if (commandLibrary == null)
+            {
+                throw new InvalidOperationException(
+                    "CMDController requires a CMDCommandLibrary.");
+            }
 
-            binder = new CMDBinder(
-                uiDocument.rootVisualElement);
+            binder = new CMDBinder(InstanceRoot);
 
-            engine = new CMDEngine(
-                commandLibrary);
+            if (binder.CommandInput == null)
+            {
+                throw new InvalidOperationException(
+                    "Command Prompt UI is missing its command input.");
+            }
 
+            engine = new CMDEngine(commandLibrary);
             viewBuilder = new CMDViewBuilder();
-
-            view = new CMDView(
-                binder);
+            view = new CMDView(binder);
 
             RegisterCallbacks();
-
             InitializeTerminal();
         }
 
-        private void OnDestroy()
+        protected override void OnShutdown()
         {
-            UnregisterCallbacks();
+            // The base class unregisters callbacks before this runs.
+            binder = null;
+            view = null;
+            viewBuilder = null;
+            engine = null;
         }
 
-        // -------------------- INITIALIZATION --------------------
         private void InitializeTerminal()
         {
             Render();
-
             view.FocusInput();
         }
 
         // -------------------- CALLBACKS --------------------
+
         private void RegisterCallbacks()
         {
-            if (binder.CommandInput == null)
-                return;
-
-            binder.CommandInput.RegisterCallback<KeyDownEvent>(
-                OnInputKeyDown);
-        }
-
-        private void UnregisterCallbacks()
-        {
-            if (binder?.CommandInput == null)
-                return;
-
-            binder.CommandInput.UnregisterCallback<KeyDownEvent>(
-                OnInputKeyDown);
+            // Intercept Enter before the TextField handles it.
+            BindCallback<KeyDownEvent>(
+                binder.CommandInput,
+                OnInputKeyDown,
+                TrickleDown.TrickleDown);
         }
 
         // -------------------- INPUT --------------------
+
         private void OnInputKeyDown(KeyDownEvent evt)
         {
             if (evt.keyCode != KeyCode.Return &&
@@ -76,15 +77,14 @@ namespace Atlas.Presentation.SOS.CommandPrompt
                 return;
             }
 
-            SubmitCommand();
-
             evt.StopPropagation();
+
+            SubmitCommand();
         }
 
         private void SubmitCommand()
         {
-            string input =
-                binder.CommandInput.value;
+            string input = binder.CommandInput.value;
 
             if (string.IsNullOrWhiteSpace(input))
             {
@@ -102,11 +102,10 @@ namespace Atlas.Presentation.SOS.CommandPrompt
         }
 
         // -------------------- RENDER --------------------
+
         private void Render()
         {
-            CMDViewState state =
-                viewBuilder.Build(engine);
-
+            CMDViewState state = viewBuilder.Build(engine);
             view.Render(state);
         }
     }

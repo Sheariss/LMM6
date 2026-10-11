@@ -1,9 +1,9 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3"/>
-    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3"/>
-    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
     <Style src="project://database/Assets/_Project/Presentation/SOS/Window/Window.uss?fileID=7433441132597879392&amp;guid=00c704ca2f7eb4f469f7b2b139bf1194&amp;type=3#Window"/>
-    <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/Calculator/Calculator.uss?fileID=7433441132597879392&amp;guid=1ac2649b43a836748b0ca9b43c44c7e7&amp;type=3"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/Calculator/Calculator.uss?fileID=7433441132597879392&amp;guid=1ac2649b43a836748b0ca9b43c44c7e7&amp;type=3#Calculator"/>
     <ui:VisualElement name="WindowRoot" class="window" style="width: 352px;">
         <ui:VisualElement name="WindowHeader" class="flex-row header" style="opacity: 1;">
             <ui:VisualElement class="header-icon-area">
@@ -24,7 +24,7 @@
             </ui:GroupBox>
         </ui:VisualElement>
         <ui:VisualElement name="WindowContent" class="content">
-            <ui:VisualElement name="ContentRoot" class="fullscreen white-text calculator">
+            <ui:VisualElement name="CalculatorRoot" class="fullscreen white-text calculator">
                 <ui:GroupBox class="calculator-display-area">
                     <ui:Label text="" name="CalculatorExpression" class="spacing-reset calculator-expression"/>
                     <ui:TextField label="" placeholder-text="0" keyboard-type="NumbersAndPunctuation" auto-correction="false" picking-mode="Ignore" name="CalculatorDisplay" class="button-reset calculator-display"/>

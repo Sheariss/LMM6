@@ -1,6 +1,6 @@
 using System;
 
-namespace Atlas.Presentation.SOS.WebBrowser.News
+namespace Atlas.Presentation.SOS.News
 {
     public sealed class NewsSiteShellEngine
     {

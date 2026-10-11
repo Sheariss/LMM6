@@ -1,50 +1,25 @@
+using System;
+using Atlas.Presentation.SOS.Apps;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Atlas.Presentation.SOS.WebBrowser.News
+namespace Atlas.Presentation.SOS.News
 {
-    [RequireComponent(typeof(UIDocument))]
-    public sealed class NewsSiteShellController : MonoBehaviour
+    public sealed class NewsSiteShellController : AppContentController
     {
-        private UIDocument uiDocument;
         private NewsSiteShellBinder binder;
         private NewsSiteShellView view;
         private NewsSiteShellViewBuilder viewBuilder;
         private NewsSiteShellEngine engine;
 
-        private void Start()
+        protected override void OnInitialize()
         {
-            Initialize();
-        }
-
-        private void OnDestroy()
-        {
-            UnregisterCallbacks();
-        }
-
-        private void Initialize()
-        {
-            uiDocument = GetComponent<UIDocument>();
-
-            if (uiDocument == null)
-            {
-                Debug.LogError(
-                    $"{nameof(NewsSiteShellController)} requires a UIDocument.",
-                    this);
-
-                return;
-            }
-
-            binder = new NewsSiteShellBinder(
-                uiDocument.rootVisualElement);
+            binder = new NewsSiteShellBinder(InstanceRoot);
 
             if (!binder.IsValid)
             {
-                Debug.LogError(
-                    $"{nameof(NewsSiteShellController)} failed to bind the News Site UI.",
-                    this);
-
-                return;
+                throw new InvalidOperationException(
+                    $"{nameof(NewsSiteShellController)} failed to bind the News Site UI.");
             }
 
             engine = new NewsSiteShellEngine();
@@ -55,24 +30,43 @@ namespace Atlas.Presentation.SOS.WebBrowser.News
             Render();
         }
 
+        protected override void OnShutdown()
+        {
+            if (engine != null)
+            {
+                engine.StateChanged -= Render;
+                engine.SectionChanged -= OnSectionChanged;
+                engine.SearchRequested -= OnSearchRequested;
+                engine.SignInRequested -= OnSignInRequested;
+                engine.HomeRequested -= OnHomeRequested;
+            }
+
+            binder = null;
+            view = null;
+            viewBuilder = null;
+            engine = null;
+        }
+
         private void RegisterCallbacks()
         {
-            binder.LogoButton.clicked += OnLogoPressed;
-            binder.SearchButton.clicked += OnSearchPressed;
-            binder.SignInButton.clicked += OnSignInPressed;
+            BindClick(binder.LogoButton, OnLogoPressed);
+            BindClick(binder.SearchButton, OnSearchPressed);
+            BindClick(binder.SignInButton, OnSignInPressed);
 
-            binder.HomeButton.clicked += OnHomePressed;
-            binder.LocalButton.clicked += OnLocalPressed;
-            binder.PoliticsButton.clicked += OnPoliticsPressed;
-            binder.BusinessButton.clicked += OnBusinessPressed;
-            binder.TechnologyButton.clicked += OnTechnologyPressed;
-            binder.CultureButton.clicked += OnCulturePressed;
-            binder.WeatherButton.clicked += OnWeatherPressed;
+            BindClick(binder.HomeButton, OnHomePressed);
+            BindClick(binder.LocalButton, OnLocalPressed);
+            BindClick(binder.PoliticsButton, OnPoliticsPressed);
+            BindClick(binder.BusinessButton, OnBusinessPressed);
+            BindClick(binder.TechnologyButton, OnTechnologyPressed);
+            BindClick(binder.CultureButton, OnCulturePressed);
+            BindClick(binder.WeatherButton, OnWeatherPressed);
 
-            binder.SearchField.RegisterValueChangedCallback(
+            BindCallback<ChangeEvent<string>>(
+                binder.SearchField,
                 OnSearchValueChanged);
 
-            binder.SearchField.RegisterCallback<KeyDownEvent>(
+            BindCallback<KeyDownEvent>(
+                binder.SearchField,
                 OnSearchKeyDown);
 
             engine.StateChanged += Render;
@@ -82,46 +76,12 @@ namespace Atlas.Presentation.SOS.WebBrowser.News
             engine.HomeRequested += OnHomeRequested;
         }
 
-        private void UnregisterCallbacks()
-        {
-            if (binder != null)
-            {
-                binder.LogoButton.clicked -= OnLogoPressed;
-                binder.SearchButton.clicked -= OnSearchPressed;
-                binder.SignInButton.clicked -= OnSignInPressed;
-
-                binder.HomeButton.clicked -= OnHomePressed;
-                binder.LocalButton.clicked -= OnLocalPressed;
-                binder.PoliticsButton.clicked -= OnPoliticsPressed;
-                binder.BusinessButton.clicked -= OnBusinessPressed;
-                binder.TechnologyButton.clicked -= OnTechnologyPressed;
-                binder.CultureButton.clicked -= OnCulturePressed;
-                binder.WeatherButton.clicked -= OnWeatherPressed;
-
-                binder.SearchField.UnregisterValueChangedCallback(
-                    OnSearchValueChanged);
-
-                binder.SearchField.UnregisterCallback<KeyDownEvent>(
-                    OnSearchKeyDown);
-            }
-
-            if (engine != null)
-            {
-                engine.StateChanged -= Render;
-                engine.SectionChanged -= OnSectionChanged;
-                engine.SearchRequested -= OnSearchRequested;
-                engine.SignInRequested -= OnSignInRequested;
-                engine.HomeRequested -= OnHomeRequested;
-            }
-        }
-
         private void Render()
         {
             if (view == null || viewBuilder == null || engine == null)
                 return;
 
-            NewsSiteShellViewState state =
-                viewBuilder.Build(engine);
+            NewsSiteShellViewState state = viewBuilder.Build(engine);
 
             view.Render(state);
         }
@@ -185,10 +145,11 @@ namespace Atlas.Presentation.SOS.WebBrowser.News
         {
             if (evt.keyCode != KeyCode.Return &&
                 evt.keyCode != KeyCode.KeypadEnter)
+            {
                 return;
+            }
 
             engine.Search(binder.SearchField.value);
-
             evt.StopPropagation();
         }
 

@@ -9,15 +9,18 @@ namespace Atlas.Presentation.SOS.Messages
 
         private readonly VisualTreeAsset incomingMessageTemplate;
         private readonly VisualTreeAsset outgoingMessageTemplate;
+        private readonly VisualTreeAsset typingIndicatorTemplate;
 
         public MessagesViewBuilder(
             MessagesView view,
             VisualTreeAsset incomingMessageTemplate,
-            VisualTreeAsset outgoingMessageTemplate)
+            VisualTreeAsset outgoingMessageTemplate,
+            VisualTreeAsset typingIndicatorTemplate)
         {
             this.view = view;
             this.incomingMessageTemplate = incomingMessageTemplate;
             this.outgoingMessageTemplate = outgoingMessageTemplate;
+            this.typingIndicatorTemplate = typingIndicatorTemplate;
         }
 
         public void BuildConversationList(

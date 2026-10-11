@@ -1,118 +1,83 @@
+using Atlas.Presentation.SOS.Apps;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Atlas.Presentation.SOS.WebBrowser
 {
-    [RequireComponent(typeof(UIDocument))]
-    public sealed class WebBrowserController : MonoBehaviour
+    public sealed class WebBrowserController : AppContentController
     {
-        private UIDocument uiDocument;
-
         private WebBrowserBinder binder;
         private WebBrowserView view;
         private WebBrowserViewBuilder viewBuilder;
         private WebBrowserEngine engine;
 
-        private void Start()
+        protected override void OnInitialize()
         {
-            uiDocument = GetComponent<UIDocument>();
-
-            binder = new WebBrowserBinder(
-                uiDocument.rootVisualElement);
+            binder = new WebBrowserBinder(InstanceRoot);
 
             engine = new WebBrowserEngine();
             view = new WebBrowserView(binder);
             viewBuilder = new WebBrowserViewBuilder();
 
             RegisterCallbacks();
-
             Render();
         }
 
-        private void OnDestroy()
+        protected override void OnShutdown()
         {
-            UnregisterCallbacks();
+            // The base class unregisters UI callbacks before this runs.
+            binder = null;
+            view = null;
+            viewBuilder = null;
+            engine = null;
         }
 
-        // -------------------- CALLBACKS --------------------
         private void RegisterCallbacks()
         {
             if (binder.BrowserBackButton != null)
-                binder.BrowserBackButton.clicked += OnBackPressed;
+                BindClick(binder.BrowserBackButton, OnBackPressed);
 
             if (binder.BrowserForwardButton != null)
-                binder.BrowserForwardButton.clicked += OnForwardPressed;
+                BindClick(binder.BrowserForwardButton, OnForwardPressed);
 
             if (binder.BrowserReloadButton != null)
-                binder.BrowserReloadButton.clicked += OnReloadPressed;
+                BindClick(binder.BrowserReloadButton, OnReloadPressed);
 
             if (binder.BrowserBookmarkButton != null)
-                binder.BrowserBookmarkButton.clicked += OnBookmarkPressed;
+                BindClick(binder.BrowserBookmarkButton, OnBookmarkPressed);
 
             if (binder.BrowserAddressField != null)
-                binder.BrowserAddressField.RegisterCallback<KeyDownEvent>(
+            {
+                BindCallback<KeyDownEvent>(
+                    binder.BrowserAddressField,
                     OnAddressFieldKeyDown);
+            }
 
             if (binder.BookmarkAshfordHerald != null)
-                binder.BookmarkAshfordHerald.clicked += OnAshfordHeraldPressed;
+                BindClick(binder.BookmarkAshfordHerald, OnAshfordHeraldPressed);
 
             if (binder.BookmarkAshfordPD != null)
-                binder.BookmarkAshfordPD.clicked += OnAshfordPDPressed;
+                BindClick(binder.BookmarkAshfordPD, OnAshfordPDPressed);
 
             if (binder.BookmarkTown != null)
-                binder.BookmarkTown.clicked += OnTownPressed;
+                BindClick(binder.BookmarkTown, OnTownPressed);
         }
 
-        private void UnregisterCallbacks()
-        {
-            if (binder == null)
-                return;
-
-            if (binder.BrowserBackButton != null)
-                binder.BrowserBackButton.clicked -= OnBackPressed;
-
-            if (binder.BrowserForwardButton != null)
-                binder.BrowserForwardButton.clicked -= OnForwardPressed;
-
-            if (binder.BrowserReloadButton != null)
-                binder.BrowserReloadButton.clicked -= OnReloadPressed;
-
-            if (binder.BrowserBookmarkButton != null)
-                binder.BrowserBookmarkButton.clicked -= OnBookmarkPressed;
-
-            if (binder.BrowserAddressField != null)
-                binder.BrowserAddressField.UnregisterCallback<KeyDownEvent>(
-                    OnAddressFieldKeyDown);
-
-            if (binder.BookmarkAshfordHerald != null)
-                binder.BookmarkAshfordHerald.clicked -= OnAshfordHeraldPressed;
-
-            if (binder.BookmarkAshfordPD != null)
-                binder.BookmarkAshfordPD.clicked -= OnAshfordPDPressed;
-
-            if (binder.BookmarkTown != null)
-                binder.BookmarkTown.clicked -= OnTownPressed;
-        }
-
-        // -------------------- NAVIGATION --------------------
         private void OnBackPressed()
         {
             engine.GoBack();
-
             LoadCurrentPage();
         }
 
         private void OnForwardPressed()
         {
             engine.GoForward();
-
             LoadCurrentPage();
         }
 
         private void OnReloadPressed()
         {
             engine.Reload();
-
             LoadCurrentPage();
         }
 
@@ -120,25 +85,23 @@ namespace Atlas.Presentation.SOS.WebBrowser
         {
             if (evt.keyCode != KeyCode.Return &&
                 evt.keyCode != KeyCode.KeypadEnter)
+            {
                 return;
+            }
 
             Navigate(binder.BrowserAddressField.value);
-
             evt.StopPropagation();
         }
 
         private void Navigate(string address)
         {
             engine.Navigate(address);
-
             LoadCurrentPage();
         }
 
-        // -------------------- BOOKMARK --------------------
         private void OnBookmarkPressed()
         {
             engine.ToggleBookmark();
-
             Render();
         }
 
@@ -157,7 +120,6 @@ namespace Atlas.Presentation.SOS.WebBrowser
             Navigate("ashfordmn.gov");
         }
 
-        // -------------------- PAGE --------------------
         private void LoadCurrentPage()
         {
             view.ClearPage();
@@ -171,7 +133,6 @@ namespace Atlas.Presentation.SOS.WebBrowser
             }
 
             VisualElement page = CreatePlaceholderPage(address);
-
             view.SetPageContent(page);
 
             Render();
@@ -180,11 +141,9 @@ namespace Atlas.Presentation.SOS.WebBrowser
         private VisualElement CreatePlaceholderPage(string address)
         {
             VisualElement root = new VisualElement();
-
             root.AddToClassList("browser-placeholder-page");
 
             Label title = new Label(address);
-
             title.AddToClassList("browser-placeholder-title");
 
             Label description = new Label(
@@ -199,12 +158,9 @@ namespace Atlas.Presentation.SOS.WebBrowser
             return root;
         }
 
-        // -------------------- RENDER --------------------
         private void Render()
         {
-            WebBrowserViewState state =
-                viewBuilder.Build(engine);
-
+            WebBrowserViewState state = viewBuilder.Build(engine);
             view.Render(state);
         }
     }

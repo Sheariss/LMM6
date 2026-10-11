@@ -1,300 +1,239 @@
+using System;
+using Atlas.Presentation.SOS.Apps;
 using Atlas.SOS.FileSystem;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Atlas.Presentation.SOS.FileExplorer
 {
-    [RequireComponent(typeof(UIDocument))]
-    public sealed class FileExplorerController : MonoBehaviour
+    public sealed class FileExplorerController : AppContentController
     {
         [Header("File System")]
-        [SerializeField]
-        private FileSystemLibrary fileSystemLibrary;
+        [SerializeField] private FileSystemLibrary fileSystemLibrary;
 
-        [SerializeField]
-        private string userId = "guest";
-
-        private UIDocument uiDocument;
+        [SerializeField] private string userId = "guest";
 
         private FileExplorerBinder binder;
         private FileExplorerView view;
         private FileExplorerViewBuilder viewBuilder;
         private FileExplorerEngine engine;
 
-        private void Start()
+        // -------------------- INITIALIZATION --------------------
+
+        protected override void OnInitialize()
         {
-            uiDocument =
-                GetComponentInParent<UIDocument>();
-
-            if (uiDocument == null)
+            if (fileSystemLibrary == null)
             {
-                Debug.LogError(
-                    $"{nameof(FileExplorerController)} could not find a UIDocument.");
-
-                return;
+                throw new InvalidOperationException(
+                    "FileExplorerController requires a FileSystemLibrary.");
             }
 
-            binder =
-                new FileExplorerBinder(
-                    uiDocument.rootVisualElement);
+            binder = new FileExplorerBinder(InstanceRoot);
 
-            engine =
-                new FileExplorerEngine(
-                    fileSystemLibrary,
-                    userId);
+            if (!binder.IsValid)
+            {
+                throw new InvalidOperationException(
+                    "File Explorer UI is missing required elements.");
+            }
 
-            view =
-                new FileExplorerView(
-                    binder);
+            engine = new FileExplorerEngine(
+                fileSystemLibrary,
+                userId);
 
-            viewBuilder =
-                new FileExplorerViewBuilder();
+            view = new FileExplorerView(binder);
+            viewBuilder = new FileExplorerViewBuilder();
 
             RegisterCallbacks();
-
             Render();
         }
 
-        private void OnDestroy()
+        protected override void OnShutdown()
         {
-            UnregisterCallbacks();
+            // The base class removes callbacks registered through
+            // BindClick and BindCallback before this method runs.
+            binder = null;
+            view = null;
+            viewBuilder = null;
+            engine = null;
         }
 
         // -------------------- CALLBACKS --------------------
+
         private void RegisterCallbacks()
         {
-            binder.NewTabButton.clicked += OnNewTabPressed;
+            BindClick(binder.NewTabButton, OnNewTabPressed);
 
-            binder.BackButton.clicked += OnBackPressed;
-            binder.ForwardButton.clicked += OnForwardPressed;
-            binder.UpButton.clicked += OnUpPressed;
+            BindClick(binder.BackButton, OnBackPressed);
+            BindClick(binder.ForwardButton, OnForwardPressed);
+            BindClick(binder.UpButton, OnUpPressed);
 
-            binder.SearchField.RegisterValueChangedCallback(
+            BindCallback<ChangeEvent<string>>(
+                binder.SearchField,
                 OnSearchChanged);
 
-            binder.NewButton.clicked += OnNewPressed;
-            binder.SortButton.clicked += OnSortPressed;
-            binder.ViewButton.clicked += OnViewPressed;
-            binder.FilterButton.clicked += OnFilterPressed;
-            binder.RefreshButton.clicked += OnRefreshPressed;
+            BindClick(binder.NewButton, OnNewPressed);
+            BindClick(binder.SortButton, OnSortPressed);
+            BindClick(binder.ViewButton, OnViewPressed);
+            BindClick(binder.FilterButton, OnFilterPressed);
+            BindClick(binder.RefreshButton, OnRefreshPressed);
 
-            binder.HomeButton.clicked += OnHomePressed;
-            binder.RecentButton.clicked += OnRecentPressed;
-            binder.StarredButton.clicked += OnStarredPressed;
+            BindClick(binder.HomeButton, OnHomePressed);
+            BindClick(binder.RecentButton, OnRecentPressed);
+            BindClick(binder.StarredButton, OnStarredPressed);
 
-            binder.DesktopButton.clicked += OnDesktopPressed;
-            binder.DocumentsButton.clicked += OnDocumentsPressed;
-            binder.PicturesButton.clicked += OnPicturesPressed;
-            binder.DownloadsButton.clicked += OnDownloadsPressed;
+            BindClick(binder.DesktopButton, OnDesktopPressed);
+            BindClick(binder.DocumentsButton, OnDocumentsPressed);
+            BindClick(binder.PicturesButton, OnPicturesPressed);
+            BindClick(binder.DownloadsButton, OnDownloadsPressed);
 
-            binder.ContentScrollView.RegisterCallback<ClickEvent>(OnContentBackgroundPressed);
-        }
-
-        private void UnregisterCallbacks()
-        {
-            if (binder == null || !binder.IsValid)
-            {
-                return;
-            }
-
-            binder.NewTabButton.clicked -= OnNewTabPressed;
-
-            binder.BackButton.clicked -= OnBackPressed;
-            binder.ForwardButton.clicked -= OnForwardPressed;
-            binder.UpButton.clicked -= OnUpPressed;
-
-            binder.SearchField.UnregisterValueChangedCallback(OnSearchChanged);
-
-            binder.NewButton.clicked -= OnNewPressed;
-            binder.SortButton.clicked -= OnSortPressed;
-            binder.ViewButton.clicked -= OnViewPressed;
-            binder.FilterButton.clicked -= OnFilterPressed;
-            binder.RefreshButton.clicked -= OnRefreshPressed;
-
-            binder.HomeButton.clicked -= OnHomePressed;
-            binder.RecentButton.clicked -= OnRecentPressed;
-            binder.StarredButton.clicked -= OnStarredPressed;
-
-            binder.DesktopButton.clicked -= OnDesktopPressed;
-            binder.DocumentsButton.clicked -= OnDocumentsPressed;
-            binder.PicturesButton.clicked -= OnPicturesPressed;
-            binder.DownloadsButton.clicked -= OnDownloadsPressed;
-
-            binder.ContentScrollView.UnregisterCallback<ClickEvent>(OnContentBackgroundPressed);
+            BindCallback<ClickEvent>(
+                binder.ContentScrollView,
+                OnContentBackgroundPressed);
         }
 
         // -------------------- TABS --------------------
+
         private void OnNewTabPressed()
         {
             engine.OpenTab();
-
             Render();
         }
 
-        private void OnTabPressed(
-            int tabId)
+        private void OnTabPressed(int tabId)
         {
-            engine.SelectTab(
-                tabId);
-
+            engine.SelectTab(tabId);
             Render();
         }
 
-        private void OnTabClosePressed(
-            int tabId)
+        private void OnTabClosePressed(int tabId)
         {
-            engine.CloseTab(
-                tabId);
-
+            engine.CloseTab(tabId);
             Render();
         }
 
         // -------------------- NAVIGATION --------------------
+
         private void OnBackPressed()
         {
             engine.GoBack();
-
             Render();
         }
 
         private void OnForwardPressed()
         {
             engine.GoForward();
-
             Render();
         }
 
         private void OnUpPressed()
         {
             engine.GoUp();
-
             Render();
         }
 
-        private void OnBreadcrumbPressed(
-            string path)
+        private void OnBreadcrumbPressed(string path)
         {
-            engine.Navigate(
-                path);
-
+            engine.Navigate(path);
             Render();
         }
 
         // -------------------- SEARCH --------------------
-        private void OnSearchChanged(
-            ChangeEvent<string> evt)
-        {
-            engine.SetSearchQuery(
-                evt.newValue);
 
+        private void OnSearchChanged(ChangeEvent<string> evt)
+        {
+            engine.SetSearchQuery(evt.newValue);
             Render();
         }
 
         // -------------------- SIDEBAR --------------------
+
         private void OnHomePressed()
         {
-            NavigateTo(
-                FileExplorerLocation.Home);
+            NavigateTo(FileExplorerLocation.Home);
         }
 
         private void OnDesktopPressed()
         {
-            NavigateTo(
-                FileExplorerLocation.Desktop);
+            NavigateTo(FileExplorerLocation.Desktop);
         }
 
         private void OnDocumentsPressed()
         {
-            NavigateTo(
-                FileExplorerLocation.Documents);
+            NavigateTo(FileExplorerLocation.Documents);
         }
 
         private void OnPicturesPressed()
         {
-            NavigateTo(
-                FileExplorerLocation.Pictures);
+            NavigateTo(FileExplorerLocation.Pictures);
         }
 
         private void OnDownloadsPressed()
         {
-            NavigateTo(
-                FileExplorerLocation.Downloads);
+            NavigateTo(FileExplorerLocation.Downloads);
         }
 
-        private void NavigateTo(
-            FileExplorerLocation location)
+        private void NavigateTo(FileExplorerLocation location)
         {
-            engine.NavigateToLocation(
-                location);
-
+            engine.NavigateToLocation(location);
             Render();
         }
 
         private void OnRecentPressed()
         {
-            Debug.Log(
-                "Recent view not implemented yet.");
+            Debug.Log("Recent view not implemented yet.");
         }
 
         private void OnStarredPressed()
         {
-            Debug.Log(
-                "Starred view not implemented yet.");
+            Debug.Log("Starred view not implemented yet.");
         }
 
         // -------------------- COMMAND BAR --------------------
+
         private void OnNewPressed()
         {
-            Debug.Log(
-                "New item menu not implemented yet.");
+            Debug.Log("New item menu not implemented yet.");
         }
 
         private void OnSortPressed()
         {
             CycleSortMode();
-
             Render();
         }
 
         private void CycleSortMode()
         {
-            FileExplorerTab tab =
-                engine.ActiveTab;
+            FileExplorerTab tab = engine.ActiveTab;
 
             if (tab == null)
                 return;
 
-            FileExplorerSortMode next =
-                tab.SortMode switch
-                {
-                    FileExplorerSortMode.Name =>
-                        FileExplorerSortMode.DateModified,
+            FileExplorerSortMode next = tab.SortMode switch
+            {
+                FileExplorerSortMode.Name =>
+                    FileExplorerSortMode.DateModified,
 
-                    FileExplorerSortMode.DateModified =>
-                        FileExplorerSortMode.Type,
+                FileExplorerSortMode.DateModified =>
+                    FileExplorerSortMode.Type,
 
-                    FileExplorerSortMode.Type =>
-                        FileExplorerSortMode.Size,
+                FileExplorerSortMode.Type =>
+                    FileExplorerSortMode.Size,
 
-                    _ =>
-                        FileExplorerSortMode.Name
-                };
+                _ => FileExplorerSortMode.Name
+            };
 
-            engine.SetSortMode(
-                next);
+            engine.SetSortMode(next);
         }
 
         private void OnViewPressed()
         {
             engine.CycleViewMode();
-
             Render();
         }
 
         private void OnFilterPressed()
         {
-            Debug.Log(
-                "Filter menu not implemented yet.");
+            Debug.Log("Filter menu not implemented yet.");
         }
 
         private void OnRefreshPressed()
@@ -303,6 +242,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
         }
 
         // -------------------- ITEMS --------------------
+
         private void OnItemPressed(
             FileExplorerItem item,
             bool additive)
@@ -311,70 +251,49 @@ namespace Atlas.Presentation.SOS.FileExplorer
                 return;
 
             if (additive)
-            {
-                engine.ToggleItemSelection(
-                    item.Id);
-            }
+                engine.ToggleItemSelection(item.Id);
             else
-            {
-                engine.SelectItem(
-                    item.Id);
-            }
+                engine.SelectItem(item.Id);
 
             Render();
         }
 
-        private void OnItemOpened(
-            FileExplorerItem item)
+        private void OnItemOpened(FileExplorerItem item)
         {
             if (item == null)
                 return;
 
             if (item.IsFolder)
             {
-                engine.OpenItem(
-                    item);
-
+                engine.OpenItem(item);
                 Render();
-
                 return;
             }
 
-            OpenFile(
-                item);
+            OpenFile(item);
         }
 
-        private void OpenFile(
-            FileExplorerItem item)
+        private void OpenFile(FileExplorerItem item)
         {
-            Debug.Log(
-                $"Open file: {item.Path}");
+            Debug.Log($"Open file: {item.Path}");
 
-            // Later:
-            //
-            // DesktopManager.Instance.OpenFile(item);
-            //
-            // or route using item.FileDefinition.FileType /
-            // item.FileDefinition.ContentId.
+            // Route file opening through AppController later.
         }
 
-        private void OnContentBackgroundPressed(
-            ClickEvent evt)
+        private void OnContentBackgroundPressed(ClickEvent evt)
         {
-            if (evt.target !=
-                    binder.ContentScrollView &&
-                evt.target !=
-                    binder.ContentContainer)
+            if (evt.target != binder.ContentScrollView &&
+                evt.target != binder.ContentContainer)
             {
                 return;
             }
 
             engine.ClearSelection();
-
             Render();
         }
 
         // -------------------- RENDER --------------------
+
         private void Render()
         {
             if (engine == null ||
@@ -385,17 +304,14 @@ namespace Atlas.Presentation.SOS.FileExplorer
             }
 
             FileExplorerViewState state =
-                viewBuilder.BuildState(
-                    engine);
+                viewBuilder.BuildState(engine);
 
-            view.Render(
-                state);
+            view.Render(state);
 
-            VisualElement tabs =
-                viewBuilder.BuildTabs(
-                    engine,
-                    OnTabPressed,
-                    OnTabClosePressed);
+            VisualElement tabs = viewBuilder.BuildTabs(
+                engine,
+                OnTabPressed,
+                OnTabClosePressed);
 
             VisualElement breadcrumbs =
                 viewBuilder.BuildBreadcrumbs(
@@ -408,14 +324,9 @@ namespace Atlas.Presentation.SOS.FileExplorer
                     OnItemPressed,
                     OnItemOpened);
 
-            view.SetTabs(
-                tabs);
-
-            view.SetBreadcrumbs(
-                breadcrumbs);
-
-            view.SetContent(
-                directory);
+            view.SetTabs(tabs);
+            view.SetBreadcrumbs(breadcrumbs);
+            view.SetContent(directory);
         }
     }
 }

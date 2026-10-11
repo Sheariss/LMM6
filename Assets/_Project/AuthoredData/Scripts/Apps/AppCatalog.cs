@@ -1,3 +1,4 @@
+using Atlas.Presentation.SOS.Apps;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace Atlas.SOS.Apps
 
         [Header("Window")]
         [SerializeField] private VisualTreeAsset appUXML;
+        [SerializeField] private AppContentController runtimePrefab;
         [SerializeField] private bool isResizable = true;
         [SerializeField] private bool allowMultipleInstances;
 
@@ -37,6 +39,8 @@ namespace Atlas.SOS.Apps
         public Sprite AppIcon96 => appIcon96;
 
         public VisualTreeAsset AppUXML => appUXML;
+        public AppContentController RuntimePrefab => runtimePrefab;
+
         public bool IsResizable => isResizable;
         public bool AllowMultipleInstances => allowMultipleInstances;
         public Vector2 DefaultWindowSize => defaultWindowSize;

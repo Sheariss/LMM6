@@ -18,6 +18,7 @@ MonoBehaviour:
     appIcon48: {fileID: 21300000, guid: a66b174f4f44938489c5d2571412278d, type: 3}
     appIcon96: {fileID: 21300000, guid: 20a76f0d7c016054cb6b10644201f821, type: 3}
     appUXML: {fileID: 9197481963319205126, guid: 9e1e3912852bdb140ab857cfdd97c1ec, type: 3}
+    runtimePrefab: {fileID: 7699226692811565324, guid: c0bf1900bacbcd24db630171d27f6c69, type: 3}
     isResizable: 1
     allowMultipleInstances: 1
     defaultWindowSize: {x: 1200, y: 850}
@@ -29,6 +30,7 @@ MonoBehaviour:
     appIcon48: {fileID: 21300000, guid: 8181b436624566b419e3f18d75e710a2, type: 3}
     appIcon96: {fileID: 21300000, guid: 9fc980fe4872d8d409c619573a6fd67f, type: 3}
     appUXML: {fileID: 9197481963319205126, guid: 37ee9bded0bda734a8ed102cf2845e1e, type: 3}
+    runtimePrefab: {fileID: 0}
     isResizable: 0
     allowMultipleInstances: 0
     defaultWindowSize: {x: 420, y: 600}
@@ -40,10 +42,11 @@ MonoBehaviour:
     appIcon48: {fileID: 21300000, guid: f926d9de82c4ba949b10e86316bf62d3, type: 3}
     appIcon96: {fileID: 21300000, guid: 83dbda71ba9d93e4b8f40f3738715ac4, type: 3}
     appUXML: {fileID: 9197481963319205126, guid: d5a229084ddf61942bba38c4d7f16b52, type: 3}
+    runtimePrefab: {fileID: 48429773608072884, guid: 4a619ccf939bc2f40958747846fbfde9, type: 3}
     isResizable: 0
     allowMultipleInstances: 1
-    defaultWindowSize: {x: 320, y: 500}
-    minimumWindowSize: {x: 320, y: 500}
+    defaultWindowSize: {x: 320, y: 528}
+    minimumWindowSize: {x: 320, y: 528}
     showDesktopShortcut: 1
     pinToTaskbar: 1
   - appID: cmd
@@ -51,6 +54,7 @@ MonoBehaviour:
     appIcon48: {fileID: 21300000, guid: bb58a9db844674b489cbc94d8013f57a, type: 3}
     appIcon96: {fileID: 21300000, guid: b31f26589cd61574e9646cc479b16c5b, type: 3}
     appUXML: {fileID: 9197481963319205126, guid: ee01e11e846d7f043905845eb0592176, type: 3}
+    runtimePrefab: {fileID: 7280307590318199523, guid: 850823c45123120499a14f4cb1009842, type: 3}
     isResizable: 1
     allowMultipleInstances: 1
     defaultWindowSize: {x: 800, y: 500}
@@ -62,6 +66,7 @@ MonoBehaviour:
     appIcon48: {fileID: 6960912526294278977, guid: 04a6b6755280ae4499980ec1518e0fc6, type: 3}
     appIcon96: {fileID: -5128267248234359663, guid: 232094fca7c75cd4982d9f52f312031f, type: 3}
     appUXML: {fileID: 9197481963319205126, guid: d32dcc097f035c94b9cc2b71c836844b, type: 3}
+    runtimePrefab: {fileID: 1597824060282103959, guid: 53aba89aa0efd634a968f6f359f397dc, type: 3}
     isResizable: 1
     allowMultipleInstances: 0
     defaultWindowSize: {x: 800, y: 600}
@@ -73,6 +78,7 @@ MonoBehaviour:
     appIcon48: {fileID: 6622987487043434500, guid: 52ab2f2743e198c4caf86640c0fb927e, type: 3}
     appIcon96: {fileID: 8657413132315104106, guid: 03fc838232f60784892a2a0ceb30c384, type: 3}
     appUXML: {fileID: 0}
+    runtimePrefab: {fileID: 0}
     isResizable: 1
     allowMultipleInstances: 0
     defaultWindowSize: {x: 1000, y: 700}
@@ -84,6 +90,7 @@ MonoBehaviour:
     appIcon48: {fileID: 6630927261847639050, guid: acb22d3ad13de9e45aeba62f6826c1f8, type: 3}
     appIcon96: {fileID: -2265978824201132125, guid: 1a2f6b2d272a23e448ce04e78a170c14, type: 3}
     appUXML: {fileID: 9197481963319205126, guid: 2142d17954aaca54c99768c68fb17706, type: 3}
+    runtimePrefab: {fileID: 460072022803693853, guid: 47427e0a73469ed4b9eedb8b84744eb6, type: 3}
     isResizable: 1
     allowMultipleInstances: 0
     defaultWindowSize: {x: 800, y: 500}
@@ -95,6 +102,7 @@ MonoBehaviour:
     appIcon48: {fileID: -8554027319003177030, guid: 93a31dccacc238348940aef3384d4555, type: 3}
     appIcon96: {fileID: 7775220601029501873, guid: acaa9fc1699c87e409bfcd985088cd6c, type: 3}
     appUXML: {fileID: 9197481963319205126, guid: a6d3332f4413ac4409dbdb9c528fb549, type: 3}
+    runtimePrefab: {fileID: 0}
     isResizable: 1
     allowMultipleInstances: 0
     defaultWindowSize: {x: 800, y: 500}
@@ -106,6 +114,7 @@ MonoBehaviour:
     appIcon48: {fileID: -8692082910617970706, guid: 8cb0174e302776b439aa815a8eb87bc5, type: 3}
     appIcon96: {fileID: -3927905213550672675, guid: 9f529cfb89eb7cb47b7aa7d7ca5a6495, type: 3}
     appUXML: {fileID: 9197481963319205126, guid: 9a31d5a082b52e741ba83e0a6fb05ccb, type: 3}
+    runtimePrefab: {fileID: 0}
     isResizable: 1
     allowMultipleInstances: 1
     defaultWindowSize: {x: 1100, y: 750}

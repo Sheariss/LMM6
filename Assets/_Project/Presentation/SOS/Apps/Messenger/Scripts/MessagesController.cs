@@ -1,10 +1,11 @@
+using System;
+using Atlas.Presentation.SOS.Apps;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Atlas.Presentation.SOS.Messages
 {
-    [RequireComponent(typeof(UIDocument))]
-    public sealed class MessagesController : MonoBehaviour
+    public sealed class MessagesController : AppContentController
     {
         [Header("Templates")]
         [SerializeField]
@@ -13,7 +14,8 @@ namespace Atlas.Presentation.SOS.Messages
         [SerializeField]
         private VisualTreeAsset outgoingMessageTemplate;
 
-        private UIDocument document;
+        [SerializeField]
+        private VisualTreeAsset typingIndicatorTemplate;
 
         private MessagesBinder binder;
         private MessagesView view;
@@ -22,70 +24,35 @@ namespace Atlas.Presentation.SOS.Messages
 
         private MessagesManager messagesManager;
 
-        private void Awake()
+        protected override void OnInitialize()
         {
-            document = GetComponent<UIDocument>();
-
             messagesManager = MessagesManager.Instance;
 
             if (messagesManager == null)
             {
-                Debug.LogError(
+                throw new InvalidOperationException(
                     "[MessagesController] MessagesManager was not found.");
-
-                enabled = false;
-                return;
             }
 
-            binder = new MessagesBinder(
-                document.rootVisualElement);
-
+            binder = new MessagesBinder(InstanceRoot);
             view = new MessagesView(binder);
 
             builder = new MessagesViewBuilder(
                 view,
                 incomingMessageTemplate,
-                outgoingMessageTemplate);
+                outgoingMessageTemplate,
+                typingIndicatorTemplate);
 
-            engine = new MessagesEngine(
-                messagesManager);
-        }
+            engine = new MessagesEngine(messagesManager);
 
-        private void OnEnable()
-        {
-            if (binder == null)
-                return;
-
-            binder.SendButton.clicked += OnSendPressed;
-
-            binder.SearchField.RegisterValueChangedCallback(
-                OnSearchChanged);
-
-            binder.InputField.RegisterCallback<KeyDownEvent>(
-                OnInputKeyDown);
-
-            messagesManager.ConversationUpdated +=
-                OnConversationUpdated;
-
-            messagesManager.MessageReceived +=
-                OnMessageReceived;
+            RegisterCallbacks();
 
             Refresh();
         }
 
-        private void OnDisable()
+        protected override void OnShutdown()
         {
-            if (binder == null)
-                return;
-
-            binder.SendButton.clicked -= OnSendPressed;
-
-            binder.SearchField.UnregisterValueChangedCallback(
-                OnSearchChanged);
-
-            binder.InputField.UnregisterCallback<KeyDownEvent>(
-                OnInputKeyDown);
-
+            // The base class unregisters UI callbacks before this runs.
             if (messagesManager != null)
             {
                 messagesManager.ConversationUpdated -=
@@ -94,6 +61,34 @@ namespace Atlas.Presentation.SOS.Messages
                 messagesManager.MessageReceived -=
                     OnMessageReceived;
             }
+
+            binder = null;
+            view = null;
+            builder = null;
+            engine = null;
+            messagesManager = null;
+        }
+
+        private void RegisterCallbacks()
+        {
+            BindClick(
+                binder.SendButton,
+                OnSendPressed);
+
+            BindCallback<ChangeEvent<string>>(
+                binder.SearchField,
+                OnSearchChanged);
+
+            BindCallback<KeyDownEvent>(
+                binder.InputField,
+                OnInputKeyDown,
+                TrickleDown.TrickleDown);
+
+            messagesManager.ConversationUpdated +=
+                OnConversationUpdated;
+
+            messagesManager.MessageReceived +=
+                OnMessageReceived;
         }
 
         private void Refresh()
@@ -165,8 +160,7 @@ namespace Atlas.Presentation.SOS.Messages
                 OnConversationSelected);
         }
 
-        private void OnSearchChanged(
-            ChangeEvent<string> evt)
+        private void OnSearchChanged(ChangeEvent<string> evt)
         {
             builder.BuildConversationList(
                 engine.SearchConversations(evt.newValue),
@@ -182,8 +176,7 @@ namespace Atlas.Presentation.SOS.Messages
 
             if (engine.ActiveConversation == conversation)
             {
-                builder.BuildConversation(
-                    conversation);
+                builder.BuildConversation(conversation);
             }
         }
 
@@ -197,8 +190,7 @@ namespace Atlas.Presentation.SOS.Messages
             messagesManager.MarkConversationRead(
                 conversation.Id);
 
-            builder.BuildConversation(
-                conversation);
+            builder.BuildConversation(conversation);
         }
     }
 }

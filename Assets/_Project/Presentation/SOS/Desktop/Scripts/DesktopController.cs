@@ -1,11 +1,13 @@
-using System;
-using System.Collections.Generic;
+using Atlas.Presentation.SOS.Apps;
+using Atlas.Presentation.SOS.Taskbar;
+using Atlas.Presentation.SOS.Windows;
 using Atlas.SOS.Apps;
 using Atlas.SOS.Authentication;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static Atlas.AuthoredData.Users.UserLibrarySO;
-using Atlas.Presentation.SOS.Taskbar;
 
 namespace Atlas.Presentation.SOS.Desktop
 {
@@ -14,6 +16,9 @@ namespace Atlas.Presentation.SOS.Desktop
         [Header("Desktop")]
         private UIDocument desktopDocument;
         [SerializeField] private AppCatalog appCatalog;
+
+        [Header("App Launcher")]
+        [SerializeField] private AppController appController;
 
         [Header("Shortcuts")]
         [SerializeField] private VisualTreeAsset shortcutTemplate;
@@ -60,8 +65,6 @@ namespace Atlas.Presentation.SOS.Desktop
             ValidateUser(ActiveUser, out _) &&
             IsDocumentCurrent();
 
-        public event Action<string> AppLaunchRequested;
-
         private void OnEnable()
         {
             // Bind and hide the shell. Do not populate it yet.
@@ -92,11 +95,11 @@ namespace Atlas.Presentation.SOS.Desktop
 
             if (appCatalog == null ||
                 shortcutTemplate == null ||
-                pinnedButtonTemplate == null)
+                pinnedButtonTemplate == null ||
+                appController == null ||
+                !appController.isActiveAndEnabled)
             {
-                error = "The app catalog, shortcut template, " +
-                        "or pinned button template is missing.";
-
+                error = "The app catalog, UI templates, or active AppController is missing.";
                 return false;
             }
 
@@ -108,6 +111,14 @@ namespace Atlas.Presentation.SOS.Desktop
 
             try
             {
+                appController.Initialize(
+                    binder.WindowLayer,
+                    InitializeAppWindow,
+                    appID => IsPreparedForCurrentUser &&
+                        ActiveUser.CanAccessApp(appID));
+
+                appController.AppStateChanged += OnAppStateChanged;
+
                 var allowedIDs = new HashSet<string>(
                     user.AvailableAppIDs,
                     StringComparer.Ordinal);
@@ -151,7 +162,7 @@ namespace Atlas.Presentation.SOS.Desktop
                 pinnedButtonController = new TaskbarPinnedButtonController(
                     pinnedButtonTemplate,
                     taskbarBinder.AppGroup,
-                    RequestAppLaunch);
+                    RequestTaskbarActivation);
 
                 pinnedButtonController.Build(pinnedApps);
             }
@@ -220,6 +231,12 @@ namespace Atlas.Presentation.SOS.Desktop
 
         public void Clear()
         {
+            if (appController != null)
+            {
+                appController.AppStateChanged -= OnAppStateChanged;
+                appController.Clear();
+            }
+
             IsPrepared = false;
             Hide();
 
@@ -385,22 +402,53 @@ namespace Atlas.Presentation.SOS.Desktop
             return result;
         }
 
-        private void RequestAppLaunch(string appID)
+        private IAppWindow InitializeAppWindow(
+            AppDefinition app,
+            TemplateContainer root)
+        {
+            var windowObject = new GameObject($"{app.AppID}Window");
+            windowObject.transform.SetParent(appController.transform, false);
+
+            var window = windowObject.AddComponent<WindowController>();
+
+            try
+            {
+                window.Initialize(root, app.IsResizable);
+                return window;
+            }
+            catch
+            {
+                Destroy(windowObject);
+                throw;
+            }
+        }
+        private bool CanRequestApp(string appID)
         {
             if (!IsPreparedForCurrentUser)
             {
                 Clear();
-                return;
+                return false;
             }
 
-            if (!ActiveUser.CanAccessApp(appID) ||
-                !appCatalog.TryGetApp(appID, out _))
-            {
-                return;
-            }
+            return !string.IsNullOrWhiteSpace(appID) &&
+                   ActiveUser.CanAccessApp(appID) &&
+                   appCatalog.TryGetApp(appID, out _);
+        }
 
-            // Connect AppController's launch method to this event.
-            AppLaunchRequested?.Invoke(appID);
+        private void RequestAppLaunch(string appID)
+        {
+            if (!CanRequestApp(appID))
+                return;
+
+            appController.Launch(appID);
+        }
+
+        private void RequestTaskbarActivation(string appID)
+        {
+            if (!CanRequestApp(appID))
+                return;
+
+            appController.ActivateFromTaskbar(appID);
         }
 
         private void HideCurrentDocumentRoot()
@@ -415,6 +463,14 @@ namespace Atlas.Presentation.SOS.Desktop
 
             root.SetEnabled(false);
             root.style.visibility = Visibility.Hidden;
+        }
+
+        private void OnAppStateChanged(
+            string appID,
+            int instanceCount,
+            bool isFocused)
+        {
+            SetPinnedAppState(appID, instanceCount > 0, isFocused);
         }
 
         public void SetPinnedAppState(
