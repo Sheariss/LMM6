@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Atlas.Presentation.SOS.Apps;
 using UnityEngine;
 
@@ -10,7 +11,6 @@ namespace Atlas.Presentation.SOS.Contacts
         [SerializeField] private ContactLibrary contactLibrary;
 
         private ContactsBinder binder;
-        private ContactsViewBuilder viewBuilder;
         private ContactsView view;
         private ContactsEngine engine;
 
@@ -37,21 +37,32 @@ namespace Atlas.Presentation.SOS.Contacts
             }
 
             engine = new ContactsEngine(contactLibrary);
-            viewBuilder = new ContactsViewBuilder();
-            view = new ContactsView(binder, viewBuilder);
+            view = new ContactsView(binder, new ContactsViewBuilder());
 
             RegisterEvents();
+
+            view.ConfigureUnavailableActions();
+            view.SetSearchText(currentSearch);
+
+            // Groups are authored data and do not change through this UI.
+            // Build their buttons once so filtering does not destroy focus.
+            view.RenderGroups(
+                engine.GetUsedGroups(),
+                ContactGroup.None,
+                engine.GetGroupCount,
+                SelectGroup);
+
             Refresh();
-            view.ShowNoSelection();
         }
 
         protected override void OnShutdown()
         {
             UnregisterEvents();
+
+            view?.Clear();
             binder?.Dispose();
 
             binder = null;
-            viewBuilder = null;
             view = null;
             engine = null;
 
@@ -66,19 +77,9 @@ namespace Atlas.Presentation.SOS.Contacts
         {
             binder.AllContactsPressed += ShowAllContacts;
             binder.FavoritesPressed += ShowFavorites;
-            binder.RecentlyAddedPressed += ShowRecentlyAdded;
             binder.ClearSearchPressed += ClearSearch;
             binder.SortPressed += ToggleSort;
             binder.SearchChanged += Search;
-            binder.NewContactPressed += NewContact;
-            binder.NewGroupPressed += NewGroup;
-            binder.SettingsPressed += OpenSettings;
-            binder.FavoriteContactPressed += ToggleFavorite;
-            binder.EditContactPressed += EditSelectedContact;
-            binder.MoreContactPressed += ShowMoreOptions;
-            binder.MessageContactPressed += MessageSelectedContact;
-            binder.EmailContactPressed += EmailSelectedContact;
-            binder.CallContactPressed += CallSelectedContact;
         }
 
         private void UnregisterEvents()
@@ -88,28 +89,25 @@ namespace Atlas.Presentation.SOS.Contacts
 
             binder.AllContactsPressed -= ShowAllContacts;
             binder.FavoritesPressed -= ShowFavorites;
-            binder.RecentlyAddedPressed -= ShowRecentlyAdded;
             binder.ClearSearchPressed -= ClearSearch;
             binder.SortPressed -= ToggleSort;
             binder.SearchChanged -= Search;
-            binder.NewContactPressed -= NewContact;
-            binder.NewGroupPressed -= NewGroup;
-            binder.SettingsPressed -= OpenSettings;
-            binder.FavoriteContactPressed -= ToggleFavorite;
-            binder.EditContactPressed -= EditSelectedContact;
-            binder.MoreContactPressed -= ShowMoreOptions;
-            binder.MessageContactPressed -= MessageSelectedContact;
-            binder.EmailContactPressed -= EmailSelectedContact;
-            binder.CallContactPressed -= CallSelectedContact;
         }
 
         private void Refresh()
         {
-            var contacts = engine.GetContacts(
+            IReadOnlyList<ContactData> contacts = engine.GetContacts(
                 currentFilter,
                 currentSearch,
                 currentSort,
                 currentGroup);
+
+            // Validate selection before rendering its highlight.
+            if (selectedContact != null &&
+                !ContainsContact(contacts, selectedContact))
+            {
+                selectedContact = null;
+            }
 
             view.SetCounts(
                 engine.GetAllCount(),
@@ -117,24 +115,19 @@ namespace Atlas.Presentation.SOS.Contacts
 
             view.SetNavigation(currentFilter, currentGroup);
             view.SetSortMode(currentSort);
-
-            view.RenderGroups(
-                engine.GetUsedGroups(),
-                currentFilter == ContactsFilter.Group
-                    ? currentGroup
-                    : ContactGroup.None,
-                engine.GetGroupCount,
-                SelectGroup);
-
+            view.SetSearchState(currentSearch);
             view.SetListHeader(GetCurrentTitle(), contacts.Count);
-            view.RenderContacts(contacts, selectedContact, SelectContact);
 
-            if (selectedContact != null &&
-                !ContainsContact(contacts, selectedContact.Id))
-            {
-                selectedContact = null;
+            view.RenderContacts(
+                contacts,
+                selectedContact,
+                SelectContact,
+                currentSort);
+
+            if (selectedContact == null)
                 view.ShowNoSelection();
-            }
+            else
+                view.ShowContact(selectedContact);
         }
 
         private void ShowAllContacts()
@@ -151,13 +144,6 @@ namespace Atlas.Presentation.SOS.Contacts
             Refresh();
         }
 
-        private void ShowRecentlyAdded()
-        {
-            currentFilter = ContactsFilter.RecentlyAdded;
-            currentGroup = ContactGroup.None;
-            Refresh();
-        }
-
         private void SelectGroup(ContactGroup group)
         {
             currentFilter = ContactsFilter.Group;
@@ -168,8 +154,11 @@ namespace Atlas.Presentation.SOS.Contacts
         private void SelectContact(ContactData contact)
         {
             selectedContact = contact;
+
+            // Update the existing rows instead of rebuilding the list.
+            // This preserves keyboard focus and the current scroll position.
+            view.SetSelectedContact(contact);
             view.ShowContact(contact);
-            Refresh();
         }
 
         private void Search(string value)
@@ -183,6 +172,7 @@ namespace Atlas.Presentation.SOS.Contacts
             currentSearch = string.Empty;
             view.SetSearchText(string.Empty);
             Refresh();
+            binder.SearchField.Focus();
         }
 
         private void ToggleSort()
@@ -199,86 +189,23 @@ namespace Atlas.Presentation.SOS.Contacts
             return currentFilter switch
             {
                 ContactsFilter.Favorites => "Favorites",
-                ContactsFilter.RecentlyAdded => "Recently Added",
                 ContactsFilter.Group => currentGroup.ToString(),
+                ContactsFilter.RecentlyAdded => "Recently Added",
                 _ => "All Contacts"
             };
         }
 
         private static bool ContainsContact(
-            System.Collections.Generic.IReadOnlyList<ContactData> contacts,
-            string id)
+            IReadOnlyList<ContactData> contacts,
+            ContactData selected)
         {
             foreach (ContactData contact in contacts)
             {
-                if (contact.Id == id)
+                if (ReferenceEquals(contact, selected))
                     return true;
             }
 
             return false;
-        }
-
-        private void NewContact()
-        {
-            Debug.Log("[Contacts] New Contact is not implemented yet.");
-        }
-
-        private void NewGroup()
-        {
-            Debug.Log("[Contacts] New Group is not implemented yet.");
-        }
-
-        private void OpenSettings()
-        {
-            Debug.Log("[Contacts] Settings are not implemented yet.");
-        }
-
-        private void ToggleFavorite()
-        {
-            if (selectedContact == null)
-                return;
-
-            Debug.Log($"[Contacts] Toggle favorite: {selectedContact.DisplayName}");
-        }
-
-        private void EditSelectedContact()
-        {
-            if (selectedContact == null)
-                return;
-
-            Debug.Log($"[Contacts] Edit contact: {selectedContact.DisplayName}");
-        }
-
-        private void ShowMoreOptions()
-        {
-            if (selectedContact == null)
-                return;
-
-            Debug.Log($"[Contacts] More options: {selectedContact.DisplayName}");
-        }
-
-        private void MessageSelectedContact()
-        {
-            if (selectedContact == null)
-                return;
-
-            Debug.Log($"[Contacts] Message: {selectedContact.DisplayName}");
-        }
-
-        private void EmailSelectedContact()
-        {
-            if (selectedContact == null)
-                return;
-
-            Debug.Log($"[Contacts] Email: {selectedContact.DisplayName}");
-        }
-
-        private void CallSelectedContact()
-        {
-            if (selectedContact == null)
-                return;
-
-            Debug.Log($"[Contacts] Call: {selectedContact.DisplayName}");
         }
     }
 }

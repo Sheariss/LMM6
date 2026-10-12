@@ -4,9 +4,10 @@ using UnityEngine.UIElements;
 
 namespace Atlas.Presentation.SOS.Contacts
 {
-    public sealed class ContactsBinder : UIBinder
+    public sealed class ContactsBinder : UIBinder, IDisposable
     {
         public VisualElement Root { get; }
+
         public Button NewContactButton { get; }
         public Button AllContactsButton { get; }
         public Label AllContactsCountLabel { get; }
@@ -17,6 +18,7 @@ namespace Atlas.Presentation.SOS.Contacts
         public ScrollView GroupsScrollView { get; }
         public VisualElement GroupsContainer { get; }
         public Button SettingsButton { get; }
+
         public VisualElement ContactsListPanel { get; }
         public TextField SearchField { get; }
         public Button ClearSearchButton { get; }
@@ -26,22 +28,27 @@ namespace Atlas.Presentation.SOS.Contacts
         public ScrollView ContactsScrollView { get; }
         public VisualElement ContactsContainer { get; }
         public VisualElement ContactsEmptyState { get; }
+
         public VisualElement ContactDetailsPanel { get; }
         public ScrollView ContactDetailsScrollView { get; }
         public VisualElement ContactDetailsContent { get; }
+
         public Button FavoriteContactButton { get; }
         public Button EditContactButton { get; }
         public Button MoreContactButton { get; }
+
         public VisualElement ProfileAvatar { get; }
         public Image ProfileImage { get; }
         public Label ProfileInitialsLabel { get; }
         public Label ProfileNameLabel { get; }
         public Label ProfileSubtitleLabel { get; }
         public VisualElement ProfileTagsContainer { get; }
+
         public VisualElement ContactQuickActions { get; }
         public Button MessageContactButton { get; }
         public Button EmailContactButton { get; }
         public Button CallContactButton { get; }
+
         public VisualElement ContactInformationSection { get; }
         public VisualElement ContactInformationContainer { get; }
         public VisualElement PersonalInformationSection { get; }
@@ -68,9 +75,15 @@ namespace Atlas.Presentation.SOS.Contacts
         public event Action CallContactPressed;
         public event Action<string> SearchChanged;
 
+        private bool eventsRegistered;
+
         public ContactsBinder(VisualElement root)
         {
+            if (root == null)
+                throw new ArgumentNullException(nameof(root));
+
             Root = Bind<VisualElement>(root, "ContactsRoot");
+
             NewContactButton = Bind<Button>(root, "NewContactButton");
             AllContactsButton = Bind<Button>(root, "AllContactsButton");
             AllContactsCountLabel = Bind<Label>(root, "AllContactsCountLabel");
@@ -81,6 +94,7 @@ namespace Atlas.Presentation.SOS.Contacts
             GroupsScrollView = Bind<ScrollView>(root, "GroupsScrollView");
             GroupsContainer = Bind<VisualElement>(root, "GroupsContainer");
             SettingsButton = Bind<Button>(root, "SettingsButton");
+
             ContactsListPanel = Bind<VisualElement>(root, "ContactsListPanel");
             SearchField = Bind<TextField>(root, "SearchField");
             ClearSearchButton = Bind<Button>(root, "ClearSearchButton");
@@ -90,22 +104,27 @@ namespace Atlas.Presentation.SOS.Contacts
             ContactsScrollView = Bind<ScrollView>(root, "ContactsScrollView");
             ContactsContainer = Bind<VisualElement>(root, "ContactsContainer");
             ContactsEmptyState = Bind<VisualElement>(root, "ContactsEmptyState");
+
             ContactDetailsPanel = Bind<VisualElement>(root, "ContactDetailsPanel");
             ContactDetailsScrollView = Bind<ScrollView>(root, "ContactDetailsScrollView");
             ContactDetailsContent = Bind<VisualElement>(root, "ContactDetailsContent");
+
             FavoriteContactButton = Bind<Button>(root, "FavoriteContactButton");
             EditContactButton = Bind<Button>(root, "EditContactButton");
             MoreContactButton = Bind<Button>(root, "MoreContactButton");
+
             ProfileAvatar = Bind<VisualElement>(root, "ProfileAvatar");
             ProfileImage = Bind<Image>(root, "ProfileImage");
             ProfileInitialsLabel = Bind<Label>(root, "ProfileInitialsLabel");
             ProfileNameLabel = Bind<Label>(root, "ProfileNameLabel");
             ProfileSubtitleLabel = Bind<Label>(root, "ProfileSubtitleLabel");
             ProfileTagsContainer = Bind<VisualElement>(root, "ProfileTagsContainer");
+
             ContactQuickActions = Bind<VisualElement>(root, "ContactQuickActions");
             MessageContactButton = Bind<Button>(root, "MessageContactButton");
             EmailContactButton = Bind<Button>(root, "EmailContactButton");
             CallContactButton = Bind<Button>(root, "CallContactButton");
+
             ContactInformationSection = Bind<VisualElement>(root, "ContactInformationSection");
             ContactInformationContainer = Bind<VisualElement>(root, "ContactInformationContainer");
             PersonalInformationSection = Bind<VisualElement>(root, "PersonalInformationSection");
@@ -134,11 +153,13 @@ namespace Atlas.Presentation.SOS.Contacts
             EmailContactButton.clicked += OnEmailContactPressed;
             CallContactButton.clicked += OnCallContactPressed;
             SearchField.RegisterValueChangedCallback(OnSearchChanged);
+
+            eventsRegistered = true;
         }
 
         public void Dispose()
         {
-            if (!IsValid)
+            if (!eventsRegistered)
                 return;
 
             NewContactButton.clicked -= OnNewContactPressed;
@@ -156,6 +177,8 @@ namespace Atlas.Presentation.SOS.Contacts
             EmailContactButton.clicked -= OnEmailContactPressed;
             CallContactButton.clicked -= OnCallContactPressed;
             SearchField.UnregisterValueChangedCallback(OnSearchChanged);
+
+            eventsRegistered = false;
         }
 
         private void OnNewContactPressed() => NewContactPressed?.Invoke();
@@ -172,6 +195,10 @@ namespace Atlas.Presentation.SOS.Contacts
         private void OnMessageContactPressed() => MessageContactPressed?.Invoke();
         private void OnEmailContactPressed() => EmailContactPressed?.Invoke();
         private void OnCallContactPressed() => CallContactPressed?.Invoke();
-        private void OnSearchChanged(ChangeEvent<string> evt) => SearchChanged?.Invoke(evt.newValue);
+
+        private void OnSearchChanged(ChangeEvent<string> evt)
+        {
+            SearchChanged?.Invoke(evt.newValue);
+        }
     }
 }

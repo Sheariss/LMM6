@@ -103,4 +103,28 @@
     cursor: resize-up-left;
 }
 
+#WindowMinimizeButton:hover:enabled,
+#WindowMaximizeButton:hover:enabled {
+    background-color: var(--surface-hover);
+}
 
+#WindowMinimizeButton:active:enabled,
+#WindowMaximizeButton:active:enabled {
+    background-color: var(--surface-active);
+}
+
+#FullscreenIcon {
+    display: flex;
+}
+
+#ExitFullscreenIcon {
+    display: none;
+}
+
+.window-button--restore #FullscreenIcon {
+    display: none;
+}
+
+.window-button--restore #ExitFullscreenIcon {
+    display: flex;
+}

@@ -13,13 +13,12 @@ namespace Atlas.Presentation.SOS.Apps
         NewWindow         // Explicit new-window action.
     }
 
-    // Implement this on your adapted WindowController.
     public interface IAppWindow : IDisposable
     {
         bool IsFocused { get; }
         bool IsMinimized { get; }
 
-        // Activate must restore if minimized, then focus and bring forward.
+        // Restore if minimized, then focus and bring forward.
         void Activate();
         void Minimize();
 
@@ -29,6 +28,9 @@ namespace Atlas.Presentation.SOS.Apps
 
     public sealed class AppController : MonoBehaviour
     {
+        private const float CascadeOffset = 24f;
+        private const int MaximumCascadeSlots = 8;
+
         [Header("App Catalog")]
         [SerializeField] private AppCatalog appCatalog;
 
@@ -38,15 +40,17 @@ namespace Atlas.Presentation.SOS.Apps
         private VisualElement windowLayer;
 
         // Initializes window behavior only.
-        // AppController separately creates the app-specific runtime controller.
+        // AppController creates the app-specific runtime controller.
         private Func<AppDefinition, TemplateContainer, IAppWindow>
             initializeWindow;
 
         private Func<string, bool> canAccessApp;
 
+        private long activationCounter;
+        private long spawnCounter;
+
         public event Action<string, int, bool> AppStateChanged;
 
-        // A taskbar/controller can subscribe and display a window chooser.
         public event Action<string, IReadOnlyList<IAppWindow>>
             WindowSelectionRequested;
 
@@ -60,25 +64,40 @@ namespace Atlas.Presentation.SOS.Apps
             public Action CloseHandler;
             public Action StateHandler;
             public long ActivationOrder;
-        }
 
-        private long activationCounter;
+            public Vector2 InitialWindowSize;
+            public long SpawnOrder;
+            public bool PlacementPending;
+        }
 
         public void Initialize(
             VisualElement windowLayer,
             Func<AppDefinition, TemplateContainer, IAppWindow> initializeWindow,
             Func<string, bool> canAccessApp)
         {
+            if (windowLayer == null)
+                throw new ArgumentNullException(nameof(windowLayer));
+
+            if (initializeWindow == null)
+                throw new ArgumentNullException(nameof(initializeWindow));
+
+            if (canAccessApp == null)
+                throw new ArgumentNullException(nameof(canAccessApp));
+
+            if (this.windowLayer != null)
+            {
+                this.windowLayer.UnregisterCallback<GeometryChangedEvent>(
+                    OnWindowLayerGeometryChanged);
+            }
+
             Clear();
 
-            this.windowLayer = windowLayer
-                ?? throw new ArgumentNullException(nameof(windowLayer));
+            this.windowLayer = windowLayer;
+            this.initializeWindow = initializeWindow;
+            this.canAccessApp = canAccessApp;
 
-            this.initializeWindow = initializeWindow
-                ?? throw new ArgumentNullException(nameof(initializeWindow));
-
-            this.canAccessApp = canAccessApp
-                ?? throw new ArgumentNullException(nameof(canAccessApp));
+            this.windowLayer.RegisterCallback<GeometryChangedEvent>(
+                OnWindowLayerGeometryChanged);
         }
 
         public void Launch(string appID)
@@ -178,7 +197,7 @@ namespace Atlas.Presentation.SOS.Apps
 
             try
             {
-                // This UXML already contains the window AND app content.
+                // This UXML contains the window and its app content.
                 root = app.AppUXML.CloneTree();
 
                 VisualElement shell =
@@ -203,16 +222,28 @@ namespace Atlas.Presentation.SOS.Apps
                         "required window elements.");
                 }
 
-                // Position the complete instance within the desktop.
+                // Use the effective initial size for centering.
+                // Minimum dimensions can exceed the configured default.
+                Vector2 initialSize = new(
+                    Mathf.Max(
+                        1f,
+                        Mathf.Max(
+                            app.DefaultWindowSize.x,
+                            app.MinimumWindowSize.x)),
+                    Mathf.Max(
+                        1f,
+                        Mathf.Max(
+                            app.DefaultWindowSize.y,
+                            app.MinimumWindowSize.y)));
+
                 root.style.position = Position.Absolute;
 
-                int offset = (GetTotalInstanceCount() % 8) * 24;
+                // Temporary position until desktop geometry is available.
+                root.style.left = 0;
+                root.style.top = 0;
 
-                root.style.left = 32 + offset;
-                root.style.top = 32 + offset;
-
-                root.style.width = app.DefaultWindowSize.x;
-                root.style.height = app.DefaultWindowSize.y;
+                root.style.width = initialSize.x;
+                root.style.height = initialSize.y;
 
                 root.style.minWidth = app.MinimumWindowSize.x;
                 root.style.minHeight = app.MinimumWindowSize.y;
@@ -230,7 +261,6 @@ namespace Atlas.Presentation.SOS.Apps
 
                 windowLayer.Add(root);
 
-                // Initialize this instance's window behavior.
                 // This initializer must also apply app.IsResizable.
                 window = initializeWindow(app, root);
 
@@ -240,14 +270,12 @@ namespace Atlas.Presentation.SOS.Apps
                         "Window initializer returned null.");
                 }
 
-                // Instantiate the runtime prefab from this catalog entry.
                 contentController =
                     Instantiate(app.RuntimePrefab, transform);
 
                 contentController.gameObject.name =
                     $"{app.AppID}Runtime";
 
-                // Bind app behavior to this instance's content subtree.
                 contentController.Initialize(content);
 
                 instance = new AppInstance
@@ -255,7 +283,10 @@ namespace Atlas.Presentation.SOS.Apps
                     AppID = app.AppID,
                     Root = root,
                     Window = window,
-                    ContentController = contentController
+                    ContentController = contentController,
+                    InitialWindowSize = initialSize,
+                    SpawnOrder = spawnCounter,
+                    PlacementPending = true
                 };
 
                 instance.CloseHandler =
@@ -275,6 +306,11 @@ namespace Atlas.Presentation.SOS.Apps
                 }
 
                 running.Add(instance);
+                spawnCounter++;
+
+                // Position immediately when the desktop is already laid out.
+                // Otherwise the geometry callback completes placement.
+                TryPlaceWindow(instance);
 
                 Activate(instance);
             }
@@ -282,6 +318,8 @@ namespace Atlas.Presentation.SOS.Apps
             {
                 if (instance != null)
                 {
+                    instance.PlacementPending = false;
+
                     window.Closed -= instance.CloseHandler;
                     window.StateChanged -= instance.StateHandler;
 
@@ -295,11 +333,101 @@ namespace Atlas.Presentation.SOS.Apps
                     }
                 }
 
+                if (instances.Count == 0)
+                    spawnCounter = 0;
+
                 CleanupRuntime(window, contentController, root);
 
                 Debug.LogException(exception, this);
                 PublishState(app.AppID);
             }
+        }
+
+        private void TryPlaceWindow(AppInstance instance)
+        {
+            if (!instance.PlacementPending ||
+                windowLayer == null ||
+                instance.Root.parent != windowLayer)
+            {
+                return;
+            }
+
+            Rect bounds = windowLayer.contentRect;
+
+            if (!IsValidDimension(bounds.width) ||
+                !IsValidDimension(bounds.height))
+            {
+                return;
+            }
+
+            float width = instance.InitialWindowSize.x;
+            float height = instance.InitialWindowSize.y;
+
+            // Oversized windows start at the desktop's top-left.
+            float centeredLeft =
+                Mathf.Max(0f, (bounds.width - width) * 0.5f);
+
+            float centeredTop =
+                Mathf.Max(0f, (bounds.height - height) * 0.5f);
+
+            // Determine how many diagonal steps fit after centering.
+            float availableHorizontalOffset =
+                Mathf.Max(0f, bounds.width - width - centeredLeft);
+
+            float availableVerticalOffset =
+                Mathf.Max(0f, bounds.height - height - centeredTop);
+
+            float availableOffset = Mathf.Min(
+                availableHorizontalOffset,
+                availableVerticalOffset);
+
+            // Limit before converting to an integer.
+            float maximumOffset =
+                (MaximumCascadeSlots - 1) * CascadeOffset;
+
+            int cascadeSlots = 1 + Mathf.FloorToInt(
+                Mathf.Min(availableOffset, maximumOffset) /
+                CascadeOffset);
+
+            int cascadeStep =
+                (int)(instance.SpawnOrder % cascadeSlots);
+
+            float offset = cascadeStep * CascadeOffset;
+
+            instance.Root.style.left =
+                bounds.xMin + centeredLeft + offset;
+
+            instance.Root.style.top =
+                bounds.yMin + centeredTop + offset;
+
+            instance.PlacementPending = false;
+        }
+
+        private static bool IsValidDimension(float value)
+        {
+            return value > 0f &&
+                   !float.IsNaN(value) &&
+                   !float.IsInfinity(value);
+        }
+
+        private void OnWindowLayerGeometryChanged(
+            GeometryChangedEvent evt)
+        {
+            // Only complete initial placement.
+            // Already placed or manually moved windows stay where they are.
+            var pending = new List<AppInstance>();
+
+            foreach (List<AppInstance> running in instances.Values)
+            {
+                foreach (AppInstance instance in running)
+                {
+                    if (instance.PlacementPending)
+                        pending.Add(instance);
+                }
+            }
+
+            foreach (AppInstance instance in pending)
+                TryPlaceWindow(instance);
         }
 
         private void Activate(AppInstance instance)
@@ -349,6 +477,10 @@ namespace Atlas.Presentation.SOS.Apps
             if (running.Count == 0)
                 instances.Remove(instance.AppID);
 
+            // The next window starts centered after all windows close.
+            if (instances.Count == 0)
+                spawnCounter = 0;
+
             try
             {
                 Release(instance);
@@ -361,6 +493,8 @@ namespace Atlas.Presentation.SOS.Apps
 
         private static void Release(AppInstance instance)
         {
+            instance.PlacementPending = false;
+
             instance.Window.Closed -= instance.CloseHandler;
             instance.Window.StateChanged -= instance.StateHandler;
 
@@ -388,7 +522,6 @@ namespace Atlas.Presentation.SOS.Apps
                 }
                 finally
                 {
-                    // Destroy the whole runtime prefab instance.
                     UnityEngine.Object.Destroy(
                         contentController.gameObject);
                 }
@@ -406,16 +539,6 @@ namespace Atlas.Presentation.SOS.Apps
             {
                 root?.RemoveFromHierarchy();
             }
-        }
-
-        private int GetTotalInstanceCount()
-        {
-            int count = 0;
-
-            foreach (List<AppInstance> running in instances.Values)
-                count += running.Count;
-
-            return count;
         }
 
         private void PublishAllStates()
@@ -457,6 +580,9 @@ namespace Atlas.Presentation.SOS.Apps
 
             instances.Clear();
 
+            spawnCounter = 0;
+            activationCounter = 0;
+
             foreach (AppInstance instance in released)
             {
                 try
@@ -475,6 +601,12 @@ namespace Atlas.Presentation.SOS.Apps
 
         private void OnDisable()
         {
+            if (windowLayer != null)
+            {
+                windowLayer.UnregisterCallback<GeometryChangedEvent>(
+                    OnWindowLayerGeometryChanged);
+            }
+
             Clear();
 
             windowLayer = null;

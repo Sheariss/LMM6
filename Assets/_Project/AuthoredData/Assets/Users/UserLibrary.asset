@@ -47,12 +47,14 @@ MonoBehaviour:
     - messenger
     - news
     - browser
+    - contacts
     desktopShortcutAppIDs:
     - assistant
     - messenger
     - news
     - browser
     - calculator
+    - contacts
     pinnedAppIDs:
     - browser
     - file-explorer

@@ -63,8 +63,8 @@ MonoBehaviour:
     pinToTaskbar: 1
   - appID: contacts
     displayName: Contacts
-    appIcon48: {fileID: 6960912526294278977, guid: 04a6b6755280ae4499980ec1518e0fc6, type: 3}
-    appIcon96: {fileID: -5128267248234359663, guid: 232094fca7c75cd4982d9f52f312031f, type: 3}
+    appIcon48: {fileID: 21300000, guid: 04a6b6755280ae4499980ec1518e0fc6, type: 3}
+    appIcon96: {fileID: 21300000, guid: 232094fca7c75cd4982d9f52f312031f, type: 3}
     appUXML: {fileID: 9197481963319205126, guid: d32dcc097f035c94b9cc2b71c836844b, type: 3}
     runtimePrefab: {fileID: 1597824060282103959, guid: 53aba89aa0efd634a968f6f359f397dc, type: 3}
     isResizable: 1

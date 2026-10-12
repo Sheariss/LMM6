@@ -1,135 +1,162 @@
-﻿<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
     <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
     <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Window/Window.uss?fileID=7433441132597879392&amp;guid=00c704ca2f7eb4f469f7b2b139bf1194&amp;type=3#Window"/>
     <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/Contacts/Contacts.uss?fileID=7433441132597879392&amp;guid=88e4de6c2a04b344aaa3f2315816a605&amp;type=3#Contacts"/>
- <ui:VisualElement name="ContactsRoot" class="contacts-root">
-        <!-- SIDEBAR -->
-        <ui:VisualElement name="ContactsSidebar" class="contacts-sidebar">
-            <ui:VisualElement class="contacts-sidebar-header">
-                <ui:Label text="Contacts" class="contacts-app-title spacing-reset"/>
-                <ui:Button name="NewContactButton" text="+" tooltip="Create new contact" class="contacts-new-button spacing-reset"/>
+    <ui:VisualElement name="WindowRoot" class="window contacts-window">
+        <ui:VisualElement name="WindowHeader" class="flex-row header">
+            <ui:VisualElement class="header-icon-area">
+                <ui:VisualElement name="WindowIcon" class="header-icon" style="background-image: resource(&quot;AppIcons/Contacts/icons8-microsoft-people-96&quot;);"/>
             </ui:VisualElement>
-            <ui:VisualElement class="contacts-sidebar-section">
-                <ui:Button name="AllContactsButton" class="contacts-nav-button contacts-nav-button--active spacing-reset">
-                    <ui:VisualElement class="contacts-nav-icon contacts-nav-icon--all"/>
-                    <ui:Label text="All Contacts" class="contacts-nav-label spacing-reset"/>
-                    <ui:Label name="AllContactsCountLabel" text="0" class="contacts-nav-count spacing-reset"/>
+            <ui:Label name="WindowTitle" text="Contacts" class="spacing-reset header-title"/>
+            <ui:GroupBox name="WindowControls" class="flex-row spacing-reset window-controls">
+                <ui:Button name="WindowMinimizeButton" text="" class="button-reset wc-button">
+                    <ui:Image name="MinimizeIcon" class="wc-btn-icon minimize-icon" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Minimize/remove_32dp_.png?fileID=21300000&amp;guid=8ba13ee49df28774c813618f06427c37&amp;type=3#remove_32dp_&quot;);"/>
                 </ui:Button>
-                <ui:Button name="FavoritesButton" class="contacts-nav-button spacing-reset">
-                    <ui:VisualElement class="contacts-nav-icon contacts-nav-icon--favorite"/>
-                    <ui:Label text="Favorites" class="contacts-nav-label spacing-reset"/>
-                    <ui:Label name="FavoritesCountLabel" text="0" class="contacts-nav-count spacing-reset"/>
+                <ui:Button name="WindowMaximizeButton" text="" class="button-reset wc-button">
+                    <ui:Image name="FullscreenIcon" class="wc-btn-icon window-maximize-icon" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Maximize-Exit/crop_square_32dp.png?fileID=21300000&amp;guid=2fe5b0aec98d3e84387083094b2987e4&amp;type=3#crop_square_32dp&quot;);"/>
+                    <ui:Image name="ExitFullscreenIcon" class="wc-btn-icon window-maximize-icon" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Maximize/filter_none_32dp.png?fileID=21300000&amp;guid=40a6434316977444baf5ceb2ad0f4953&amp;type=3#filter_none_32dp&quot;);"/>
                 </ui:Button>
-                <ui:Button name="RecentlyAddedButton" class="contacts-nav-button spacing-reset">
-                    <ui:VisualElement class="contacts-nav-icon contacts-nav-icon--recent"/>
-                    <ui:Label text="Recently Added" class="contacts-nav-label spacing-reset"/>
+                <ui:Button name="WindowCloseButton" text="" class="button-reset wc-button window-close-button">
+                    <ui:Image name="CloseIcon" class="wc-btn-icon" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Close/close_32dp.png?fileID=21300000&amp;guid=f388726a89c92bb42abb8d4656bb544d&amp;type=3#close_32dp&quot;);"/>
                 </ui:Button>
-            </ui:VisualElement>
-            <ui:VisualElement class="contacts-divider"/>
-            <ui:VisualElement class="contacts-sidebar-section contacts-groups-section">
-                <ui:VisualElement class="contacts-section-heading-row">
-                    <ui:Label text="GROUPS" class="contacts-section-heading spacing-reset"/>
-                    <ui:Button name="NewGroupButton" text="+" tooltip="Create new group" class="contacts-section-action spacing-reset"/>
-                </ui:VisualElement>
-                <ui:ScrollView name="GroupsScrollView" class="contacts-groups-scroll">
-                    <ui:VisualElement name="GroupsContainer" class="contacts-groups-container"/>
-                </ui:ScrollView>
-            </ui:VisualElement>
-            <ui:VisualElement class="contacts-sidebar-spacer"/>
-            <ui:VisualElement class="contacts-divider"/>
-            <ui:Button name="SettingsButton" class="contacts-nav-button contacts-settings-button spacing-reset">
-                <ui:VisualElement class="contacts-nav-icon contacts-nav-icon--settings"/>
-                <ui:Label text="Settings" class="contacts-nav-label spacing-reset"/>
-            </ui:Button>
+            </ui:GroupBox>
         </ui:VisualElement>
-
-        <!-- CONTACT LIST -->
-        <ui:VisualElement name="ContactsListPanel" class="contacts-list-panel">
-            <ui:VisualElement class="contacts-search-area">
-                <ui:VisualElement class="contacts-search-box">
-                    <ui:Label text="⌕" class="contacts-search-icon spacing-reset"/>
-                    <ui:TextField name="SearchField" class="contacts-search-field spacing-reset"/>
-                    <ui:Button name="ClearSearchButton" text="×" tooltip="Clear search" class="contacts-search-clear spacing-reset"/>
-                </ui:VisualElement>
-            </ui:VisualElement>
-            <ui:VisualElement class="contacts-list-header">
-                <ui:VisualElement>
-                    <ui:Label name="ListTitleLabel" text="All Contacts" class="contacts-list-title spacing-reset"/>
-                    <ui:Label name="ListCountLabel" text="0 contacts" class="contacts-list-subtitle spacing-reset"/>
-                </ui:VisualElement>
-                <ui:Button name="SortButton" text="A–Z  ▾" tooltip="Sort contacts" class="contacts-sort-button spacing-reset"/>
-            </ui:VisualElement>
-            <ui:VisualElement class="contacts-list-divider"/>
-            <ui:ScrollView name="ContactsScrollView" class="contacts-scroll-view">
-                <ui:VisualElement name="ContactsContainer" class="contacts-list-container"/>
-            </ui:ScrollView>
-            <ui:VisualElement name="ContactsEmptyState" class="contacts-empty-state">
-                <ui:VisualElement class="contacts-empty-icon"/>
-                <ui:Label text="No contacts found" class="contacts-empty-title spacing-reset"/>
-                <ui:Label text="Try another search or create a new contact." class="contacts-empty-description spacing-reset"/>
-            </ui:VisualElement>
-        </ui:VisualElement>
-
-        <!-- CONTACT DETAILS -->
-        <ui:VisualElement name="ContactDetailsPanel" class="contacts-details-panel">
-            <ui:ScrollView name="ContactDetailsScrollView" class="contacts-details-scroll">
-                <ui:VisualElement name="ContactDetailsContent" class="contacts-details-content">
-                    <ui:VisualElement class="contacts-profile-toolbar">
-                        <ui:VisualElement class="contacts-profile-toolbar-spacer"/>
-                        <ui:Button name="FavoriteContactButton" text="☆" tooltip="Add to favorites" class="contacts-toolbar-button contacts-favorite-button spacing-reset"/>
-                        <ui:Button name="EditContactButton" text="✎" tooltip="Edit contact" class="contacts-toolbar-button spacing-reset"/>
-                        <ui:Button name="MoreContactButton" text="⋯" tooltip="More options" class="contacts-toolbar-button spacing-reset"/>
+        <ui:VisualElement name="WindowContent" class="content">
+            <ui:VisualElement name="ContactsRoot" class="contacts-root">
+                <ui:VisualElement name="ContactsSidebar" class="contacts-sidebar">
+                    <ui:VisualElement class="contacts-sidebar-header">
+                        <ui:Button name="NewContactButton" text="" tooltip="Create new contact" class="contacts-new-button spacing-reset">
+                            <ui:Image class="contacts-new-icon spacing-reset" style="background-image: resource(&quot;Icons/Math/Add/add_2_32dp&quot;);"/>
+                            <ui:Label text="Create new contact" class="contacts-new-label spacing-reset"/>
+                        </ui:Button>
                     </ui:VisualElement>
-                    <ui:VisualElement class="contacts-profile-header">
-                        <ui:VisualElement name="ProfileAvatar" class="contacts-profile-avatar">
-                            <ui:Image name="ProfileImage" class="contacts-profile-image"/>
-                            <ui:Label name="ProfileInitialsLabel" text="--" class="contacts-profile-initials spacing-reset"/>
+                    <ui:VisualElement class="contacts-sidebar-section">
+                        <ui:Button name="AllContactsButton" class="contacts-nav-button contacts-nav-button--active spacing-reset">
+                            <ui:Image class="contacts-nav-icon spacing-reset" style="background-image: resource(&quot;Icons/Apps/Contacts/Contacts/contacts_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40&quot;);"/>
+                            <ui:Label text="All Contacts" class="contacts-nav-label spacing-reset"/>
+                            <ui:Label name="AllContactsCountLabel" text="0" class="contacts-nav-count spacing-reset"/>
+                        </ui:Button>
+                        <ui:Button name="FavoritesButton" class="contacts-nav-button spacing-reset">
+                            <ui:Image class="contacts-nav-icon contacts-favorites-nav-icon spacing-reset"/>
+                            <ui:Label text="Favorites" class="contacts-nav-label spacing-reset"/>
+                            <ui:Label name="FavoritesCountLabel" text="0" class="contacts-nav-count spacing-reset"/>
+                        </ui:Button>
+                        <ui:Button name="RecentlyAddedButton" class="contacts-nav-button spacing-reset">
+                            <ui:Image class="contacts-nav-icon spacing-reset" style="background-image: resource(&quot;Icons/System/Recent/schedule_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40&quot;);"/>
+                            <ui:Label text="Recently Added" class="contacts-nav-label spacing-reset"/>
+                        </ui:Button>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="contacts-divider"/>
+                    <ui:VisualElement class="contacts-groups-section">
+                        <ui:VisualElement class="contacts-section-heading-row">
+                            <ui:Label text="GROUPS" class="contacts-section-heading spacing-reset"/>
+                            <ui:Button name="NewGroupButton" text="" tooltip="Create new group" class="contacts-section-action spacing-reset">
+                                <ui:Image class="contacts-section-action-icon spacing-reset" style="background-image: resource(&quot;Icons/Math/Add/add_2_32dp&quot;);"/>
+                            </ui:Button>
                         </ui:VisualElement>
-                        <ui:Label name="ProfileNameLabel" text="Select a contact" class="contacts-profile-name spacing-reset"/>
-                        <ui:Label name="ProfileSubtitleLabel" text="" class="contacts-profile-subtitle spacing-reset"/>
-                        <ui:VisualElement name="ProfileTagsContainer" class="contacts-profile-tags"/>
+                        <ui:ScrollView name="GroupsScrollView" mode="Vertical" class="contacts-groups-scroll">
+                            <ui:VisualElement name="GroupsContainer" class="contacts-groups-container"/>
+                        </ui:ScrollView>
                     </ui:VisualElement>
-                    <ui:VisualElement name="ContactQuickActions" class="contacts-quick-actions">
-                        <ui:Button name="MessageContactButton" class="contacts-action-button spacing-reset">
-                            <ui:Label text="✉" class="contacts-action-icon spacing-reset"/>
-                            <ui:Label text="Message" class="contacts-action-label spacing-reset"/>
-                        </ui:Button>
-                        <ui:Button name="EmailContactButton" class="contacts-action-button spacing-reset">
-                            <ui:Label text="@" class="contacts-action-icon spacing-reset"/>
-                            <ui:Label text="Email" class="contacts-action-label spacing-reset"/>
-                        </ui:Button>
-                        <ui:Button name="CallContactButton" class="contacts-action-button spacing-reset">
-                            <ui:Label text="☎" class="contacts-action-icon spacing-reset"/>
-                            <ui:Label text="Call" class="contacts-action-label spacing-reset"/>
-                        </ui:Button>
+                    <ui:VisualElement class="contacts-sidebar-spacer"/>
+                    <ui:VisualElement class="contacts-divider"/>
+                    <ui:Button name="SettingsButton" class="contacts-nav-button spacing-reset">
+                        <ui:Image class="contacts-nav-icon spacing-reset" style="background-image: resource(&quot;Icons/PDW/Settings/settings_32dp&quot;);"/>
+                        <ui:Label text="Settings" class="contacts-nav-label spacing-reset"/>
+                    </ui:Button>
+                </ui:VisualElement>
+                <ui:VisualElement name="ContactsListPanel" class="contacts-list-panel">
+                    <ui:VisualElement class="contacts-search-area">
+                        <ui:VisualElement class="contacts-search-box">
+                            <ui:Image class="contacts-search-icon spacing-reset" style="background-image: resource(&quot;Icons/UI/Search/search_32dp&quot;);"/>
+                            <ui:TextField name="SearchField" tooltip="Search contacts" placeholder-text="Search contacts..." class="contacts-search-field spacing-reset"/>
+                            <ui:Button name="ClearSearchButton" text="×" tooltip="Clear search" class="contacts-search-clear spacing-reset"/>
+                        </ui:VisualElement>
                     </ui:VisualElement>
-                    <ui:VisualElement class="contacts-detail-divider"/>
-                    <ui:VisualElement name="ContactInformationSection" class="contacts-detail-section">
-                        <ui:Label text="CONTACT INFORMATION" class="contacts-detail-heading spacing-reset"/>
-                        <ui:VisualElement name="ContactInformationContainer" class="contacts-detail-fields"/>
+                    <ui:VisualElement class="contacts-list-header">
+                        <ui:VisualElement class="contacts-list-heading">
+                            <ui:Label name="ListTitleLabel" text="All Contacts" class="contacts-list-title spacing-reset"/>
+                            <ui:Label name="ListCountLabel" text="0 contacts" class="contacts-list-subtitle spacing-reset"/>
+                        </ui:VisualElement>
+                        <ui:Button name="SortButton" text="First Name ▾" tooltip="Change contact sorting" class="contacts-sort-button spacing-reset"/>
                     </ui:VisualElement>
-                    <ui:VisualElement name="PersonalInformationSection" class="contacts-detail-section">
-                        <ui:Label text="PERSONAL INFORMATION" class="contacts-detail-heading spacing-reset"/>
-                        <ui:VisualElement name="PersonalInformationContainer" class="contacts-detail-fields"/>
-                    </ui:VisualElement>
-                    <ui:VisualElement name="NotesSection" class="contacts-detail-section">
-                        <ui:Label text="NOTES" class="contacts-detail-heading spacing-reset"/>
-                        <ui:Label name="NotesLabel" text="" class="contacts-notes spacing-reset"/>
-                    </ui:VisualElement>
-                    <ui:VisualElement name="ContactGroupsSection" class="contacts-detail-section">
-                        <ui:Label text="GROUPS" class="contacts-detail-heading spacing-reset"/>
-                        <ui:VisualElement name="ContactGroupsContainer" class="contacts-contact-groups"/>
+                    <ui:VisualElement class="contacts-list-divider"/>
+                    <ui:ScrollView name="ContactsScrollView" mode="Vertical" class="contacts-scroll-view">
+                        <ui:VisualElement name="ContactsContainer" class="contacts-list-container"/>
+                    </ui:ScrollView>
+                    <ui:VisualElement name="ContactsEmptyState" class="contacts-empty-state">
+                        <ui:Label text="☰" class="contacts-empty-icon spacing-reset"/>
+                        <ui:Label text="No contacts found" class="contacts-empty-title spacing-reset"/>
+                        <ui:Label text="Try another search or select a different category." class="contacts-empty-description spacing-reset"/>
                     </ui:VisualElement>
                 </ui:VisualElement>
-            </ui:ScrollView>
+                <ui:VisualElement name="ContactDetailsPanel" class="contacts-details-panel">
+                    <ui:ScrollView name="ContactDetailsScrollView" mode="Vertical" class="contacts-details-scroll">
+                        <ui:VisualElement name="ContactDetailsContent" class="contacts-details-content">
+                            <ui:VisualElement class="contacts-profile-toolbar">
+                                <ui:VisualElement class="contacts-profile-toolbar-spacer"/>
+                                <ui:Button name="FavoriteContactButton" text="" tooltip="Add to favorites" class="contacts-toolbar-button contacts-favorite-button spacing-reset">
+                                    <ui:Image class="contacts-favorite-icon spacing-reset"/>
+                                </ui:Button>
+                                <ui:Button name="EditContactButton" text="✎" class="contacts-toolbar-button spacing-reset"/>
+                                <ui:Button name="MoreContactButton" text="⋯" class="contacts-toolbar-button spacing-reset"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement class="contacts-profile-header">
+                                <ui:VisualElement name="ProfileAvatar" class="contacts-profile-avatar">
+                                    <ui:Image name="ProfileImage" class="contacts-profile-image"/>
+                                    <ui:Label name="ProfileInitialsLabel" text="--" class="contacts-profile-initials spacing-reset"/>
+                                </ui:VisualElement>
+                                <ui:Label name="ProfileNameLabel" text="Select a contact" class="contacts-profile-name spacing-reset"/>
+                                <ui:Label name="ProfileSubtitleLabel" text="" class="contacts-profile-subtitle spacing-reset"/>
+                                <ui:VisualElement name="ProfileTagsContainer" class="contacts-profile-tags"/>
+                            </ui:VisualElement>
+                           <ui:VisualElement name="ContactQuickActions" class="contacts-quick-actions">
+                                <ui:Button name="MessageContactButton" class="contacts-action-button spacing-reset">
+                                    <ui:Image class="contacts-action-icon contacts-action-icon--message spacing-reset"/>
+                                    <ui:Label text="Message" class="contacts-action-label spacing-reset"/>
+                                </ui:Button>
 
-            <!-- Displayed when no contact is selected -->
-            <ui:VisualElement name="NoContactSelectedState" class="contacts-no-selection">
-                <ui:VisualElement class="contacts-no-selection-icon"/>
-                <ui:Label text="Select a contact" class="contacts-no-selection-title spacing-reset"/>
-                <ui:Label text="Choose a contact from the list to view their information." class="contacts-no-selection-description spacing-reset"/>
+                                <ui:Button name="EmailContactButton" class="contacts-action-button spacing-reset">
+                                    <ui:Image class="contacts-action-icon contacts-action-icon--email spacing-reset"/>
+                                    <ui:Label text="Email" class="contacts-action-label spacing-reset"/>
+                                </ui:Button>
+
+                                <ui:Button name="CallContactButton" class="contacts-action-button spacing-reset">
+                                    <ui:Image class="contacts-action-icon contacts-action-icon--call spacing-reset"/>
+                                    <ui:Label text="Call" class="contacts-action-label spacing-reset"/>
+                                </ui:Button>
+                            </ui:VisualElement>
+                            <ui:VisualElement class="contacts-detail-divider"/>
+                            <ui:VisualElement name="ContactInformationSection" class="contacts-detail-section">
+                                <ui:Label text="CONTACT INFORMATION" class="contacts-detail-heading spacing-reset"/>
+                                <ui:VisualElement name="ContactInformationContainer" class="contacts-detail-fields"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement name="PersonalInformationSection" class="contacts-detail-section">
+                                <ui:Label text="PERSONAL INFORMATION" class="contacts-detail-heading spacing-reset"/>
+                                <ui:VisualElement name="PersonalInformationContainer" class="contacts-detail-fields"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement name="NotesSection" class="contacts-detail-section">
+                                <ui:Label text="NOTES" class="contacts-detail-heading spacing-reset"/>
+                                <ui:Label name="NotesLabel" text="" class="contacts-notes spacing-reset"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement name="ContactGroupsSection" class="contacts-detail-section">
+                                <ui:Label text="GROUPS" class="contacts-detail-heading spacing-reset"/>
+                                <ui:VisualElement name="ContactGroupsContainer" class="contacts-contact-groups"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:ScrollView>
+                    <ui:VisualElement name="NoContactSelectedState" class="contacts-no-selection">
+                        <ui:VisualElement class="contacts-no-selection-icon-area">
+                            <ui:Image class="contacts-no-selection-icon" style="background-image: resource(&quot;Icons/Apps/Contacts/Person/person_64dp_FFFFFF_FILL0_wght400_GRAD0_opsz48&quot;);"/>
+                        </ui:VisualElement>
+                        <ui:Label text="Select a contact" class="contacts-no-selection-title spacing-reset"/>
+                        <ui:Label text="Choose a contact from the list to view their information." class="contacts-no-selection-description spacing-reset"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
+        <ui:VisualElement name="WindowFooter" class="footer" style="display: none;"/>
     </ui:VisualElement>
 </ui:UXML>

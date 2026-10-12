@@ -5,78 +5,129 @@ namespace Atlas.Presentation.SOS.Contacts
 {
     public sealed class ContactsViewBuilder
     {
-        public VisualElement BuildContactItem(
+        public Button BuildContactItem(
             ContactData contact,
             bool selected,
             Action<ContactData> onSelected)
         {
-            VisualElement root = new();
+            if (contact == null)
+                throw new ArgumentNullException(nameof(contact));
+
+            Button root = new()
+            {
+                text = string.Empty,
+                tooltip = contact.DisplayName
+            };
+
+            root.AddToClassList("spacing-reset");
             root.AddToClassList("contact-item");
+            root.EnableInClassList("contact-item--selected", selected);
 
-            if (selected)
-                root.AddToClassList("contact-item--selected");
+            VisualElement avatar = new()
+            {
+                pickingMode = PickingMode.Ignore
+            };
 
-            VisualElement avatar = new();
             avatar.AddToClassList("contact-item-avatar");
 
             if (contact.ProfileImage != null)
             {
-                avatar.style.backgroundImage = new StyleBackground(contact.ProfileImage);
+                avatar.style.backgroundImage =
+                    new StyleBackground(contact.ProfileImage);
             }
             else
             {
-                Label initials = new(contact.Initials);
-                initials.AddToClassList("contact-item-initials");
-                avatar.Add(initials);
+                avatar.Add(BuildLabel(
+                    contact.Initials,
+                    "contact-item-initials"));
             }
 
-            VisualElement text = new();
-            text.AddToClassList("contact-item-content");
+            VisualElement content = new()
+            {
+                pickingMode = PickingMode.Ignore
+            };
 
-            Label name = new(contact.DisplayName);
-            name.AddToClassList("contact-item-name");
+            content.AddToClassList("contact-item-content");
+
+            content.Add(BuildLabel(
+                contact.DisplayName,
+                "contact-item-name"));
 
             string secondaryText = GetSecondaryText(contact);
-            Label secondary = new(secondaryText);
-            secondary.AddToClassList("contact-item-secondary");
-
-            text.Add(name);
 
             if (!string.IsNullOrWhiteSpace(secondaryText))
-                text.Add(secondary);
-
-            Label favorite = new(contact.IsFavorite ? "★" : "");
-            favorite.AddToClassList("contact-item-favorite");
+            {
+                content.Add(BuildLabel(
+                    secondaryText,
+                    "contact-item-secondary"));
+            }
 
             root.Add(avatar);
-            root.Add(text);
-            root.Add(favorite);
+            root.Add(content);
 
-            root.RegisterCallback<ClickEvent>(_ => onSelected?.Invoke(contact));
+            if (contact.IsFavorite)
+            {
+                Image favoriteIcon = new()
+                {
+                    pickingMode = PickingMode.Ignore
+                };
+
+                favoriteIcon.AddToClassList("contact-item-favorite");
+                root.Add(favoriteIcon);
+            }
+
+            // Button supports pointer clicks and keyboard activation.
+            root.clicked += () => onSelected?.Invoke(contact);
 
             return root;
         }
 
-        public VisualElement BuildGroupItem(
-            ContactGroup group,
-            int count,
-            bool selected,
-            Action<ContactGroup> onSelected)
+        public Button BuildGroupItem(
+    ContactGroup group,
+    int count,
+    bool selected,
+    Action<ContactGroup> onSelected)
         {
-            Button button = new();
+            Button button = new()
+            {
+                text = string.Empty,
+                tooltip = $"{group}: {count} contacts"
+            };
+
+            button.AddToClassList("spacing-reset");
             button.AddToClassList("contacts-group-button");
 
-            if (selected)
-                button.AddToClassList("contacts-group-button--active");
+            button.EnableInClassList(
+                "contacts-group-button--active",
+                selected);
 
-            Label name = new(group.ToString());
-            name.AddToClassList("contacts-group-name");
+            string iconClass = group switch
+            {
+                ContactGroup.Friends => "contacts-group-icon--friends",
+                ContactGroup.Work => "contacts-group-icon--work",
+                _ => null
+            };
 
-            Label countLabel = new(count.ToString());
-            countLabel.AddToClassList("contacts-group-count");
+            if (iconClass != null)
+            {
+                Image icon = new()
+                {
+                    pickingMode = PickingMode.Ignore
+                };
 
-            button.Add(name);
-            button.Add(countLabel);
+                icon.AddToClassList("contacts-group-icon");
+                icon.AddToClassList(iconClass);
+                button.Add(icon);
+            }
+
+            button.Add(BuildLabel(
+                group.ToString(),
+                "contacts-group-name"));
+
+            button.Add(BuildLabel(
+                count.ToString(),
+                "contacts-group-count"));
+
             button.clicked += () => onSelected?.Invoke(group);
 
             return button;
@@ -87,23 +138,33 @@ namespace Atlas.Presentation.SOS.Contacts
             VisualElement root = new();
             root.AddToClassList("contact-detail-field");
 
-            Label heading = new(label);
-            heading.AddToClassList("contact-detail-field-label");
+            root.Add(BuildLabel(
+                label,
+                "contact-detail-field-label"));
 
-            Label content = new(value);
-            content.AddToClassList("contact-detail-field-value");
-
-            root.Add(heading);
-            root.Add(content);
+            root.Add(BuildLabel(
+                value,
+                "contact-detail-field-value"));
 
             return root;
         }
 
         public VisualElement BuildTag(string text)
         {
-            Label tag = new(text);
-            tag.AddToClassList("contact-tag");
-            return tag;
+            return BuildLabel(text, "contact-tag");
+        }
+
+        private static Label BuildLabel(string text, string className)
+        {
+            Label label = new(text ?? string.Empty)
+            {
+                pickingMode = PickingMode.Ignore
+            };
+
+            label.AddToClassList("spacing-reset");
+            label.AddToClassList(className);
+
+            return label;
         }
 
         private static string GetSecondaryText(ContactData contact)

@@ -10,10 +10,42 @@ namespace Atlas.Presentation.SOS.Contacts
         private readonly ContactsBinder binder;
         private readonly ContactsViewBuilder builder;
 
-        public ContactsView(ContactsBinder binder, ContactsViewBuilder builder)
+        private readonly List<(ContactData Contact, Button Button)> contactRows = new();
+        private readonly Dictionary<ContactGroup, Button> groupButtons = new();
+
+        public ContactsView(
+            ContactsBinder binder,
+            ContactsViewBuilder builder)
         {
-            this.binder = binder;
-            this.builder = builder;
+            this.binder = binder ?? throw new ArgumentNullException(nameof(binder));
+            this.builder = builder ?? throw new ArgumentNullException(nameof(builder));
+        }
+
+        public void ConfigureUnavailableActions()
+        {
+            Disable(
+                binder.RecentlyAddedButton,
+                "Recently Added is unavailable because contacts do not store an added date.");
+
+            Disable(binder.NewContactButton, "Creating contacts is not implemented yet.");
+            Disable(binder.NewGroupButton, "Creating groups is not implemented yet.");
+            Disable(binder.SettingsButton, "Contact settings are not implemented yet.");
+
+            Disable(
+                binder.FavoriteContactButton,
+                "Favorite status is currently configured in the ContactLibrary asset.");
+
+            Disable(binder.EditContactButton, "Editing contacts is not implemented yet.");
+            Disable(binder.MoreContactButton, "Additional contact actions are not implemented yet.");
+            Disable(binder.MessageContactButton, "Messaging from Contacts is not implemented yet.");
+            Disable(binder.EmailContactButton, "Email from Contacts is not implemented yet.");
+            Disable(binder.CallContactButton, "Calling from Contacts is not implemented yet.");
+
+            ConfigureScrollView(binder.GroupsScrollView);
+            ConfigureScrollView(binder.ContactsScrollView);
+            ConfigureScrollView(binder.ContactDetailsScrollView);
+
+            binder.ProfileImage.scaleMode = ScaleMode.ScaleAndCrop;
         }
 
         public void SetCounts(int allContacts, int favorites)
@@ -25,19 +57,35 @@ namespace Atlas.Presentation.SOS.Contacts
         public void SetListHeader(string title, int count)
         {
             binder.ListTitleLabel.text = title;
-            binder.ListCountLabel.text = count == 1 ? "1 contact" : $"{count} contacts";
+            binder.ListCountLabel.text = count == 1
+                ? "1 contact"
+                : $"{count} contacts";
         }
 
         public void SetSearchText(string value)
         {
-            binder.SearchField.SetValueWithoutNotify(value ?? string.Empty);
+            string search = value ?? string.Empty;
+            binder.SearchField.SetValueWithoutNotify(search);
+            SetSearchState(search);
+        }
+
+        public void SetSearchState(string value)
+        {
+            binder.ClearSearchButton.SetEnabled(!string.IsNullOrEmpty(value));
         }
 
         public void SetSortMode(ContactsSortMode sortMode)
         {
-            binder.SortButton.text = sortMode == ContactsSortMode.FirstNameAscending
-                ? "A–Z  ▾"
-                : "Last Name  ▾";
+            bool byFirstName = sortMode == ContactsSortMode.FirstNameAscending;
+
+            // To Do: set better sort system
+            binder.SortButton.text = byFirstName
+                ? "First Name ▾"
+                : "Last Name ▾";
+
+            binder.SortButton.tooltip = byFirstName
+                ? "Sorted by first name. Click to sort by last name."
+                : "Sorted by last name. Click to sort by first name.";
         }
 
         public void SetNavigation(
@@ -55,6 +103,14 @@ namespace Atlas.Presentation.SOS.Contacts
             binder.RecentlyAddedButton.EnableInClassList(
                 "contacts-nav-button--active",
                 filter == ContactsFilter.RecentlyAdded);
+
+            foreach (KeyValuePair<ContactGroup, Button> entry in groupButtons)
+            {
+                entry.Value.EnableInClassList(
+                    "contacts-group-button--active",
+                    filter == ContactsFilter.Group &&
+                    entry.Key == selectedGroup);
+            }
         }
 
         public void RenderGroups(
@@ -64,27 +120,69 @@ namespace Atlas.Presentation.SOS.Contacts
             Action<ContactGroup> onSelected)
         {
             binder.GroupsContainer.Clear();
+            groupButtons.Clear();
+
+            if (groups == null)
+                return;
 
             foreach (ContactGroup group in groups)
             {
-                VisualElement element = builder.BuildGroupItem(
+                if (group == ContactGroup.None || groupButtons.ContainsKey(group))
+                    continue;
+
+                Button button = builder.BuildGroupItem(
                     group,
-                    countProvider(group),
+                    countProvider?.Invoke(group) ?? 0,
                     group == selectedGroup,
                     onSelected);
 
-                binder.GroupsContainer.Add(element);
+                groupButtons.Add(group, button);
+                binder.GroupsContainer.Add(button);
             }
         }
 
         public void RenderContacts(
             IReadOnlyList<ContactData> contacts,
             ContactData selectedContact,
-            Action<ContactData> onSelected)
+            Action<ContactData> onSelected,
+            ContactsSortMode sortMode = ContactsSortMode.FirstNameAscending)
         {
             binder.ContactsContainer.Clear();
+            contactRows.Clear();
 
-            bool hasContacts = contacts != null && contacts.Count > 0;
+            if (contacts != null)
+            {
+                char? currentLetter = null;
+
+                foreach (ContactData contact in contacts)
+                {
+                    if (contact == null)
+                        continue;
+
+                    char letter = GetSectionLetter(contact, sortMode);
+
+                    if (currentLetter != letter)
+                    {
+                        currentLetter = letter;
+
+                        Label section = new(letter.ToString());
+                        section.AddToClassList("contact-list-section");
+                        section.pickingMode = PickingMode.Ignore;
+
+                        binder.ContactsContainer.Add(section);
+                    }
+
+                    Button row = builder.BuildContactItem(
+                        contact,
+                        ReferenceEquals(selectedContact, contact),
+                        onSelected);
+
+                    contactRows.Add((contact, row));
+                    binder.ContactsContainer.Add(row);
+                }
+            }
+
+            bool hasContacts = contactRows.Count > 0;
 
             binder.ContactsScrollView.style.display = hasContacts
                 ? DisplayStyle.Flex
@@ -93,30 +191,15 @@ namespace Atlas.Presentation.SOS.Contacts
             binder.ContactsEmptyState.style.display = hasContacts
                 ? DisplayStyle.None
                 : DisplayStyle.Flex;
+        }
 
-            if (!hasContacts)
-                return;
-
-            char? currentLetter = null;
-
-            foreach (ContactData contact in contacts)
+        public void SetSelectedContact(ContactData selectedContact)
+        {
+            foreach (var row in contactRows)
             {
-                char letter = GetSectionLetter(contact);
-
-                if (currentLetter != letter)
-                {
-                    currentLetter = letter;
-
-                    Label section = new(letter.ToString());
-                    section.AddToClassList("contact-list-section");
-                    binder.ContactsContainer.Add(section);
-                }
-
-                bool selected = selectedContact != null &&
-                                selectedContact.Id == contact.Id;
-
-                binder.ContactsContainer.Add(
-                    builder.BuildContactItem(contact, selected, onSelected));
+                row.Button.EnableInClassList(
+                    "contact-item--selected",
+                    ReferenceEquals(row.Contact, selectedContact));
             }
         }
 
@@ -135,140 +218,133 @@ namespace Atlas.Presentation.SOS.Contacts
             binder.ProfileSubtitleLabel.text = BuildSubtitle(contact);
             binder.ProfileInitialsLabel.text = contact.Initials;
 
-            if (contact.ProfileImage != null)
-            {
-                binder.ProfileImage.image = contact.ProfileImage.texture;
-                binder.ProfileImage.style.display = DisplayStyle.Flex;
-                binder.ProfileInitialsLabel.style.display = DisplayStyle.None;
-            }
-            else
-            {
-                binder.ProfileImage.image = null;
-                binder.ProfileImage.style.display = DisplayStyle.None;
-                binder.ProfileInitialsLabel.style.display = DisplayStyle.Flex;
-            }
+            // Assign the sprite so packed sprites retain their own UV region.
+            binder.ProfileImage.image = null;
+            binder.ProfileImage.sprite = contact.ProfileImage;
 
-            binder.FavoriteContactButton.text = contact.IsFavorite ? "★" : "☆";
+            bool hasImage = contact.ProfileImage != null;
 
-            RenderProfileTags(contact);
+            binder.ProfileImage.style.display = hasImage
+                ? DisplayStyle.Flex
+                : DisplayStyle.None;
+
+            binder.ProfileInitialsLabel.style.display = hasImage
+                ? DisplayStyle.None
+                : DisplayStyle.Flex;
+
+            binder.FavoriteContactButton.text = string.Empty;
+            binder.FavoriteContactButton.EnableInClassList(
+                "contacts-favorite-button--active",
+                contact.IsFavorite);
+
+            binder.FavoriteContactButton.tooltip = contact.IsFavorite
+                ? "Remove from favorites"
+                : "Add to favorites";
+
+            RenderGroupsAsTags(binder.ProfileTagsContainer, contact.Groups);
             RenderContactInformation(contact);
             RenderPersonalInformation(contact);
             RenderNotes(contact);
             RenderContactGroups(contact);
 
-            binder.MessageContactButton.SetEnabled(
-                !string.IsNullOrWhiteSpace(contact.MobilePhone));
-
-            binder.EmailContactButton.SetEnabled(
-                !string.IsNullOrWhiteSpace(contact.PrimaryEmail));
-
-            binder.CallContactButton.SetEnabled(
-                !string.IsNullOrWhiteSpace(contact.PrimaryPhone));
+            // Action buttons remain disabled until their handlers are implemented.
         }
 
         public void ShowNoSelection()
         {
             binder.ContactDetailsScrollView.style.display = DisplayStyle.None;
             binder.NoContactSelectedState.style.display = DisplayStyle.Flex;
+
+            binder.ProfileImage.image = null;
+            binder.ProfileImage.sprite = null;
         }
 
-        private void RenderProfileTags(ContactData contact)
+        public void Clear()
         {
+            contactRows.Clear();
+            groupButtons.Clear();
+
+            binder.ContactsContainer.Clear();
+            binder.GroupsContainer.Clear();
             binder.ProfileTagsContainer.Clear();
+            binder.ContactInformationContainer.Clear();
+            binder.PersonalInformationContainer.Clear();
+            binder.ContactGroupsContainer.Clear();
 
-            foreach (ContactGroup group in contact.Groups)
-            {
-                if (group == ContactGroup.None)
-                    continue;
-
-                binder.ProfileTagsContainer.Add(builder.BuildTag(group.ToString()));
-            }
+            binder.ProfileImage.image = null;
+            binder.ProfileImage.sprite = null;
         }
 
         private void RenderContactInformation(ContactData contact)
         {
-            binder.ContactInformationContainer.Clear();
+            VisualElement container = binder.ContactInformationContainer;
+            container.Clear();
 
-            AddField(
-                binder.ContactInformationContainer,
-                "Mobile",
-                contact.MobilePhone);
+            AddField(container, "Mobile", contact.MobilePhone);
+            AddField(container, "Home", contact.HomePhone);
+            AddField(container, "Work", contact.WorkPhone);
+            AddField(container, "Personal Email", contact.PersonalEmail);
+            AddField(container, "Work Email", contact.WorkEmail);
 
-            AddField(
-                binder.ContactInformationContainer,
-                "Home",
-                contact.HomePhone);
-
-            AddField(
-                binder.ContactInformationContainer,
-                "Work",
-                contact.WorkPhone);
-
-            AddField(
-                binder.ContactInformationContainer,
-                "Personal Email",
-                contact.PersonalEmail);
-
-            AddField(
-                binder.ContactInformationContainer,
-                "Work Email",
-                contact.WorkEmail);
-
-            binder.ContactInformationSection.style.display =
-                binder.ContactInformationContainer.childCount > 0
-                    ? DisplayStyle.Flex
-                    : DisplayStyle.None;
+            SetSectionVisible(
+                binder.ContactInformationSection,
+                container.childCount > 0);
         }
 
         private void RenderPersonalInformation(ContactData contact)
         {
-            binder.PersonalInformationContainer.Clear();
+            VisualElement container = binder.PersonalInformationContainer;
+            container.Clear();
 
-            AddField(
-                binder.PersonalInformationContainer,
-                "Birthday",
-                contact.Birthday);
+            AddField(container, "Nickname", contact.Nickname);
+            AddField(container, "Birthday", contact.Birthday);
+            AddField(container, "Address", contact.Address);
 
-            AddField(
-                binder.PersonalInformationContainer,
-                "Address",
-                contact.Address);
-
-            binder.PersonalInformationSection.style.display =
-                binder.PersonalInformationContainer.childCount > 0
-                    ? DisplayStyle.Flex
-                    : DisplayStyle.None;
+            SetSectionVisible(
+                binder.PersonalInformationSection,
+                container.childCount > 0);
         }
 
         private void RenderNotes(ContactData contact)
         {
             bool hasNotes = !string.IsNullOrWhiteSpace(contact.Notes);
 
-            binder.NotesSection.style.display = hasNotes
-                ? DisplayStyle.Flex
-                : DisplayStyle.None;
-
             binder.NotesLabel.text = hasNotes
                 ? contact.Notes
                 : string.Empty;
+
+            SetSectionVisible(binder.NotesSection, hasNotes);
         }
 
         private void RenderContactGroups(ContactData contact)
         {
-            binder.ContactGroupsContainer.Clear();
+            RenderGroupsAsTags(
+                binder.ContactGroupsContainer,
+                contact.Groups);
 
-            foreach (ContactGroup group in contact.Groups)
+            SetSectionVisible(
+                binder.ContactGroupsSection,
+                binder.ContactGroupsContainer.childCount > 0);
+        }
+
+        private void RenderGroupsAsTags(
+            VisualElement container,
+            IReadOnlyList<ContactGroup> groups)
+        {
+            container.Clear();
+
+            if (groups == null)
+                return;
+
+            HashSet<ContactGroup> renderedGroups = new();
+
+            foreach (ContactGroup group in groups)
             {
-                if (group == ContactGroup.None)
+                if (group == ContactGroup.None || !renderedGroups.Add(group))
                     continue;
 
-                binder.ContactGroupsContainer.Add(builder.BuildTag(group.ToString()));
+                container.Add(builder.BuildTag(group.ToString()));
             }
-
-            binder.ContactGroupsSection.style.display =
-                binder.ContactGroupsContainer.childCount > 0
-                    ? DisplayStyle.Flex
-                    : DisplayStyle.None;
         }
 
         private void AddField(
@@ -276,17 +352,39 @@ namespace Atlas.Presentation.SOS.Contacts
             string label,
             string value)
         {
-            if (string.IsNullOrWhiteSpace(value))
-                return;
+            if (!string.IsNullOrWhiteSpace(value))
+                container.Add(builder.BuildDetailField(label, value));
+        }
 
-            container.Add(builder.BuildDetailField(label, value));
+        private static void SetSectionVisible(
+            VisualElement section,
+            bool visible)
+        {
+            section.style.display = visible
+                ? DisplayStyle.Flex
+                : DisplayStyle.None;
+        }
+
+        private static void Disable(Button button, string tooltip)
+        {
+            button.tooltip = tooltip;
+            button.SetEnabled(false);
+        }
+
+        private static void ConfigureScrollView(ScrollView scrollView)
+        {
+            scrollView.mode = ScrollViewMode.Vertical;
+            scrollView.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
+            scrollView.verticalScrollerVisibility = ScrollerVisibility.Auto;
         }
 
         private static string BuildSubtitle(ContactData contact)
         {
             if (!string.IsNullOrWhiteSpace(contact.JobTitle) &&
                 !string.IsNullOrWhiteSpace(contact.Organization))
+            {
                 return $"{contact.JobTitle} · {contact.Organization}";
+            }
 
             if (!string.IsNullOrWhiteSpace(contact.JobTitle))
                 return contact.JobTitle;
@@ -294,15 +392,20 @@ namespace Atlas.Presentation.SOS.Contacts
             return contact.Organization ?? string.Empty;
         }
 
-        private static char GetSectionLetter(ContactData contact)
+        private static char GetSectionLetter(
+            ContactData contact,
+            ContactsSortMode sortMode)
         {
-            string value = !string.IsNullOrWhiteSpace(contact.FirstName)
-                ? contact.FirstName
-                : contact.DisplayName;
+            string value = ContactsEngine.GetSortName(contact, sortMode);
 
-            return string.IsNullOrWhiteSpace(value)
-                ? '#'
-                : char.ToUpperInvariant(value[0]);
+            if (string.IsNullOrWhiteSpace(value))
+                return '#';
+
+            char firstCharacter = char.ToUpperInvariant(value[0]);
+
+            return char.IsLetter(firstCharacter)
+                ? firstCharacter
+                : '#';
         }
     }
 }
