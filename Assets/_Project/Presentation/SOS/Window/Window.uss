@@ -128,3 +128,5 @@
 .window-button--restore #ExitFullscreenIcon {
     display: flex;
 }
+
+

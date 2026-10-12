@@ -951,7 +951,7 @@ Image.contacts-action-icon {
 
 .contacts-action-icon--email {
     /* Replace with your email icon URL. */
-    background-image: url("Icons/Apps/Contacts/Email/mail_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40.png");
+    background-image: resource("Icons/Apps/Contacts/Email/mail_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40");
 }
 
 .contacts-action-icon--call {

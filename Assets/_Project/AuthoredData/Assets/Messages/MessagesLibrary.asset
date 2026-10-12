@@ -12,4 +12,160 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adf4851ee8fdde846934f84e233f83dd, type: 3}
   m_Name: MessagesLibrary
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Messages.MessagesLibrary
-  conversations: []
+  conversations:
+  - id: priya-shah
+    contactName: Priya Shah
+    contactAvatar: {fileID: 6882940414357336427, guid: a1b2fa014c149ff42beeb0f834b4391b, type: 3}
+    status: Online
+    initialMessages:
+    - id: priya-1
+      senderName: Priya Shah
+      text: Are you coming over tonight?
+      timestamp: 18:04
+      direction: 0
+      initialReadState: 2
+    - id: priya-2
+      senderName: You
+      text: Depends...
+      timestamp: 18:06
+      direction: 1
+      initialReadState: 2
+    - id: priya-3
+      senderName: You
+      text: Is your brother cooking again?
+      timestamp: 18:06
+      direction: 1
+      initialReadState: 2
+    - id: priya-4
+      senderName: Priya Shah
+      text: "We ordered pizza. You\u2019re safe."
+      timestamp: 18:07
+      direction: 0
+      initialReadState: 2
+    - id: priya-5
+      senderName: You
+      text: Then yes. ETA 20 min.
+      timestamp: 18:07
+      direction: 1
+      initialReadState: 2
+  - id: alex-unknown
+    contactName: Unsaved number
+    contactAvatar: {fileID: 21300000, guid: 2b744a57dcf1ef84383b0e94a8bdafd2, type: 3}
+    status: Offline
+    initialMessages:
+    - id: alex-1
+      senderName: Unknown
+      text: "Hey, it\u2019s Alex from yesterday. Jamie gave me your number."
+      timestamp: 11:42
+      direction: 0
+      initialReadState: 2
+    - id: alex-2
+      senderName: You
+      text: Hey! Did you find your notebook?
+      timestamp: 11:44
+      direction: 1
+      initialReadState: 2
+    - id: alex-3
+      senderName: Unknown
+      text: "Yeah, I went back to the caf\xE9 after we all left. Luckily, it was
+        still there."
+      timestamp: 11:44
+      direction: 0
+      initialReadState: 2
+    - id: alex-4
+      senderName: You
+      text: Classic.
+      timestamp: 
+      direction: 0
+      initialReadState: 0
+    - id: alex-5
+      senderName: Unknown
+      text: "Are you free Friday? We\u2019re meeting at the same place around six."
+      timestamp: 
+      direction: 0
+      initialReadState: 0
+  - id: spam
+    contactName: Unknown
+    contactAvatar: {fileID: 21300000, guid: 2b744a57dcf1ef84383b0e94a8bdafd2, type: 3}
+    status: Do not disturb
+    initialMessages:
+    - id: spam-1
+      senderName: Unknown
+      text: Your parcel could not be delivered because the address is incomplete.
+      timestamp: 08:21
+      direction: 0
+      initialReadState: 0
+    - id: spam-2
+      senderName: Unknown
+      text: A redelivery fee of $1.49 is required. Reply YES to receive your payment
+        link.
+      timestamp: 08:21
+      direction: 0
+      initialReadState: 0
+    - id: spam-3
+      senderName: Unknown
+      text: 'FINAL REMINDER: Your parcel will be returned if payment is not received
+        today.'
+      timestamp: 10:03
+      direction: 0
+      initialReadState: 0
+  - id: maya-chen
+    contactName: Maya Chen
+    contactAvatar: {fileID: 3329167552241617970, guid: 91de436ed9ddc9248a59a6f1f5ccf378, type: 3}
+    status: Online
+    initialMessages:
+    - id: maya-1
+      senderName: Maya
+      text: Morning! Did you get a chance to look at the revised brief?
+      timestamp: 09:12
+      direction: 0
+      initialReadState: 2
+    - id: maya-2
+      senderName: You
+      text: Just opened it. Are we still meeting at 10?
+      timestamp: 09:13
+      direction: 1
+      initialReadState: 0
+    - id: maya-3
+      senderName: Maya
+      text: "Yep, same room. Bring whatever you have so far, even if it\u2019s rough.
+        We mostly need to agree on the direction today."
+      timestamp: 09:14
+      direction: 0
+      initialReadState: 0
+  - id: daniel-reyes
+    contactName: Daniel Reyes
+    contactAvatar: {fileID: 3146629883168243156, guid: 429a17b26eed50b4ca99a454719c079c, type: 3}
+    status: Online
+    initialMessages:
+    - id: danny-1
+      senderName: Danny
+      text: Your access should be working now.
+      timestamp: 14:32
+      direction: 0
+      initialReadState: 2
+    - id: danny-2
+      senderName: You
+      text: Still getting the same error.
+      timestamp: 14:33
+      direction: 1
+      initialReadState: 2
+    - id: danny-3
+      senderName: Danny
+      text: Try signing out completely, then back in. The old session might still
+        be cached.
+      timestamp: 14:33
+      direction: 0
+      initialReadState: 0
+    - id: danny-4
+      senderName: You
+      text: That did it, thanks!
+      timestamp: 14:35
+      direction: 1
+      initialReadState: 2
+    - id: danny-5
+      senderName: Danny
+      text: Nice. Let me know if anything else acts up.
+      timestamp: 14:35
+      direction: 0
+      initialReadState: 2
