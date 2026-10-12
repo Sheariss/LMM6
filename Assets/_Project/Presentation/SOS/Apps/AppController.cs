@@ -182,7 +182,7 @@ namespace Atlas.Presentation.SOS.Apps
                 root = app.AppUXML.CloneTree();
 
                 VisualElement shell =
-                    root.Q<VisualElement>("CalculatorRoot");
+                    root.Q<VisualElement>("WindowRoot");
 
                 VisualElement content =
                     root.Q<VisualElement>("WindowContent");

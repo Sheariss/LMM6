@@ -12,4 +12,112 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53c11628cb50a894eb7fa8cdbf059c06, type: 3}
   m_Name: ContactLibrary
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Contacts.ContactLibrary
-  contacts: []
+  contacts:
+  - id: maya-chen
+    firstName: Maya
+    middleName: 
+    lastName: Chen
+    nickname: 
+    profileImage: {fileID: 3329167552241617970, guid: 91de436ed9ddc9248a59a6f1f5ccf378, type: 3}
+    jobTitle: Project Lead
+    organization: Bluehaven Labs
+    mobilePhone: +1 202-555-0101
+    homePhone: 
+    workPhone: 
+    personalEmail: maya.chen@orbilo.com
+    workEmail: 
+    birthday: 
+    address: 
+    notes: 
+    isFavorite: 1
+    groups: 03000000
+  - id: daniel-reyes
+    firstName: Daniel
+    middleName: 
+    lastName: Reyes
+    nickname: Danny
+    profileImage: {fileID: 3146629883168243156, guid: 429a17b26eed50b4ca99a454719c079c, type: 3}
+    jobTitle: IT Support
+    organization: Northstar Studio
+    mobilePhone: +1 202-555-0102
+    homePhone: 
+    workPhone: 
+    personalEmail: danny.reyes@orbilo.com
+    workEmail: 
+    birthday: 
+    address: 
+    notes: 
+    isFavorite: 1
+    groups: 0300000002000000
+  - id: priya-shah
+    firstName: Priya
+    middleName: 
+    lastName: Shah
+    nickname: 
+    profileImage: {fileID: 6882940414357336427, guid: a1b2fa014c149ff42beeb0f834b4391b, type: 3}
+    jobTitle: 
+    organization: 
+    mobilePhone: +1 202-555-0103
+    homePhone: 
+    workPhone: 
+    personalEmail: 
+    workEmail: 
+    birthday: 
+    address: 
+    notes: 
+    isFavorite: 0
+    groups: 
+  - id: olly-brooks
+    firstName: Oliver
+    middleName: 
+    lastName: Brooks
+    nickname: 
+    profileImage: {fileID: -5243747422034102828, guid: bb149169a385fce4283a7e8898b8b908, type: 3}
+    jobTitle: Freelance Photographer
+    organization: 
+    mobilePhone: 
+    homePhone: 
+    workPhone: +1 202-555-0104
+    personalEmail: 
+    workEmail: ollybrooks-photography@orbilo.com
+    birthday: 
+    address: 
+    notes: 
+    isFavorite: 1
+    groups: 03000000
+  - id: lucas-bennett
+    firstName: Lucas
+    middleName: 
+    lastName: Bennett
+    nickname: Luke
+    profileImage: {fileID: 0}
+    jobTitle: 
+    organization: 
+    mobilePhone: 
+    homePhone: 
+    workPhone: 
+    personalEmail: luke.bennett@orbilo.com
+    workEmail: 
+    birthday: 
+    address: 
+    notes: 
+    isFavorite: 1
+    groups: 02000000
+  - id: nora-williams
+    firstName: Nora
+    middleName: 
+    lastName: Williams
+    nickname: 
+    profileImage: {fileID: -5462451880630557980, guid: dfc212cb7b0e9bc4288460a46d24af3c, type: 3}
+    jobTitle: 
+    organization: 
+    mobilePhone: 
+    homePhone: 
+    workPhone: 
+    personalEmail: nora.williams@orbilo.com
+    workEmail: 
+    birthday: 
+    address: 
+    notes: 
+    isFavorite: 1
+    groups: 02000000

@@ -1,3 +1,4 @@
+using System;
 using Atlas.Utils;
 using UnityEngine.UIElements;
 
@@ -6,6 +7,7 @@ namespace Atlas.Presentation.SOS.WebBrowser
     public sealed class WebBrowserBinder : UIBinder
     {
         // -------------------- TAB BAR --------------------
+        public VisualElement WindowHeader { get; }
         public VisualElement BrowserTabBar { get; }
         public VisualElement BrowserTabsContainer { get; }
         public VisualElement BrowserTab { get; }
@@ -47,15 +49,32 @@ namespace Atlas.Presentation.SOS.WebBrowser
         public WebBrowserBinder(VisualElement root)
         {
 
+            // Find this browser instance's enclosing window.
+            VisualElement windowRoot = root;
+
+            while (windowRoot != null && windowRoot.name != "WindowRoot")
+                windowRoot = windowRoot.parent;
+
+            if (windowRoot == null)
+            {
+                throw new InvalidOperationException(
+                    "[WebBrowserBinder] Could not find the enclosing WindowRoot.");
+            }
+
+            WindowHeader = Bind<VisualElement>(windowRoot, "WindowHeader");
+
+            if (WindowHeader == null)
+                return;
+
             // Tab Bar
-            BrowserTabBar = Bind<VisualElement>(root, "BrowserTabBar");
-            BrowserTabsContainer = Bind<VisualElement>(root, "BrowserTabsContainer");
-            BrowserTab = Bind<VisualElement>(root, "BrowserTab");
-            BrowserTabFavicon = Bind<VisualElement>(root, "BrowserTabFavicon");
-            BrowserTabTitle = Bind<Label>(root, "BrowserTabTitle");
-            BrowserTabCloseButton = Bind<Button>(root, "BrowserTabCloseButton");
-            BrowserAddTabButton = Bind<Button>(root, "BrowserAddTabButton");
-            BrowserTabBarSpacer = Bind<VisualElement>(root, "BrowserTabBarSpacer");
+            BrowserTabBar = Bind<VisualElement>(WindowHeader, "BrowserTabBar");
+            BrowserTabsContainer = Bind<VisualElement>(WindowHeader, "BrowserTabsContainer");
+            BrowserTab = Bind<VisualElement>(WindowHeader, "BrowserTab");
+            BrowserTabFavicon = Bind<VisualElement>(WindowHeader, "BrowserTabFavicon");
+            BrowserTabTitle = Bind<Label>(WindowHeader, "BrowserTabTitle");
+            BrowserTabCloseButton = Bind<Button>(WindowHeader, "BrowserTabCloseButton");
+            BrowserAddTabButton = Bind<Button>(WindowHeader, "BrowserAddTabButton");
+            BrowserTabBarSpacer = Bind<VisualElement>(WindowHeader, "BrowserTabBarSpacer");
 
             // Navigation
             BrowserNavigationBar = Bind<VisualElement>(root, "BrowserNavigationBar");
