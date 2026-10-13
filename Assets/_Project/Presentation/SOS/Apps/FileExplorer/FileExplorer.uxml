@@ -4,83 +4,158 @@
     <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
     <Style src="project://database/Assets/_Project/Presentation/SOS/Window/Window.uss?fileID=7433441132597879392&amp;guid=00c704ca2f7eb4f469f7b2b139bf1194&amp;type=3#Window"/>
     <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/FileExplorer/FileExplorer.uss?fileID=7433441132597879392&amp;guid=00fbcb08e91d14a4c849c85cf4087ea2&amp;type=3#FileExplorer"/>
-    <ui:VisualElement name="WindowRoot" class="window">
-        <ui:VisualElement name="WindowHeader" class="flex-row header" style="opacity: 1;">
-            <ui:VisualElement name="WindowIcon" class="header-icon"/>
-            <ui:Label text="Window Name" name="WindowTitle" class="spacing-reset header-title"/>
+    <ui:VisualElement name="WindowRoot" class="window fe-window">
+        <ui:VisualElement name="WindowHeader" class="flex-row header fe-window-header">
+            <ui:VisualElement name="WindowIcon" style="display: none;"/>
+            <ui:Label name="WindowTitle" style="display: none;"/>
+            <ui:VisualElement name="FE-TabBar" class="fe-tab-bar">
+                <ui:VisualElement name="FE-TabsContainer" class="fe-tabs"/>
+                <ui:Button name="FE-NewTabButton" tooltip="New tab" class="fe-new-tab-button">
+                    <ui:Image picking-mode="Ignore" class="fe-icon" style="background-image: resource(&quot;Icons/Math/Add/add_2_32dp&quot;);"/>
+                </ui:Button>
+                <ui:VisualElement class="fe-tab-spacer"/>
+            </ui:VisualElement>
             <ui:GroupBox name="WindowControls" class="flex-row spacing-reset window-controls">
-                <ui:Button text="" name="WindowMinimizeButton" class="button-reset wc-button">
-                    <ui:Image name="MinimizeIcon" class="wc-btn-icon minimize-icon" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Minimize/remove_32dp_.png?fileID=21300000&amp;guid=8ba13ee49df28774c813618f06427c37&amp;type=3#remove_32dp_&quot;);"/>
+                <ui:Button name="WindowMinimizeButton" tooltip="Minimize" class="button-reset wc-button">
+                    <ui:Image name="MinimizeIcon" picking-mode="Ignore" class="wc-btn-icon minimize-icon" style="background-image: resource(&quot;Icons/UI/Minimize/remove_32dp_&quot;);"/>
                 </ui:Button>
-                <ui:Button text="" name="WindowMaximizeButton" class="button-reset wc-button">
-                    <ui:Image name="FullscreenIcon" class="wc-btn-icon window-maximize-icon" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Maximize-Exit/crop_square_32dp.png?fileID=21300000&amp;guid=2fe5b0aec98d3e84387083094b2987e4&amp;type=3#crop_square_32dp&quot;); display: flex;"/>
-                    <ui:Image name="ExitFullscreenIcon" class="wc-btn-icon window-maximize-icon" style="display: none; background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Maximize/filter_none_32dp.png?fileID=21300000&amp;guid=40a6434316977444baf5ceb2ad0f4953&amp;type=3#filter_none_32dp&quot;);"/>
+                <ui:Button name="WindowMaximizeButton" tooltip="Maximize" class="button-reset wc-button">
+                    <ui:Image name="FullscreenIcon" picking-mode="Ignore" class="wc-btn-icon window-maximize-icon" style="background-image: resource(&quot;Icons/UI/Maximize-Exit/crop_square_32dp&quot;); display: flex;"/>
+                    <ui:Image name="ExitFullscreenIcon" picking-mode="Ignore" class="wc-btn-icon window-maximize-icon" style="background-image: resource(&quot;Icons/UI/Maximize/filter_none_32dp&quot;); display: none;"/>
                 </ui:Button>
-                <ui:Button text="" name="WindowCloseButton" class="button-reset wc-button window-close-button">
-                    <ui:Image name="CloseIcon" class="wc-btn-icon" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Close/close_32dp.png?fileID=21300000&amp;guid=f388726a89c92bb42abb8d4656bb544d&amp;type=3#close_32dp&quot;);"/>
+                <ui:Button name="WindowCloseButton" tooltip="Close" class="button-reset wc-button window-close-button">
+                    <ui:Image name="CloseIcon" picking-mode="Ignore" class="wc-btn-icon" style="background-image: resource(&quot;Icons/UI/Close/close_32dp&quot;);"/>
                 </ui:Button>
             </ui:GroupBox>
         </ui:VisualElement>
-        <ui:VisualElement name="WindowContent" class="content"/>
-        <ui:VisualElement name="WindowFooter" class="footer"/>
-    </ui:VisualElement>
-    <ui:VisualElement name="FileExplorerRoot" class="file-explorer">
-        <ui:VisualElement name="FE-TabBar" class="fe-tab-bar">
-            <ui:VisualElement name="FE-TabsContainer" class="fe-tabs"/>
-            <ui:Button name="FE-NewTabButton" text="+" tooltip="New tab" class="fe-new-tab-button"/>
-        </ui:VisualElement>
-        <ui:VisualElement name="FE-NavigationBar" class="fe-navigation-bar">
-            <ui:VisualElement class="fe-navigation-controls">
-                <ui:Button name="FE-BackButton" text="‹" class="fe-nav-button"/>
-                <ui:Button name="FE-ForwardButton" text="›" class="fe-nav-button"/>
-                <ui:Button name="FE-UpButton" text="↑" class="fe-nav-button"/>
-            </ui:VisualElement>
-            <ui:VisualElement name="FE-BreadcrumbContainer" class="fe-breadcrumb-container"/>
-            <ui:VisualElement class="fe-search-container">
-                <ui:Label text="⌕" class="fe-search-icon"/>
-                <ui:TextField name="FE-SearchField" class="fe-search-field"/>
-            </ui:VisualElement>
-        </ui:VisualElement>
-        <ui:VisualElement name="FE-CommandBar" class="fe-command-bar">
-            <ui:Button name="FE-NewButton" text="New" class="fe-command-button fe-command-button--primary"/>
-            <ui:VisualElement class="fe-command-spacer"/>
-            <ui:Button name="FE-SortButton" text="Sort" class="fe-command-button"/>
-            <ui:Button name="FE-ViewButton" text="View" class="fe-command-button"/>
-            <ui:Button name="FE-FilterButton" text="Filter" class="fe-command-button"/>
-            <ui:Button name="FE-RefreshButton" text="↻" class="fe-command-icon-button"/>
-        </ui:VisualElement>
-        <ui:VisualElement class="fe-workspace">
-            <ui:ScrollView name="FE-SidebarScrollView" class="fe-sidebar">
-                <ui:Button name="FE-HomeButton" text="Home" class="fe-sidebar-item fe-sidebar-item--active"/>
-                <ui:Button name="FE-RecentButton" text="Recent" class="fe-sidebar-item"/>
-                <ui:Button name="FE-StarredButton" text="Starred" class="fe-sidebar-item"/>
-                <ui:Label text="LOCATIONS" class="fe-sidebar-heading"/>
-                <ui:Button name="FE-DesktopButton" text="Desktop" class="fe-sidebar-item"/>
-                <ui:Button name="FE-DocumentsButton" text="Documents" class="fe-sidebar-item"/>
-                <ui:Button name="FE-PicturesButton" text="Pictures" class="fe-sidebar-item"/>
-                <ui:Button name="FE-DownloadsButton" text="Downloads" class="fe-sidebar-item"/>
-            </ui:ScrollView>
-            <ui:VisualElement class="fe-main">
-                <ui:VisualElement class="fe-directory-header">
-                    <ui:VisualElement>
-                        <ui:Label name="FE-DirectoryTitle" text="Documents" class="fe-directory-title"/>
-                        <ui:Label name="FE-DirectorySubtitle" text="18 items" class="fe-directory-subtitle"/>
+        <ui:VisualElement name="WindowContent" class="content fe-window-content">
+            <ui:VisualElement name="FileExplorerRoot" class="file-explorer">
+                <ui:VisualElement name="FE-NavigationBar" class="fe-navigation-bar">
+                    <ui:VisualElement class="fe-navigation-controls">
+                        <ui:Button name="FE-BackButton" tooltip="Back" class="fe-nav-button">
+                            <ui:VisualElement picking-mode="Ignore" class="fe-icon fe-icon-back"/>
+                        </ui:Button>
+                        <ui:Button name="FE-ForwardButton" tooltip="Forward" class="fe-nav-button">
+                            <ui:VisualElement picking-mode="Ignore" class="fe-icon fe-icon-forward"/>
+                        </ui:Button>
+                        <ui:Button name="FE-UpButton" tooltip="Up one level" class="fe-nav-button">
+                            <ui:VisualElement picking-mode="Ignore" class="fe-icon fe-icon-up"/>
+                        </ui:Button>
+                        <ui:Button name="FE-RefreshButton" tooltip="Refresh" class="fe-nav-button">
+                            <ui:VisualElement picking-mode="Ignore" class="fe-icon fe-icon-refresh"/>
+                        </ui:Button>
                     </ui:VisualElement>
-                    <ui:VisualElement class="fe-directory-actions">
-                        <ui:Label name="FE-SortStatus" text="Name • Ascending" class="fe-sort-status"/>
+                    <ui:VisualElement
+                        name="FE-AddressBar"
+                        focusable="true"
+                        class="fe-address-bar">
+
+                        <ui:VisualElement
+                            name="FE-PathIcon"
+                            picking-mode="Ignore"
+                            class="fe-icon fe-path-icon fe-icon-desktop"/>
+
+                        <ui:VisualElement
+                            name="FE-BreadcrumbContainer"
+                            class="fe-breadcrumb-container"/>
+
+                        <ui:TextField
+                            name="FE-AddressField"
+                            multiline="false"
+                            class="fe-address-field"/>
+
+                        <ui:Label
+                            name="FE-AddressError"
+                            text="Folder not found"
+                            picking-mode="Ignore"
+                            class="fe-address-error"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="fe-search-container">
+                        <ui:VisualElement class="fe-search-entry">
+                            <ui:TextField name="FE-SearchField" tooltip="Search files" class="fe-search-field"/>
+                            <ui:Label name="FE-SearchPlaceholder" text="Search files" picking-mode="Ignore" class="fe-search-placeholder"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement picking-mode="Ignore" class="fe-icon fe-search-icon fe-icon-search"/>
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:ScrollView name="FE-ContentScrollView" class="fe-content-scroll">
-                    <ui:VisualElement name="FE-ContentContainer" class="fe-content fe-content--grid"/>
+                <ui:ScrollView name="FE-CommandBar" mode="Horizontal" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" class="fe-command-bar">
+                    <ui:VisualElement class="fe-command-items">
+                        <ui:Button name="FE-NewButton" tooltip="New" class="fe-command-button">
+                            <ui:VisualElement picking-mode="Ignore" class="fe-icon fe-icon-new"/>
+                            <ui:Label text="New" picking-mode="Ignore" class="fe-command-label"/>
+                            <ui:VisualElement picking-mode="Ignore" class="fe-chevron fe-icon-chevron"/>
+                        </ui:Button>
+                        <ui:VisualElement picking-mode="Ignore" class="fe-command-divider"/>
+                        <ui:Button name="FE-CutButton" tooltip="Cut" class="fe-command-icon-button">
+                            <ui:VisualElement picking-mode="Ignore" class="fe-icon fe-icon-cut"/>
+                        </ui:Button>
+                        <ui:Button name="FE-CopyButton" tooltip="Copy" class="fe-command-icon-button">
+                            <ui:VisualElement picking-mode="Ignore" class="fe-icon fe-icon-copy"/>
+                        </ui:Button>
+                        <ui:Button name="FE-PasteButton" tooltip="Paste" class="fe-command-icon-button">
+                            <ui:VisualElement picking-mode="Ignore" class="fe-icon fe-icon-paste"/>
+                        </ui:Button>
+                        <ui:Button name="FE-RenameButton" tooltip="Rename" class="fe-command-icon-button">
+                            <ui:VisualElement picking-mode="Ignore" class="fe-icon fe-icon-rename"/>
+                        </ui:Button>
+                        <ui:Button name="FE-ShareButton" tooltip="Share" class="fe-command-icon-button">
+                            <ui:VisualElement picking-mode="Ignore" class="fe-icon fe-icon-share"/>
+                        </ui:Button>
+                        <ui:Button name="FE-DeleteButton" tooltip="Delete" class="fe-command-icon-button">
+                            <ui:VisualElement picking-mode="Ignore" class="fe-icon fe-icon-delete"/>
+                        </ui:Button>
+                        <ui:VisualElement picking-mode="Ignore" class="fe-command-divider"/>
+                        <ui:Button name="FE-SortButton" tooltip="Sort" class="fe-command-button">
+                            <ui:VisualElement picking-mode="Ignore" class="fe-icon fe-icon-sort"/>
+                            <ui:Label text="Sort" picking-mode="Ignore" class="fe-command-label"/>
+                            <ui:VisualElement picking-mode="Ignore" class="fe-chevron fe-icon-chevron"/>
+                        </ui:Button>
+                        <ui:Button name="FE-ViewButton" tooltip="View" class="fe-command-button">
+                            <ui:VisualElement picking-mode="Ignore" class="fe-icon fe-icon-list"/>
+                            <ui:Label text="View" picking-mode="Ignore" class="fe-command-label"/>
+                            <ui:VisualElement picking-mode="Ignore" class="fe-chevron fe-icon-chevron"/>
+                        </ui:Button>
+                        <ui:VisualElement picking-mode="Ignore" class="fe-command-divider"/>
+                        <ui:Button name="FE-MoreButton" tooltip="More options" class="fe-command-icon-button">
+                            <ui:VisualElement picking-mode="Ignore" class="fe-icon fe-icon-more"/>
+                        </ui:Button>
+                    </ui:VisualElement>
                 </ui:ScrollView>
-                <ui:VisualElement name="FE-EmptyState" class="fe-empty-state">
-                    <ui:Label text="This folder is empty." class="fe-empty-title"/>
+                <ui:VisualElement class="fe-workspace">
+                    <ui:ScrollView name="FE-SidebarScrollView" horizontal-scroller-visibility="Hidden" class="fe-sidebar">
+                        <ui:Button name="FE-HomeButton" text="Home" class="fe-sidebar-item fe-sidebar-item--active"/>
+                        <ui:Button name="FE-RecentButton" text="Recent" class="fe-sidebar-item"/>
+                        <ui:Button name="FE-StarredButton" text="Starred" class="fe-sidebar-item"/>
+                        <ui:VisualElement picking-mode="Ignore" class="fe-sidebar-divider"/>
+                        <ui:Label text="LOCATIONS" class="fe-sidebar-heading"/>
+                        <ui:Button name="FE-DesktopButton" text="Desktop" class="fe-sidebar-item"/>
+                        <ui:Button name="FE-DocumentsButton" text="Documents" class="fe-sidebar-item"/>
+                        <ui:Button name="FE-PicturesButton" text="Pictures" class="fe-sidebar-item"/>
+                        <ui:Button name="FE-DownloadsButton" text="Downloads" class="fe-sidebar-item"/>
+                    </ui:ScrollView>
+                    <ui:VisualElement class="fe-main">
+                        <ui:VisualElement class="fe-directory-header">
+                            <ui:VisualElement>
+                                <ui:Label name="FE-DirectoryTitle" text="Files" class="fe-directory-title"/>
+                                <ui:Label name="FE-DirectorySubtitle" text="" class="fe-directory-subtitle"/>
+                            </ui:VisualElement>
+                            <ui:Label name="FE-SortStatus" text="" class="fe-sort-status"/>
+                        </ui:VisualElement>
+                        <ui:ScrollView name="FE-ContentScrollView" class="fe-content-scroll">
+                            <ui:VisualElement name="FE-ContentContainer" class="fe-content fe-content--grid"/>
+                        </ui:ScrollView>
+                        <ui:VisualElement name="FE-EmptyState" class="fe-empty-state">
+                            <ui:Label text="This folder is empty." class="fe-empty-title"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="FE-StatusBar" class="fe-status-bar">
+                    <ui:Label name="FE-ItemCount" text="" class="fe-status-text"/>
+                    <ui:Label name="FE-SelectionStatus" text="" class="fe-status-text"/>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="FE-StatusBar" class="fe-status-bar">
-            <ui:Label name="FE-ItemCount" text="18 items" class="fe-status-text"/>
-            <ui:Label name="FE-SelectionStatus" text="" class="fe-status-text"/>
-        </ui:VisualElement>
+        <ui:VisualElement name="WindowFooter" class="footer" style="display: none;"/>
+        <ui:VisualElement name="FE-MenuLayer" picking-mode="Ignore" class="fe-menu-layer"/>
     </ui:VisualElement>
 </ui:UXML>

@@ -20,8 +20,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
         private string defaultPath = "";
 
-        public IReadOnlyList<FileExplorerTab> Tabs =>
-            tabs;
+        public IReadOnlyList<FileExplorerTab> Tabs => tabs;
 
         public FileExplorerTab ActiveTab =>
             tabs.Count > 0 &&
@@ -35,8 +34,8 @@ namespace Atlas.Presentation.SOS.FileExplorer
             directories.TryGetValue(
                 ActiveTab.CurrentPath,
                 out FileExplorerDirectory directory)
-                ? directory
-                : null;
+                    ? directory
+                    : null;
 
         public bool CanGoBack =>
             ActiveTab?.CanGoBack ?? false;
@@ -46,24 +45,22 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
         public bool CanGoUp =>
             CurrentDirectory != null &&
-            !string.IsNullOrWhiteSpace(
-                CurrentDirectory.ParentPath);
+            !string.IsNullOrWhiteSpace(CurrentDirectory.ParentPath);
 
-        public int SelectedItemCount =>
-            selectedItemIds.Count;
+        public int SelectedItemCount => selectedItemIds.Count;
+
+        // -------------------- INITIALIZATION --------------------
 
         public FileExplorerEngine(
             FileSystemLibrary library,
             string userId)
         {
-            profile =
-                library?.GetProfile(userId);
+            profile = library?.GetProfile(userId);
 
             if (profile == null)
                 return;
 
-            FileSystemRuntimeBuilder builder =
-                new();
+            FileSystemRuntimeBuilder builder = new();
 
             Dictionary<string, FileExplorerDirectory> runtimeDirectories =
                 builder.Build(profile);
@@ -71,25 +68,20 @@ namespace Atlas.Presentation.SOS.FileExplorer
             foreach (KeyValuePair<string, FileExplorerDirectory> pair
                      in runtimeDirectories)
             {
-                directories[pair.Key] =
-                    pair.Value;
+                directories[pair.Key] = pair.Value;
             }
 
-            defaultPath =
-                ResolveFolderPath(
-                    profile.HomeFolderId);
+            defaultPath = ResolveFolderPath(profile.HomeFolderId);
 
             if (string.IsNullOrWhiteSpace(defaultPath))
-            {
-                defaultPath =
-                    directories.Keys.FirstOrDefault() ?? "";
-            }
+                defaultPath = directories.Keys.FirstOrDefault() ?? "";
 
             if (!string.IsNullOrWhiteSpace(defaultPath))
                 OpenTab(defaultPath);
         }
 
         // -------------------- TABS --------------------
+
         public void OpenTab()
         {
             OpenTab(defaultPath);
@@ -106,24 +98,19 @@ namespace Atlas.Presentation.SOS.FileExplorer
             if (string.IsNullOrWhiteSpace(path))
                 return;
 
-            FileExplorerTab tab =
-                new(
-                    nextTabId++,
-                    path);
+            FileExplorerTab tab = new(
+                nextTabId++,
+                path);
 
             tabs.Add(tab);
-
-            activeTabIndex =
-                tabs.Count - 1;
+            activeTabIndex = tabs.Count - 1;
 
             ClearSelection();
         }
 
         public void CloseTab(int tabId)
         {
-            int index =
-                tabs.FindIndex(
-                    tab => tab.Id == tabId);
+            int index = tabs.FindIndex(tab => tab.Id == tabId);
 
             if (index < 0)
                 return;
@@ -131,11 +118,9 @@ namespace Atlas.Presentation.SOS.FileExplorer
             if (tabs.Count == 1)
             {
                 tabs.Clear();
-
                 activeTabIndex = 0;
 
                 OpenTab();
-
                 return;
             }
 
@@ -151,9 +136,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
         public void SelectTab(int tabId)
         {
-            int index =
-                tabs.FindIndex(
-                    tab => tab.Id == tabId);
+            int index = tabs.FindIndex(tab => tab.Id == tabId);
 
             if (index < 0)
                 return;
@@ -164,6 +147,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
         }
 
         // -------------------- NAVIGATION --------------------
+
         public void Navigate(string path)
         {
             if (ActiveTab == null)
@@ -199,8 +183,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
             if (!CanGoUp)
                 return;
 
-            Navigate(
-                CurrentDirectory.ParentPath);
+            Navigate(CurrentDirectory.ParentPath);
         }
 
         public void NavigateToLocation(
@@ -212,48 +195,36 @@ namespace Atlas.Presentation.SOS.FileExplorer
             if (location == FileExplorerLocation.Home)
             {
                 Navigate(defaultPath);
-
                 return;
             }
 
-            FileSystemLocation systemLocation =
-                location switch
-                {
-                    FileExplorerLocation.Desktop =>
-                        FileSystemLocation.Desktop,
-
-                    FileExplorerLocation.Documents =>
-                        FileSystemLocation.Documents,
-
-                    FileExplorerLocation.Pictures =>
-                        FileSystemLocation.Pictures,
-
-                    FileExplorerLocation.Downloads =>
-                        FileSystemLocation.Downloads,
-
-                    _ =>
-                        FileSystemLocation.None
-                };
-
-            if (systemLocation ==
-                FileSystemLocation.None)
+            FileSystemLocation systemLocation = location switch
             {
+                FileExplorerLocation.Desktop =>
+                    FileSystemLocation.Desktop,
+
+                FileExplorerLocation.Documents =>
+                    FileSystemLocation.Documents,
+
+                FileExplorerLocation.Pictures =>
+                    FileSystemLocation.Pictures,
+
+                FileExplorerLocation.Downloads =>
+                    FileSystemLocation.Downloads,
+
+                _ => FileSystemLocation.None
+            };
+
+            if (systemLocation == FileSystemLocation.None)
                 return;
-            }
 
             FileLocationDefinition definition =
-                profile.GetLocation(
-                    systemLocation);
+                profile.GetLocation(systemLocation);
 
-            if (definition == null ||
-                !definition.Visible)
-            {
+            if (definition == null || !definition.Visible)
                 return;
-            }
 
-            string path =
-                ResolveFolderPath(
-                    definition.FolderId);
+            string path = ResolveFolderPath(definition.FolderId);
 
             if (string.IsNullOrWhiteSpace(path))
                 return;
@@ -261,21 +232,217 @@ namespace Atlas.Presentation.SOS.FileExplorer
             Navigate(path);
         }
 
+        // -------------------- BREADCRUMBS --------------------
+
+        // Key: internal navigation path.
+        // Value: displayed breadcrumb title.
+        public List<KeyValuePair<string, string>> GetBreadcrumbs()
+        {
+            var result = new List<KeyValuePair<string, string>>();
+
+            if (CurrentDirectory == null)
+                return result;
+
+            List<FileExplorerDirectory> chain =
+                GetFolderChain(CurrentDirectory.Path);
+
+            int startIndex = 0;
+            string locationTitle = null;
+
+            // Start at the closest configured Location.
+            // Documents/Archive therefore shows Documents > Archive.
+            for (int i = chain.Count - 1; i >= 0; i--)
+            {
+                FileLocationDefinition match = null;
+
+                if (profile != null)
+                {
+                    foreach (FileLocationDefinition location
+                             in profile.Locations)
+                    {
+                        if (location == null ||
+                            !location.Visible ||
+                            location.Location == FileSystemLocation.None ||
+                            location.Location == FileSystemLocation.Recent)
+                        {
+                            continue;
+                        }
+
+                        if (string.Equals(
+                            location.FolderId,
+                            chain[i].Id,
+                            StringComparison.OrdinalIgnoreCase))
+                        {
+                            match = location;
+                            break;
+                        }
+                    }
+                }
+
+                if (match == null)
+                    continue;
+
+                startIndex = i;
+
+                locationTitle =
+                    string.IsNullOrWhiteSpace(match.DisplayName)
+                        ? chain[i].Name
+                        : match.DisplayName;
+
+                break;
+            }
+
+            for (int i = startIndex; i < chain.Count; i++)
+            {
+                string title =
+                    i == startIndex && locationTitle != null
+                        ? locationTitle
+                        : chain[i].Name;
+
+                result.Add(new KeyValuePair<string, string>(
+                    chain[i].Path,
+                    title));
+            }
+
+            return result;
+        }
+
+        private List<FileExplorerDirectory> GetFolderChain(string path)
+        {
+            var chain = new List<FileExplorerDirectory>();
+
+            var visited = new HashSet<string>(
+                StringComparer.OrdinalIgnoreCase);
+
+            FileExplorerDirectory directory = GetDirectory(path);
+
+            while (directory != null && visited.Add(directory.Path))
+            {
+                chain.Add(directory);
+                directory = GetDirectory(directory.ParentPath);
+            }
+
+            chain.Reverse();
+
+            return chain;
+        }
+
+        // -------------------- WINDOWS ADDRESS --------------------
+
+        // Maps the configured Home folder to windowsHomePath.
+        // Example:
+        // /home/documents/archive
+        // becomes C:\Users\guest\Documents\Archive.
+        //
+        // Displayed folder names come from authored data,
+        // preserving capitalization and spaces.
+        public string GetWindowsPath(
+            string internalPath,
+            string windowsHomePath)
+        {
+            if (profile == null ||
+                string.IsNullOrWhiteSpace(windowsHomePath))
+            {
+                return "";
+            }
+
+            List<FileExplorerDirectory> chain =
+                GetFolderChain(internalPath);
+
+            int homeIndex = chain.FindIndex(directory =>
+                string.Equals(
+                    directory.Id,
+                    profile.HomeFolderId,
+                    StringComparison.OrdinalIgnoreCase));
+
+            if (homeIndex < 0)
+                return "";
+
+            string result =
+                NormalizeWindowsAddress(windowsHomePath);
+
+            // Home itself represents C:\Users\guest.
+            // Append only the folders below Home.
+            for (int i = homeIndex + 1; i < chain.Count; i++)
+                result += "\\" + chain[i].Name;
+
+            return result;
+        }
+
+        // Resolves an entered Windows address to an internal path.
+        // Accepts case differences, forward slashes, surrounding
+        // quotes, and trailing slashes.
+        //
+        // Only existing folders beneath the configured Home
+        // folder are supported.
+        public bool TryResolveWindowsPath(
+            string enteredPath,
+            string windowsHomePath,
+            out string internalPath)
+        {
+            internalPath = "";
+
+            string requested =
+                NormalizeWindowsAddress(enteredPath);
+
+            if (string.IsNullOrWhiteSpace(requested))
+                return false;
+
+            foreach (FileExplorerDirectory directory
+                     in directories.Values)
+            {
+                string candidate = GetWindowsPath(
+                    directory.Path,
+                    windowsHomePath);
+
+                if (string.IsNullOrWhiteSpace(candidate))
+                    continue;
+
+                if (!string.Equals(
+                    candidate,
+                    requested,
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                // Reject ambiguous display addresses.
+                if (!string.IsNullOrEmpty(internalPath))
+                {
+                    internalPath = "";
+                    return false;
+                }
+
+                internalPath = directory.Path;
+            }
+
+            return !string.IsNullOrEmpty(internalPath);
+        }
+
+        private static string NormalizeWindowsAddress(string value)
+        {
+            return (value ?? "")
+                .Trim()
+                .Trim('"')
+                .Replace('/', '\\')
+                .TrimEnd('\\');
+        }
+
         // -------------------- SEARCH --------------------
+
         public void SetSearchQuery(string query)
         {
             if (ActiveTab == null)
                 return;
 
-            ActiveTab.SearchQuery =
-                query?.Trim() ?? "";
+            ActiveTab.SearchQuery = query?.Trim() ?? "";
 
             ClearSelection();
         }
 
         // -------------------- VIEW --------------------
-        public void SetViewMode(
-            FileExplorerViewMode mode)
+
+        public void SetViewMode(FileExplorerViewMode mode)
         {
             if (ActiveTab == null)
                 return;
@@ -288,29 +455,27 @@ namespace Atlas.Presentation.SOS.FileExplorer
             if (ActiveTab == null)
                 return;
 
-            ActiveTab.ViewMode =
-                ActiveTab.ViewMode switch
-                {
-                    FileExplorerViewMode.LargeGrid =>
-                        FileExplorerViewMode.Grid,
+            ActiveTab.ViewMode = ActiveTab.ViewMode switch
+            {
+                FileExplorerViewMode.LargeGrid =>
+                    FileExplorerViewMode.Grid,
 
-                    FileExplorerViewMode.Grid =>
-                        FileExplorerViewMode.List,
+                FileExplorerViewMode.Grid =>
+                    FileExplorerViewMode.List,
 
-                    FileExplorerViewMode.List =>
-                        FileExplorerViewMode.Details,
+                FileExplorerViewMode.List =>
+                    FileExplorerViewMode.Details,
 
-                    FileExplorerViewMode.Details =>
-                        FileExplorerViewMode.LargeGrid,
+                FileExplorerViewMode.Details =>
+                    FileExplorerViewMode.LargeGrid,
 
-                    _ =>
-                        FileExplorerViewMode.Grid
-                };
+                _ => FileExplorerViewMode.Grid
+            };
         }
 
         // -------------------- SORT --------------------
-        public void SetSortMode(
-            FileExplorerSortMode mode)
+
+        public void SetSortMode(FileExplorerSortMode mode)
         {
             if (ActiveTab == null)
                 return;
@@ -333,26 +498,21 @@ namespace Atlas.Presentation.SOS.FileExplorer
         }
 
         // -------------------- CONTENT --------------------
+
         public IReadOnlyList<FileExplorerItem> GetVisibleItems()
         {
-            if (CurrentDirectory == null ||
-                ActiveTab == null)
-            {
+            if (CurrentDirectory == null || ActiveTab == null)
                 return Array.Empty<FileExplorerItem>();
-            }
 
             IEnumerable<FileExplorerItem> query =
                 CurrentDirectory.Items;
 
-            if (!string.IsNullOrWhiteSpace(
-                    ActiveTab.SearchQuery))
+            if (!string.IsNullOrWhiteSpace(ActiveTab.SearchQuery))
             {
-                query =
-                    query.Where(
-                        item =>
-                            item.Name.Contains(
-                                ActiveTab.SearchQuery,
-                                StringComparison.OrdinalIgnoreCase));
+                query = query.Where(item =>
+                    item.Name.Contains(
+                        ActiveTab.SearchQuery,
+                        StringComparison.OrdinalIgnoreCase));
             }
 
             return ApplySorting(query).ToList();
@@ -365,18 +525,13 @@ namespace Atlas.Presentation.SOS.FileExplorer
                 return items;
 
             IEnumerable<FileExplorerItem> folders =
-                items.Where(
-                    item => item.IsFolder);
+                items.Where(item => item.IsFolder);
 
             IEnumerable<FileExplorerItem> files =
-                items.Where(
-                    item => !item.IsFolder);
+                items.Where(item => !item.IsFolder);
 
-            folders =
-                SortItems(folders);
-
-            files =
-                SortItems(files);
+            folders = SortItems(folders);
+            files = SortItems(files);
 
             return folders.Concat(files);
         }
@@ -401,17 +556,13 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
                 FileExplorerSortMode.Type =>
                     ascending
-                        ? items.OrderBy(
-                            item => item.FileType)
-                        : items.OrderByDescending(
-                            item => item.FileType),
+                        ? items.OrderBy(item => item.FileType)
+                        : items.OrderByDescending(item => item.FileType),
 
                 FileExplorerSortMode.Size =>
                     ascending
-                        ? items.OrderBy(
-                            item => item.Size)
-                        : items.OrderByDescending(
-                            item => item.Size),
+                        ? items.OrderBy(item => item.Size)
+                        : items.OrderByDescending(item => item.Size),
 
                 _ =>
                     ascending
@@ -424,19 +575,16 @@ namespace Atlas.Presentation.SOS.FileExplorer
             };
         }
 
-        public void OpenItem(
-            FileExplorerItem item)
+        public void OpenItem(FileExplorerItem item)
         {
-            if (item == null)
-                return;
-
-            if (!item.IsFolder)
+            if (item == null || !item.IsFolder)
                 return;
 
             Navigate(item.Path);
         }
 
         // -------------------- SELECTION --------------------
+
         public void SelectItem(
             string itemId,
             bool additive = false)
@@ -445,21 +593,16 @@ namespace Atlas.Presentation.SOS.FileExplorer
                 selectedItemIds.Clear();
 
             if (!string.IsNullOrWhiteSpace(itemId))
-            {
                 selectedItemIds.Add(itemId);
-            }
         }
 
-        public void ToggleItemSelection(
-            string itemId)
+        public void ToggleItemSelection(string itemId)
         {
             if (string.IsNullOrWhiteSpace(itemId))
                 return;
 
             if (!selectedItemIds.Add(itemId))
-            {
                 selectedItemIds.Remove(itemId);
-            }
         }
 
         public bool IsSelected(string itemId)
@@ -476,13 +619,11 @@ namespace Atlas.Presentation.SOS.FileExplorer
         }
 
         // -------------------- LOCATION --------------------
+
         public FileExplorerLocation GetCurrentLocation()
         {
-            if (profile == null ||
-                CurrentDirectory == null)
-            {
+            if (profile == null || CurrentDirectory == null)
                 return FileExplorerLocation.None;
-            }
 
             if (string.Equals(
                 CurrentDirectory.Id,
@@ -492,19 +633,15 @@ namespace Atlas.Presentation.SOS.FileExplorer
                 return FileExplorerLocation.Home;
             }
 
-            foreach (FileLocationDefinition location
-                     in profile.Locations)
+            foreach (FileLocationDefinition location in profile.Locations)
             {
-                if (location == null ||
-                    !location.Visible)
-                {
+                if (location == null || !location.Visible)
                     continue;
-                }
 
                 if (!string.Equals(
-                        location.FolderId,
-                        CurrentDirectory.Id,
-                        StringComparison.OrdinalIgnoreCase))
+                    location.FolderId,
+                    CurrentDirectory.Id,
+                    StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
@@ -523,8 +660,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
                     FileSystemLocation.Downloads =>
                         FileExplorerLocation.Downloads,
 
-                    _ =>
-                        FileExplorerLocation.None
+                    _ => FileExplorerLocation.None
                 };
             }
 
@@ -532,14 +668,25 @@ namespace Atlas.Presentation.SOS.FileExplorer
         }
 
         // -------------------- LOOKUP --------------------
-        private string ResolveFolderPath(
-            string folderId)
+
+        public FileExplorerDirectory GetDirectory(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+                return null;
+
+            return directories.TryGetValue(
+                path,
+                out FileExplorerDirectory directory)
+                    ? directory
+                    : null;
+        }
+
+        private string ResolveFolderPath(string folderId)
         {
             if (string.IsNullOrWhiteSpace(folderId))
                 return "";
 
-            foreach (FileExplorerDirectory directory
-                     in directories.Values)
+            foreach (FileExplorerDirectory directory in directories.Values)
             {
                 if (string.Equals(
                     directory.Id,

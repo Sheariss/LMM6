@@ -1,3 +1,4 @@
+using System;
 using Atlas.Utils;
 using UnityEngine.UIElements;
 
@@ -5,30 +6,41 @@ namespace Atlas.Presentation.SOS.FileExplorer
 {
     public sealed class FileExplorerBinder : UIBinder
     {
+        public VisualElement WindowRoot { get; }
+        public VisualElement WindowHeader { get; }
         public VisualElement Root { get; }
+        public VisualElement MenuLayer { get; }
 
-        // -------------------- TABS --------------------
         public VisualElement TabBar { get; }
         public VisualElement TabsContainer { get; }
         public Button NewTabButton { get; }
 
-        // -------------------- NAVIGATION --------------------
         public VisualElement NavigationBar { get; }
         public Button BackButton { get; }
         public Button ForwardButton { get; }
         public Button UpButton { get; }
+        public Button RefreshButton { get; }
         public VisualElement BreadcrumbContainer { get; }
-        public TextField SearchField { get; }
+        public VisualElement AddressBar { get; }
+        public VisualElement PathIcon { get; }
+        public TextField AddressField { get; }
+        public Label AddressError { get; }
 
-        // -------------------- COMMANDS --------------------
+        public TextField SearchField { get; }
+        public Label SearchPlaceholder { get; }
+
         public VisualElement CommandBar { get; }
         public Button NewButton { get; }
+        public Button CutButton { get; }
+        public Button CopyButton { get; }
+        public Button PasteButton { get; }
+        public Button RenameButton { get; }
+        public Button ShareButton { get; }
+        public Button DeleteButton { get; }
         public Button SortButton { get; }
         public Button ViewButton { get; }
-        public Button FilterButton { get; }
-        public Button RefreshButton { get; }
+        public Button MoreButton { get; }
 
-        // -------------------- SIDEBAR --------------------
         public ScrollView SidebarScrollView { get; }
         public Button HomeButton { get; }
         public Button RecentButton { get; }
@@ -38,188 +50,86 @@ namespace Atlas.Presentation.SOS.FileExplorer
         public Button PicturesButton { get; }
         public Button DownloadsButton { get; }
 
-        // -------------------- DIRECTORY --------------------
         public Label DirectoryTitle { get; }
         public Label DirectorySubtitle { get; }
         public Label SortStatus { get; }
 
-        // -------------------- CONTENT --------------------
         public ScrollView ContentScrollView { get; }
         public VisualElement ContentContainer { get; }
         public VisualElement EmptyState { get; }
 
-        // -------------------- STATUS --------------------
         public VisualElement StatusBar { get; }
         public Label ItemCount { get; }
         public Label SelectionStatus { get; }
 
-        public FileExplorerBinder(
-            VisualElement root)
+        public FileExplorerBinder(VisualElement root)
         {
-            Root =
-                Bind<VisualElement>(
-                    root,
-                    "FileExplorerRoot");
+            VisualElement window = root;
 
-            TabBar =
-                Bind<VisualElement>(
-                    root,
-                    "FE-TabBar");
+            while (window != null && window.name != "WindowRoot")
+                window = window.parent;
 
-            TabsContainer =
-                Bind<VisualElement>(
-                    root,
-                    "FE-TabsContainer");
+            if (window == null)
+            {
+                throw new InvalidOperationException(
+                    "File Explorer could not find its enclosing WindowRoot.");
+            }
 
-            NewTabButton =
-                Bind<Button>(
-                    root,
-                    "FE-NewTabButton");
+            WindowRoot = window;
+            WindowHeader = Bind<VisualElement>(window, "WindowHeader");
+            MenuLayer = Bind<VisualElement>(window, "FE-MenuLayer");
 
-            NavigationBar =
-                Bind<VisualElement>(
-                    root,
-                    "FE-NavigationBar");
+            Root = Bind<VisualElement>(root, "FileExplorerRoot");
 
-            BackButton =
-                Bind<Button>(
-                    root,
-                    "FE-BackButton");
+            TabBar = Bind<VisualElement>(window, "FE-TabBar");
+            TabsContainer = Bind<VisualElement>(window, "FE-TabsContainer");
+            NewTabButton = Bind<Button>(window, "FE-NewTabButton");
 
-            ForwardButton =
-                Bind<Button>(
-                    root,
-                    "FE-ForwardButton");
+            NavigationBar = Bind<VisualElement>(root, "FE-NavigationBar");
+            BackButton = Bind<Button>(root, "FE-BackButton");
+            ForwardButton = Bind<Button>(root, "FE-ForwardButton");
+            UpButton = Bind<Button>(root, "FE-UpButton");
+            RefreshButton = Bind<Button>(root, "FE-RefreshButton");
+            BreadcrumbContainer = Bind<VisualElement>(root, "FE-BreadcrumbContainer");
+            AddressBar = Bind<VisualElement>(root, "FE-AddressBar");
+            PathIcon = Bind<VisualElement>(root, "FE-PathIcon");
+            AddressField = Bind<TextField>(root, "FE-AddressField");
+            AddressError = Bind<Label>(root, "FE-AddressError");
+            SearchField = Bind<TextField>(root, "FE-SearchField");
+            SearchPlaceholder = Bind<Label>(root, "FE-SearchPlaceholder");
 
-            UpButton =
-                Bind<Button>(
-                    root,
-                    "FE-UpButton");
+            CommandBar = Bind<VisualElement>(root, "FE-CommandBar");
+            NewButton = Bind<Button>(root, "FE-NewButton");
+            CutButton = Bind<Button>(root, "FE-CutButton");
+            CopyButton = Bind<Button>(root, "FE-CopyButton");
+            PasteButton = Bind<Button>(root, "FE-PasteButton");
+            RenameButton = Bind<Button>(root, "FE-RenameButton");
+            ShareButton = Bind<Button>(root, "FE-ShareButton");
+            DeleteButton = Bind<Button>(root, "FE-DeleteButton");
+            SortButton = Bind<Button>(root, "FE-SortButton");
+            ViewButton = Bind<Button>(root, "FE-ViewButton");
+            MoreButton = Bind<Button>(root, "FE-MoreButton");
 
-            BreadcrumbContainer =
-                Bind<VisualElement>(
-                    root,
-                    "FE-BreadcrumbContainer");
+            SidebarScrollView = Bind<ScrollView>(root, "FE-SidebarScrollView");
+            HomeButton = Bind<Button>(root, "FE-HomeButton");
+            RecentButton = Bind<Button>(root, "FE-RecentButton");
+            StarredButton = Bind<Button>(root, "FE-StarredButton");
+            DesktopButton = Bind<Button>(root, "FE-DesktopButton");
+            DocumentsButton = Bind<Button>(root, "FE-DocumentsButton");
+            PicturesButton = Bind<Button>(root, "FE-PicturesButton");
+            DownloadsButton = Bind<Button>(root, "FE-DownloadsButton");
 
-            SearchField =
-                Bind<TextField>(
-                    root,
-                    "FE-SearchField");
+            DirectoryTitle = Bind<Label>(root, "FE-DirectoryTitle");
+            DirectorySubtitle = Bind<Label>(root, "FE-DirectorySubtitle");
+            SortStatus = Bind<Label>(root, "FE-SortStatus");
 
-            CommandBar =
-                Bind<VisualElement>(
-                    root,
-                    "FE-CommandBar");
+            ContentScrollView = Bind<ScrollView>(root, "FE-ContentScrollView");
+            ContentContainer = Bind<VisualElement>(root, "FE-ContentContainer");
+            EmptyState = Bind<VisualElement>(root, "FE-EmptyState");
 
-            NewButton =
-                Bind<Button>(
-                    root,
-                    "FE-NewButton");
-
-            SortButton =
-                Bind<Button>(
-                    root,
-                    "FE-SortButton");
-
-            ViewButton =
-                Bind<Button>(
-                    root,
-                    "FE-ViewButton");
-
-            FilterButton =
-                Bind<Button>(
-                    root,
-                    "FE-FilterButton");
-
-            RefreshButton =
-                Bind<Button>(
-                    root,
-                    "FE-RefreshButton");
-
-            SidebarScrollView =
-                Bind<ScrollView>(
-                    root,
-                    "FE-SidebarScrollView");
-
-            HomeButton =
-                Bind<Button>(
-                    root,
-                    "FE-HomeButton");
-
-            RecentButton =
-                Bind<Button>(
-                    root,
-                    "FE-RecentButton");
-
-            StarredButton =
-                Bind<Button>(
-                    root,
-                    "FE-StarredButton");
-
-            DesktopButton =
-                Bind<Button>(
-                    root,
-                    "FE-DesktopButton");
-
-            DocumentsButton =
-                Bind<Button>(
-                    root,
-                    "FE-DocumentsButton");
-
-            PicturesButton =
-                Bind<Button>(
-                    root,
-                    "FE-PicturesButton");
-
-            DownloadsButton =
-                Bind<Button>(
-                    root,
-                    "FE-DownloadsButton");
-
-            DirectoryTitle =
-                Bind<Label>(
-                    root,
-                    "FE-DirectoryTitle");
-
-            DirectorySubtitle =
-                Bind<Label>(
-                    root,
-                    "FE-DirectorySubtitle");
-
-            SortStatus =
-                Bind<Label>(
-                    root,
-                    "FE-SortStatus");
-
-            ContentScrollView =
-                Bind<ScrollView>(
-                    root,
-                    "FE-ContentScrollView");
-
-            ContentContainer =
-                Bind<VisualElement>(
-                    root,
-                    "FE-ContentContainer");
-
-            EmptyState =
-                Bind<VisualElement>(
-                    root,
-                    "FE-EmptyState");
-
-            StatusBar =
-                Bind<VisualElement>(
-                    root,
-                    "FE-StatusBar");
-
-            ItemCount =
-                Bind<Label>(
-                    root,
-                    "FE-ItemCount");
-
-            SelectionStatus =
-                Bind<Label>(
-                    root,
-                    "FE-SelectionStatus");
+            StatusBar = Bind<VisualElement>(root, "FE-StatusBar");
+            ItemCount = Bind<Label>(root, "FE-ItemCount");
+            SelectionStatus = Bind<Label>(root, "FE-SelectionStatus");
         }
     }
 }

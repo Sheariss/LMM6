@@ -10,10 +10,14 @@ namespace Atlas.SOS.FileSystem
     public sealed class FileSystemLibrary : ScriptableObject
     {
         [SerializeField]
+        private Sprite defaultFolderIcon;
+
+        [SerializeField]
         private List<FileSystemProfile> profiles = new();
 
-        public IReadOnlyList<FileSystemProfile> Profiles =>
-            profiles;
+        public Sprite DefaultFolderIcon => defaultFolderIcon;
+
+        public IReadOnlyList<FileSystemProfile> Profiles => profiles;
 
         public FileSystemProfile GetProfile(string userId)
         {
@@ -35,6 +39,45 @@ namespace Atlas.SOS.FileSystem
             }
 
             return null;
+        }
+
+        public FileLocationDefinition GetLocationForFolder(
+            string userId,
+            string folderId)
+        {
+            if (string.IsNullOrWhiteSpace(folderId))
+                return null;
+
+            FileSystemProfile profile = GetProfile(userId);
+
+            if (profile == null)
+                return null;
+
+            foreach (FileLocationDefinition location in profile.Locations)
+            {
+                if (location == null)
+                    continue;
+
+                if (string.Equals(
+                    location.FolderId,
+                    folderId,
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    return location;
+                }
+            }
+
+            return null;
+        }
+
+        public Sprite GetFolderIcon(string userId, string folderId)
+        {
+            FileLocationDefinition location =
+                GetLocationForFolder(userId, folderId);
+
+            return location?.Icon != null
+                ? location.Icon
+                : defaultFolderIcon;
         }
     }
 }

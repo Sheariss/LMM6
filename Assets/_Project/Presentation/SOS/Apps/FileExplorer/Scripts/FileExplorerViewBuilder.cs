@@ -175,71 +175,40 @@ namespace Atlas.Presentation.SOS.FileExplorer
             FileExplorerEngine engine,
             Action<string> onBreadcrumbPressed)
         {
-            VisualElement root =
-                new();
+            var root = new VisualElement();
+            root.AddToClassList("fe-breadcrumb-trail");
 
-            if (engine?.ActiveTab == null)
+            if (engine == null)
                 return root;
 
-            string path =
-                engine.ActiveTab.CurrentPath;
+            var breadcrumbs = engine.GetBreadcrumbs();
 
-            string[] segments =
-                path.Split(
-                    '/',
-                    StringSplitOptions.RemoveEmptyEntries);
-
-            string currentPath = "";
-
-            for (int i = 0;
-                 i < segments.Length;
-                 i++)
+            for (int i = 0; i < breadcrumbs.Count; i++)
             {
-                currentPath +=
-                    "/" + segments[i];
+                string capturedPath = breadcrumbs[i].Key;
 
-                string capturedPath =
-                    currentPath;
+                var button = new Button(() =>
+                    onBreadcrumbPressed?.Invoke(capturedPath))
+                {
+                    text = breadcrumbs[i].Value
+                };
 
-                Button breadcrumb =
-                    new()
+                button.AddToClassList("fe-breadcrumb");
+
+                if (i == breadcrumbs.Count - 1)
+                    button.AddToClassList("fe-breadcrumb--current");
+
+                root.Add(button);
+
+                if (i < breadcrumbs.Count - 1)
+                {
+                    var separator = new Label("›")
                     {
-                        text =
-                            FormatSegment(
-                                segments[i])
+                        pickingMode = PickingMode.Ignore
                     };
 
-                breadcrumb.AddToClassList(
-                    "fe-breadcrumb");
-
-                if (i ==
-                    segments.Length - 1)
-                {
-                    breadcrumb.AddToClassList(
-                        "fe-breadcrumb--current");
-                }
-
-                breadcrumb.clicked +=
-                    () =>
-                    {
-                        onBreadcrumbPressed?.Invoke(
-                            capturedPath);
-                    };
-
-                root.Add(
-                    breadcrumb);
-
-                if (i <
-                    segments.Length - 1)
-                {
-                    Label separator =
-                        new("›");
-
-                    separator.AddToClassList(
-                        "fe-breadcrumb-separator");
-
-                    root.Add(
-                        separator);
+                    separator.AddToClassList("fe-breadcrumb-separator");
+                    root.Add(separator);
                 }
             }
 

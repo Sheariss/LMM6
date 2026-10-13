@@ -16,11 +16,15 @@ namespace Atlas.SOS.FileSystem
         private string folderId;
 
         [SerializeField]
+        private Sprite icon;
+
+        [SerializeField]
         private bool visible = true;
 
         public FileSystemLocation Location => location;
         public string DisplayName => displayName;
         public string FolderId => folderId;
+        public Sprite Icon => icon;
         public bool Visible => visible;
     }
 }
