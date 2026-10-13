@@ -428,3 +428,8 @@
 
     color: var(--text-primary);
 }
+
+#BrowserTabBar {
+    flex-grow: 1;
+    min-width: 0;
+}

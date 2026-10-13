@@ -29,14 +29,37 @@ namespace Atlas.Presentation.SOS.Messages
             if (string.IsNullOrWhiteSpace(search))
                 return manager.Conversations;
 
-            string normalized = search.Trim();
+            string query = search.Trim();
 
             return manager.Conversations
-                .Where(x =>
-                    x.ContactName.Contains(
-                        normalized,
-                        StringComparison.OrdinalIgnoreCase))
+                .Where(conversation =>
+                    MatchesConversation(conversation, query))
                 .ToList();
+        }
+
+        private static bool MatchesConversation(
+            MessageConversationData conversation,
+            string query)
+        {
+            if (conversation == null)
+                return false;
+
+            if (ContainsQuery(conversation.ContactName, query))
+                return true;
+
+            return conversation.Messages != null &&
+                conversation.Messages.Any(message =>
+                    message != null &&
+                    (ContainsQuery(message.SenderName, query) ||
+                     ContainsQuery(message.Text, query)));
+        }
+
+        private static bool ContainsQuery(string value, string query)
+        {
+            return !string.IsNullOrEmpty(value) &&
+                value.IndexOf(
+                    query,
+                    StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         public MessageConversationData SelectConversation(string id)

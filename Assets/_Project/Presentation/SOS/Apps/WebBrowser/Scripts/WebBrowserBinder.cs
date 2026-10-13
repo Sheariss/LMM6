@@ -43,9 +43,6 @@ namespace Atlas.Presentation.SOS.WebBrowser
         public VisualElement BrowserPageContainer { get; }
         public ScrollView BrowserPageScrollView { get; }
 
-        // -------------------- FOOTER --------------------
-        public VisualElement WindowFooter { get; }
-
         public WebBrowserBinder(VisualElement root)
         {
 

@@ -38,6 +38,11 @@ namespace Atlas.Presentation.SOS.Messages
             binder.ContactName.text = name;
             binder.ContactStatus.text = status;
 
+            binder.ContactStatus.style.display =
+                string.IsNullOrWhiteSpace(status)
+                    ? DisplayStyle.None
+                    : DisplayStyle.Flex;
+
             if (avatar != null)
             {
                 binder.ContactAvatar.style.backgroundImage =
@@ -45,7 +50,9 @@ namespace Atlas.Presentation.SOS.Messages
             }
             else
             {
-                binder.ContactAvatar.style.backgroundImage = StyleKeyword.None;
+                // Clear the inline sprite and reveal the USS fallback.
+                binder.ContactAvatar.style.backgroundImage =
+                    StyleKeyword.Null;
             }
         }
 

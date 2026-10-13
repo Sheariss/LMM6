@@ -76,8 +76,8 @@ MonoBehaviour:
       senderName: You
       text: Classic.
       timestamp: 
-      direction: 0
-      initialReadState: 0
+      direction: 1
+      initialReadState: 2
     - id: alex-5
       senderName: Unknown
       text: "Are you free Friday? We\u2019re meeting at the same place around six."
@@ -125,14 +125,14 @@ MonoBehaviour:
       text: Just opened it. Are we still meeting at 10?
       timestamp: 09:13
       direction: 1
-      initialReadState: 0
+      initialReadState: 2
     - id: maya-3
       senderName: Maya
       text: "Yep, same room. Bring whatever you have so far, even if it\u2019s rough.
         We mostly need to agree on the direction today."
       timestamp: 09:14
       direction: 0
-      initialReadState: 0
+      initialReadState: 2
   - id: daniel-reyes
     contactName: Daniel Reyes
     contactAvatar: {fileID: 3146629883168243156, guid: 429a17b26eed50b4ca99a454719c079c, type: 3}
@@ -156,7 +156,7 @@ MonoBehaviour:
         be cached.
       timestamp: 14:33
       direction: 0
-      initialReadState: 0
+      initialReadState: 2
     - id: danny-4
       senderName: You
       text: That did it, thanks!

@@ -48,6 +48,7 @@ MonoBehaviour:
     - news
     - browser
     - contacts
+    - cmd
     desktopShortcutAppIDs:
     - assistant
     - messenger
@@ -55,6 +56,7 @@ MonoBehaviour:
     - browser
     - calculator
     - contacts
+    - cmd
     pinnedAppIDs:
     - browser
     - file-explorer

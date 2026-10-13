@@ -6,6 +6,8 @@
     <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/WebBrowser/WebBrowser.uss?fileID=7433441132597879392&amp;guid=d1177304087e5d74eaf28e87c2337084&amp;type=3#WebBrowser"/>
     <ui:VisualElement name="WindowRoot" class="window browser-root">
         <ui:VisualElement name="WindowHeader" class="flex-row header browser-tab-bar" style="opacity: 1;">
+            <ui:VisualElement name="WindowIcon" style="display: none;"/>
+            <ui:Label name="WindowTitle" style="display: none;"/>
             <ui:VisualElement name="BrowserTabBar" class="browser-tab-bar">
                 <ui:VisualElement name="BrowserTabsContainer" class="browser-tabs-container">
                     <ui:VisualElement name="BrowserTab" class="browser-tab browser-tab--active">

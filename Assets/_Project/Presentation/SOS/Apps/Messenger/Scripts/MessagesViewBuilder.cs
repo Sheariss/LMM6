@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Atlas.Presentation.SOS.Messages
@@ -10,6 +11,9 @@ namespace Atlas.Presentation.SOS.Messages
         private readonly VisualTreeAsset incomingMessageTemplate;
         private readonly VisualTreeAsset outgoingMessageTemplate;
         private readonly VisualTreeAsset typingIndicatorTemplate;
+
+        private Sprite activeContactAvatar;
+        private string activeContactName;
 
         public MessagesViewBuilder(
             MessagesView view,
@@ -29,8 +33,14 @@ namespace Atlas.Presentation.SOS.Messages
         {
             view.ClearConversationList();
 
+            if (conversations == null)
+                return;
+
             foreach (MessageConversationData conversation in conversations)
             {
+                if (conversation == null)
+                    continue;
+
                 VisualElement item =
                     BuildConversationItem(conversation, onSelected);
 
@@ -42,6 +52,9 @@ namespace Atlas.Presentation.SOS.Messages
             MessageConversationData conversation)
         {
             view.ClearMessageHistory();
+
+            activeContactAvatar = conversation?.ContactAvatar;
+            activeContactName = conversation?.ContactName;
 
             if (conversation == null)
             {
@@ -76,6 +89,8 @@ namespace Atlas.Presentation.SOS.Messages
 
             TemplateContainer instance = template.CloneTree();
 
+            instance.style.flexShrink = 0;
+
             Label sender =
                 instance.Q<Label>("MessageSender");
 
@@ -88,8 +103,15 @@ namespace Atlas.Presentation.SOS.Messages
             Label read =
                 instance.Q<Label>("MessageReadIcon");
 
+            VisualElement avatar =
+                instance.Q<VisualElement>("MessageAvatar");
+
             if (sender != null)
-                sender.text = message.SenderName;
+            {
+                sender.text = GetSenderName(
+                    message,
+                    activeContactName);
+            }
 
             if (text != null)
                 text.text = message.Text;
@@ -98,7 +120,32 @@ namespace Atlas.Presentation.SOS.Messages
                 time.text = message.Timestamp;
 
             if (read != null)
+            {
                 read.text = GetReadIcon(message.ReadState);
+
+                read.EnableInClassList(
+                    "messages-message-read--read",
+                    message.ReadState == MessageReadState.Read);
+            }
+
+            if (avatar != null)
+            {
+                bool hasPhoto = activeContactAvatar != null;
+
+                avatar.EnableInClassList(
+                    "messages-message-avatar--has-photo",
+                    hasPhoto);
+
+                if (hasPhoto)
+                {
+                    avatar.style.backgroundImage =
+                        new StyleBackground(activeContactAvatar);
+                }
+                else
+                {
+                    avatar.style.backgroundImage = StyleKeyword.Null;
+                }
+            }
 
             view.MessageContainer.Add(instance);
             view.ScrollToBottom();
@@ -146,9 +193,9 @@ namespace Atlas.Presentation.SOS.Messages
             bottom.AddToClassList("messages-conversation-bottom");
 
             Label preview = new(
-                lastMessage != null
-                    ? lastMessage.Text
-                    : "No messages yet");
+                GetPreviewText(
+                    lastMessage,
+                    conversation.ContactName));
 
             preview.AddToClassList("messages-conversation-preview");
 
@@ -176,7 +223,41 @@ namespace Atlas.Presentation.SOS.Messages
             return root;
         }
 
-        private string GetReadIcon(MessageReadState state)
+        private static string GetSenderName(
+            MessageData message,
+            string contactName)
+        {
+            if (message.IsOutgoing)
+                return "You";
+
+            if (!string.IsNullOrWhiteSpace(message.SenderName))
+                return message.SenderName;
+
+            return string.IsNullOrWhiteSpace(contactName)
+                ? "Unknown"
+                : contactName;
+        }
+
+        private static string GetPreviewText(
+            MessageData message,
+            string contactName)
+        {
+            if (message == null)
+                return "No messages yet";
+
+            string sender =
+                GetSenderName(message, contactName);
+
+            string text = (message.Text ?? string.Empty)
+                .Replace("\r\n", " ")
+                .Replace('\r', ' ')
+                .Replace('\n', ' ')
+                .Trim();
+
+            return $"{sender}: {text}";
+        }
+
+        private static string GetReadIcon(MessageReadState state)
         {
             return state switch
             {

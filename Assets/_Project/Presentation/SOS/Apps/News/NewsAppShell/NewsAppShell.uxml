@@ -1,0 +1,47 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/WebBrowser/Websites/News/NewsSiteShell.uss?fileID=7433441132597879392&amp;guid=a7c09faf1d5afe34281c96c8b992ec56&amp;type=3#NewsSiteShell"/>
+    <ui:VisualElement name="NewsSiteRoot" class="news-site">
+        <ui:VisualElement name="NewsUtilityBar" class="news-utility">
+            <ui:Label name="NewsDateLabel" text="Sunday, June 12, 2026" class="news-utility__text"/>
+            <ui:VisualElement class="news-utility__right">
+                <ui:Label name="NewsLocationLabel" text="San Juan, PR" class="news-utility__text"/>
+                <ui:Label name="NewsWeatherLabel" text="64°F" class="news-utility__weather"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="NewsBrandBar" class="news-brand">
+            <ui:Button name="NewsLogoButton" text="" class="news-brand__logo">
+                <ui:Image name="" class="news-brand__logo-image" style="background-image: resource(&quot;News/news-logo-small&quot;);"/>
+            </ui:Button>
+            <ui:VisualElement class="news-brand__actions">
+                <ui:VisualElement name="NewsSearchGroup" class="news-search">
+                    <ui:TextField name="NewsSearchField" class="news-search__field"/>
+                    <ui:Button name="NewsSearchButton" text="SEARCH" class="news-search__button"/>
+                </ui:VisualElement>
+                <ui:Button name="NewsSignInButton" text="SIGN IN" class="news-sign-in"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="NewsNavigationBar" class="news-nav">
+            <ui:Button name="NewsHomeButton" text="HOME" class="news-nav__button news-nav__button--active"/>
+            <ui:Button name="NewsLocalButton" text="LOCAL" class="news-nav__button"/>
+            <ui:Button name="NewsPoliticsButton" text="POLITICS" class="news-nav__button"/>
+            <ui:Button name="NewsBusinessButton" text="BUSINESS" class="news-nav__button"/>
+            <ui:Button name="NewsTechnologyButton" text="TECHNOLOGY" class="news-nav__button"/>
+            <ui:Button name="NewsCultureButton" text="CULTURE" class="news-nav__button"/>
+            <ui:Button name="NewsWeatherButton" text="WEATHER" class="news-nav__button"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="BreakingNewsBar" class="breaking-news">
+            <ui:VisualElement class="breaking-news__badge">
+                <ui:Label text="BREAKING" class="breaking-news__badge-text"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="BreakingNewsViewport" class="breaking-news__viewport">
+                <ui:VisualElement name="BreakingNewsTrack" class="breaking-news__track">
+                    <ui:Label name="BreakingNewsText" text="Police continue search as investigation enters third day     •     Severe weather expected across northern Puerto Rico this afternoon     •     Airport officials report delays at Luis Muñoz Marín International Airport" class="breaking-news__text"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="NewsContentContainer" class="news-content-container"/>
+    </ui:VisualElement>
+</ui:UXML>
