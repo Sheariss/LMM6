@@ -12,27 +12,728 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5d6ca27962edd044b4cf04a27d69471, type: 3}
   m_Name: FileSystemLibrary
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.SOS.FileSystem.FileSystemLibrary
+  defaultFolderIcon: {fileID: 0}
   profiles:
-  - userId: admin
-    displayName: admin
-    homeFolderId: 
-    locations: []
+  - userId: guest
+    displayName: Guest
+    homeFolderId: guest-home
+    locations:
+    - location: 1
+      displayName: Home
+      folderId: guest-home
+      icon: {fileID: 21300000, guid: c9c80c58e6ceda04985f7f2c947d7bb3, type: 3}
+      visible: 1
+    - location: 3
+      displayName: Desktop
+      folderId: guest-desktop
+      icon: {fileID: 21300000, guid: a40c23382ea257a49bb503963a2529dd, type: 3}
+      visible: 1
+    - location: 4
+      displayName: Downloads
+      folderId: guest-downloads
+      icon: {fileID: 21300000, guid: 544cbc0db5e01144ebb2cf7000aa711d, type: 3}
+      visible: 1
+    - location: 5
+      displayName: Documents
+      folderId: guest-documents
+      icon: {fileID: 21300000, guid: c6d19a8bcb919894c820ab8f2520daa3, type: 3}
+      visible: 1
+    - location: 6
+      displayName: Pictures
+      folderId: guest-pictures
+      icon: {fileID: 21300000, guid: 32e86c51943f49a45b6882e22fd16359, type: 3}
+      visible: 1
+    - location: 7
+      displayName: Music
+      folderId: guest-music
+      icon: {fileID: 21300000, guid: bbf3f894526b0b94b9b02aad1ad9a843, type: 3}
+      visible: 1
+    - location: 8
+      displayName: Videos
+      folderId: guest-videos
+      icon: {fileID: 21300000, guid: a6e520b2d6fb7a34384beea1f9866252, type: 3}
+      visible: 1
     rootFolders:
-    - id: 
-      name: 
+    - id: guest-home
+      name: Home
       hidden: 0
       readOnly: 0
-      folders: []
-      files:
-      - id: 
-        name: 
-        fileType: 0
-        size: 0
-        modifiedDate: 
+      folders:
+      - id: guest-desktop
+        name: Desktop
         hidden: 0
         readOnly: 0
-        starred: 0
-        textContent: 
-        previewImage: {fileID: 0}
-        contentId: 
-        progressionEventId: 
+        folders: []
+        files:
+        - id: guest-start-here
+          name: Start Here.txt
+          fileType: 1
+          size: 447
+          modifiedDate: 2026-10-12
+          hidden: 0
+          readOnly: 0
+          starred: 1
+          textContent: 'WORKSPACE GUIDE
+
+
+            Documents contains the current
+            working files.
+
+            Documents/Archive contains previous versions
+            and completed work.
+
+            Downloads contains incoming files that
+            have not yet been filed.
+
+
+            Read Handoff Notes for the status
+            of ongoing work.
+
+            Read Maintenance Log for recent changes
+            to this laptop.
+
+
+            Before replacing a document, compare its
+            revision date with the
+
+            archived copy. Some older versions
+            contain comments that were
+
+            not carried forward.'
+          previewImage: {fileID: 0}
+          contentId: guest-start-here-content
+          progressionEventId: 
+        - id: guest-priority-tasks
+          name: Priority Tasks.txt
+          fileType: 1
+          size: 525
+          modifiedDate: 2026-10-12
+          hidden: 0
+          readOnly: 0
+          starred: 0
+          textContent: 'Review the handoff notes.
+
+            Check the maintenance
+            log.
+
+            Clean up Downloads.
+
+            Keep the old backups
+            until the current documents have been checked.'
+          previewImage: {fileID: 0}
+          contentId: guest-priority-tasks-content
+          progressionEventId: 
+        - id: handoff-checklist
+          name: Handoff Checklist.txt
+          fileType: 1
+          size: 536
+          modifiedDate: 2026-10-09
+          hidden: 0
+          readOnly: 0
+          starred: 0
+          textContent: 'WORKSTATION HANDOFF CHECKLIST
+
+
+            Use this checklist
+            when preparing the laptop for reassignment.
+
+
+            [ ] Confirm
+            current working documents are saved in Documents.
+
+            [ ] Record
+            the status of unfinished work in Handoff Notes.
+
+            [ ] Check
+            that referenced attachments are included.
+
+            [ ] Record unresolved
+            device issues in Maintenance Log.
+
+            [ ] Review Downloads for
+            files that still need to be retained.
+
+            [ ] Confirm archived
+            copies are readable before removing duplicates.
+
+
+            Record
+            the handoff date and reviewer in Handoff Notes when complete.'
+          previewImage: {fileID: 0}
+          contentId: guest-handoff-checklist-content
+          progressionEventId: 
+        - id: guest-review-schedule
+          name: Review Schedule.txt
+          fileType: 1
+          size: 422
+          modifiedDate: 2026-10-12
+          hidden: 0
+          readOnly: 0
+          starred: 0
+          textContent: "DOCUMENT REVIEW SCHEDULE\nWeek beginning: 12 October 2026\n\nMonday\u2013Tuesday\nReview
+            the handoff notes and identify the current versions of\nactive documents.\n\nWednesday\u2013Thursday\nCompare
+            archived copies where revisions are unclear. Record\ndiscrepancies in
+            the handoff notes.\n\nFriday\nSummarize unresolved items and prepare
+            the verified document\nset for review.\n\nArchive cleanup will be scheduled
+            after the review is complete."
+          previewImage: {fileID: 0}
+          contentId: guest-review-schedule-content
+          progressionEventId: 
+        - id: guest-archive-reference
+          name: Archive Reference.txt
+          fileType: 1
+          size: 514
+          modifiedDate: 2026-09-18
+          hidden: 0
+          readOnly: 0
+          starred: 0
+          textContent: 'ARCHIVE REFERENCE
+
+
+            Documents/Archive holds earlier
+            document versions and copies
+
+            retained during previous handoffs.
+
+
+            An
+            older modification date does not necessarily mean a file
+
+            has
+            been superseded. Check its contents against the current
+
+            working
+            version before treating it as a duplicate.
+
+
+            Retain copies
+            containing unique comments, attachments, or
+
+            revision history
+            until that information has been accounted for.
+
+
+            If the relationship
+            between two versions is unclear, record
+
+            both filenames in
+            Handoff Notes for review.'
+          previewImage: {fileID: 0}
+          contentId: guest-archive-reference-content
+          progressionEventId: 
+      - id: guest-documents
+        name: Documents
+        hidden: 0
+        readOnly: 0
+        folders:
+        - id: 
+          name: 
+          hidden: 0
+          readOnly: 0
+          folders: []
+          files: []
+        files: []
+      - id: guest-downloads
+        name: Downloads
+        hidden: 0
+        readOnly: 0
+        folders:
+        - id: company-references
+          name: Company References
+          hidden: 0
+          readOnly: 0
+          folders: []
+          files:
+          - id: guest-document-filing-guide
+            name: Document Filing Guide.txt
+            fileType: 1
+            size: 496
+            modifiedDate: 2026-09-25
+            hidden: 0
+            readOnly: 0
+            starred: 0
+            textContent: 'DOCUMENT FILING GUIDE
+
+
+              Documents
+
+              Current
+              working files and review material.
+
+
+              Documents/Archive
+
+              Previous
+              versions retained for comparison and reference.
+
+
+              Documents/Work
+              Reference
+
+              Procedures, contact information, and equipment
+              documentation.
+
+
+              Downloads
+
+              Incoming files
+              awaiting review and filing.
+
+
+              Keep the original filename
+              when first filing an incoming
+
+              document. If two files
+              share a name, compare their contents
+
+              before replacing
+              either copy.
+
+
+              Record unresolved version conflicts in
+              Handoff Notes.'
+            previewImage: {fileID: 0}
+            contentId: guest-document-filing-guide-content
+            progressionEventId: 
+          - id: guest-reference-index
+            name: Reference Index.txt
+            fileType: 0
+            size: 493
+            modifiedDate: 2026-10-07
+            hidden: 0
+            readOnly: 0
+            starred: 0
+            textContent: 'WORK REFERENCE INDEX
+
+
+              Document Filing Guide.txt
+
+              Folder
+              purposes and guidance for handling duplicate filenames.
+
+
+              Support
+              Contacts.txt
+
+              Which team handles equipment, access, and
+              purchasing queries.
+
+
+              Equipment Service Notes.txt
+
+              Reported
+              equipment faults and information for the service visit.
+
+
+              Equipment
+              Warranty.pdf
+
+              Coverage summary and service requirements
+              for the issued laptop.
+
+
+              Current priorities and the review
+              schedule are on the desktop.
+
+              Handoff Notes and Maintenance
+              Log are in Documents.'
+            previewImage: {fileID: 0}
+            contentId: guest-reference-index-content
+            progressionEventId: 
+          - id: guest-support-contacts
+            name: Support Contacts.txt
+            fileType: 1
+            size: 462
+            modifiedDate: 2026-08-14
+            hidden: 0
+            readOnly: 0
+            starred: 0
+            textContent: 'INTERNAL SUPPORT CONTACTS
+
+
+              IT Service Desk
+
+              Laptop
+              faults, account access, backup, and restore requests.
+
+              Use
+              the service portal listed in the company directory.
+
+
+              Facilities
+
+              Office
+              furniture and shared workspace repairs.
+
+              Submit a facilities
+              request with the location and asset label.
+
+
+              Procurement
+
+              Supplier
+              invoices, purchase records, and warranty documentation.
+
+              Include
+              the purchase reference when available.
+
+
+              Use the company
+              directory for current contact details.'
+            previewImage: {fileID: 0}
+            contentId: guest-support-contacts-content
+            progressionEventId: 
+          - id: guest-equipment-service-notes
+            name: Equipment Service Notes.txt
+            fileType: 1
+            size: 502
+            modifiedDate: 2026-10-06
+            hidden: 0
+            readOnly: 0
+            starred: 0
+            textContent: 'EQUIPMENT SERVICE NOTES
+
+              Recorded: 6 October
+              2026
+
+
+              Reported issues:
+
+              - Storage cabinet
+              hinge is loose.
+
+              - Lower drawer sticks when closing.
+
+
+              Service
+              visit:
+
+              Thursday, 8 October, afternoon.
+
+
+              Requested
+              checks:
+
+              Inspect the hinge and drawer runners.
+
+              Confirm
+              whether replacement parts are covered by the service agreement.
+
+              Provide
+              a written record of the work completed.
+
+
+              Completion
+              status:
+
+              No service report was attached when these notes
+              were prepared.
+
+              Check incoming files before marking the
+              request complete.'
+            previewImage: {fileID: 0}
+            contentId: guest-equipment-service-notes-content
+            progressionEventId: 
+          - id: guest-equipment-warranty
+            name: Equipment Warranty.pdf
+            fileType: 3
+            size: 245760
+            modifiedDate: 2026-07-19
+            hidden: 0
+            readOnly: 0
+            starred: 0
+            textContent: 'NORTHBRIDGE OFFICE SUPPLY
+
+              EQUIPMENT WARRANTY
+              SUMMARY
+
+
+              Asset reference: OPS-LT-014
+
+              Purchase
+              reference: NBS-2026-0719
+
+
+              Coverage period:
+
+              19
+              July 2026 to 18 July 2027
+
+
+              Covered:
+
+              Manufacturing
+              defects in the supplied laptop.
+
+              Replacement parts and
+              labor for approved warranty repairs.
+
+
+              Excluded:
+
+              Accidental
+              damage, liquid damage, and unauthorized repairs.
+
+              Consumable
+              accessories and normal cosmetic wear.
+
+
+              Service procedure:
+
+              Contact
+              the IT Service Desk with the asset reference and
+
+              a description
+              of the fault. Procurement will provide proof
+
+              of purchase
+              if the supplier requires it.
+
+
+              Back up working documents
+              before submitting the laptop
+
+              for service.'
+            previewImage: {fileID: 0}
+            contentId: guest-equipment-warranty-content
+            progressionEventId: 
+        files:
+        - id: guest-handoff-notes
+          name: Workstation Handoff.pdf
+          fileType: 3
+          size: 530
+          modifiedDate: 2026-10-11
+          hidden: 0
+          readOnly: 0
+          starred: 0
+          textContent: 'WORKSTATION HANDOFF NOTES
+
+            Updated: 11 October
+            2026
+
+
+            The current working documents are in Documents.
+
+            Earlier
+            versions are retained in Documents/Archive.
+
+
+            Document verification
+            is still open. Compare revision dates
+
+            and check that referenced
+            attachments are present before
+
+            removing duplicate copies.
+
+
+            Downloads
+            contains incoming supplier documents and equipment
+
+            manuals
+            that have not yet been filed.
+
+
+            Reusable procedures are in
+            Documents/Work Reference.
+
+
+            The backup completed on 11 October.
+            A restore check has not
+
+            yet been recorded.'
+          previewImage: {fileID: 0}
+          contentId: guest-handoff-notes-content
+          progressionEventId: 
+        - id: guest-maintenance-log
+          name: Maintenance Log.csv
+          fileType: 0
+          size: 494
+          modifiedDate: 2026-10-12
+          hidden: 0
+          readOnly: 0
+          starred: 0
+          textContent: 'WORKSTATION MAINTENANCE LOG
+
+
+            2026-10-07 - Grouped
+            reference material in Work Reference.
+
+            2026-10-09 - Moved
+            previous document versions into Archive.
+
+            2026-10-11 - Backup
+            completed successfully.
+
+            2026-10-12 - Confirmed Downloads
+            still contains unfiled material.
+
+
+            OPEN ITEMS
+
+            -
+            Verify the current document set against Handoff Notes.
+
+            -
+            Check that a sample file can be restored from backup.
+
+            -
+            File retained downloads after document verification.
+
+
+            No
+            archive copies have been removed during this review.'
+          previewImage: {fileID: 0}
+          contentId: guest-maintenance-log-content
+          progressionEventId: 
+        - id: guest-department-budget
+          name: Department Budget.csv
+          fileType: 0
+          size: 159
+          modifiedDate: 2026-10-01
+          hidden: 0
+          readOnly: 0
+          starred: 0
+          textContent: 'Category,Allocated,Spent
+
+            Office supplies,500,342
+
+            Software
+            subscriptions,1200,1200
+
+            Equipment maintenance,800,465
+
+            Staff
+            training,600,180
+
+            Courier services,200,96'
+          previewImage: {fileID: 0}
+          contentId: guest-department-budget-content
+          progressionEventId: 
+        - id: guest-equipment-invoice
+          name: Equipment Invoice.pdf
+          fileType: 3
+          size: 98304
+          modifiedDate: 2026-07-19
+          hidden: 0
+          readOnly: 0
+          starred: 0
+          textContent: 'NORTHBRIDGE OFFICE SUPPLY
+
+            EQUIPMENT INVOICE
+
+
+            Invoice
+            reference: NBS-2026-0719
+
+            Invoice date: 19 July 2026
+
+            Customer:
+            Operations Department
+
+
+            Item                         Quantity   
+            Amount
+
+            Business laptop                 1        1,150.00
+
+            USB-C
+            docking station           1          180.00
+
+            Laptop carrying
+            case            1           45.00
+
+
+            Total                                   
+            1,375.00
+
+            Currency: USD
+
+            Payment status: Paid
+
+
+            Laptop
+            asset reference: OPS-LT-014
+
+
+            Retain this invoice as proof
+            of purchase for warranty service.'
+          previewImage: {fileID: 0}
+          contentId: guest-equipment-invoice-content
+          progressionEventId: 
+        - id: guest-asset-assignment
+          name: Asset Assignment.pdf
+          fileType: 3
+          size: 163840
+          modifiedDate: 2026-08-21
+          hidden: 0
+          readOnly: 0
+          starred: 0
+          textContent: 'IT EQUIPMENT ASSIGNMENT RECORD
+
+
+            Assignment date:
+            21 August 2026
+
+            Department: Operations
+
+            Asset
+            reference: OPS-LT-014
+
+
+            Issued equipment:
+
+            -
+            Business laptop
+
+            - USB-C docking station
+
+            - Power
+            adapter
+
+            - Laptop carrying case
+
+
+            This equipment
+            is assigned for company work.
+
+            Report faults through the
+            IT Service Desk.
+
+
+            Before reassignment:
+
+            Save
+            current work in the designated document folders.
+
+            Record
+            outstanding work and equipment issues.
+
+            Confirm that all
+            issued accessories are present.
+
+
+            Assignment changes must
+            be recorded in the IT asset register.'
+          previewImage: {fileID: 0}
+          contentId: guest-asset-assignment-content
+          progressionEventId: 
+      - id: guest-pictures
+        name: Pictures
+        hidden: 0
+        readOnly: 0
+        folders: []
+        files:
+        - id: guest-wallapeper
+          name: Wallpaper.png
+          fileType: 2
+          size: 281404
+          modifiedDate: 2025-08-13
+          hidden: 0
+          readOnly: 0
+          starred: 0
+          textContent: 
+          previewImage: {fileID: 0}
+          contentId: guest-wallpaper-content
+          progressionEventId: 
+      files: []

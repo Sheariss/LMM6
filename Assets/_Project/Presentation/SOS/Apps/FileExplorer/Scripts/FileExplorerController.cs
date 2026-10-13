@@ -13,16 +13,22 @@ namespace Atlas.Presentation.SOS.FileExplorer
         [SerializeField] private FileSystemLibrary fileSystemLibrary;
         [SerializeField] private string userId = "guest";
 
+        [Header("Address Bar")]
+        [SerializeField] private string windowsHomePath = @"C:\Users\guest";
+
         private FileExplorerBinder binder;
         private FileExplorerView view;
         private FileExplorerViewBuilder viewBuilder;
         private FileExplorerEngine engine;
 
+        private bool isEditingAddress;
+        private int addressEditVersion;
+        private VisualElement addressEventRoot;
+
         private VisualElement menu;
         private VisualElement menuContent;
         private VisualElement menuEventRoot;
         private Button menuAnchor;
-
         private float menuDesiredHeight;
 
         private readonly List<Button> menuButtons = new();
@@ -61,6 +67,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
         protected override void OnShutdown()
         {
+            EndAddressEditing();
             CloseMenu();
 
             binder = null;
@@ -106,7 +113,6 @@ namespace Atlas.Presentation.SOS.FileExplorer
                 profile?.GetLocation(FileSystemLocation.Downloads),
                 "fe-icon-downloads");
 
-            // FileSystemLocation currently has no Starred entry.
             ConfigureLocationButton(
                 binder.StarredButton,
                 null,
@@ -165,10 +171,9 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
             element.AddToClassList("fe-icon-folder");
 
-            Sprite sprite =
-                fileSystemLibrary.GetFolderIcon(
-                    userId,
-                    folderId);
+            Sprite sprite = fileSystemLibrary.GetFolderIcon(
+                userId,
+                folderId);
 
             if (sprite != null)
             {
@@ -177,19 +182,16 @@ namespace Atlas.Presentation.SOS.FileExplorer
             }
             else
             {
-                // Let the USS fallback provide the icon.
                 element.style.backgroundImage = StyleKeyword.Null;
             }
         }
 
         private void UpdatePathIcon()
         {
-            VisualElement icon =
-                binder.Root.Q<VisualElement>("FE-PathIcon");
-
-            SetFolderIcon(
-                icon,
-                engine.CurrentDirectory?.Id);
+            // Use the existing monitor icon for the breadcrumb bar.
+            binder.PathIcon.RemoveFromClassList("fe-icon-folder");
+            binder.PathIcon.AddToClassList("fe-icon-desktop");
+            binder.PathIcon.style.backgroundImage = StyleKeyword.Null;
         }
 
         // -------------------- COMMAND AVAILABILITY --------------------
@@ -216,53 +218,48 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
         private void RegisterCallbacks()
         {
-            BindClick(
-                binder.NewTabButton,
-                OnNewTabPressed);
-
-            BindClick(
-                binder.BackButton,
-                OnBackPressed);
-
-            BindClick(
-                binder.ForwardButton,
-                OnForwardPressed);
-
-            BindClick(
-                binder.UpButton,
-                OnUpPressed);
-
-            BindClick(
-                binder.RefreshButton,
-                Render);
+            BindClick(binder.NewTabButton, OnNewTabPressed);
+            BindClick(binder.BackButton, OnBackPressed);
+            BindClick(binder.ForwardButton, OnForwardPressed);
+            BindClick(binder.UpButton, OnUpPressed);
+            BindClick(binder.RefreshButton, Render);
 
             BindCallback<ChangeEvent<string>>(
                 binder.SearchField,
                 OnSearchChanged);
 
+            BindCallback<PointerDownEvent>(
+                binder.AddressBar,
+                OnAddressBarPointerDown);
+
+            BindCallback<KeyDownEvent>(
+                binder.AddressField,
+                OnAddressKeyDown,
+                TrickleDown.TrickleDown);
+
+            BindCallback<FocusOutEvent>(
+                binder.AddressField,
+                OnAddressFocusOut);
+
+            BindCallback<ChangeEvent<string>>(
+                binder.AddressField,
+                OnAddressChanged);
+
             BindClick(
                 binder.NewButton,
-                () => ToggleMenu(
-                    binder.NewButton,
-                    BuildNewMenu));
+                () => ToggleMenu(binder.NewButton, BuildNewMenu));
 
             BindClick(
                 binder.SortButton,
-                () => ToggleMenu(
-                    binder.SortButton,
-                    BuildSortMenu));
+                () => ToggleMenu(binder.SortButton, BuildSortMenu));
 
             BindClick(
                 binder.ViewButton,
-                () => ToggleMenu(
-                    binder.ViewButton,
-                    BuildViewMenu));
+                () => ToggleMenu(binder.ViewButton, BuildViewMenu));
 
             BindClick(
                 binder.MoreButton,
-                () => ToggleMenu(
-                    binder.MoreButton,
-                    BuildMoreMenu));
+                () => ToggleMenu(binder.MoreButton, BuildMoreMenu));
 
             BindClick(
                 binder.HomeButton,
@@ -284,13 +281,8 @@ namespace Atlas.Presentation.SOS.FileExplorer
                 binder.DownloadsButton,
                 () => NavigateTo(FileExplorerLocation.Downloads));
 
-            BindClick(
-                binder.RecentButton,
-                OnRecentPressed);
-
-            BindClick(
-                binder.StarredButton,
-                OnStarredPressed);
+            BindClick(binder.RecentButton, OnRecentPressed);
+            BindClick(binder.StarredButton, OnStarredPressed);
 
             BindCallback<ClickEvent>(
                 binder.ContentScrollView,
@@ -308,6 +300,190 @@ namespace Atlas.Presentation.SOS.FileExplorer
             BindCallback<DetachFromPanelEvent>(
                 binder.WindowRoot,
                 OnWindowDetached);
+        }
+
+        // -------------------- ADDRESS BAR --------------------
+
+        private void OnAddressBarPointerDown(PointerDownEvent evt)
+        {
+            if (evt.button != 0 || isEditingAddress)
+                return;
+
+            VisualElement target = evt.target as VisualElement;
+
+            // Breadcrumb buttons navigate without entering edit mode.
+            for (VisualElement element = target;
+                 element != null && element != binder.AddressBar;
+                 element = element.parent)
+            {
+                if (element is Button)
+                    return;
+            }
+
+            BeginAddressEditing();
+            evt.StopPropagation();
+        }
+
+        private void BeginAddressEditing()
+        {
+            if (engine?.CurrentDirectory == null)
+                return;
+
+            string fullPath = engine.GetWindowsPath(
+                engine.CurrentDirectory.Path,
+                windowsHomePath);
+
+            if (string.IsNullOrWhiteSpace(fullPath))
+                return;
+
+            CloseMenu();
+
+            isEditingAddress = true;
+            int version = ++addressEditVersion;
+
+            binder.PathIcon.style.display = DisplayStyle.None;
+            binder.BreadcrumbContainer.style.display = DisplayStyle.None;
+            binder.AddressField.style.display = DisplayStyle.Flex;
+
+            ClearAddressError();
+            binder.AddressField.SetValueWithoutNotify(fullPath);
+
+            // Catch outside clicks even on non-focusable elements.
+            if (binder.WindowRoot.panel != null)
+            {
+                addressEventRoot =
+                    binder.WindowRoot.panel.visualTree;
+
+                addressEventRoot.RegisterCallback<PointerDownEvent>(
+                    OnAddressGlobalPointerDown,
+                    TrickleDown.TrickleDown);
+            }
+
+            TextField field = binder.AddressField;
+
+            // Focus after the opening pointer event completes.
+            field.schedule.Execute(() =>
+            {
+                if (!isEditingAddress ||
+                    addressEditVersion != version ||
+                    binder == null ||
+                    binder.AddressField != field ||
+                    field.panel == null)
+                {
+                    return;
+                }
+
+                field.Focus();
+                field.SelectAll();
+            });
+        }
+
+        private void EndAddressEditing()
+        {
+            isEditingAddress = false;
+            addressEditVersion++;
+
+            if (addressEventRoot != null)
+            {
+                addressEventRoot.UnregisterCallback<PointerDownEvent>(
+                    OnAddressGlobalPointerDown,
+                    TrickleDown.TrickleDown);
+
+                addressEventRoot = null;
+            }
+
+            if (binder == null)
+                return;
+
+            binder.AddressField.style.display = DisplayStyle.None;
+            binder.PathIcon.style.display = DisplayStyle.Flex;
+            binder.BreadcrumbContainer.style.display = DisplayStyle.Flex;
+
+            ClearAddressError();
+        }
+
+        private void ClearAddressError()
+        {
+            binder.AddressError.style.display = DisplayStyle.None;
+
+            binder.AddressField.RemoveFromClassList(
+                "fe-address-field--invalid");
+        }
+
+        private void OnAddressChanged(ChangeEvent<string> evt)
+        {
+            ClearAddressError();
+        }
+
+        private void OnAddressKeyDown(KeyDownEvent evt)
+        {
+            if (!isEditingAddress)
+                return;
+
+            if (evt.keyCode == KeyCode.Escape)
+            {
+                evt.PreventDefault();
+                evt.StopPropagation();
+
+                EndAddressEditing();
+                binder.AddressBar.Focus();
+                return;
+            }
+
+            if (evt.keyCode != KeyCode.Return &&
+                evt.keyCode != KeyCode.KeypadEnter)
+            {
+                return;
+            }
+
+            evt.PreventDefault();
+            evt.StopPropagation();
+
+            if (!engine.TryResolveWindowsPath(
+                binder.AddressField.value,
+                windowsHomePath,
+                out string path))
+            {
+                binder.AddressError.style.display = DisplayStyle.Flex;
+
+                binder.AddressField.AddToClassList(
+                    "fe-address-field--invalid");
+
+                return;
+            }
+
+            EndAddressEditing();
+            engine.Navigate(path);
+            Render();
+
+            binder.AddressBar.Focus();
+        }
+
+        private void OnAddressFocusOut(FocusOutEvent evt)
+        {
+            if (!isEditingAddress)
+                return;
+
+            VisualElement next = evt.relatedTarget as VisualElement;
+
+            if (IsWithin(binder.AddressField, next))
+                return;
+
+            EndAddressEditing();
+        }
+
+        private void OnAddressGlobalPointerDown(PointerDownEvent evt)
+        {
+            if (!isEditingAddress || binder == null)
+                return;
+
+            VisualElement target = evt.target as VisualElement;
+
+            if (IsWithin(binder.AddressBar, target))
+                return;
+
+            // Do not consume the click: its intended action still runs.
+            EndAddressEditing();
         }
 
         // -------------------- TABS --------------------
@@ -341,13 +517,11 @@ namespace Atlas.Presentation.SOS.FileExplorer
                 FileExplorerDirectory directory =
                     engine.GetDirectory(tab.CurrentPath);
 
-                // WindowController excludes focusable header elements
-                // from window drag handling.
+                // Prevent tab interactions from dragging the window.
                 tabElement.focusable = true;
 
                 Label oldIcon =
-                    tabElement.Q<Label>(
-                        className: "fe-tab__icon");
+                    tabElement.Q<Label>(className: "fe-tab__icon");
 
                 if (oldIcon != null)
                 {
@@ -360,16 +534,13 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
                     icon.AddToClassList("fe-tab__icon");
 
-                    SetFolderIcon(
-                        icon,
-                        directory?.Id);
+                    SetFolderIcon(icon, directory?.Id);
 
                     tabElement.Insert(0, icon);
                 }
 
                 Button close =
-                    tabElement.Q<Button>(
-                        className: "fe-tab__close");
+                    tabElement.Q<Button>(className: "fe-tab__close");
 
                 if (close == null)
                     continue;
@@ -517,6 +688,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
                 return;
             }
 
+            EndAddressEditing();
             CloseMenu();
 
             FileExplorerViewState state =
@@ -525,27 +697,24 @@ namespace Atlas.Presentation.SOS.FileExplorer
             view.Render(state);
             UpdatePathIcon();
 
-            VisualElement tabs =
-                viewBuilder.BuildTabs(
-                    engine,
-                    OnTabPressed,
-                    OnTabClosePressed);
+            VisualElement tabs = viewBuilder.BuildTabs(
+                engine,
+                OnTabPressed,
+                OnTabClosePressed);
 
             DecorateTabs(tabs);
             view.SetTabs(tabs);
 
-            VisualElement breadcrumbs =
-                viewBuilder.BuildBreadcrumbs(
-                    engine,
-                    OnBreadcrumbPressed);
+            VisualElement breadcrumbs = viewBuilder.BuildBreadcrumbs(
+                engine,
+                OnBreadcrumbPressed);
 
             view.SetBreadcrumbs(breadcrumbs);
 
-            VisualElement directory =
-                viewBuilder.BuildDirectory(
-                    engine,
-                    OnItemPressed,
-                    OnItemOpened);
+            VisualElement directory = viewBuilder.BuildDirectory(
+                engine,
+                OnItemPressed,
+                OnItemOpened);
 
             view.SetContent(directory);
         }
@@ -556,6 +725,8 @@ namespace Atlas.Presentation.SOS.FileExplorer
             Button anchor,
             Action buildMenu)
         {
+            EndAddressEditing();
+
             if (menu != null && menuAnchor == anchor)
             {
                 CloseMenu(true);
@@ -581,14 +752,12 @@ namespace Atlas.Presentation.SOS.FileExplorer
             };
 
             scroll.AddToClassList("fe-popover-scroll");
-
             menu.Add(scroll);
 
             menuContent = scroll.contentContainer;
             menuDesiredHeight = 14f;
 
             menuButtons.Clear();
-
             buildMenu();
 
             binder.MenuLayer.Add(menu);
@@ -610,11 +779,8 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
             openedMenu.schedule.Execute(() =>
             {
-                if (menu != openedMenu ||
-                    openedMenu.panel == null)
-                {
+                if (menu != openedMenu || openedMenu.panel == null)
                     return;
-                }
 
                 if (menuButtons.Count > 0)
                     menuButtons[0].Focus();
@@ -628,11 +794,8 @@ namespace Atlas.Presentation.SOS.FileExplorer
             if (menu == null || menuAnchor == null)
                 return;
 
-            float width =
-                binder.MenuLayer.resolvedStyle.width;
-
-            float height =
-                binder.MenuLayer.resolvedStyle.height;
+            float width = binder.MenuLayer.resolvedStyle.width;
+            float height = binder.MenuLayer.resolvedStyle.height;
 
             if (float.IsNaN(width) || width <= 0f)
                 width = binder.WindowRoot.worldBound.width;
@@ -650,24 +813,20 @@ namespace Atlas.Presentation.SOS.FileExplorer
                 menuDesiredHeight,
                 Mathf.Max(1f, height - padding * 2f));
 
-            Vector2 below =
-                binder.MenuLayer.WorldToLocal(
-                    new Vector2(
-                        menuAnchor.worldBound.xMin,
-                        menuAnchor.worldBound.yMax));
+            Vector2 below = binder.MenuLayer.WorldToLocal(
+                new Vector2(
+                    menuAnchor.worldBound.xMin,
+                    menuAnchor.worldBound.yMax));
 
-            Vector2 above =
-                binder.MenuLayer.WorldToLocal(
-                    new Vector2(
-                        menuAnchor.worldBound.xMin,
-                        menuAnchor.worldBound.yMin));
+            Vector2 above = binder.MenuLayer.WorldToLocal(
+                new Vector2(
+                    menuAnchor.worldBound.xMin,
+                    menuAnchor.worldBound.yMin));
 
             float left = Mathf.Clamp(
                 below.x,
                 padding,
-                Mathf.Max(
-                    padding,
-                    width - menuWidth - padding));
+                Mathf.Max(padding, width - menuWidth - padding));
 
             float top = below.y + 5f;
 
@@ -677,9 +836,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
             top = Mathf.Clamp(
                 top,
                 padding,
-                Mathf.Max(
-                    padding,
-                    height - menuHeight - padding));
+                Mathf.Max(padding, height - menuHeight - padding));
 
             menu.style.left = left;
             menu.style.top = top;
@@ -726,8 +883,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
             if (menu == null)
                 return;
 
-            VisualElement target =
-                evt.target as VisualElement;
+            VisualElement target = evt.target as VisualElement;
 
             if (IsWithin(menu, target) ||
                 IsWithin(menuAnchor, target))
@@ -744,19 +900,17 @@ namespace Atlas.Presentation.SOS.FileExplorer
         {
             return container != null &&
                    target != null &&
-                   (target == container ||
-                    container.Contains(target));
+                   (target == container || container.Contains(target));
         }
 
-        private void OnWindowGeometryChanged(
-            GeometryChangedEvent evt)
+        private void OnWindowGeometryChanged(GeometryChangedEvent evt)
         {
             CloseMenu();
         }
 
-        private void OnWindowDetached(
-            DetachFromPanelEvent evt)
+        private void OnWindowDetached(DetachFromPanelEvent evt)
         {
+            EndAddressEditing();
             CloseMenu();
         }
 
@@ -778,9 +932,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
                 return;
 
             int focusedIndex = -1;
-
-            VisualElement target =
-                evt.target as VisualElement;
+            VisualElement target = evt.target as VisualElement;
 
             for (int i = 0; i < menuButtons.Count; i++)
             {
@@ -870,7 +1022,6 @@ namespace Atlas.Presentation.SOS.FileExplorer
             button.Add(label);
 
             bool available = action != null;
-
             button.SetEnabled(available);
 
             if (available)
@@ -943,39 +1094,24 @@ namespace Atlas.Presentation.SOS.FileExplorer
             if (tab == null)
                 return;
 
-            AddSortItem(
-                "Name",
-                FileExplorerSortMode.Name);
-
-            AddSortItem(
-                "Date modified",
-                FileExplorerSortMode.DateModified);
-
-            AddSortItem(
-                "Type",
-                FileExplorerSortMode.Type);
-
-            AddSortItem(
-                "Size",
-                FileExplorerSortMode.Size);
+            AddSortItem("Name", FileExplorerSortMode.Name);
+            AddSortItem("Date modified", FileExplorerSortMode.DateModified);
+            AddSortItem("Type", FileExplorerSortMode.Type);
+            AddSortItem("Size", FileExplorerSortMode.Size);
 
             AddMenuDivider();
 
             AddMenuItem(
                 "Ascending",
-                () => SetSortDirection(
-                    FileExplorerSortDirection.Ascending),
+                () => SetSortDirection(FileExplorerSortDirection.Ascending),
                 selected:
-                    tab.SortDirection ==
-                    FileExplorerSortDirection.Ascending);
+                    tab.SortDirection == FileExplorerSortDirection.Ascending);
 
             AddMenuItem(
                 "Descending",
-                () => SetSortDirection(
-                    FileExplorerSortDirection.Descending),
+                () => SetSortDirection(FileExplorerSortDirection.Descending),
                 selected:
-                    tab.SortDirection ==
-                    FileExplorerSortDirection.Descending);
+                    tab.SortDirection == FileExplorerSortDirection.Descending);
         }
 
         private void AddSortItem(
@@ -991,25 +1127,19 @@ namespace Atlas.Presentation.SOS.FileExplorer
                     if (tab == null)
                         return;
 
-                    // Preserve direction when choosing a sort field.
-                    // The existing SetSortMode method toggles direction
-                    // when selecting the current field.
+                    // Selecting a field preserves the current direction.
                     tab.SortMode = mode;
-
                     Render();
                 },
-                selected:
-                    engine.ActiveTab.SortMode == mode);
+                selected: engine.ActiveTab.SortMode == mode);
         }
 
-        private void SetSortDirection(
-            FileExplorerSortDirection direction)
+        private void SetSortDirection(FileExplorerSortDirection direction)
         {
             if (engine.ActiveTab == null)
                 return;
 
             engine.ActiveTab.SortDirection = direction;
-
             Render();
         }
 
@@ -1020,21 +1150,10 @@ namespace Atlas.Presentation.SOS.FileExplorer
             if (engine.ActiveTab == null)
                 return;
 
-            AddViewItem(
-                "Large icons",
-                FileExplorerViewMode.LargeGrid);
-
-            AddViewItem(
-                "Medium icons",
-                FileExplorerViewMode.Grid);
-
-            AddViewItem(
-                "List",
-                FileExplorerViewMode.List);
-
-            AddViewItem(
-                "Details",
-                FileExplorerViewMode.Details);
+            AddViewItem("Large icons", FileExplorerViewMode.LargeGrid);
+            AddViewItem("Medium icons", FileExplorerViewMode.Grid);
+            AddViewItem("List", FileExplorerViewMode.List);
+            AddViewItem("Details", FileExplorerViewMode.Details);
         }
 
         private void AddViewItem(
@@ -1054,8 +1173,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
                     engine.SetViewMode(mode);
                     Render();
                 },
-                selected:
-                    engine.ActiveTab.ViewMode == mode,
+                selected: engine.ActiveTab.ViewMode == mode,
                 iconClass: iconClass);
         }
 
@@ -1090,22 +1208,19 @@ namespace Atlas.Presentation.SOS.FileExplorer
             AddMenuItem(
                 "Select all",
                 selectAll,
-                unavailableReason:
-                    "There are no visible items to select.");
+                unavailableReason: "There are no visible items to select.");
 
             AddMenuItem(
                 "Clear selection",
                 clearSelection,
-                unavailableReason:
-                    "No items are selected.");
+                unavailableReason: "No items are selected.");
 
             AddMenuDivider();
 
             AddMenuItem(
                 "Filter",
                 null,
-                unavailableReason:
-                    "Filtering is not implemented yet.");
+                unavailableReason: "Filtering is not implemented yet.");
         }
     }
 }
