@@ -997,6 +997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Apps.AppController
   appCatalog: {fileID: 11400000, guid: ab7cff7353a143742a455312169db2ea, type: 2}
+  fileAssociations: {fileID: 11400000, guid: d6e357d953dc9634cbaf9db9f95975b6, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

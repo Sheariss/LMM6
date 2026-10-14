@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Atlas.Presentation.SOS.FileExplorer;
 using Atlas.SOS.Apps;
+using Atlas.SOS.FileSystem;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,9 +10,9 @@ namespace Atlas.Presentation.SOS.Apps
 {
     public enum AppLaunchIntent
     {
-        Launch,           // Desktop shortcut or Start menu app entry.
-        TaskbarActivate,  // Ordinary taskbar click.
-        NewWindow         // Explicit new-window action.
+        Launch,
+        TaskbarActivate,
+        NewWindow
     }
 
     public interface IAppWindow : IDisposable
@@ -18,7 +20,6 @@ namespace Atlas.Presentation.SOS.Apps
         bool IsFocused { get; }
         bool IsMinimized { get; }
 
-        // Restore if minimized, then focus and bring forward.
         void Activate();
         void Minimize();
 
@@ -26,7 +27,7 @@ namespace Atlas.Presentation.SOS.Apps
         event Action StateChanged;
     }
 
-    public sealed class AppController : MonoBehaviour
+    public sealed class AppController : MonoBehaviour, IFileAppLauncher
     {
         private const float CascadeOffset = 24f;
         private const int MaximumCascadeSlots = 8;
@@ -34,13 +35,16 @@ namespace Atlas.Presentation.SOS.Apps
         [Header("App Catalog")]
         [SerializeField] private AppCatalog appCatalog;
 
+        [Header("File Opening")]
+        [SerializeField] private FileAssociationCatalog fileAssociations;
+
+        private FileOpenRouter fileOpenRouter;
+
         private readonly Dictionary<string, List<AppInstance>>
             instances = new(StringComparer.Ordinal);
 
         private VisualElement windowLayer;
 
-        // Initializes window behavior only.
-        // AppController creates the app-specific runtime controller.
         private Func<AppDefinition, TemplateContainer, IAppWindow>
             initializeWindow;
 
@@ -70,6 +74,8 @@ namespace Atlas.Presentation.SOS.Apps
             public bool PlacementPending;
         }
 
+        // -------------------- INITIALIZATION --------------------
+
         public void Initialize(
             VisualElement windowLayer,
             Func<AppDefinition, TemplateContainer, IAppWindow> initializeWindow,
@@ -84,6 +90,18 @@ namespace Atlas.Presentation.SOS.Apps
             if (canAccessApp == null)
                 throw new ArgumentNullException(nameof(canAccessApp));
 
+            if (appCatalog == null)
+            {
+                throw new InvalidOperationException(
+                    "AppController requires an AppCatalog.");
+            }
+
+            if (fileAssociations == null)
+            {
+                throw new InvalidOperationException(
+                    "AppController requires a FileAssociationCatalog.");
+            }
+
             if (this.windowLayer != null)
             {
                 this.windowLayer.UnregisterCallback<GeometryChangedEvent>(
@@ -96,9 +114,13 @@ namespace Atlas.Presentation.SOS.Apps
             this.initializeWindow = initializeWindow;
             this.canAccessApp = canAccessApp;
 
+            fileOpenRouter = new FileOpenRouter(fileAssociations, this);
+
             this.windowLayer.RegisterCallback<GeometryChangedEvent>(
                 OnWindowLayerGeometryChanged);
         }
+
+        // -------------------- APP LAUNCHING --------------------
 
         public void Launch(string appID)
         {
@@ -153,13 +175,14 @@ namespace Atlas.Presentation.SOS.Apps
             if (running.Count > 1 &&
                 WindowSelectionRequested != null)
             {
-                var windows = new List<IAppWindow>(running.Count);
+                List<IAppWindow> windows = new(running.Count);
 
                 foreach (AppInstance instance in running)
                     windows.Add(instance.Window);
 
                 WindowSelectionRequested.Invoke(
-                    appID, windows.AsReadOnly());
+                    appID,
+                    windows.AsReadOnly());
 
                 return;
             }
@@ -178,16 +201,153 @@ namespace Atlas.Presentation.SOS.Apps
             }
         }
 
+        // -------------------- FILE LAUNCHING --------------------
+
+        // Implements IFileAppLauncher.TryOpenFile.
+        public bool TryOpenFile(
+            string appId,
+            FileOpenRequest request,
+            out string error)
+        {
+            error = null;
+
+            if (windowLayer == null ||
+                initializeWindow == null ||
+                canAccessApp == null ||
+                appCatalog == null)
+            {
+                error = "The app system is not initialized.";
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(appId))
+            {
+                error = "No destination app ID was provided.";
+                return false;
+            }
+
+            if (request?.File == null)
+            {
+                error = "No valid file-open request was provided.";
+                return false;
+            }
+
+            if (!canAccessApp(appId))
+            {
+                error =
+                    $"The current user cannot access app '{appId}'.";
+
+                return false;
+            }
+
+            if (!appCatalog.TryGetApp(
+                appId,
+                out AppDefinition app))
+            {
+                error =
+                    $"App '{appId}' does not exist in the app catalog.";
+
+                return false;
+            }
+
+            if (app.RuntimePrefab == null)
+            {
+                error = $"App '{appId}' has no runtime prefab.";
+                return false;
+            }
+
+            if (app.RuntimePrefab is not IFileContentReceiver)
+            {
+                error =
+                    $"App '{appId}' cannot receive filesystem content.";
+
+                return false;
+            }
+
+            instances.TryGetValue(
+                appId,
+                out List<AppInstance> running);
+
+            bool createWindow =
+                app.AllowMultipleInstances ||
+                running == null ||
+                running.Count == 0;
+
+            if (createWindow)
+            {
+                // Spawn delivers the request before activating the window.
+                return Spawn(app, request, out error) != null;
+            }
+
+            AppInstance target = GetMostRecent(running);
+
+            if (target.ContentController is not IFileContentReceiver receiver)
+            {
+                error =
+                    $"The running app '{appId}' cannot receive files.";
+
+                return false;
+            }
+
+            try
+            {
+                if (!receiver.TryOpenFile(request, out error))
+                {
+                    if (string.IsNullOrWhiteSpace(error))
+                    {
+                        error =
+                            $"App '{appId}' could not open " +
+                            $"'{request.File.Name}'.";
+                    }
+
+                    return false;
+                }
+
+                Activate(target);
+                error = null;
+
+                return true;
+            }
+            catch (Exception exception)
+            {
+                error = exception.Message;
+                Debug.LogException(exception, this);
+
+                return false;
+            }
+        }
+
+        // -------------------- WINDOW CREATION --------------------
+
         private void Spawn(AppDefinition app)
         {
+            Spawn(app, null, out _);
+        }
+
+        private AppInstance Spawn(
+            AppDefinition app,
+            FileOpenRequest request,
+            out string error)
+        {
+            error = null;
+
+            if (app == null)
+            {
+                error = "No app definition was provided.";
+                Debug.LogError($"[AppController] {error}", this);
+
+                return null;
+            }
+
             if (app.AppUXML == null || app.RuntimePrefab == null)
             {
-                Debug.LogError(
-                    $"[AppController] App '{app.AppID}' is missing " +
-                    "its UXML or runtime prefab.",
-                    this);
+                error =
+                    $"App '{app.AppID}' is missing its UXML " +
+                    "or runtime prefab.";
 
-                return;
+                Debug.LogError($"[AppController] {error}", this);
+
+                return null;
             }
 
             TemplateContainer root = null;
@@ -197,7 +357,6 @@ namespace Atlas.Presentation.SOS.Apps
 
             try
             {
-                // This UXML contains the window and its app content.
                 root = app.AppUXML.CloneTree();
 
                 VisualElement shell =
@@ -222,8 +381,6 @@ namespace Atlas.Presentation.SOS.Apps
                         "required window elements.");
                 }
 
-                // Use the effective initial size for centering.
-                // Minimum dimensions can exceed the configured default.
                 Vector2 initialSize = new(
                     Mathf.Max(
                         1f,
@@ -237,10 +394,8 @@ namespace Atlas.Presentation.SOS.Apps
                             app.MinimumWindowSize.y)));
 
                 root.style.position = Position.Absolute;
-
-                // Temporary position until desktop geometry is available.
-                root.style.left = 0;
-                root.style.top = 0;
+                root.style.left = 0f;
+                root.style.top = 0f;
 
                 root.style.width = initialSize.x;
                 root.style.height = initialSize.y;
@@ -248,8 +403,8 @@ namespace Atlas.Presentation.SOS.Apps
                 root.style.minWidth = app.MinimumWindowSize.x;
                 root.style.minHeight = app.MinimumWindowSize.y;
 
-                shell.style.width = Length.Percent(100);
-                shell.style.height = Length.Percent(100);
+                shell.style.width = Length.Percent(100f);
+                shell.style.height = Length.Percent(100f);
 
                 title.text = app.DisplayName;
 
@@ -261,7 +416,6 @@ namespace Atlas.Presentation.SOS.Apps
 
                 windowLayer.Add(root);
 
-                // This initializer must also apply app.IsResizable.
                 window = initializeWindow(app, root);
 
                 if (window == null)
@@ -276,7 +430,41 @@ namespace Atlas.Presentation.SOS.Apps
                 contentController.gameObject.name =
                     $"{app.AppID}Runtime";
 
+                // Inject the shared router into every File Explorer.
+                if (contentController is FileExplorerController explorer)
+                {
+                    if (fileOpenRouter == null)
+                    {
+                        throw new InvalidOperationException(
+                            "The file-open router has not been initialized.");
+                    }
+
+                    explorer.ConfigureFileOpening(fileOpenRouter);
+                }
+
                 contentController.Initialize(content);
+
+                // Deliver content after initialization and before activation.
+                if (request != null)
+                {
+                    if (contentController is not IFileContentReceiver receiver)
+                    {
+                        throw new InvalidOperationException(
+                            $"App '{app.AppID}' cannot receive " +
+                            "filesystem content.");
+                    }
+
+                    if (!receiver.TryOpenFile(
+                        request,
+                        out string openError))
+                    {
+                        throw new InvalidOperationException(
+                            string.IsNullOrWhiteSpace(openError)
+                                ? $"App '{app.AppID}' could not open " +
+                                  $"'{request.File.Name}'."
+                                : openError);
+                    }
+                }
 
                 instance = new AppInstance
                 {
@@ -299,7 +487,8 @@ namespace Atlas.Presentation.SOS.Apps
                 window.StateChanged += instance.StateHandler;
 
                 if (!instances.TryGetValue(
-                        app.AppID, out List<AppInstance> running))
+                    app.AppID,
+                    out List<AppInstance> running))
                 {
                     running = new List<AppInstance>();
                     instances.Add(app.AppID, running);
@@ -308,14 +497,15 @@ namespace Atlas.Presentation.SOS.Apps
                 running.Add(instance);
                 spawnCounter++;
 
-                // Position immediately when the desktop is already laid out.
-                // Otherwise the geometry callback completes placement.
                 TryPlaceWindow(instance);
-
                 Activate(instance);
+
+                return instance;
             }
             catch (Exception exception)
             {
+                error = exception.Message;
+
                 if (instance != null)
                 {
                     instance.PlacementPending = false;
@@ -324,7 +514,8 @@ namespace Atlas.Presentation.SOS.Apps
                     window.StateChanged -= instance.StateHandler;
 
                     if (instances.TryGetValue(
-                            app.AppID, out List<AppInstance> running))
+                        app.AppID,
+                        out List<AppInstance> running))
                     {
                         running.Remove(instance);
 
@@ -340,8 +531,12 @@ namespace Atlas.Presentation.SOS.Apps
 
                 Debug.LogException(exception, this);
                 PublishState(app.AppID);
+
+                return null;
             }
         }
+
+        // -------------------- WINDOW PLACEMENT --------------------
 
         private void TryPlaceWindow(AppInstance instance)
         {
@@ -363,14 +558,12 @@ namespace Atlas.Presentation.SOS.Apps
             float width = instance.InitialWindowSize.x;
             float height = instance.InitialWindowSize.y;
 
-            // Oversized windows start at the desktop's top-left.
             float centeredLeft =
                 Mathf.Max(0f, (bounds.width - width) * 0.5f);
 
             float centeredTop =
                 Mathf.Max(0f, (bounds.height - height) * 0.5f);
 
-            // Determine how many diagonal steps fit after centering.
             float availableHorizontalOffset =
                 Mathf.Max(0f, bounds.width - width - centeredLeft);
 
@@ -381,7 +574,6 @@ namespace Atlas.Presentation.SOS.Apps
                 availableHorizontalOffset,
                 availableVerticalOffset);
 
-            // Limit before converting to an integer.
             float maximumOffset =
                 (MaximumCascadeSlots - 1) * CascadeOffset;
 
@@ -413,9 +605,7 @@ namespace Atlas.Presentation.SOS.Apps
         private void OnWindowLayerGeometryChanged(
             GeometryChangedEvent evt)
         {
-            // Only complete initial placement.
-            // Already placed or manually moved windows stay where they are.
-            var pending = new List<AppInstance>();
+            List<AppInstance> pending = new();
 
             foreach (List<AppInstance> running in instances.Values)
             {
@@ -429,6 +619,8 @@ namespace Atlas.Presentation.SOS.Apps
             foreach (AppInstance instance in pending)
                 TryPlaceWindow(instance);
         }
+
+        // -------------------- WINDOW ACTIVATION --------------------
 
         private void Activate(AppInstance instance)
         {
@@ -465,10 +657,13 @@ namespace Atlas.Presentation.SOS.Apps
             return result;
         }
 
+        // -------------------- WINDOW REMOVAL --------------------
+
         private void Remove(AppInstance instance)
         {
             if (!instances.TryGetValue(
-                    instance.AppID, out List<AppInstance> running) ||
+                instance.AppID,
+                out List<AppInstance> running) ||
                 !running.Remove(instance))
             {
                 return;
@@ -477,7 +672,6 @@ namespace Atlas.Presentation.SOS.Apps
             if (running.Count == 0)
                 instances.Remove(instance.AppID);
 
-            // The next window starts centered after all windows close.
             if (instances.Count == 0)
                 spawnCounter = 0;
 
@@ -509,7 +703,6 @@ namespace Atlas.Presentation.SOS.Apps
             AppContentController contentController,
             TemplateContainer root)
         {
-            // Release app callbacks before removing its UI.
             if (contentController != null)
             {
                 try
@@ -541,10 +734,11 @@ namespace Atlas.Presentation.SOS.Apps
             }
         }
 
+        // -------------------- APP STATE --------------------
+
         private void PublishAllStates()
         {
-            // Snapshot keys because subscribers may close windows.
-            var appIDs = new List<string>(instances.Keys);
+            List<string> appIDs = new(instances.Keys);
 
             foreach (string appID in appIDs)
                 PublishState(appID);
@@ -556,7 +750,8 @@ namespace Atlas.Presentation.SOS.Apps
             bool focused = false;
 
             if (instances.TryGetValue(
-                    appID, out List<AppInstance> running))
+                appID,
+                out List<AppInstance> running))
             {
                 count = running.Count;
 
@@ -570,10 +765,12 @@ namespace Atlas.Presentation.SOS.Apps
             AppStateChanged?.Invoke(appID, count, focused);
         }
 
+        // -------------------- CLEANUP --------------------
+
         public void Clear()
         {
-            var released = new List<AppInstance>();
-            var appIDs = new List<string>(instances.Keys);
+            List<AppInstance> released = new();
+            List<string> appIDs = new(instances.Keys);
 
             foreach (List<AppInstance> running in instances.Values)
                 released.AddRange(running);
@@ -609,6 +806,7 @@ namespace Atlas.Presentation.SOS.Apps
 
             Clear();
 
+            fileOpenRouter = null;
             windowLayer = null;
             initializeWindow = null;
             canAccessApp = null;

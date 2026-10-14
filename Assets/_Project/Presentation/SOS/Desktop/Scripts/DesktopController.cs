@@ -22,9 +22,11 @@ namespace Atlas.Presentation.SOS.Desktop
 
         [Header("Shortcuts")]
         [SerializeField] private VisualTreeAsset shortcutTemplate;
+
         [SerializeField]
         private Vector2 shortcutSize =
             new Vector2(128f, 128f);
+
         [SerializeField]
         private Vector2 shortcutGap =
             new Vector2(16f, 16f);
@@ -38,7 +40,6 @@ namespace Atlas.Presentation.SOS.Desktop
         [Header("Taskbar")]
         [SerializeField] private VisualTreeAsset pinnedButtonTemplate;
 
-
         private DesktopBinder binder;
         private DesktopView view;
 
@@ -46,7 +47,6 @@ namespace Atlas.Presentation.SOS.Desktop
         private DesktopShortcutGridController gridController;
         private DesktopShortcutController shortcutController;
         private TaskbarPinnedButtonController pinnedButtonController;
-
 
         private readonly List<AppDefinition> availableApps = new();
         private readonly List<AppDefinition> pinnedApps = new();
@@ -99,7 +99,10 @@ namespace Atlas.Presentation.SOS.Desktop
                 appController == null ||
                 !appController.isActiveAndEnabled)
             {
-                error = "The app catalog, UI templates, or active AppController is missing.";
+                error =
+                    "The app catalog, UI templates, or active " +
+                    "AppController is missing.";
+
                 return false;
             }
 
@@ -164,7 +167,9 @@ namespace Atlas.Presentation.SOS.Desktop
                     taskbarBinder.AppGroup,
                     RequestTaskbarActivation);
 
-                pinnedButtonController.Build(pinnedApps);
+                // Cache all available app buttons once.
+                // Only pinned buttons are attached initially.
+                pinnedButtonController.Build(availableApps, pinnedApps);
             }
             catch (Exception exception)
             {
@@ -252,9 +257,9 @@ namespace Atlas.Presentation.SOS.Desktop
 
             view?.ClearWallpaper();
 
+            // Release both attached and detached cached taskbar buttons.
             pinnedButtonController?.Dispose();
             pinnedButtonController = null;
-
 
             availableApps.Clear();
             pinnedApps.Clear();
@@ -275,7 +280,10 @@ namespace Atlas.Presentation.SOS.Desktop
 
             if (desktopDocument == null)
             {
-                error = "A desktop UIDocument was not found in the parent hierarchy.";
+                error =
+                    "A desktop UIDocument was not found " +
+                    "in the parent hierarchy.";
+
                 return false;
             }
 
@@ -422,6 +430,7 @@ namespace Atlas.Presentation.SOS.Desktop
                 throw;
             }
         }
+
         private bool CanRequestApp(string appID)
         {
             if (!IsPreparedForCurrentUser)
@@ -470,10 +479,11 @@ namespace Atlas.Presentation.SOS.Desktop
             int instanceCount,
             bool isFocused)
         {
-            SetPinnedAppState(appID, instanceCount > 0, isFocused);
+            // Instance count includes minimized and maximized windows.
+            SetTaskbarAppState(appID, instanceCount > 0, isFocused);
         }
 
-        public void SetPinnedAppState(
+        public void SetTaskbarAppState(
             string appID,
             bool isOpen,
             bool isFocused)
@@ -482,7 +492,18 @@ namespace Atlas.Presentation.SOS.Desktop
                 return;
 
             pinnedButtonController?.SetAppState(
-                appID, isOpen, isFocused);
+                appID,
+                isOpen,
+                isFocused);
+        }
+
+        // Preserve the existing public API.
+        public void SetPinnedAppState(
+            string appID,
+            bool isOpen,
+            bool isFocused)
+        {
+            SetTaskbarAppState(appID, isOpen, isFocused);
         }
     }
 }

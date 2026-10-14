@@ -724,7 +724,7 @@ MonoBehaviour:
         readOnly: 0
         folders: []
         files:
-        - id: guest-wallapeper
+        - id: guest-wallpaper
           name: Wallpaper.png
           fileType: 2
           size: 281404
@@ -735,5 +735,29 @@ MonoBehaviour:
           textContent: 
           previewImage: {fileID: 0}
           contentId: guest-wallpaper-content
+          progressionEventId: 
+        - id: test-1
+          name: test-1.png
+          fileType: 2
+          size: 45236
+          modifiedDate: 2025-08-13
+          hidden: 0
+          readOnly: 0
+          starred: 0
+          textContent: 
+          previewImage: {fileID: 0}
+          contentId: guest-test-1-content
+          progressionEventId: 
+        - id: test-2
+          name: test-2.png
+          fileType: 2
+          size: 45236
+          modifiedDate: 2025-08-13
+          hidden: 0
+          readOnly: 0
+          starred: 0
+          textContent: 
+          previewImage: {fileID: 0}
+          contentId: guest-test-1-content
           progressionEventId: 
       files: []

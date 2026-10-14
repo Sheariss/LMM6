@@ -121,3 +121,15 @@ MonoBehaviour:
     minimumWindowSize: {x: 640, y: 450}
     showDesktopShortcut: 1
     pinToTaskbar: 1
+  - appID: photos
+    displayName: Photos
+    appIcon48: {fileID: 21300000, guid: 4f2cf6cbc0851584a80653f50bbbb5a3, type: 3}
+    appIcon96: {fileID: 21300000, guid: 01d0d42f31afc1440946d1946e4e711d, type: 3}
+    appUXML: {fileID: 9197481963319205126, guid: 1b349fa21381e944693d649acd4d1958, type: 3}
+    runtimePrefab: {fileID: 3291458596396551050, guid: 541eb288e65dd024d8c88bca36ab97bf, type: 3}
+    isResizable: 1
+    allowMultipleInstances: 1
+    defaultWindowSize: {x: 1100, y: 750}
+    minimumWindowSize: {x: 800, y: 450}
+    showDesktopShortcut: 0
+    pinToTaskbar: 0

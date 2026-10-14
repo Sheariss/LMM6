@@ -21,6 +21,8 @@ namespace Atlas.Presentation.SOS.FileExplorer
         private FileExplorerViewBuilder viewBuilder;
         private FileExplorerEngine engine;
 
+        private FileOpenRouter fileOpenRouter;
+
         private bool isEditingAddress;
         private int addressEditVersion;
         private VisualElement addressEventRoot;
@@ -33,6 +35,16 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
         private readonly List<Button> menuButtons = new();
 
+        // -------------------- CONFIGURATION --------------------
+
+        // Supply the shared router from the app runtime setup.
+        // This can be called before or after Initialize().
+        public void ConfigureFileOpening(FileOpenRouter router)
+        {
+            fileOpenRouter = router ??
+                throw new ArgumentNullException(nameof(router));
+        }
+
         // -------------------- INITIALIZATION --------------------
 
         protected override void OnInitialize()
@@ -41,6 +53,18 @@ namespace Atlas.Presentation.SOS.FileExplorer
             {
                 throw new InvalidOperationException(
                     "FileExplorerController requires a FileSystemLibrary.");
+            }
+
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                throw new InvalidOperationException(
+                    "FileExplorerController requires a user ID.");
+            }
+
+            if (fileSystemLibrary.GetProfile(userId) == null)
+            {
+                throw new InvalidOperationException(
+                    $"No filesystem profile exists for user '{userId}'.");
             }
 
             binder = new FileExplorerBinder(InstanceRoot);
@@ -74,6 +98,9 @@ namespace Atlas.Presentation.SOS.FileExplorer
             view = null;
             viewBuilder = null;
             engine = null;
+
+            // Retain the injected router if this controller is
+            // subsequently initialized with another UI instance.
         }
 
         // -------------------- LOCATION ICONS --------------------
@@ -129,9 +156,10 @@ namespace Atlas.Presentation.SOS.FileExplorer
                     ? button.text
                     : definition.DisplayName;
 
-            button.text = "";
+            button.text = string.Empty;
+            button.Clear();
 
-            var icon = new VisualElement
+            VisualElement icon = new()
             {
                 pickingMode = PickingMode.Ignore
             };
@@ -146,7 +174,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
                     new StyleBackground(definition.Icon);
             }
 
-            var label = new Label(title)
+            Label label = new(title)
             {
                 pickingMode = PickingMode.Ignore
             };
@@ -188,7 +216,6 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
         private void UpdatePathIcon()
         {
-            // Use the existing monitor icon for the breadcrumb bar.
             binder.PathIcon.RemoveFromClassList("fe-icon-folder");
             binder.PathIcon.AddToClassList("fe-icon-desktop");
             binder.PathIcon.style.backgroundImage = StyleKeyword.Null;
@@ -326,8 +353,12 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
         private void BeginAddressEditing()
         {
-            if (engine?.CurrentDirectory == null)
+            if (binder == null ||
+                isEditingAddress ||
+                engine?.CurrentDirectory == null)
+            {
                 return;
+            }
 
             string fullPath = engine.GetWindowsPath(
                 engine.CurrentDirectory.Path,
@@ -404,6 +435,9 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
         private void ClearAddressError()
         {
+            if (binder == null)
+                return;
+
             binder.AddressError.style.display = DisplayStyle.None;
 
             binder.AddressField.RemoveFromClassList(
@@ -417,12 +451,11 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
         private void OnAddressKeyDown(KeyDownEvent evt)
         {
-            if (!isEditingAddress)
+            if (!isEditingAddress || binder == null || engine == null)
                 return;
 
             if (evt.keyCode == KeyCode.Escape)
             {
-                evt.PreventDefault();
                 evt.StopPropagation();
 
                 EndAddressEditing();
@@ -436,7 +469,6 @@ namespace Atlas.Presentation.SOS.FileExplorer
                 return;
             }
 
-            evt.PreventDefault();
             evt.StopPropagation();
 
             if (!engine.TryResolveWindowsPath(
@@ -461,7 +493,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
         private void OnAddressFocusOut(FocusOutEvent evt)
         {
-            if (!isEditingAddress)
+            if (!isEditingAddress || binder == null)
                 return;
 
             VisualElement next = evt.relatedTarget as VisualElement;
@@ -482,7 +514,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
             if (IsWithin(binder.AddressBar, target))
                 return;
 
-            // Do not consume the click: its intended action still runs.
+            // Let the intended click action continue.
             EndAddressEditing();
         }
 
@@ -512,6 +544,9 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
             foreach (VisualElement tabElement in tabs.Children())
             {
+                if (index >= engine.Tabs.Count)
+                    break;
+
                 FileExplorerTab tab = engine.Tabs[index++];
 
                 FileExplorerDirectory directory =
@@ -527,13 +562,12 @@ namespace Atlas.Presentation.SOS.FileExplorer
                 {
                     oldIcon.RemoveFromHierarchy();
 
-                    var icon = new VisualElement
+                    VisualElement icon = new()
                     {
                         pickingMode = PickingMode.Ignore
                     };
 
                     icon.AddToClassList("fe-tab__icon");
-
                     SetFolderIcon(icon, directory?.Id);
 
                     tabElement.Insert(0, icon);
@@ -545,10 +579,11 @@ namespace Atlas.Presentation.SOS.FileExplorer
                 if (close == null)
                     continue;
 
-                close.text = "";
+                close.text = string.Empty;
                 close.tooltip = "Close tab";
+                close.Clear();
 
-                var closeIcon = new VisualElement
+                VisualElement closeIcon = new()
                 {
                     pickingMode = PickingMode.Ignore
                 };
@@ -594,12 +629,12 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
         private void OnRecentPressed()
         {
-            Debug.Log("Recent view not implemented yet.");
+            Debug.Log("Recent view not implemented yet.", this);
         }
 
         private void OnStarredPressed()
         {
-            Debug.Log("Starred view not implemented yet.");
+            Debug.Log("Starred view not implemented yet.", this);
         }
 
         // -------------------- SEARCH --------------------
@@ -616,7 +651,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
             FileExplorerItem item,
             bool additive)
         {
-            if (item == null)
+            if (item == null || engine == null)
                 return;
 
             if (additive)
@@ -624,12 +659,12 @@ namespace Atlas.Presentation.SOS.FileExplorer
             else
                 engine.SelectItem(item.Id);
 
-            Render();
+            RenderSelection();
         }
 
         private void OnItemOpened(FileExplorerItem item)
         {
-            if (item == null)
+            if (item == null || engine == null)
                 return;
 
             if (item.IsFolder)
@@ -642,11 +677,139 @@ namespace Atlas.Presentation.SOS.FileExplorer
             OpenFile(item);
         }
 
+
+        private void RenderSelection()
+        {
+            if (binder == null || engine == null || view == null)
+                return;
+
+            EndAddressEditing();
+            CloseMenu();
+
+            // Preserve the actual clicked elements so double-click
+            // detection can continue across both clicks.
+            binder.ContentContainer
+                .Query<VisualElement>()
+                .ForEach(element =>
+                {
+                    if (element.userData is not FileExplorerItem item)
+                        return;
+
+                    bool selected = engine.IsSelected(item.Id);
+
+                    if (element.ClassListContains("fe-file-card"))
+                    {
+                        element.EnableInClassList(
+                            "fe-file-card--selected",
+                            selected);
+                    }
+
+                    if (element.ClassListContains("fe-file-row"))
+                    {
+                        element.EnableInClassList(
+                            "fe-file-row--selected",
+                            selected);
+                    }
+
+                    if (element.ClassListContains("fe-details-row"))
+                    {
+                        element.EnableInClassList(
+                            "fe-details-row--selected",
+                            selected);
+                    }
+                });
+
+            view.SetSelectionCount(engine.SelectedItemCount);
+            binder.SelectionStatus.tooltip = string.Empty;
+        }
+
+        // -------------------- FILE OPENING --------------------
+
         private void OpenFile(FileExplorerItem item)
         {
-            Debug.Log($"Open file: {item.Path}");
+            if (item == null || item.IsFolder)
+                return;
 
-            // Route file opening through AppController when implemented.
+            EndAddressEditing();
+            CloseMenu();
+
+            if (engine == null)
+            {
+                ReportFileOpenFailure(
+                    "File Explorer is not initialized.");
+
+                return;
+            }
+
+            if (fileOpenRouter == null)
+            {
+                ReportFileOpenFailure(
+                    "File opening is unavailable: no FileOpenRouter " +
+                    "has been configured.");
+
+                return;
+            }
+
+            if (item.FileDefinition == null)
+            {
+                ReportFileOpenFailure(
+                    $"'{item.Name}' has no filesystem definition.");
+
+                return;
+            }
+
+            List<FileSystemFileDefinition> relatedFiles = new();
+
+            // Preserve the visible sort/filter order.
+            // FileOpenRequest filters these to the selected file type.
+            foreach (FileExplorerItem sibling in engine.GetVisibleItems())
+            {
+                if (sibling == null ||
+                    sibling.IsFolder ||
+                    sibling.FileDefinition == null)
+                {
+                    continue;
+                }
+
+                relatedFiles.Add(sibling.FileDefinition);
+            }
+
+            FileOpenRequest request = new(
+                userId,
+                item.Path,
+                item.FileDefinition,
+                relatedFiles);
+
+            if (!fileOpenRouter.TryOpen(request, out string error))
+            {
+                ReportFileOpenFailure(error);
+                return;
+            }
+
+            // Clear an earlier opening failure without rebuilding
+            // File Explorer or taking focus from the destination app.
+            if (binder != null)
+            {
+                view.SetSelectionCount(engine.SelectedItemCount);
+                binder.SelectionStatus.tooltip = string.Empty;
+            }
+        }
+
+        private void ReportFileOpenFailure(string error)
+        {
+            string message = string.IsNullOrWhiteSpace(error)
+                ? "The selected file could not be opened."
+                : error;
+
+            Debug.LogWarning(
+                $"[FileExplorerController] {message}",
+                this);
+
+            if (binder == null)
+                return;
+
+            binder.SelectionStatus.text = message;
+            binder.SelectionStatus.tooltip = message;
         }
 
         private void OnContentBackgroundPressed(ClickEvent evt)
@@ -668,20 +831,21 @@ namespace Atlas.Presentation.SOS.FileExplorer
             foreach (FileExplorerItem item in engine.GetVisibleItems())
                 engine.ToggleItemSelection(item.Id);
 
-            Render();
+            RenderSelection();
         }
 
         private void ClearSelection()
         {
             engine.ClearSelection();
-            Render();
+            RenderSelection();
         }
 
         // -------------------- RENDER --------------------
 
         private void Render()
         {
-            if (engine == null ||
+            if (binder == null ||
+                engine == null ||
                 view == null ||
                 viewBuilder == null)
             {
@@ -695,6 +859,8 @@ namespace Atlas.Presentation.SOS.FileExplorer
                 viewBuilder.BuildState(engine);
 
             view.Render(state);
+            binder.SelectionStatus.tooltip = string.Empty;
+
             UpdatePathIcon();
 
             VisualElement tabs = viewBuilder.BuildTabs(
@@ -745,7 +911,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
             menu.AddToClassList("fe-popover");
 
-            var scroll = new ScrollView(ScrollViewMode.Vertical)
+            ScrollView scroll = new(ScrollViewMode.Vertical)
             {
                 horizontalScrollerVisibility = ScrollerVisibility.Hidden,
                 verticalScrollerVisibility = ScrollerVisibility.Auto
@@ -791,7 +957,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
         private void PositionMenu()
         {
-            if (menu == null || menuAnchor == null)
+            if (binder == null || menu == null || menuAnchor == null)
                 return;
 
             float width = binder.MenuLayer.resolvedStyle.width;
@@ -802,6 +968,14 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
             if (float.IsNaN(height) || height <= 0f)
                 height = binder.WindowRoot.worldBound.height;
+
+            if (float.IsNaN(width) ||
+                float.IsNaN(height) ||
+                width <= 0f ||
+                height <= 0f)
+            {
+                return;
+            }
 
             const float padding = 8f;
 
@@ -983,7 +1157,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
             string unavailableReason = null,
             string iconClass = null)
         {
-            var button = new Button();
+            Button button = new();
 
             button.AddToClassList("fe-popover-item");
 
@@ -991,7 +1165,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
                 "fe-popover-item--selected",
                 selected);
 
-            var check = new Label(selected ? "✓" : "")
+            Label check = new(selected ? "✓" : string.Empty)
             {
                 pickingMode = PickingMode.Ignore
             };
@@ -1001,7 +1175,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
             if (!string.IsNullOrWhiteSpace(iconClass))
             {
-                var icon = new VisualElement
+                VisualElement icon = new()
                 {
                     pickingMode = PickingMode.Ignore
                 };
@@ -1013,7 +1187,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
                 button.Add(icon);
             }
 
-            var label = new Label(text)
+            Label label = new(text)
             {
                 pickingMode = PickingMode.Ignore
             };
@@ -1026,6 +1200,8 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
             if (available)
             {
+                // These buttons are removed with the popup,
+                // so their callbacks do not accumulate on the window.
                 button.clicked += () =>
                 {
                     CloseMenu(true);
@@ -1046,7 +1222,7 @@ namespace Atlas.Presentation.SOS.FileExplorer
 
         private void AddMenuDivider()
         {
-            var divider = new VisualElement
+            VisualElement divider = new()
             {
                 pickingMode = PickingMode.Ignore
             };

@@ -1,0 +1,311 @@
+﻿<ui:UXML
+    xmlns:ui="UnityEngine.UIElements"
+    editor-extension-mode="False">
+
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Window/Window.uss?fileID=7433441132597879392&amp;guid=00c704ca2f7eb4f469f7b2b139bf1194&amp;type=3#Window"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/Photos/Photos.uss?fileID=7433441132597879392&amp;guid=32e5379415f25ee4d98919b5d07658eb&amp;type=3#Photos"/>
+
+    <ui:VisualElement name="WindowRoot" class="window photos-window">
+
+        <ui:VisualElement name="WindowHeader" class="photos-header">
+
+            <ui:Image name="WindowIcon" class="photos-hidden"/>
+            <ui:Label name="WindowTitle" text="Photos" class="photos-hidden"/>
+
+            <ui:VisualElement name="PhotoActions" class="photos-actions">
+
+                <ui:Button name="EditButton"
+                           tooltip="Editing is not available yet"
+                           focusable="false"
+                           class="photos-button photos-edit-button photos-unavailable">
+                    <ui:Image name="EditIcon"
+                              picking-mode="Ignore"
+                              class="photos-icon photos-icon-edit"/>
+                    <ui:Label text="Edit"
+                              picking-mode="Ignore"
+                              class="photos-button-label"/>
+                </ui:Button>
+
+                <ui:Button name="RotateButton"
+                           tooltip="Rotate"
+                           class="photos-button photos-icon-button">
+                    <ui:Image name="RotateIcon"
+                              picking-mode="Ignore"
+                              class="photos-icon photos-icon-rotate"/>
+                </ui:Button>
+
+                <ui:Button name="DeleteButton"
+                           tooltip="Delete"
+                           class="photos-button photos-icon-button">
+                    <ui:Image name="DeleteIcon"
+                              picking-mode="Ignore"
+                              class="photos-icon photos-icon-delete"/>
+                </ui:Button>
+
+                <ui:Button name="ShareButton"
+                           tooltip="Share"
+                           class="photos-button photos-icon-button">
+                    <ui:Image name="ShareIcon"
+                              picking-mode="Ignore"
+                              class="photos-icon photos-icon-share"/>
+                </ui:Button>
+
+                <ui:Button name="MoreButton"
+                           tooltip="More options"
+                           class="photos-button photos-icon-button">
+                    <ui:Image name="MoreIcon"
+                              picking-mode="Ignore"
+                              class="photos-icon photos-icon-more"/>
+                </ui:Button>
+
+            </ui:VisualElement>
+
+            <ui:VisualElement class="photos-title-area">
+                <ui:Label name="photo-name-label"
+                          text="No image loaded"
+                          picking-mode="Ignore"
+                          class="photos-file-name"/>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="photos-header-right">
+
+                <ui:Button name="OpenWithButton"
+                           tooltip="Open with"
+                           class="photos-button photos-open-with-button">
+                    <ui:Label text="Open with"
+                              picking-mode="Ignore"
+                              class="photos-button-label"/>
+                    <ui:Image name="OpenWithChevronIcon"
+                              picking-mode="Ignore"
+                              class="photos-icon photos-icon-chevron"/>
+                </ui:Button>
+
+                <ui:GroupBox name="WindowControls"
+                             class="photos-window-controls">
+
+                    <ui:Button name="WindowMinimizeButton"
+                               tooltip="Minimize"
+                               class="photos-button photos-window-button">
+                        <ui:Image name="MinimizeIcon"
+                                  picking-mode="Ignore"
+                                  class="photos-window-icon photos-icon-minimize"/>
+                    </ui:Button>
+
+                    <ui:Button name="WindowMaximizeButton"
+                               tooltip="Maximize"
+                               class="photos-button photos-window-button">
+                        <ui:Image name="FullscreenIcon"
+                                  picking-mode="Ignore"
+                                  class="photos-window-icon photos-icon-maximize"/>
+                        <ui:Image name="ExitFullscreenIcon"
+                                  picking-mode="Ignore"
+                                  class="photos-window-icon photos-icon-restore photos-hidden"/>
+                    </ui:Button>
+
+                    <ui:Button name="WindowCloseButton"
+                               tooltip="Close"
+                               class="photos-button photos-window-button photos-close-button">
+                        <ui:Image name="CloseIcon"
+                                  picking-mode="Ignore"
+                                  class="photos-window-icon photos-icon-close"/>
+                    </ui:Button>
+
+                </ui:GroupBox>
+
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+
+        <ui:VisualElement name="WindowContent" class="photos-content">
+            <ui:VisualElement name="root" class="photos-root">
+
+                <ui:VisualElement name="PhotoViewport" class="photos-viewport">
+
+                    <ui:Image name="photo-image"
+                              scale-mode="ScaleToFit"
+                              picking-mode="Ignore"
+                              class="photos-image"/>
+
+                    <ui:Button name="previous-button"
+                               tooltip="Previous photo"
+                               class="photos-button photos-navigation-button photos-previous-button">
+                        <ui:Image name="PreviousIcon"
+                                  picking-mode="Ignore"
+                                  class="photos-icon photos-icon-previous"/>
+                    </ui:Button>
+
+                    <ui:Button name="next-button"
+                               tooltip="Next photo"
+                               class="photos-button photos-navigation-button photos-next-button">
+                        <ui:Image name="NextIcon"
+                                  picking-mode="Ignore"
+                                  class="photos-icon photos-icon-next"/>
+                    </ui:Button>
+
+                </ui:VisualElement>
+
+                <ui:VisualElement name="FilmstripContainer"
+                                  class="photos-filmstrip photos-hidden">
+                    <ui:ScrollView name="FilmstripScrollView"
+                                   mode="Horizontal"
+                                   horizontal-scroller-visibility="Auto"
+                                   vertical-scroller-visibility="Hidden"
+                                   class="photos-filmstrip-scroll">
+                        <ui:VisualElement name="FilmstripItems"
+                                          class="photos-filmstrip-items"/>
+                    </ui:ScrollView>
+                </ui:VisualElement>
+
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="WindowFooter" class="photos-footer">
+
+            <ui:VisualElement class="photos-footer-left">
+
+                <ui:Button name="FilmstripButton"
+                           tooltip="Show filmstrip"
+                           class="photos-button photos-footer-button">
+                    <ui:Image name="FilmstripIcon"
+                              picking-mode="Ignore"
+                              class="photos-icon photos-icon-filmstrip"/>
+                </ui:Button>
+
+                <ui:VisualElement class="photos-metadata">
+                    <ui:Label name="FileTypeLabel"
+                              text="—"
+                              class="photos-metadata-label"/>
+                    <ui:VisualElement class="photos-separator"/>
+                    <ui:Label name="DimensionsLabel"
+                              text="— × —"
+                              class="photos-metadata-label"/>
+                    <ui:VisualElement class="photos-separator"/>
+                    <ui:Label name="FileSizeLabel"
+                              text="—"
+                              class="photos-metadata-label"/>
+                </ui:VisualElement>
+
+                <ui:Label name="counter-label"
+                          text="0 / 0"
+                          tooltip="Current photo"
+                          class="photos-counter"/>
+
+            </ui:VisualElement>
+
+            <ui:VisualElement class="photos-footer-center">
+
+                <ui:Button name="InfoButton"
+                           tooltip="File information"
+                           class="photos-button photos-footer-button">
+                    <ui:Image name="InfoIcon"
+                              picking-mode="Ignore"
+                              class="photos-icon photos-icon-info"/>
+                </ui:Button>
+
+                <ui:Button name="ExtractTextButton"
+                           tooltip="Extract text"
+                           class="photos-button photos-footer-button">
+                    <ui:Image name="ExtractTextIcon"
+                              picking-mode="Ignore"
+                              class="photos-icon photos-icon-extract-text"/>
+                </ui:Button>
+
+            </ui:VisualElement>
+
+            <ui:VisualElement class="photos-footer-right">
+
+                <ui:Button name="ActualSizeButton"
+                           tooltip="View actual size"
+                           class="photos-button photos-footer-button">
+                    <ui:Image name="ActualSizeIcon"
+                              picking-mode="Ignore"
+                              class="photos-icon photos-icon-actual-size"/>
+                </ui:Button>
+
+                <ui:DropdownField name="ZoomDropdown"
+                                  tooltip="Zoom percentage"
+                                  choices="25%,50%,75%,100%,125%,150%,200%,400%"
+                                  index="3"
+                                  class="photos-zoom-dropdown"/>
+
+                <ui:Button name="ZoomOutButton"
+                           tooltip="Zoom out"
+                           class="photos-button photos-footer-button">
+                    <ui:Image name="ZoomOutIcon"
+                              picking-mode="Ignore"
+                              class="photos-icon photos-icon-minus"/>
+                </ui:Button>
+
+                <ui:Slider name="ZoomSlider"
+                           tooltip="Zoom"
+                           low-value="25"
+                           high-value="400"
+                           value="100"
+                           class="photos-zoom-slider"/>
+
+                <ui:Button name="ZoomInButton"
+                           tooltip="Zoom in"
+                           class="photos-button photos-footer-button">
+                    <ui:Image name="ZoomInIcon"
+                              picking-mode="Ignore"
+                              class="photos-icon photos-icon-plus"/>
+                </ui:Button>
+
+                <ui:VisualElement class="photos-separator"/>
+
+                <ui:Button name="FullscreenButton"
+                           tooltip="Full screen"
+                           class="photos-button photos-footer-button">
+                    <ui:Image name="ViewerFullscreenIcon"
+                              picking-mode="Ignore"
+                              class="photos-icon photos-icon-fullscreen"/>
+                </ui:Button>
+
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+
+        <ui:VisualElement name="MoreMenu"
+                          class="photos-popup photos-more-menu photos-hidden">
+            <ui:Button name="SaveAsButton"
+                       text="Save as"
+                       class="photos-button photos-menu-item"/>
+            <ui:Button name="CopyButton"
+                       text="Copy"
+                       class="photos-button photos-menu-item"/>
+            <ui:Button name="ResizeButton"
+                       text="Resize"
+                       class="photos-button photos-menu-item"/>
+            <ui:Button name="SetAsButton"
+                       text="Set as"
+                       class="photos-button photos-menu-item"/>
+            <ui:VisualElement class="photos-menu-separator"/>
+            <ui:Button name="SettingsButton"
+                       text="Settings"
+                       class="photos-button photos-menu-item"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="OpenWithMenu"
+                          class="photos-popup photos-open-with-menu photos-hidden">
+            <ui:VisualElement name="OpenWithItems"
+                              class="photos-menu-items"/>
+            <ui:Button name="ChooseAnotherAppButton"
+                       text="Choose another app"
+                       class="photos-button photos-menu-item"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="SetAsMenu"
+                          class="photos-popup photos-set-as-menu photos-hidden">
+            <ui:Button name="SetAsBackgroundButton"
+                       text="Background"
+                       class="photos-button photos-menu-item"/>
+            <ui:Button name="SetAsLockScreenButton"
+                       text="Lock screen"
+                       class="photos-button photos-menu-item"/>
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

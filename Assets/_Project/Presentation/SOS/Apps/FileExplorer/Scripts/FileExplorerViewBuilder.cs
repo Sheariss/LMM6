@@ -541,25 +541,21 @@ namespace Atlas.Presentation.SOS.FileExplorer
             Action<FileExplorerItem, bool> onPressed,
             Action<FileExplorerItem> onOpened)
         {
-            element.RegisterCallback<ClickEvent>(
-                evt =>
+            // Allows selection styling to update the existing element.
+            element.userData = item;
+
+            element.RegisterCallback<ClickEvent>(evt =>
+            {
+                evt.StopPropagation();
+
+                if (evt.clickCount >= 2)
                 {
-                    if (evt.clickCount >= 2)
-                    {
-                        onOpened?.Invoke(
-                            item);
+                    onOpened?.Invoke(item);
+                    return;
+                }
 
-                        evt.StopPropagation();
-
-                        return;
-                    }
-
-                    onPressed?.Invoke(
-                        item,
-                        evt.ctrlKey);
-
-                    evt.StopPropagation();
-                });
+                onPressed?.Invoke(item, evt.ctrlKey || evt.commandKey);
+            });
         }
 
         private static string BuildDirectorySubtitle(
