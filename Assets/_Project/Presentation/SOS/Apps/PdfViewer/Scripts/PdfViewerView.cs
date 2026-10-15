@@ -110,11 +110,12 @@ public sealed class PdfViewerView : IDisposable
         binder.Root.EnableInClassList(
             "pdf-presentation", presentation);
 
-        binder.WindowTitle.text = hasDocument
+        binder.WindowTitle.text = "PDF Viewer";
+
+        binder.DocumentTitle.text = hasDocument
             ? engine.DocumentTitle
             : "PDF Viewer";
 
-        binder.DocumentTitle.text = binder.WindowTitle.text;
         binder.DocumentTitle.tooltip = binder.WindowTitle.text;
 
         if (!IsEditing(binder.PageNumberField))
