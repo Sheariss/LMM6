@@ -245,7 +245,7 @@ public sealed class PdfViewerController :
             binder.PageNumberField,
             OnPageNumberChanged);
 
-        BindCallback<ChangeEvent<float>>(
+        BindCallback<ChangeEvent<string>>(
             binder.ZoomField,
             OnZoomFieldChanged);
 
@@ -436,8 +436,8 @@ public sealed class PdfViewerController :
     }
 
     private void SetZoom(
-        float percentage,
-        Vector2? worldPoint = null)
+    float percentage,
+    Vector2? worldPoint = null)
     {
         if (!engine.HasDocument || presentation)
             return;
@@ -446,7 +446,8 @@ public sealed class PdfViewerController :
             float.IsInfinity(percentage))
         {
             binder.ZoomField.SetValueWithoutNotify(
-                view.CurrentScale * 100f);
+                PdfViewerViewBuilder.FormatZoom(
+                    view.CurrentScale * 100f));
 
             return;
         }
@@ -462,14 +463,33 @@ public sealed class PdfViewerController :
         Refresh();
 
         binder.ZoomField.SetValueWithoutNotify(
-            engine.ZoomPercent);
+            PdfViewerViewBuilder.FormatZoom(
+                engine.ZoomPercent));
 
         view.RestoreAnchor(anchor);
     }
 
-    private void OnZoomFieldChanged(ChangeEvent<float> evt)
+    private void OnZoomFieldChanged(ChangeEvent<string> evt)
     {
-        SetZoom(evt.newValue);
+        if (!engine.HasDocument || presentation)
+            return;
+
+        if (!PdfViewerViewBuilder.TryParseZoom(
+                evt.newValue,
+                out float percentage) ||
+            float.IsNaN(percentage) ||
+            float.IsInfinity(percentage))
+        {
+            // Invalid input restores the current percentage.
+            binder.ZoomField.SetValueWithoutNotify(
+                PdfViewerViewBuilder.FormatZoom(
+                    view.CurrentScale * 100f));
+
+            return;
+        }
+
+        // SetZoom clamps the value and adds the % suffix.
+        SetZoom(percentage);
     }
 
     private void OnFitChanged(ChangeEvent<string> evt)

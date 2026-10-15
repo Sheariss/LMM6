@@ -594,13 +594,11 @@
 }
 
 .pdf-up-icon {
-    background-image: resource("Icons/Arrows 1/Arrow-Upward/arrow_upward_24dp");
-    rotate: -90deg;
+    background-image: resource("Icons/Arrows 1/Collapse-Arrow/keyboard_control_key_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40");
 }
 
 .pdf-down-icon {
-    background-image: resource("Icons/Arrows 1/Arrow-Downward/arrow_downward_24dp");
-    rotate: -90deg;
+    background-image: resource("Icons/Arrows 1/Expand-Arrow/keyboard_arrow_down_32dp");
 }
 
 .pdf-minus-icon {
@@ -637,4 +635,8 @@
 
 .pdf-close-icon {
     background-image: resource("Icons/UI/Close/close_24dp");
+}
+
+.pdf-zoom-field {
+    width: 68px;
 }

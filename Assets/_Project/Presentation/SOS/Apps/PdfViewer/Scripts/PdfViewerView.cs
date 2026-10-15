@@ -256,7 +256,7 @@ public sealed class PdfViewerView : IDisposable
 
         if (!hasDocument)
         {
-            binder.ZoomField.SetValueWithoutNotify(100f);
+            binder.ZoomField.SetValueWithoutNotify("100%");
             binder.ZoomField.SetEnabled(false);
             binder.FitDropdown.SetEnabled(false);
             binder.Button("ZoomOutButton").SetEnabled(false);
@@ -271,7 +271,7 @@ public sealed class PdfViewerView : IDisposable
         if (!IsEditing(binder.ZoomField))
         {
             binder.ZoomField.SetValueWithoutNotify(
-                Mathf.Round(percentage * 10f) / 10f);
+                PdfViewerViewBuilder.FormatZoom(percentage));
         }
 
         binder.ZoomField.SetEnabled(!presentation);

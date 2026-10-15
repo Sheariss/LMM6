@@ -42,8 +42,11 @@
                     <ui:Button name="ZoomOutButton" tooltip="Zoom out" class="pdf-button pdf-icon-button">
                         <ui:Image picking-mode="Ignore" class="pdf-icon pdf-minus-icon"/>
                     </ui:Button>
-                    <ui:FloatField name="ZoomField" value="100" is-delayed="true" tooltip="Zoom percentage; press Enter to apply" class="pdf-field pdf-zoom-field"/>
-                    <ui:Label text="%" class="pdf-percent"/>
+                    <ui:TextField name="ZoomField"
+                      value="100%"
+                      is-delayed="true"
+                      tooltip="Zoom percentage; press Enter to apply"
+                      class="pdf-field pdf-zoom-field"/>
                     <ui:Button name="ZoomInButton" tooltip="Zoom in" class="pdf-button pdf-icon-button">
                         <ui:Image picking-mode="Ignore" class="pdf-icon pdf-plus-icon"/>
                     </ui:Button>

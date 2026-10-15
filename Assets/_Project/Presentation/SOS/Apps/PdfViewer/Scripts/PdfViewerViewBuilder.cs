@@ -279,10 +279,10 @@ public sealed class PdfViewerViewBuilder
                !float.IsInfinity(value);
     }
 
-    private static string FormatZoom(float percentage)
+    public static string FormatZoom(float percentage)
     {
         return percentage.ToString(
-            "0",
+            "0.#",
             CultureInfo.InvariantCulture) + "%";
     }
 }

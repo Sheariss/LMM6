@@ -12,7 +12,7 @@ public sealed class PdfViewerBinder
 
     public IntegerField PageNumberField { get; }
     public Label PageCountLabel { get; }
-    public FloatField ZoomField { get; }
+    public TextField ZoomField { get; }
     public DropdownField FitDropdown { get; }
 
     public VisualElement SearchBar { get; }
@@ -49,7 +49,7 @@ public sealed class PdfViewerBinder
 
         PageNumberField = Get<IntegerField>("PageNumberField");
         PageCountLabel = Get<Label>("PageCountLabel");
-        ZoomField = Get<FloatField>("ZoomField");
+        ZoomField = Get<TextField>("ZoomField");
         FitDropdown = Get<DropdownField>("FitDropdown");
 
         SearchBar = Get<VisualElement>("SearchBar");
