@@ -42,6 +42,7 @@
     margin-right: 6px;
     padding: 6px;
     -unity-background-scale-mode: scale-to-fit;
+    background-color: rgb(171, 99, 99);
 }
 
 .header-title {
@@ -128,5 +129,3 @@
 .window-button--restore #ExitFullscreenIcon {
     display: flex;
 }
-
-

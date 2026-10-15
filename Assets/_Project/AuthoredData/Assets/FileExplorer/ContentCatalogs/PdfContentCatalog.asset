@@ -1,0 +1,245 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b694b6df73d11346be7cb85a3518ed9, type: 3}
+  m_Name: PdfContentCatalog
+  m_EditorClassIdentifier: Assembly-CSharp::Atlas.SOS.FileSystem.PdfContentCatalog
+  entries:
+  - contentId: guest-company-profile-content
+    title: Company Profile 2027.pdf
+    pages:
+    - image: {fileID: 21300000, guid: ab919a2cad478de4cbecd2e9ff92b8a6, type: 3}
+      thumbnail: {fileID: 21300000, guid: ab919a2cad478de4cbecd2e9ff92b8a6, type: 3}
+      displayWidth: 800
+      searchableText: 'NORTHSTAR GROUP
+
+        TEAM MEMBER GUIDE
+
+        2027 EDITION
+
+        A
+        helpful resource for understanding our company, policies, and professional
+        standards'
+    - image: {fileID: 21300000, guid: 54135ed73882ac749b015058defe86db, type: 3}
+      thumbnail: {fileID: 21300000, guid: 54135ed73882ac749b015058defe86db, type: 3}
+      displayWidth: 800
+      searchableText: 'Table of Contents
+
+        01  Welcome Message
+
+        02 
+        About Our Company
+
+        03  Mission, Vision & Values
+
+        04  Meet
+        The Team
+
+        05  Workplace Guidelines
+
+        06  Employee Benefits
+
+        07 
+        Code Of Conduct
+
+        08  Contact Information'
+    - image: {fileID: 21300000, guid: 2c62e03efe7f7b34fb925df00abbe5ba, type: 3}
+      thumbnail: {fileID: 21300000, guid: 2c62e03efe7f7b34fb925df00abbe5ba, type: 3}
+      displayWidth: 800
+      searchableText: "01\nWELCOME!\nTO OUR TEAM\nWelcome to Northstar! We\u2019re
+        a team of curious thinkers, problem-solvers, and collaborators who believe
+        great work begins with great people. Whether you\u2019re joining us for the
+        first time or getting to know our company, we\u2019re glad you\u2019re here.\nEvery
+        team member brings a unique perspective that helps us move forward. We encourage
+        you to ask questions, share ideas, and build meaningful connections as we
+        work together to create practical solutions and lasting value.\nAt Northstar
+        Group, your journey is an opportunity to learn, contribute, and make a difference.
+        We\u2019re here to support you as you settle in, discover your strengths,
+        and take on new challenges."
+    - image: {fileID: 21300000, guid: e67bc100d8d14d846acd804d9dbd0e62, type: 3}
+      thumbnail: {fileID: 21300000, guid: e67bc100d8d14d846acd804d9dbd0e62, type: 3}
+      displayWidth: 800
+      searchableText: '02
+
+        About Our Company
+
+        NORTHSTAR GROUP
+
+        Northstar
+        Group helps businesses turn ideas into meaningful experiences through design,
+        technology, and strategic thinking. We work closely with our clients to understand
+        their challenges and develop creative solutions that strengthen their brands,
+        connect with their audiences, and support lasting growth.
+
+        Founded:
+        2022
+
+        Location: USA
+
+        Team Members: 100+
+
+        Industry:
+        Tech Solutions'
+    - image: {fileID: 21300000, guid: c3f44065811cf6f48910136bd15c00df, type: 3}
+      thumbnail: {fileID: 21300000, guid: c3f44065811cf6f48910136bd15c00df, type: 3}
+      displayWidth: 800
+      searchableText: "03\nMission, Vision & Values \nMission\nOur mission is to
+        help organizations solve complex challenges through thoughtful consulting,
+        practical technology, and strong partnerships. We empower our people to turn
+        ideas into solutions that improve how businesses work and serve their communities.\nVision\nOur
+        vision is to become a trusted partner for organizations building a more adaptable
+        and sustainable future. We aspire to create a workplace where people grow,
+        collaboration drives progress, and our work delivers lasting benefits for
+        clients and communities.\nValues\n- Integrity\n- Teamwork\n- Innovation\n-
+        Excellence\n- Respect\n- Growth"
+    - image: {fileID: 21300000, guid: 325eba8ea2f2b2544a232088724e65ae, type: 3}
+      thumbnail: {fileID: 21300000, guid: 325eba8ea2f2b2544a232088724e65ae, type: 3}
+      displayWidth: 800
+      searchableText: '04
+
+        Meet Our Team
+
+        Founder/CEO
+
+        Karla
+        Torres
+
+        Project Manager
+
+        Alanis Cubi
+
+        Creative Director
+
+        Dana
+        Hamayel
+
+        Marketing Manager
+
+        Fabiola Ramos'
+    - image: {fileID: 21300000, guid: bc9b13339e70c7941a8bae468f03abe6, type: 3}
+      thumbnail: {fileID: 21300000, guid: bc9b13339e70c7941a8bae468f03abe6, type: 3}
+      displayWidth: 800
+      searchableText: "05\nWorkplace Guidelines\n1. Respect Everyone\n   Promote
+        an inclusive workplace by listening to others and treating every colleague
+        fairly.\n2. Communication Standards\n   Share information clearly and maintain
+        professional workplace communication.\n3. Attendance Policy\n   Follow attendance
+        guidelines and update your team when required.\n4. Privacy Guidelines\n  
+        Protect important information and respect workplace confidentiality.\n5.
+        Team Collaboration\n   Support teamwork, cooperation, and positive working
+        relationships."
+    - image: {fileID: 21300000, guid: a4c4057170c03ec4e8fe2d7133dd0d1d, type: 3}
+      thumbnail: {fileID: 21300000, guid: a4c4057170c03ec4e8fe2d7133dd0d1d, type: 3}
+      displayWidth: 800
+      searchableText: '06
+
+        Employee Benefits
+
+        We support our employees
+        with benefits that promote wellbeing, professional growth, and a healthy
+        balance between work and personal life. Our benefits package helps team members
+        feel supported throughout their time at Northstar.
+
+        - Learning Programs
+
+        -
+        Health & Wellness
+
+        - Career Growth
+
+        - Flexible Workplace
+
+        -
+        Performance Rewards
+
+        - Team Activities'
+    - image: {fileID: 21300000, guid: 2655b47518521ed47b1950577fc1eafd, type: 3}
+      thumbnail: {fileID: 21300000, guid: 2655b47518521ed47b1950577fc1eafd, type: 3}
+      displayWidth: 800
+      searchableText: '07
+
+        Code of Conduct
+
+        - Treat colleagues, clients,
+        and partners with dignity and respect.
+
+        - Maintain a workplace free
+        from harassment, discrimination, and bullying.
+
+        - Act honestly and
+        avoid conflicts of interest.
+
+        - Protect confidential company, employee,
+        and client information.
+
+        - Use company resources responsibly and
+        for authorized purposes.
+
+        NORTHSTAR GROUP'
+    - image: {fileID: 21300000, guid: d2affd269fd515c48a6eec4619062b3f, type: 3}
+      thumbnail: {fileID: 21300000, guid: d2affd269fd515c48a6eec4619062b3f, type: 3}
+      displayWidth: 800
+      searchableText: '08
+
+        Contact Information
+
+        125 Northstar Avenue,
+
+        Ashford,
+        Minnesota
+
+        WEBSITE
+
+        www.northstargroup.com
+
+        CONTACT
+        NUMBER
+
+        +123-456-7890
+
+        EMAIL
+
+        hello@northstar.com
+
+        GET
+        IN TOUCH
+
+        NORTHSTAR GROUP'
+    outline:
+    - title: Team Member Guide
+      pageNumber: 1
+      level: 0
+    - title: Table of Contents
+      pageNumber: 2
+      level: 0
+    - title: Welcome to Our Team
+      pageNumber: 3
+      level: 0
+    - title: About Our Company
+      pageNumber: 4
+      level: 0
+    - title: Mission, Vision & Values
+      pageNumber: 5
+      level: 0
+    - title: Meet Our Team
+      pageNumber: 6
+      level: 0
+    - title: Workplace Guidelines
+      pageNumber: 7
+      level: 0
+    - title: Employee Benefits
+      pageNumber: 8
+      level: 0
+    - title: Code of Conduct
+      pageNumber: 9
+      level: 0
+    - title: Contact Information
+      pageNumber: 10
+      level: 0

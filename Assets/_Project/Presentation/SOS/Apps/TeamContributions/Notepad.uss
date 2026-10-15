@@ -1,0 +1,15 @@
+.window { flex-grow: 1; background-color: rgb(245,247,250); color: rgb(22,30,42); min-width: 320px; min-height: 240px; }
+.header { flex-direction: row; align-items: center; height: 38px; background-color: rgb(26,44,68); color: white; flex-shrink: 0; }
+.header-icon { width: 12px; height: 12px; margin-left: 12px; margin-right: 8px; background-color: rgb(137,190,237); }
+.header-title { flex-grow: 1; -unity-font-style: bold; }
+.window-controls { flex-direction: row; }
+.window-controls Button { min-width: 38px; height: 30px; margin-right: 4px; }
+.content { flex-grow: 1; padding: 12px; }
+.toolbar { flex-direction: row; flex-wrap: wrap; align-items: center; margin-bottom: 10px; flex-shrink: 0; }
+Button { min-height: 30px; margin-right: 5px; margin-bottom: 4px; padding: 5px; color: rgb(22,30,42); background-color: rgb(230,237,245); border-width: 1px; border-color: rgb(98,118,142); border-radius: 4px; }
+Button:hover { background-color: rgb(208,226,244); }
+Button:focus { border-width: 3px; border-color: rgb(24,99,182); }
+Label { white-space: normal; }
+.status { margin-top: 10px; min-height: 28px; flex-shrink: 0; }
+TextField:focus, IntegerField:focus { border-width: 2px; border-color: rgb(24,99,182); }
+ .filename { min-width: 220px; flex-grow: 1; } .editor { flex-grow: 1; min-height: 170px; } .editor > .unity-text-field__input { white-space: normal; -unity-text-align: upper-left; background-color: white; color: rgb(20,26,32); padding: 12px; } .prompt { display: none; padding: 10px; margin-bottom: 10px; background-color: rgb(253,236,189); }

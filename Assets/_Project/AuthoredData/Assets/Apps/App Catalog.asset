@@ -133,3 +133,27 @@ MonoBehaviour:
     minimumWindowSize: {x: 800, y: 450}
     showDesktopShortcut: 0
     pinToTaskbar: 0
+  - appID: pdf-viewer
+    displayName: PDF Viewer
+    appIcon48: {fileID: 2081229772717681874, guid: e53a33a284d8e7746b06adce99bfd090, type: 3}
+    appIcon96: {fileID: 8093248978165781046, guid: 3b6e8055c2aca0547b32800f717969ea, type: 3}
+    appUXML: {fileID: 9197481963319205126, guid: acfd149fb29a6324a9655801a83e7362, type: 3}
+    runtimePrefab: {fileID: 8228470272741409234, guid: 3bf758cd4b5736e48b6101f0b598475f, type: 3}
+    isResizable: 1
+    allowMultipleInstances: 1
+    defaultWindowSize: {x: 1100, y: 750}
+    minimumWindowSize: {x: 800, y: 450}
+    showDesktopShortcut: 1
+    pinToTaskbar: 0
+  - appID: learn
+    displayName: Atlas Learn
+    appIcon48: {fileID: 21300000, guid: 5b79e26d6d5002445b6b1a76e4999e2c, type: 3}
+    appIcon96: {fileID: 21300000, guid: 1e37ff9343ae94e4c981df4e87c7ae11, type: 3}
+    appUXML: {fileID: 9197481963319205126, guid: 87434af6a824eab42b84fa6d114bc4d8, type: 3}
+    runtimePrefab: {fileID: 0}
+    isResizable: 1
+    allowMultipleInstances: 1
+    defaultWindowSize: {x: 1100, y: 750}
+    minimumWindowSize: {x: 800, y: 450}
+    showDesktopShortcut: 1
+    pinToTaskbar: 0

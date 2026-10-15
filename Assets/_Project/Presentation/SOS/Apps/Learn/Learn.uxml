@@ -1,0 +1,232 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         editor-extension-mode="False">
+
+    <ui:VisualElement name="AtlasLearnRoot" class="learn-root">
+        <!-- Sidebar -->
+        <ui:VisualElement class="learn-sidebar">
+            <ui:Label text="ATLAS" class="learn-brand"/>
+            <ui:Label text="Learn" class="learn-brand-subtitle"/>
+
+            <ui:Label text="WORKPLACE TRAINING"
+                      class="learn-sidebar-heading"/>
+
+            <ui:Button name="LibraryButton"
+                       text="Training library"
+                       class="learn-button learn-nav learn-nav--selected"/>
+
+            <ui:VisualElement class="learn-sidebar-footer">
+                <ui:Label text="YOUR PROGRESS" class="learn-eyebrow"/>
+                <ui:Label name="CompletionLabel"
+                          text="0 of 3 completed"
+                          class="learn-progress-label"/>
+                <ui:ProgressBar name="OverallProgress"
+                                low-value="0" high-value="3" value="0"
+                                class="learn-progress"/>
+                <ui:Label text="Small lessons. Safer decisions."
+                          class="learn-muted learn-wrap"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement class="learn-main">
+            <ui:VisualElement class="learn-topbar">
+                <ui:Label name="BreadcrumbLabel"
+                          text="Atlas Learn / Training library"
+                          class="learn-muted"/>
+                <ui:Label text="EMPLOYEE LEARNING"
+                          class="learn-eyebrow"/>
+            </ui:VisualElement>
+
+            <!-- Library -->
+            <ui:ScrollView name="LibraryView"
+                           mode="Vertical"
+                           class="learn-scroll">
+                <ui:VisualElement class="learn-page">
+                    <ui:VisualElement class="learn-intro">
+                        <ui:Label text="Stay informed. Work safely."
+                                  class="learn-title learn-wrap"/>
+                        <ui:Label
+                            text="Short cybersecurity lessons for everyday work. Learn to recognize suspicious messages, protect your account, and handle information carefully."
+                            class="learn-body learn-wrap"/>
+                        <ui:Label text="3 modules • Learn at your own pace"
+                                  class="learn-muted"/>
+                    </ui:VisualElement>
+
+                    <ui:Label text="Your training"
+                              class="learn-section-title"/>
+
+                    <ui:VisualElement class="learn-card-grid">
+                        <ui:VisualElement class="learn-card">
+                            <ui:VisualElement class="learn-card-banner learn-banner-email">
+                                <ui:Label text="01" class="learn-module-number"/>
+                                <ui:Label text="EMAIL SAFETY"
+                                          class="learn-eyebrow"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement class="learn-card-body">
+                                <ui:Label text="Recognize phishing"
+                                          class="learn-card-title learn-wrap"/>
+                                <ui:Label
+                                    text="Inspect an unexpected email and decide what to do before clicking."
+                                    class="learn-body learn-wrap"/>
+                                <ui:Label text="About 3 minutes • 2 questions"
+                                          class="learn-muted learn-wrap"/>
+                                <ui:Label name="EmailStatusLabel"
+                                          text="Not started"
+                                          class="learn-status"/>
+                                <ui:Button name="StartEmailButton"
+                                           text="Start lesson"
+                                           class="learn-button learn-primary"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="learn-card">
+                            <ui:VisualElement class="learn-card-banner learn-banner-account">
+                                <ui:Label text="02" class="learn-module-number"/>
+                                <ui:Label text="ACCOUNT SECURITY"
+                                          class="learn-eyebrow"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement class="learn-card-body">
+                                <ui:Label text="Protect your account"
+                                          class="learn-card-title learn-wrap"/>
+                                <ui:Label
+                                    text="Explore passwords, verification, and unexpected sign-in requests."
+                                    class="learn-body learn-wrap"/>
+                                <ui:Label text="Planned module"
+                                          class="learn-muted"/>
+                                <ui:Label text="Coming soon"
+                                          class="learn-status"/>
+                                <ui:Button name="StartAccountButton"
+                                           text="Coming soon"
+                                           enabled="false"
+                                           class="learn-button learn-secondary"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="learn-card">
+                            <ui:VisualElement class="learn-card-banner learn-banner-information">
+                                <ui:Label text="03" class="learn-module-number"/>
+                                <ui:Label text="INFORMATION SAFETY"
+                                          class="learn-eyebrow"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement class="learn-card-body">
+                                <ui:Label text="Share information carefully"
+                                          class="learn-card-title learn-wrap"/>
+                                <ui:Label
+                                    text="Consider what a website requests before sharing personal or company details."
+                                    class="learn-body learn-wrap"/>
+                                <ui:Label text="Planned module"
+                                          class="learn-muted"/>
+                                <ui:Label text="Coming soon"
+                                          class="learn-status"/>
+                                <ui:Button name="StartInformationButton"
+                                           text="Coming soon"
+                                           enabled="false"
+                                           class="learn-button learn-secondary"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:ScrollView>
+
+            <!-- Lesson: reveal when a module is opened -->
+            <ui:ScrollView name="LessonView"
+                           mode="Vertical"
+                           class="learn-scroll learn-hidden">
+                <ui:VisualElement class="learn-page learn-lesson-page">
+                    <ui:VisualElement class="learn-lesson-header">
+                        <ui:Label name="ModuleTitleLabel"
+                                  text="Email safety"
+                                  class="learn-section-title"/>
+                        <ui:Label name="StepLabel"
+                                  text="Step 1 of 5"
+                                  class="learn-muted"/>
+                    </ui:VisualElement>
+
+                    <ui:ProgressBar name="LessonProgress"
+                                    low-value="0" high-value="5" value="1"
+                                    class="learn-progress"/>
+
+                    <ui:VisualElement class="learn-lesson-card">
+                        <!-- Text / example slide -->
+                        <ui:VisualElement name="SlidePanel">
+                            <ui:Label text="RECOGNIZE PHISHING"
+                                      class="learn-eyebrow"/>
+                            <ui:Label name="SlideTitleLabel"
+                                      text="An urgent message arrives"
+                                      class="learn-title learn-wrap"/>
+                            <ui:Label name="SlideBodyLabel"
+                                      text="An email claims your work account will be disabled unless you verify it immediately. Before following its instructions, take a moment to inspect the message."
+                                      class="learn-body learn-wrap"/>
+
+                            <ui:VisualElement name="EmailExample"
+                                              class="learn-example">
+                                <ui:Label text="EXAMPLE EMAIL"
+                                          class="learn-eyebrow"/>
+                                <ui:Label text="From: IT Support &lt;support@atlas-access.example&gt;"
+                                          class="learn-body learn-wrap"/>
+                                <ui:Label text="Subject: Action required — verify your account"
+                                          class="learn-example-subject learn-wrap"/>
+                                <ui:Label text="Your account is scheduled for suspension. Use the link below to confirm your password and keep access."
+                                          class="learn-body learn-wrap"/>
+                                <ui:Label text="Verify account"
+                                          class="learn-example-link"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                        <!-- Quiz: reveal instead of SlidePanel -->
+                        <ui:VisualElement name="QuizPanel"
+                                          class="learn-hidden">
+                            <ui:Label text="CHECK YOUR UNDERSTANDING"
+                                      class="learn-eyebrow"/>
+                            <ui:Label name="QuestionLabel"
+                                      text="What should you do next?"
+                                      class="learn-title learn-wrap"/>
+                            <ui:Button name="AnswerAButton"
+                                       text="Follow the link and enter your password."
+                                       class="learn-button learn-answer"/>
+                            <ui:Button name="AnswerBButton"
+                                       text="Verify the request through a known company IT channel."
+                                       class="learn-button learn-answer"/>
+                            <ui:Button name="AnswerCButton"
+                                       text="Reply with your account details."
+                                       class="learn-button learn-answer"/>
+                            <ui:VisualElement name="FeedbackPanel"
+                                              class="learn-feedback learn-hidden">
+                                <ui:Label name="FeedbackLabel"
+                                          text=""
+                                          class="learn-body learn-wrap"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                        <!-- Summary: reveal after the quiz -->
+                        <ui:VisualElement name="SummaryPanel"
+                                          class="learn-hidden">
+                            <ui:Label text="MODULE COMPLETE"
+                                      class="learn-eyebrow"/>
+                            <ui:Label text="Pause. Inspect. Verify."
+                                      class="learn-title learn-wrap"/>
+                            <ui:Label text="Check the sender’s full address and inspect unexpected requests."
+                                      class="learn-takeaway learn-wrap"/>
+                            <ui:Label text="Treat urgency as a reason to slow down and verify."
+                                      class="learn-takeaway learn-wrap"/>
+                            <ui:Label text="Use a known company channel to confirm or report a suspicious message."
+                                      class="learn-takeaway learn-wrap"/>
+                            <ui:Button name="ReturnToLibraryButton"
+                                       text="Return to training library"
+                                       class="learn-button learn-primary"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="LessonNavigation"
+                                      class="learn-lesson-navigation">
+                        <ui:Button name="PreviousStepButton"
+                                   text="Back"
+                                   class="learn-button learn-secondary"/>
+                        <ui:Button name="NextStepButton"
+                                   text="Next"
+                                   class="learn-button learn-primary"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:ScrollView>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

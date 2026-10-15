@@ -1,0 +1,723 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         editor-extension-mode="False">
+
+    <Style src="../../../Tokens/Global-Colors.uss"/>
+    <Style src="../../../Tokens/Global-Tokens.uss"/>
+    <Style src="../../../Tokens/ATLAS.uss"/>
+    <Style src="../../Window/Window.uss"/>
+    <Style src="Notepad.uss"/>
+
+    <ui:VisualElement name="WindowRoot" class="notes-window">
+
+        <!-- HEADER -->
+        <ui:VisualElement name="WindowHeader" class="notes-header">
+
+            <ui:Label name="WindowTitle" text="Notepad" class="notes-hidden"/>
+
+            <ui:VisualElement class="notes-header-left">
+
+                <ui:VisualElement name="WindowIcon"
+                                  class="notes-app-icon"
+                                  style="background-image: resource(&quot;Icons/PDW/Notes/note_stack_24dp&quot;);"/>
+
+                <ui:VisualElement name="QuickAccessToolbar" class="notes-quick-access">
+
+                    <ui:Label text="AutoSave" class="notes-autosave-label"/>
+
+                    <ui:Toggle name="AutoSaveToggle"
+                               tooltip="Automatically save document changes"
+                               class="notes-autosave">
+                        <ui:Label name="AutoSaveState"
+                                  text="Off"
+                                  picking-mode="Ignore"
+                                  class="notes-autosave-state"/>
+                    </ui:Toggle>
+
+                    <ui:Button name="Save"
+                               tooltip="Save (Ctrl+S)"
+                               class="notes-button notes-icon-button">
+                        <ui:Image name="SaveIcon"
+                                  picking-mode="Ignore"
+                                  class="notes-icon"/>
+                    </ui:Button>
+
+                    <ui:Button name="Undo"
+                               tooltip="Undo (Ctrl+Z)"
+                               class="notes-button notes-icon-button">
+                        <ui:Image name="UndoIcon"
+                                  picking-mode="Ignore"
+                                  class="notes-icon"
+                                  style="background-image: resource(&quot;Icons/Arrows 1/Undo/undo_24dp&quot;);"/>
+                    </ui:Button>
+
+                    <ui:Button name="Redo"
+                               tooltip="Redo (Ctrl+Y)"
+                               class="notes-button notes-icon-button">
+                        <ui:Image name="RedoIcon"
+                                  picking-mode="Ignore"
+                                  class="notes-icon"
+                                  style="background-image: resource(&quot;Icons/Arrows 1/Redo/redo_24dp&quot;);"/>
+                    </ui:Button>
+
+                    <ui:Button name="QuickAccessOptions"
+                               tooltip="Customize quick access"
+                               class="notes-button notes-icon-button">
+                        <ui:Image picking-mode="Ignore"
+                                  class="notes-chevron"
+                                  style="background-image: resource(&quot;Icons/Arrows 1/Expand-Arrow/keyboard_arrow_down_24dp&quot;);"/>
+                    </ui:Button>
+
+                </ui:VisualElement>
+
+                <ui:VisualElement class="notes-title-area">
+
+                    <ui:TextField name="FileName"
+                                  value="Untitled document"
+                                  tooltip="Rename document"
+                                  class="notes-document-name"/>
+
+                    <ui:VisualElement name="SaveIndicator"
+                                      tooltip="Document has not been saved"
+                                      class="notes-save-indicator">
+
+                        <ui:Image name="SaveStateIcon"
+                                  picking-mode="Ignore"
+                                  class="notes-icon"/>
+
+                        <ui:Image name="UnsavedBadge"
+                                  picking-mode="Ignore"
+                                  class="notes-state-badge notes-unsaved-badge"
+                                  style="background-image: resource(&quot;Icons/UI/Close/close_24dp&quot;);"/>
+
+                        <ui:Image name="SavedBadge"
+                                  picking-mode="Ignore"
+                                  class="notes-state-badge notes-saved-badge notes-hidden"
+                                  style="background-image: resource(&quot;Icons/System/Status/Success/check_circle_24dp&quot;);"/>
+                    </ui:VisualElement>
+
+                    <ui:Label name="SaveState"
+                              text="Not saved"
+                              class="notes-save-state"/>
+
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="HeaderSearch" class="notes-header-search">
+
+                <ui:VisualElement name="SearchPill" class="notes-search-pill">
+
+                    <ui:Image picking-mode="Ignore"
+                              class="notes-icon notes-search-icon"
+                              style="background-image: resource(&quot;Icons/UI/Search/search_24dp&quot;);"/>
+
+                    <ui:TextField name="DocumentSearch"
+                                  placeholder-text="Search document"
+                                  tooltip="Find text (Ctrl+F)"
+                                  class="notes-search"/>
+                </ui:VisualElement>
+
+            </ui:VisualElement>
+
+            <ui:VisualElement name="WindowControls" class="notes-window-controls">
+
+                <ui:Button name="WindowMinimizeButton"
+                           tooltip="Minimize"
+                           class="notes-window-button">
+                    <ui:Image name="MinimizeIcon"
+                              picking-mode="Ignore"
+                              class="notes-icon"
+                              style="background-image: resource(&quot;Icons/UI/Minimize/remove_24dp&quot;);"/>
+                </ui:Button>
+
+                <ui:Button name="WindowMaximizeButton"
+                           tooltip="Maximize or restore"
+                           class="notes-window-button">
+                    <ui:Image name="FullscreenIcon"
+                              picking-mode="Ignore"
+                              class="notes-icon"
+                              style="background-image: resource(&quot;Icons/UI/Maximize-Exit/crop_square_24dp&quot;);"/>
+                    <ui:Image name="ExitFullscreenIcon"
+                              picking-mode="Ignore"
+                              class="notes-icon"
+                              style="background-image: resource(&quot;Icons/UI/Maximize/filter_none_24dp&quot;);"/>
+                </ui:Button>
+
+                <ui:Button name="WindowCloseButton"
+                           tooltip="Close"
+                           class="notes-window-button notes-close-button">
+                    <ui:Image name="CloseIcon"
+                              picking-mode="Ignore"
+                              class="notes-icon"
+                              style="background-image: resource(&quot;Icons/UI/Close/close_24dp&quot;);"/>
+                </ui:Button>
+
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="WindowContent" class="notes-content">
+
+            <!-- MENU ROW -->
+            <ui:VisualElement name="MenuBar" class="notes-menu-bar">
+                <ui:Button name="FileMenuButton" text="File" class="notes-menu-button"/>
+                <ui:Button name="EditMenuButton" text="Edit" class="notes-menu-button"/>
+                <ui:Button name="ViewMenuButton" text="View" class="notes-menu-button"/>
+                <ui:Button name="InsertMenuButton" text="Insert" class="notes-menu-button"/>
+                <ui:Button name="FormatMenuButton" text="Format" class="notes-menu-button"/>
+                <ui:Button name="DesignMenuButton" text="Design" class="notes-menu-button"/>
+                <ui:Button name="LayoutMenuButton" text="Layout" class="notes-menu-button"/>
+                <ui:Button name="ToolsMenuButton" text="Tools" class="notes-menu-button"/>
+                <ui:Button name="HelpMenuButton" text="Help" class="notes-menu-button"/>
+            </ui:VisualElement>
+
+            <!-- FORMATTING TOOLBAR -->
+            <ui:ScrollView name="FormattingToolbar"
+                           mode="Horizontal"
+                           horizontal-scroller-visibility="Auto"
+                           vertical-scroller-visibility="Hidden"
+                           class="notes-toolbar-scroll">
+
+                <ui:VisualElement class="notes-toolbar">
+
+                    <ui:Button name="ToolbarUndo"
+                               tooltip="Undo (Ctrl+Z)"
+                               class="notes-button notes-icon-button">
+                        <ui:Image picking-mode="Ignore"
+                                  class="notes-icon"
+                                  style="background-image: resource(&quot;Icons/Arrows 1/Undo/undo_24dp&quot;);"/>
+                    </ui:Button>
+
+                    <ui:Button name="ToolbarRedo"
+                               tooltip="Redo (Ctrl+Y)"
+                               class="notes-button notes-icon-button">
+                        <ui:Image picking-mode="Ignore"
+                                  class="notes-icon"
+                                  style="background-image: resource(&quot;Icons/Arrows 1/Redo/redo_24dp&quot;);"/>
+                    </ui:Button>
+
+                    <ui:VisualElement class="notes-divider"/>
+
+                    <ui:Button name="TextStyle"
+                               tooltip="Text style"
+                               class="notes-button notes-dropdown notes-style-button">
+                        <ui:Label name="TextStyleLabel"
+                                  text="Normal text"
+                                  picking-mode="Ignore"
+                                  class="notes-dropdown-label"/>
+                        <ui:Image picking-mode="Ignore"
+                                  class="notes-chevron"
+                                  style="background-image: resource(&quot;Icons/Arrows 1/Expand-Arrow/keyboard_arrow_down_24dp&quot;);"/>
+                    </ui:Button>
+
+                    <ui:VisualElement class="notes-divider"/>
+
+                    <ui:Button name="FontFamily"
+                               tooltip="Font family"
+                               class="notes-button notes-dropdown notes-font-button">
+                        <ui:Label name="FontFamilyLabel"
+                                  text="Default font"
+                                  picking-mode="Ignore"
+                                  class="notes-dropdown-label"/>
+                        <ui:Image picking-mode="Ignore"
+                                  class="notes-chevron"
+                                  style="background-image: resource(&quot;Icons/Arrows 1/Expand-Arrow/keyboard_arrow_down_24dp&quot;);"/>
+                    </ui:Button>
+
+                    <ui:VisualElement class="notes-divider"/>
+
+                    <ui:VisualElement class="notes-toolbar-group">
+
+                        <ui:Button name="DecreaseFontSize"
+                                   tooltip="Decrease font size"
+                                   class="notes-button notes-icon-button">
+                            <ui:Image picking-mode="Ignore"
+                                      class="notes-icon"
+                                      style="background-image: resource(&quot;Icons/Math/Minus/remove_24dp&quot;);"/>
+                        </ui:Button>
+
+                        <ui:IntegerField name="FontSize"
+                                         value="12"
+                                         tooltip="Font size"
+                                         class="notes-font-size"/>
+
+                        <ui:Button name="IncreaseFontSize"
+                                   tooltip="Increase font size"
+                                   class="notes-button notes-icon-button">
+                            <ui:Image picking-mode="Ignore"
+                                      class="notes-icon"
+                                      style="background-image: resource(&quot;Icons/Math/Add/add_2_24dp&quot;);"/>
+                        </ui:Button>
+
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="notes-divider"/>
+
+                    <!-- Assign image assets to empty Image slots. -->
+                    <ui:VisualElement class="notes-toolbar-group">
+
+                        <ui:Button name="Bold" tooltip="Bold (Ctrl+B)" class="notes-button notes-icon-button">
+                            <ui:Image name="BoldIcon" picking-mode="Ignore" class="notes-icon"/>
+                        </ui:Button>
+
+                        <ui:Button name="Italic" tooltip="Italic (Ctrl+I)" class="notes-button notes-icon-button">
+                            <ui:Image name="ItalicIcon" picking-mode="Ignore" class="notes-icon"/>
+                        </ui:Button>
+
+                        <ui:Button name="Underline" tooltip="Underline (Ctrl+U)" class="notes-button notes-icon-button">
+                            <ui:Image name="UnderlineIcon" picking-mode="Ignore" class="notes-icon"/>
+                        </ui:Button>
+
+                        <ui:Button name="Strikethrough" tooltip="Strikethrough" class="notes-button notes-icon-button">
+                            <ui:Image name="StrikethroughIcon" picking-mode="Ignore" class="notes-icon"/>
+                        </ui:Button>
+
+                        <ui:Button name="Superscript" tooltip="Superscript" class="notes-button notes-icon-button">
+                            <ui:Image name="SuperscriptIcon"
+                                      picking-mode="Ignore"
+                                      class="notes-icon"
+                                      style="background-image: resource(&quot;Icons/Math/Superscript/superscript_24dp&quot;);"/>
+                        </ui:Button>
+
+                        <ui:Button name="Subscript" tooltip="Subscript" class="notes-button notes-icon-button">
+                            <ui:Image name="SubscriptIcon" picking-mode="Ignore" class="notes-icon"/>
+                        </ui:Button>
+
+                        <ui:Button name="TextColor" tooltip="Text color" class="notes-button notes-icon-dropdown">
+                            <ui:Image name="TextColorIcon" picking-mode="Ignore" class="notes-icon"/>
+                            <ui:Image picking-mode="Ignore"
+                                      class="notes-chevron"
+                                      style="background-image: resource(&quot;Icons/Arrows 1/Expand-Arrow/keyboard_arrow_down_24dp&quot;);"/>
+                        </ui:Button>
+
+                        <ui:Button name="HighlightColor" tooltip="Highlight color" class="notes-button notes-icon-dropdown">
+                            <ui:Image name="HighlightIcon" picking-mode="Ignore" class="notes-icon"/>
+                            <ui:Image picking-mode="Ignore"
+                                      class="notes-chevron"
+                                      style="background-image: resource(&quot;Icons/Arrows 1/Expand-Arrow/keyboard_arrow_down_24dp&quot;);"/>
+                        </ui:Button>
+
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="notes-divider"/>
+
+                    <ui:VisualElement class="notes-toolbar-group">
+
+                        <ui:Button name="TextAlignment" tooltip="Paragraph alignment" class="notes-button notes-icon-dropdown">
+                            <ui:Image name="TextAlignmentIcon" picking-mode="Ignore" class="notes-icon"/>
+                            <ui:Image picking-mode="Ignore"
+                                      class="notes-chevron"
+                                      style="background-image: resource(&quot;Icons/Arrows 1/Expand-Arrow/keyboard_arrow_down_24dp&quot;);"/>
+                        </ui:Button>
+
+                        <ui:Button name="ParagraphSpacing" tooltip="Line and paragraph spacing" class="notes-button notes-icon-button">
+                            <ui:Image name="ParagraphSpacingIcon" picking-mode="Ignore" class="notes-icon"/>
+                        </ui:Button>
+
+                        <ui:Button name="ListOptions" tooltip="Multilevel list" class="notes-button notes-icon-dropdown">
+                            <ui:Image name="MultilevelListIcon" picking-mode="Ignore" class="notes-icon"/>
+                            <ui:Image picking-mode="Ignore"
+                                      class="notes-chevron"
+                                      style="background-image: resource(&quot;Icons/Arrows 1/Expand-Arrow/keyboard_arrow_down_24dp&quot;);"/>
+                        </ui:Button>
+
+                        <ui:Button name="BulletList" tooltip="Bulleted list" class="notes-button notes-icon-dropdown">
+                            <ui:Image name="BulletListIcon" picking-mode="Ignore" class="notes-icon"/>
+                            <ui:Image picking-mode="Ignore"
+                                      class="notes-chevron"
+                                      style="background-image: resource(&quot;Icons/Arrows 1/Expand-Arrow/keyboard_arrow_down_24dp&quot;);"/>
+                        </ui:Button>
+
+                        <ui:Button name="NumberedList" tooltip="Numbered list" class="notes-button notes-icon-dropdown">
+                            <ui:Image name="NumberedListIcon" picking-mode="Ignore" class="notes-icon"/>
+                            <ui:Image picking-mode="Ignore"
+                                      class="notes-chevron"
+                                      style="background-image: resource(&quot;Icons/Arrows 1/Expand-Arrow/keyboard_arrow_down_24dp&quot;);"/>
+                        </ui:Button>
+
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="notes-divider"/>
+
+                    <ui:Button name="DecreaseIndent" tooltip="Decrease indentation" class="notes-button notes-icon-button">
+                        <ui:Image name="DecreaseIndentIcon" picking-mode="Ignore" class="notes-icon"/>
+                    </ui:Button>
+
+                    <ui:Button name="IncreaseIndent" tooltip="Increase indentation" class="notes-button notes-icon-button">
+                        <ui:Image name="IncreaseIndentIcon" picking-mode="Ignore" class="notes-icon"/>
+                    </ui:Button>
+
+                    <ui:VisualElement class="notes-divider"/>
+
+                    <ui:Button name="ClearFormatting" tooltip="Clear formatting" class="notes-button notes-icon-button">
+                        <ui:Image name="ClearFormattingIcon" picking-mode="Ignore" class="notes-icon"/>
+                    </ui:Button>
+
+                </ui:VisualElement>
+            </ui:ScrollView>
+
+            <!-- CONFIRMATION -->
+            <ui:VisualElement name="Prompt" class="notes-prompt">
+                <ui:Label name="PromptText" class="notes-prompt-text"/>
+                <ui:Button name="Cancel" text="Cancel" class="notes-button"/>
+                <ui:Button name="Confirm" text="Discard changes" class="notes-button notes-danger"/>
+            </ui:VisualElement>
+
+            <!-- WORKSPACE-EDGE RULERS -->
+            <ui:VisualElement name="DocumentWorkspace" class="notes-workspace">
+
+                <ui:VisualElement class="notes-workspace-ruler-row">
+
+                    <ui:VisualElement class="notes-ruler-corner"/>
+
+                    <ui:VisualElement name="HorizontalRuler" class="notes-horizontal-ruler">
+                        <ui:VisualElement name="HorizontalRulerTicks" class="notes-horizontal-ticks">
+                            <ui:Label text="0" class="notes-ruler-number"/>
+                            <ui:Label text="1" class="notes-ruler-number"/>
+                            <ui:Label text="2" class="notes-ruler-number"/>
+                            <ui:Label text="3" class="notes-ruler-number"/>
+                            <ui:Label text="4" class="notes-ruler-number"/>
+                            <ui:Label text="5" class="notes-ruler-number"/>
+                            <ui:Label text="6" class="notes-ruler-number"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                </ui:VisualElement>
+
+                <ui:VisualElement class="notes-workspace-body">
+
+                    <ui:VisualElement name="VerticalRuler" class="notes-vertical-ruler">
+                        <ui:VisualElement name="VerticalRulerTicks" class="notes-vertical-ticks">
+                            <ui:Label text="0" class="notes-vertical-mark"/>
+                            <ui:Label text="1" class="notes-vertical-mark"/>
+                            <ui:Label text="2" class="notes-vertical-mark"/>
+                            <ui:Label text="3" class="notes-vertical-mark"/>
+                            <ui:Label text="4" class="notes-vertical-mark"/>
+                            <ui:Label text="5" class="notes-vertical-mark"/>
+                            <ui:Label text="6" class="notes-vertical-mark"/>
+                            <ui:Label text="7" class="notes-vertical-mark"/>
+                            <ui:Label text="8" class="notes-vertical-mark"/>
+                            <ui:Label text="9" class="notes-vertical-mark"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:ScrollView name="DocumentScroll"
+                                   mode="VerticalAndHorizontal"
+                                   horizontal-scroller-visibility="Auto"
+                                   vertical-scroller-visibility="Auto"
+                                   class="notes-document-scroll">
+
+                        <ui:VisualElement name="DocumentCanvas" class="notes-canvas">
+                            <ui:VisualElement name="PagesContainer" class="notes-pages">
+
+                                <ui:VisualElement name="PageOne" class="notes-page">
+                                    <ui:VisualElement name="PageHeader" class="notes-page-header"/>
+                                    <ui:TextField name="Editor" multiline="true" class="notes-editor"/>
+                                    <ui:VisualElement name="PageFooter" class="notes-page-footer"/>
+                                </ui:VisualElement>
+
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                    </ui:ScrollView>
+
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- FOOTER -->
+            <ui:VisualElement name="DocumentStatusBar" class="notes-statusbar">
+
+                <ui:VisualElement class="notes-status-group">
+
+                    <ui:Label name="PageCount" text="Page 1 of 1" class="notes-status-label"/>
+
+                    <ui:Button name="WordCount" text="0 words" tooltip="Document word count" class="notes-status-button"/>
+
+                    <ui:Button name="DocumentLanguage" tooltip="Document language" class="notes-status-button">
+                        <ui:Image picking-mode="Ignore"
+                                  class="notes-small-icon"
+                                  style="background-image: resource(&quot;Icons/Media/Language/language_24dp&quot;);"/>
+                        <ui:Label name="DocumentLanguageLabel"
+                                  text="English (United States)"
+                                  picking-mode="Ignore"
+                                  class="notes-status-button-label"/>
+                    </ui:Button>
+
+                    <ui:Button name="AccessibilityOptions" tooltip="Accessibility options" class="notes-status-button">
+                        <ui:Image picking-mode="Ignore"
+                                  class="notes-small-icon"
+                                  style="background-image: resource(&quot;Icons/System/Accessibility/accessibility_new_24dp&quot;);"/>
+                        <ui:Label text="Accessibility" picking-mode="Ignore" class="notes-status-button-label"/>
+                    </ui:Button>
+
+                </ui:VisualElement>
+
+                <ui:VisualElement class="notes-status-spacer"/>
+
+                <ui:VisualElement class="notes-status-group">
+
+                    <ui:Button name="FocusMode" tooltip="Toggle focus mode" class="notes-status-button">
+                        <ui:Image picking-mode="Ignore"
+                                  class="notes-small-icon"
+                                  style="background-image: resource(&quot;Icons/UI/Fullscreen/fullscreen_24dp&quot;);"/>
+                        <ui:Label text="Focus" picking-mode="Ignore" class="notes-status-button-label"/>
+                    </ui:Button>
+
+                    <ui:VisualElement class="notes-status-divider"/>
+
+                    <ui:Button name="ReadMode" tooltip="Read mode" class="notes-status-button notes-status-icon-button">
+                        <ui:Image name="ReadModeIcon" picking-mode="Ignore" class="notes-small-icon"/>
+                    </ui:Button>
+
+                    <ui:Button name="PrintLayout" tooltip="Print layout" class="notes-status-button notes-status-icon-button is-active">
+                        <ui:Image name="PrintLayoutIcon"
+                                  picking-mode="Ignore"
+                                  class="notes-small-icon"
+                                  style="background-image: resource(&quot;Icons/Files/Storage-Types/Documents/description_24dp&quot;);"/>
+                    </ui:Button>
+
+                    <ui:Button name="WebLayout" tooltip="Web layout" class="notes-status-button notes-status-icon-button">
+                        <ui:Image name="WebLayoutIcon" picking-mode="Ignore" class="notes-small-icon"/>
+                    </ui:Button>
+
+                    <ui:VisualElement class="notes-status-divider"/>
+
+                    <ui:Button name="ZoomOut" tooltip="Zoom out" class="notes-status-button notes-status-icon-button">
+                        <ui:Image picking-mode="Ignore"
+                                  class="notes-small-icon"
+                                  style="background-image: resource(&quot;Icons/Math/Minus/remove_24dp&quot;);"/>
+                    </ui:Button>
+
+                    <ui:Slider name="ZoomSlider"
+                               low-value="10"
+                               high-value="500"
+                               value="100"
+                               tooltip="Document zoom"
+                               class="notes-zoom-slider"/>
+
+                    <ui:Button name="ZoomIn" tooltip="Zoom in" class="notes-status-button notes-status-icon-button">
+                        <ui:Image picking-mode="Ignore"
+                                  class="notes-small-icon"
+                                  style="background-image: resource(&quot;Icons/Math/Add/add_2_24dp&quot;);"/>
+                    </ui:Button>
+
+                    <ui:TextField name="ZoomPercentage"
+                                  value="100%"
+                                  tooltip="Zoom percentage: 10% to 500%"
+                                  class="notes-zoom-percentage"/>
+
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:Label name="Status" class="notes-message"/>
+
+            <!-- POPUP OVERLAY
+                 Runtime code opens one panel, positions it below its anchor,
+                 and closes it on Escape or outside click. -->
+            <ui:VisualElement name="MenuLayer" class="notes-menu-layer">
+
+                <ui:VisualElement name="FileMenu" class="notes-popup-menu">
+
+                    <ui:Button name="New" class="notes-menu-item">
+                        <ui:Label text="New" picking-mode="Ignore" class="notes-menu-item-label"/>
+                        <ui:Label text="Ctrl+N" picking-mode="Ignore" class="notes-menu-shortcut"/>
+                    </ui:Button>
+
+                    <ui:Button name="Open" class="notes-menu-item">
+                        <ui:Label text="Open" picking-mode="Ignore" class="notes-menu-item-label"/>
+                        <ui:Label text="Ctrl+O" picking-mode="Ignore" class="notes-menu-shortcut"/>
+                    </ui:Button>
+
+                    <ui:Button name="MakeCopy" text="Make a copy" class="notes-menu-item"/>
+                    <ui:Button name="ShareDocument" text="Share" enabled="false"
+                               tooltip="Sharing is not available yet" class="notes-menu-item"/>
+
+                    <ui:VisualElement class="notes-menu-separator"/>
+
+                    <ui:Button name="MenuSave" class="notes-menu-item">
+                        <ui:Label text="Save" picking-mode="Ignore" class="notes-menu-item-label"/>
+                        <ui:Label text="Ctrl+S" picking-mode="Ignore" class="notes-menu-shortcut"/>
+                    </ui:Button>
+
+                    <ui:Button name="SaveAs" class="notes-menu-item">
+                        <ui:Label text="Save as" picking-mode="Ignore" class="notes-menu-item-label"/>
+                        <ui:Label text="Ctrl+Shift+S" picking-mode="Ignore" class="notes-menu-shortcut"/>
+                    </ui:Button>
+
+                    <ui:Button name="ExportDocument" text="Export / Download" class="notes-menu-item"/>
+                    <ui:Button name="DocumentDetails" text="Info / Details" class="notes-menu-item"/>
+
+                    <ui:Button name="PrintDocument" enabled="false"
+                               tooltip="Printing is not available yet" class="notes-menu-item">
+                        <ui:Label text="Print" picking-mode="Ignore" class="notes-menu-item-label"/>
+                        <ui:Label text="Ctrl+P" picking-mode="Ignore" class="notes-menu-shortcut"/>
+                    </ui:Button>
+
+                    <ui:VisualElement class="notes-menu-separator"/>
+                    <ui:Button name="ExitDocument" text="Exit" class="notes-menu-item"/>
+
+                </ui:VisualElement>
+
+                <ui:VisualElement name="EditMenu" class="notes-popup-menu">
+
+                    <ui:Button name="MenuUndo" class="notes-menu-item">
+                        <ui:Label text="Undo" picking-mode="Ignore" class="notes-menu-item-label"/>
+                        <ui:Label text="Ctrl+Z" picking-mode="Ignore" class="notes-menu-shortcut"/>
+                    </ui:Button>
+
+                    <ui:Button name="MenuRedo" class="notes-menu-item">
+                        <ui:Label text="Redo" picking-mode="Ignore" class="notes-menu-item-label"/>
+                        <ui:Label text="Ctrl+Y" picking-mode="Ignore" class="notes-menu-shortcut"/>
+                    </ui:Button>
+
+                    <ui:VisualElement class="notes-menu-separator"/>
+
+                    <ui:Button name="Cut" class="notes-menu-item">
+                        <ui:Label text="Cut" picking-mode="Ignore" class="notes-menu-item-label"/>
+                        <ui:Label text="Ctrl+X" picking-mode="Ignore" class="notes-menu-shortcut"/>
+                    </ui:Button>
+
+                    <ui:Button name="Copy" class="notes-menu-item">
+                        <ui:Label text="Copy" picking-mode="Ignore" class="notes-menu-item-label"/>
+                        <ui:Label text="Ctrl+C" picking-mode="Ignore" class="notes-menu-shortcut"/>
+                    </ui:Button>
+
+                    <ui:Button name="Paste" class="notes-menu-item">
+                        <ui:Label text="Paste" picking-mode="Ignore" class="notes-menu-item-label"/>
+                        <ui:Label text="Ctrl+V" picking-mode="Ignore" class="notes-menu-shortcut"/>
+                    </ui:Button>
+
+                    <ui:Button name="DeleteSelection" class="notes-menu-item">
+                        <ui:Label text="Delete selection" picking-mode="Ignore" class="notes-menu-item-label"/>
+                        <ui:Label text="Delete" picking-mode="Ignore" class="notes-menu-shortcut"/>
+                    </ui:Button>
+
+                    <ui:VisualElement class="notes-menu-separator"/>
+
+                    <ui:Button name="Find" class="notes-menu-item">
+                        <ui:Label text="Find" picking-mode="Ignore" class="notes-menu-item-label"/>
+                        <ui:Label text="Ctrl+F" picking-mode="Ignore" class="notes-menu-shortcut"/>
+                    </ui:Button>
+
+                    <ui:Button name="FindNext" class="notes-menu-item">
+                        <ui:Label text="Find next" picking-mode="Ignore" class="notes-menu-item-label"/>
+                        <ui:Label text="F3" picking-mode="Ignore" class="notes-menu-shortcut"/>
+                    </ui:Button>
+
+                    <ui:Button name="FindPrevious" class="notes-menu-item">
+                        <ui:Label text="Find previous" picking-mode="Ignore" class="notes-menu-item-label"/>
+                        <ui:Label text="Shift+F3" picking-mode="Ignore" class="notes-menu-shortcut"/>
+                    </ui:Button>
+
+                    <ui:Button name="Replace" class="notes-menu-item">
+                        <ui:Label text="Replace" picking-mode="Ignore" class="notes-menu-item-label"/>
+                        <ui:Label text="Ctrl+H" picking-mode="Ignore" class="notes-menu-shortcut"/>
+                    </ui:Button>
+
+                    <ui:Button name="GoToPage" class="notes-menu-item">
+                        <ui:Label text="Go to page" picking-mode="Ignore" class="notes-menu-item-label"/>
+                        <ui:Label text="Ctrl+G" picking-mode="Ignore" class="notes-menu-shortcut"/>
+                    </ui:Button>
+
+                    <ui:VisualElement class="notes-menu-separator"/>
+
+                    <ui:Button name="SelectAll" class="notes-menu-item">
+                        <ui:Label text="Select all" picking-mode="Ignore" class="notes-menu-item-label"/>
+                        <ui:Label text="Ctrl+A" picking-mode="Ignore" class="notes-menu-shortcut"/>
+                    </ui:Button>
+
+                    <ui:Button name="Clear" text="Clear document" class="notes-menu-item"/>
+
+                </ui:VisualElement>
+
+                <ui:VisualElement name="ViewMenu" class="notes-popup-menu">
+
+                    <ui:Toggle name="ShowRulers" label="Show rulers" value="true" class="notes-menu-toggle"/>
+                    <ui:Button name="MenuFocus" text="Focus" class="notes-menu-item"/>
+
+                    <ui:VisualElement class="notes-menu-separator"/>
+
+                    <ui:Button name="MenuReadMode" text="Read mode" class="notes-menu-item"/>
+                    <ui:Button name="MenuPrintLayout" text="Print layout" class="notes-menu-item"/>
+                    <ui:Button name="MenuWebLayout" text="Web layout" class="notes-menu-item"/>
+
+                    <ui:VisualElement class="notes-menu-separator"/>
+
+                    <ui:Button name="MenuZoomIn" text="Zoom in" class="notes-menu-item"/>
+                    <ui:Button name="MenuZoomOut" text="Zoom out" class="notes-menu-item"/>
+                    <ui:Button name="ZoomActualSize" text="100%" class="notes-menu-item"/>
+                    <ui:Button name="ZoomFitPage" text="Fit page" class="notes-menu-item"/>
+                    <ui:Button name="ZoomFitWidth" text="Fit width" class="notes-menu-item"/>
+                    <ui:Button name="ZoomMultiplePages" text="Multiple pages" class="notes-menu-item"/>
+
+                </ui:VisualElement>
+
+                <ui:VisualElement name="InsertMenu" class="notes-popup-menu">
+                    <ui:Button name="InsertPageBreak" text="Page break" class="notes-menu-item"/>
+                    <ui:Button name="InsertLink" text="Link" class="notes-menu-item"/>
+                    <ui:VisualElement class="notes-menu-separator"/>
+                    <ui:Button name="InsertImage" text="Image" enabled="false"
+                               tooltip="Image insertion is not available yet" class="notes-menu-item"/>
+                    <ui:Button name="InsertTable" text="Table" enabled="false"
+                               tooltip="Tables are not available yet" class="notes-menu-item"/>
+                </ui:VisualElement>
+
+                <ui:VisualElement name="FormatMenu" class="notes-popup-menu">
+                    <ui:Button name="MenuBold" text="Bold" class="notes-menu-item"/>
+                    <ui:Button name="MenuItalic" text="Italic" class="notes-menu-item"/>
+                    <ui:Button name="MenuUnderline" text="Underline" class="notes-menu-item"/>
+                    <ui:Button name="MenuStrikethrough" text="Strikethrough" class="notes-menu-item"/>
+                    <ui:Button name="MenuSuperscript" text="Superscript" class="notes-menu-item"/>
+                    <ui:Button name="MenuSubscript" text="Subscript" class="notes-menu-item"/>
+                    <ui:VisualElement class="notes-menu-separator"/>
+                    <ui:Button name="MenuParagraphSpacing" text="Line and paragraph spacing" class="notes-menu-item"/>
+                    <ui:Button name="MenuClearFormatting" text="Clear formatting" class="notes-menu-item"/>
+                </ui:VisualElement>
+
+                <ui:VisualElement name="DesignMenu" class="notes-popup-menu">
+                    <ui:Button name="DocumentTheme" text="Document theme" enabled="false"
+                               tooltip="Document themes are not available yet" class="notes-menu-item"/>
+                    <ui:Button name="PageColor" text="Page color" enabled="false"
+                               tooltip="Page color customization is not available yet" class="notes-menu-item"/>
+                </ui:VisualElement>
+
+                <ui:VisualElement name="LayoutMenu" class="notes-popup-menu">
+                    <ui:Button name="PageMargins" text="Margins" class="notes-menu-item"/>
+                    <ui:Button name="PageSize" text="Page size" class="notes-menu-item"/>
+                    <ui:Button name="PageOrientation" text="Orientation" class="notes-menu-item"/>
+                </ui:VisualElement>
+
+                <ui:VisualElement name="ToolsMenu" class="notes-popup-menu">
+                    <ui:Button name="MenuWordCount" text="Word count" class="notes-menu-item"/>
+                    <ui:Button name="MenuLanguage" text="Language" class="notes-menu-item"/>
+                    <ui:Button name="MenuAccessibility" text="Accessibility" class="notes-menu-item"/>
+                </ui:VisualElement>
+
+                <ui:VisualElement name="HelpMenu" class="notes-popup-menu">
+                    <ui:Button name="KeyboardShortcuts" text="Keyboard shortcuts" class="notes-menu-item"/>
+                    <ui:Button name="AboutNotepad" text="About Notepad" class="notes-menu-item"/>
+                </ui:VisualElement>
+
+                <!-- IMAGE-ONLY ALIGNMENT PALETTE -->
+                <ui:VisualElement name="AlignmentMenu" class="notes-popup-menu notes-alignment-palette">
+
+                    <ui:Button name="AlignLeft" tooltip="Align left" class="notes-button notes-icon-button is-active">
+                        <ui:Image name="AlignLeftIcon" picking-mode="Ignore" class="notes-icon"/>
+                    </ui:Button>
+
+                    <ui:Button name="AlignCenter" tooltip="Align center" class="notes-button notes-icon-button">
+                        <ui:Image name="AlignCenterIcon" picking-mode="Ignore" class="notes-icon"/>
+                    </ui:Button>
+
+                    <ui:Button name="AlignRight" tooltip="Align right" class="notes-button notes-icon-button">
+                        <ui:Image name="AlignRightIcon" picking-mode="Ignore" class="notes-icon"/>
+                    </ui:Button>
+
+                    <ui:Button name="AlignJustified" tooltip="Justify" class="notes-button notes-icon-button">
+                        <ui:Image name="AlignJustifiedIcon" picking-mode="Ignore" class="notes-icon"/>
+                    </ui:Button>
+
+                </ui:VisualElement>
+
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

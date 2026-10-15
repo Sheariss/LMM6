@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: f6a59f2e44cf2b343b1125e08acccd93
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - pdfContentCatalog: {fileID: 11400000, guid: 6ec308cd6fe52c543bb8434a6419fc20, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

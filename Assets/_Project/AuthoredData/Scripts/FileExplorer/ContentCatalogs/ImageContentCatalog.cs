@@ -16,7 +16,7 @@ namespace Atlas.SOS.FileSystem
 
     [CreateAssetMenu(
         fileName = "ImageContentCatalog",
-        menuName = "ATLAS/SOS/Image Content Catalog")]
+        menuName = "ATLAS/SOS/Content Catalogs/Image Content Catalog")]
     public sealed class ImageContentCatalog : ScriptableObject
     {
         [SerializeField]
