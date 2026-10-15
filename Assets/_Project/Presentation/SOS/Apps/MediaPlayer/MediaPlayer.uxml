@@ -1,0 +1,368 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         editor-extension-mode="False">
+
+    <Style src="MediaPlayer.uss"/>
+
+    <ui:VisualElement name="WindowRoot" class="window mp">
+
+        <!-- Title bar -->
+        <ui:VisualElement name="WindowHeader" class="mp-titlebar">
+
+            <ui:Image name="WindowIcon" class="mp-app-icon"/>
+
+            <ui:Label name="WindowTitle"
+                      text="Media Player"
+                      class="mp-window-title"/>
+
+            <ui:VisualElement name="WindowControls" class="mp-row">
+
+                <ui:Button name="WindowMinimizeButton"
+                           tooltip="Minimize"
+                           class="mp-button mp-window-button">
+                    <ui:Image class="mp-icon mp-icon-minimize"
+                              picking-mode="Ignore"/>
+                </ui:Button>
+
+                <ui:Button name="WindowMaximizeButton"
+                           tooltip="Maximize"
+                           class="mp-button mp-window-button">
+                    <ui:Image name="FullscreenIcon"
+                              class="mp-icon mp-icon-maximize"
+                              picking-mode="Ignore"/>
+                    <ui:Image name="ExitFullscreenIcon"
+                              class="mp-icon mp-icon-restore"
+                              picking-mode="Ignore"/>
+                </ui:Button>
+
+                <ui:Button name="WindowCloseButton"
+                           tooltip="Close"
+                           class="mp-button mp-window-button mp-close">
+                    <ui:Image class="mp-icon mp-icon-close"
+                              picking-mode="Ignore"/>
+                </ui:Button>
+
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="WindowContent" class="mp-body">
+
+            <!-- Shared navigation -->
+            <ui:VisualElement name="Sidebar" class="mp-sidebar">
+
+                <ui:TextField name="SearchField"
+                              tooltip="Search your library"
+                              class="mp-search"/>
+
+                <ui:Button name="HomeButton"
+                           class="mp-button mp-nav mp-selected">
+                    <ui:Image class="mp-icon mp-icon-home"
+                              picking-mode="Ignore"/>
+                    <ui:Label text="Home"
+                              picking-mode="Ignore"/>
+                </ui:Button>
+
+                <ui:Button name="MusicLibraryButton"
+                           class="mp-button mp-nav">
+                    <ui:Image class="mp-icon mp-icon-music"
+                              picking-mode="Ignore"/>
+                    <ui:Label text="Music library"
+                              picking-mode="Ignore"/>
+                </ui:Button>
+
+                <ui:Button name="VideoLibraryButton"
+                           class="mp-button mp-nav">
+                    <ui:Image class="mp-icon mp-icon-video"
+                              picking-mode="Ignore"/>
+                    <ui:Label text="Video library"
+                              picking-mode="Ignore"/>
+                </ui:Button>
+
+                <ui:Button name="QueueButton"
+                           class="mp-button mp-nav">
+                    <ui:Label text="&#x2261;"
+                              class="mp-text-icon"
+                              picking-mode="Ignore"/>
+                    <ui:Label text="Play queue"
+                              picking-mode="Ignore"/>
+                </ui:Button>
+
+                <ui:VisualElement class="mp-divider"/>
+
+                <ui:Label text="PLAYLISTS"
+                          class="mp-section-caption"/>
+
+                <ui:Button name="CreatePlaylistButton"
+                           text="+  Create playlist"
+                           class="mp-button mp-nav"/>
+
+                <ui:VisualElement class="mp-spacer"/>
+
+                <ui:Button name="NowPlayingButton"
+                           class="mp-button mp-nav">
+                    <ui:Image class="mp-icon mp-icon-play"
+                              picking-mode="Ignore"/>
+                    <ui:Label text="Now playing"
+                              picking-mode="Ignore"/>
+                </ui:Button>
+
+                <ui:Button name="SettingsButton"
+                           class="mp-button mp-nav">
+                    <ui:Image class="mp-icon mp-icon-settings"
+                              picking-mode="Ignore"/>
+                    <ui:Label text="Settings"
+                              picking-mode="Ignore"/>
+                </ui:Button>
+
+            </ui:VisualElement>
+
+            <ui:VisualElement name="MainContent" class="mp-main">
+
+                <!-- Library view -->
+                <ui:ScrollView name="HomeView"
+                               class="mp-home"
+                               mode="Vertical"
+                               horizontal-scroller-visibility="Hidden">
+
+                    <ui:VisualElement class="mp-page-header">
+
+                        <ui:Label text="Home"
+                                  class="mp-heading"/>
+
+                        <ui:VisualElement class="mp-spacer"/>
+
+                        <ui:Button name="OpenFileButton"
+                                   text="Open file"
+                                   class="mp-button mp-outlined"/>
+
+                    </ui:VisualElement>
+
+                    <ui:Label text="Recently played"
+                              class="mp-subheading"/>
+
+                    <!-- Sample cards populated from the media library -->
+                    <ui:VisualElement name="RecentItems"
+                                      class="mp-card-grid">
+
+                        <ui:Button name="RecentAudioButton"
+                                   class="mp-button mp-card">
+
+                            <ui:VisualElement
+                                class="mp-card-art mp-audio-art"
+                                picking-mode="Ignore">
+
+                                <ui:Image
+                                    class="mp-art-icon mp-icon-music"
+                                    picking-mode="Ignore"/>
+
+                            </ui:VisualElement>
+
+                            <ui:Label text="Evening ambience"
+                                      class="mp-card-title"
+                                      picking-mode="Ignore"/>
+
+                            <ui:Label text="Audio &#x2022; Local file"
+                                      class="mp-muted"
+                                      picking-mode="Ignore"/>
+
+                        </ui:Button>
+
+                        <ui:Button name="RecentVideoButton"
+                                   class="mp-button mp-card">
+
+                            <ui:VisualElement
+                                class="mp-card-art mp-video-art"
+                                picking-mode="Ignore">
+
+                                <ui:Image
+                                    class="mp-art-icon mp-icon-video"
+                                    picking-mode="Ignore"/>
+
+                            </ui:VisualElement>
+
+                            <ui:Label text="Project recording"
+                                      class="mp-card-title"
+                                      picking-mode="Ignore"/>
+
+                            <ui:Label text="Video &#x2022; Local file"
+                                      class="mp-muted"
+                                      picking-mode="Ignore"/>
+
+                        </ui:Button>
+
+                    </ui:VisualElement>
+
+                    <ui:Label text="Your media, all in one place"
+                              class="mp-subheading"/>
+
+                    <ui:Label
+                        text="Open an audio or video file to start playing."
+                        class="mp-muted"/>
+
+                </ui:ScrollView>
+
+                <!-- Now playing view containing audio and video surfaces -->
+                <ui:VisualElement name="NowPlayingView"
+                                  class="mp-now-playing">
+
+                    <ui:VisualElement name="AudioView"
+                                      class="mp-audio-view">
+
+                        <ui:VisualElement name="AlbumArtwork"
+                                          class="mp-album-art">
+
+                            <ui:Image
+                                class="mp-album-symbol mp-icon-music"
+                                picking-mode="Ignore"/>
+
+                        </ui:VisualElement>
+
+                        <ui:Label name="AudioTitleLabel"
+                                  text="Evening ambience"
+                                  class="mp-track-title"/>
+
+                        <ui:Label name="ArtistLabel"
+                                  text="Unknown artist"
+                                  class="mp-muted"/>
+
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="VideoView"
+                                      class="mp-video-view">
+
+                        <!-- Assign a VideoPlayer RenderTexture from C# -->
+                        <ui:Image name="VideoSurface"
+                                  scale-mode="ScaleToFit"
+                                  picking-mode="Ignore"
+                                  class="mp-video-surface"/>
+
+                    </ui:VisualElement>
+
+                </ui:VisualElement>
+
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+
+        <!-- Shared playback controls -->
+        <ui:VisualElement name="WindowFooter" class="mp-player">
+
+            <ui:VisualElement class="mp-timeline">
+
+                <ui:Label name="ElapsedLabel"
+                          text="0:00"
+                          class="mp-time"/>
+
+                <ui:Slider name="SeekSlider"
+                           low-value="0"
+                           high-value="1"
+                           value="0"
+                           tooltip="Playback position"
+                           class="mp-slider mp-seek"/>
+
+                <ui:Label name="DurationLabel"
+                          text="0:00"
+                          class="mp-time"/>
+
+            </ui:VisualElement>
+
+            <ui:VisualElement class="mp-player-row">
+
+                <ui:VisualElement class="mp-track-info">
+
+                    <ui:VisualElement class="mp-mini-art">
+                        <ui:Image class="mp-icon mp-icon-music"
+                                  picking-mode="Ignore"/>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="mp-track-text">
+
+                        <ui:Label name="CurrentMediaTitle"
+                                  text="Nothing playing"
+                                  class="mp-current-title"/>
+
+                        <ui:Label name="CurrentMediaSubtitle"
+                                  text="Select a file"
+                                  class="mp-muted"/>
+
+                    </ui:VisualElement>
+
+                </ui:VisualElement>
+
+                <ui:VisualElement class="mp-transport">
+
+                    <ui:Button name="RepeatButton"
+                               tooltip="Repeat"
+                               class="mp-button mp-icon-button">
+                        <ui:Image class="mp-icon mp-icon-repeat"
+                                  picking-mode="Ignore"/>
+                    </ui:Button>
+
+                    <ui:Button name="PreviousButton"
+                               tooltip="Previous"
+                               class="mp-button mp-icon-button">
+                        <ui:Image class="mp-icon mp-icon-previous"
+                                  picking-mode="Ignore"/>
+                    </ui:Button>
+
+                    <ui:Button name="PlayPauseButton"
+                               tooltip="Play or pause"
+                               class="mp-button mp-play-button">
+
+                        <ui:Image name="PlayIcon"
+                                  class="mp-icon mp-icon-play"
+                                  picking-mode="Ignore"/>
+
+                        <ui:Image name="PauseIcon"
+                                  class="mp-icon mp-icon-pause"
+                                  picking-mode="Ignore"/>
+
+                    </ui:Button>
+
+                    <ui:Button name="NextButton"
+                               tooltip="Next"
+                               class="mp-button mp-icon-button">
+                        <ui:Image class="mp-icon mp-icon-next"
+                                  picking-mode="Ignore"/>
+                    </ui:Button>
+
+                    <ui:Button name="MoreButton"
+                               tooltip="More options"
+                               class="mp-button mp-icon-button">
+                        <ui:Image class="mp-icon mp-icon-more"
+                                  picking-mode="Ignore"/>
+                    </ui:Button>
+
+                </ui:VisualElement>
+
+                <ui:VisualElement class="mp-player-options">
+
+                    <ui:Button name="MuteButton"
+                               tooltip="Mute"
+                               class="mp-button mp-icon-button">
+                        <ui:Image class="mp-icon mp-icon-volume"
+                                  picking-mode="Ignore"/>
+                    </ui:Button>
+
+                    <ui:Slider name="VolumeSlider"
+                               low-value="0"
+                               high-value="1"
+                               value="0.75"
+                               tooltip="Volume"
+                               class="mp-slider mp-volume"/>
+
+                    <ui:Button name="VideoFullscreenButton"
+                               tooltip="Full screen"
+                               class="mp-button mp-icon-button">
+                        <ui:Image class="mp-icon mp-icon-fullscreen"
+                                  picking-mode="Ignore"/>
+                    </ui:Button>
+
+                </ui:VisualElement>
+
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+
+</ui:UXML>

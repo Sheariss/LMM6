@@ -1,0 +1,153 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         editor-extension-mode="False">
+
+    <Style src="../../../Tokens/Global-Colors.uss"/>
+    <Style src="../../../Tokens/Global-Tokens.uss"/>
+    <Style src="Dictionary.uss"/>
+
+    <ui:VisualElement name="DictionaryRoot" class="dictionary-root">
+
+        <ui:VisualElement class="dictionary-header">
+            <ui:VisualElement class="dictionary-brand">
+                <ui:Label text="Atlas" class="dictionary-brand-name"/>
+                <ui:Label text="Dictionary" class="dictionary-brand-subtitle"/>
+            </ui:VisualElement>
+
+            <ui:Label text="Find the right words."
+                      class="dictionary-tagline"/>
+        </ui:VisualElement>
+
+        <ui:ScrollView mode="Vertical" class="dictionary-scroll">
+            <ui:VisualElement class="dictionary-page">
+
+                <ui:VisualElement class="dictionary-search">
+                    <ui:TextField name="SearchInput"
+                                  tooltip="Enter a word"
+                                  class="dictionary-search-input"/>
+
+                    <ui:Button name="SearchButton"
+                               text="Search"
+                               class="dictionary-button dictionary-search-button"/>
+                </ui:VisualElement>
+
+                <ui:VisualElement class="dictionary-tabs">
+                    <ui:Button name="DictionaryTab"
+                               text="Dictionary"
+                               class="dictionary-button dictionary-tab dictionary-tab--selected"/>
+
+                    <ui:Button name="ThesaurusTab"
+                               text="Thesaurus"
+                               class="dictionary-button dictionary-tab"/>
+                </ui:VisualElement>
+
+                <ui:VisualElement name="EntryPanel"
+                                  class="dictionary-entry">
+
+                    <ui:Label text="WORD DEFINITION"
+                              class="dictionary-eyebrow"/>
+
+                    <ui:Label name="WordLabel"
+                              text="resilient"
+                              class="dictionary-word dictionary-wrap"/>
+
+                    <ui:VisualElement class="dictionary-word-details">
+                        <ui:Label name="PronunciationLabel"
+                                  text="/rɪˈzɪliənt/"
+                                  class="dictionary-muted"/>
+
+                        <ui:Label name="PartOfSpeechLabel"
+                                  text="adjective"
+                                  class="dictionary-part-of-speech"/>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="DefinitionsContainer"
+                                      class="dictionary-definitions">
+
+                        <ui:VisualElement class="dictionary-definition">
+                            <ui:Label text="1."
+                                      class="dictionary-definition-number"/>
+
+                            <ui:VisualElement class="dictionary-definition-content">
+                                <ui:Label
+                                    text="Able to recover quickly after difficulty or change."
+                                    class="dictionary-body dictionary-wrap"/>
+
+                                <ui:Label
+                                    text="“The team remained resilient through a difficult week.”"
+                                    class="dictionary-example dictionary-wrap"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="dictionary-definition">
+                            <ui:Label text="2."
+                                      class="dictionary-definition-number"/>
+
+                            <ui:VisualElement class="dictionary-definition-content">
+                                <ui:Label
+                                    text="Able to return to an original shape after being bent or stretched."
+                                    class="dictionary-body dictionary-wrap"/>
+
+                                <ui:Label
+                                    text="“The case is made from a resilient material.”"
+                                    class="dictionary-example dictionary-wrap"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="SynonymsSection"
+                                      class="dictionary-related-section">
+                        <ui:Label text="Synonyms"
+                                  class="dictionary-section-title"/>
+
+                        <ui:Label text="Words with similar meanings"
+                                  class="dictionary-muted"/>
+
+                        <ui:VisualElement name="SynonymsContainer"
+                                          class="dictionary-chips">
+                            <ui:Button text="adaptable"
+                                       class="dictionary-button dictionary-chip"/>
+                            <ui:Button text="strong"
+                                       class="dictionary-button dictionary-chip"/>
+                            <ui:Button text="resourceful"
+                                       class="dictionary-button dictionary-chip"/>
+                            <ui:Button text="flexible"
+                                       class="dictionary-button dictionary-chip"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="AntonymsSection"
+                                      class="dictionary-related-section">
+                        <ui:Label text="Antonyms"
+                                  class="dictionary-section-title"/>
+
+                        <ui:Label text="Words with opposite meanings"
+                                  class="dictionary-muted"/>
+
+                        <ui:VisualElement name="AntonymsContainer"
+                                          class="dictionary-chips">
+                            <ui:Button text="fragile"
+                                       class="dictionary-button dictionary-chip dictionary-chip--muted"/>
+                            <ui:Button text="vulnerable"
+                                       class="dictionary-button dictionary-chip dictionary-chip--muted"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                </ui:VisualElement>
+
+                <ui:VisualElement name="EmptyState"
+                                  class="dictionary-empty dictionary-hidden">
+                    <ui:Label text="No matching word"
+                              class="dictionary-section-title"/>
+
+                    <ui:Label text="Check the spelling or try another word."
+                              class="dictionary-muted dictionary-wrap"/>
+                </ui:VisualElement>
+
+                <ui:Label text="ATLAS DICTIONARY"
+                          class="dictionary-footer"/>
+            </ui:VisualElement>
+        </ui:ScrollView>
+
+    </ui:VisualElement>
+</ui:UXML>

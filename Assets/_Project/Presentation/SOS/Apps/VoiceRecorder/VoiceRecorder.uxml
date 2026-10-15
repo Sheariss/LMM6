@@ -1,0 +1,166 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:Style src="VoiceRecorder.uss" />
+
+    <ui:VisualElement class="recorder">
+        <!-- Header -->
+        <ui:VisualElement class="app-header">
+            <ui:VisualElement class="app-mark">
+                <ui:Label text="●" class="app-mark-icon" />
+            </ui:VisualElement>
+
+            <ui:Label text="Voice Recorder" class="app-title" />
+            <ui:VisualElement class="spacer" />
+            <ui:Button name="settings-button" text="Settings" class="text-button" />
+        </ui:VisualElement>
+
+        <ui:VisualElement class="workspace">
+            <!-- Recordings sidebar -->
+            <ui:VisualElement class="sidebar">
+                <ui:VisualElement class="sidebar-heading">
+                    <ui:Label text="Your recordings" class="section-title" />
+                    <ui:Label text="3" class="count-badge" />
+                </ui:VisualElement>
+
+                <ui:TextField
+                    name="search-field"
+                    class="search-field"
+                    tooltip="Search recordings" />
+
+                <ui:Label text="TODAY" class="group-label" />
+
+                <ui:ScrollView class="recordings-list">
+                    <ui:Button name="recording-1" class="recording-item selected">
+                        <ui:VisualElement class="recording-icon">
+                            <ui:Label text="▶" />
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="recording-details">
+                            <ui:Label text="Design thoughts" class="recording-title" />
+                            <ui:Label text="10:42 AM · 02:34" class="recording-meta" />
+                        </ui:VisualElement>
+
+                        <ui:Label text="●" class="selected-dot" />
+                    </ui:Button>
+
+                    <ui:Button name="recording-2" class="recording-item">
+                        <ui:VisualElement class="recording-icon">
+                            <ui:Label text="▶" />
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="recording-details">
+                            <ui:Label text="Meeting notes" class="recording-title" />
+                            <ui:Label text="9:15 AM · 12:08" class="recording-meta" />
+                        </ui:VisualElement>
+                    </ui:Button>
+
+                    <ui:Button name="recording-3" class="recording-item">
+                        <ui:VisualElement class="recording-icon">
+                            <ui:Label text="▶" />
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="recording-details">
+                            <ui:Label text="A little reminder" class="recording-title" />
+                            <ui:Label text="8:30 AM · 00:46" class="recording-meta" />
+                        </ui:VisualElement>
+                    </ui:Button>
+                </ui:ScrollView>
+
+                <ui:VisualElement class="sidebar-footer">
+                    <ui:Label text="All recordings saved locally" class="muted-label" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Player -->
+            <ui:VisualElement class="player-card">
+                <ui:VisualElement class="player-toolbar">
+                    <ui:Label text="RECORDING" class="eyebrow" />
+                    <ui:VisualElement class="spacer" />
+                    <ui:Button name="rename-button" text="Rename" class="text-button" />
+                    <ui:Button name="more-button" text="···" class="more-button" />
+                </ui:VisualElement>
+
+                <ui:VisualElement class="player-content">
+                    <ui:Label text="Design thoughts" class="recording-heading" />
+                    <ui:Label
+                        text="Today, 10:42 AM"
+                        class="recording-subheading" />
+
+                    <ui:VisualElement class="waveform">
+                        <ui:VisualElement class="waveform-baseline" />
+
+                        <ui:VisualElement class="wave-bar played h1" />
+                        <ui:VisualElement class="wave-bar played h2" />
+                        <ui:VisualElement class="wave-bar played h3" />
+                        <ui:VisualElement class="wave-bar played h2" />
+                        <ui:VisualElement class="wave-bar played h4" />
+                        <ui:VisualElement class="wave-bar played h5" />
+                        <ui:VisualElement class="wave-bar played h3" />
+                        <ui:VisualElement class="wave-bar played h6" />
+                        <ui:VisualElement class="wave-bar played h4" />
+                        <ui:VisualElement class="wave-bar played h2" />
+                        <ui:VisualElement class="wave-bar played h3" />
+                        <ui:VisualElement class="wave-bar played h5" />
+
+                        <ui:VisualElement class="wave-bar h6" />
+                        <ui:VisualElement class="wave-bar h4" />
+                        <ui:VisualElement class="wave-bar h3" />
+                        <ui:VisualElement class="wave-bar h5" />
+                        <ui:VisualElement class="wave-bar h2" />
+                        <ui:VisualElement class="wave-bar h4" />
+                        <ui:VisualElement class="wave-bar h6" />
+                        <ui:VisualElement class="wave-bar h3" />
+                        <ui:VisualElement class="wave-bar h5" />
+                        <ui:VisualElement class="wave-bar h4" />
+                        <ui:VisualElement class="wave-bar h2" />
+                        <ui:VisualElement class="wave-bar h1" />
+                    </ui:VisualElement>
+
+                    <ui:Slider
+                        name="playback-slider"
+                        low-value="0"
+                        high-value="154"
+                        value="62"
+                        class="playback-slider" />
+
+                    <ui:VisualElement class="time-labels">
+                        <ui:Label name="elapsed-time" text="01:02" />
+                        <ui:VisualElement class="spacer" />
+                        <ui:Label name="total-time" text="02:34" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="playback-controls">
+                        <ui:Button name="skip-back-button" text="−10" class="skip-button" />
+                        <ui:Button name="play-button" text="▶" class="play-button" />
+                        <ui:Button name="skip-forward-button" text="+10" class="skip-button" />
+                    </ui:VisualElement>
+
+                    <ui:Button name="speed-button" text="1× speed" class="speed-button" />
+                </ui:VisualElement>
+
+                <ui:VisualElement class="player-footer">
+                    <ui:Label text="WAV · 48 kHz · Stereo" class="muted-label" />
+                    <ui:VisualElement class="spacer" />
+                    <ui:Button name="delete-button" text="Delete" class="text-button" />
+                    <ui:Button name="export-button" text="Export" class="export-button" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Recording dock -->
+        <ui:VisualElement class="recording-dock">
+            <ui:VisualElement class="input-details">
+                <ui:Label text="Ready when you are" class="input-title" />
+                <ui:Label text="Default microphone" class="muted-label" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="spacer" />
+
+            <ui:Label text="Start a new recording" class="record-hint" />
+            <ui:Button
+                name="record-button"
+                text="●"
+                tooltip="Start recording"
+                class="record-button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

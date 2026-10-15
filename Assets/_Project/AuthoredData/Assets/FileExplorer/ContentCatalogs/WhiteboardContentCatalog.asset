@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 459fdec8c56c9594ba6dbf270de8c1e5, type: 3}
+  m_Name: WhiteboardContentCatalog
+  m_EditorClassIdentifier: Assembly-CSharp::Atlas.SOS.FileSystem.WhiteboardContentCatalog
+  entries:
+  - contentId: guest-welcome-whiteboard-content
+    document:
+      Version: 1
+      Id: guest-welcome-whiteboard
+      Title: WelcomeToWhiteboard.whiteboard
+      Background: {r: 0, g: 0, b: 0, a: 0}
+      ShowGrid: 1
+      SnapToGrid: 0
+      GridSize: 1
+      Items:
+      - Id: stricknote1
+        Kind: 0
+        Position: {x: 0, y: 0}
+        Size: {x: 0, y: 0}
+        Text: This is a text!!!!
+        Color: {r: 0, g: 0, b: 0, a: 0}
+        TextColor: {r: 0, g: 0, b: 0, a: 0}
+        FontSize: 0
+        LineWidth: 0
+        Points: []
+        Start:
+          ItemId: 
+          Anchor: {x: 0, y: 0}
+          Position: {x: 0, y: 0}
+        End:
+          ItemId: 
+          Anchor: {x: 0, y: 0}
+          Position: {x: 0, y: 0}

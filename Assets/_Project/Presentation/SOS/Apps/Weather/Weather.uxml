@@ -1,0 +1,159 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/Weather/Weather.uss?fileID=7433441132597879392&amp;guid=67e9550d0e3b5474eac3988612c071dd&amp;type=3#Weather"/>
+    <ui:VisualElement class="weather-screen">
+        <ui:ScrollView mode="Vertical" horizontal-scroller-visibility="Hidden" class="weather-scroll" style="width: 888px;">
+            <ui:VisualElement class="weather-app">
+                <ui:VisualElement class="header">
+                    <ui:VisualElement>
+                        <ui:Label text="WEATHER" class="eyebrow"/>
+                        <ui:Label name="location-label" text="Westbrook" class="location"/>
+                        <ui:Label name="date-label" text="Thursday, October 15" class="secondary"/>
+                    </ui:VisualElement>
+                    <ui:Button name="locations-button" text="Locations" class="pill-button"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="current-card">
+                    <ui:VisualElement class="current-top">
+                        <ui:Label text="Current conditions" class="card-heading"/>
+                        <ui:VisualElement class="live-badge">
+                            <ui:VisualElement class="live-dot"/>
+                            <ui:Label text="Live" class="live-label"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="current-body">
+                        <ui:VisualElement class="temperature-block">
+                            <ui:Label name="temperature-label" text="24°" class="temperature"/>
+                            <ui:Label name="condition-label" text="Partly cloudy" class="condition"/>
+                            <ui:Label name="temperature-range-label" text="High 26°  ·  Low 18°" class="secondary"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="weather-art">
+                            <ui:VisualElement class="sun-halo"/>
+                            <ui:VisualElement class="sun"/>
+                            <ui:VisualElement class="cloud cloud-back"/>
+                            <ui:VisualElement class="cloud cloud-front"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="summary-strip">
+                        <ui:Label name="summary-label" text="A clear afternoon ahead. Rain expected tonight." class="summary-text"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="card">
+                    <ui:VisualElement class="section-header">
+                        <ui:Label text="Hourly forecast" class="card-heading"/>
+                        <ui:Label text="Next 6 hours" class="secondary"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="hourly-container" class="hourly-row">
+                        <ui:VisualElement class="hour-item hour-selected">
+                            <ui:Label text="Now" class="hour-time"/>
+                            <ui:Label text="SUN" class="weather-tag tag-sun"/>
+                            <ui:Label text="24°" class="hour-temp"/>
+                            <ui:Label text="5%" class="rain-chance"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="hour-item">
+                            <ui:Label text="15:00" class="hour-time"/>
+                            <ui:Label text="SUN" class="weather-tag tag-sun"/>
+                            <ui:Label text="25°" class="hour-temp"/>
+                            <ui:Label text="5%" class="rain-chance"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="hour-item">
+                            <ui:Label text="16:00" class="hour-time"/>
+                            <ui:Label text="CLOUD" class="weather-tag"/>
+                            <ui:Label text="24°" class="hour-temp"/>
+                            <ui:Label text="10%" class="rain-chance"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="hour-item">
+                            <ui:Label text="17:00" class="hour-time"/>
+                            <ui:Label text="CLOUD" class="weather-tag"/>
+                            <ui:Label text="23°" class="hour-temp"/>
+                            <ui:Label text="15%" class="rain-chance"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="hour-item">
+                            <ui:Label text="18:00" class="hour-time"/>
+                            <ui:Label text="RAIN" class="weather-tag tag-rain"/>
+                            <ui:Label text="21°" class="hour-temp"/>
+                            <ui:Label text="60%" class="rain-chance"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="hour-item">
+                            <ui:Label text="19:00" class="hour-time"/>
+                            <ui:Label text="RAIN" class="weather-tag tag-rain"/>
+                            <ui:Label text="20°" class="hour-temp"/>
+                            <ui:Label text="75%" class="rain-chance"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="details-grid">
+                    <ui:VisualElement class="detail-card">
+                        <ui:Label text="Feels like" class="secondary"/>
+                        <ui:Label name="feels-like-label" text="26°" class="detail-value"/>
+                        <ui:Label text="Slightly warmer" class="detail-caption"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="detail-card">
+                        <ui:Label text="Wind" class="secondary"/>
+                        <ui:Label name="wind-label" text="12 km/h" class="detail-value"/>
+                        <ui:Label text="From the northeast" class="detail-caption"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="detail-card">
+                        <ui:Label text="Humidity" class="secondary"/>
+                        <ui:Label name="humidity-label" text="64%" class="detail-value"/>
+                        <ui:Label text="Comfortable" class="detail-caption"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="detail-card">
+                        <ui:Label text="Visibility" class="secondary"/>
+                        <ui:Label name="visibility-label" text="10 km" class="detail-value"/>
+                        <ui:Label text="Clear conditions" class="detail-caption"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="card forecast-card">
+                    <ui:Label text="5-day forecast" class="card-heading"/>
+                    <ui:VisualElement name="daily-container" class="daily-list">
+                        <ui:VisualElement class="daily-row">
+                            <ui:Label text="Today" class="day-name"/>
+                            <ui:Label text="Partly cloudy" class="day-condition"/>
+                            <ui:Label text="18°" class="day-low"/>
+                            <ui:VisualElement class="range-track">
+                                <ui:VisualElement class="range-fill range-today"/>
+                            </ui:VisualElement>
+                            <ui:Label text="26°" class="day-high"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="daily-row">
+                            <ui:Label text="Fri" class="day-name"/>
+                            <ui:Label text="Light rain" class="day-condition"/>
+                            <ui:Label text="17°" class="day-low"/>
+                            <ui:VisualElement class="range-track">
+                                <ui:VisualElement class="range-fill range-friday"/>
+                            </ui:VisualElement>
+                            <ui:Label text="23°" class="day-high"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="daily-row">
+                            <ui:Label text="Sat" class="day-name"/>
+                            <ui:Label text="Cloudy" class="day-condition"/>
+                            <ui:Label text="18°" class="day-low"/>
+                            <ui:VisualElement class="range-track">
+                                <ui:VisualElement class="range-fill range-saturday"/>
+                            </ui:VisualElement>
+                            <ui:Label text="24°" class="day-high"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="daily-row">
+                            <ui:Label text="Sun" class="day-name"/>
+                            <ui:Label text="Sunny" class="day-condition"/>
+                            <ui:Label text="19°" class="day-low"/>
+                            <ui:VisualElement class="range-track">
+                                <ui:VisualElement class="range-fill range-sunday"/>
+                            </ui:VisualElement>
+                            <ui:Label text="28°" class="day-high"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="daily-row daily-row-last">
+                            <ui:Label text="Mon" class="day-name"/>
+                            <ui:Label text="Sunny" class="day-condition"/>
+                            <ui:Label text="20°" class="day-low"/>
+                            <ui:VisualElement class="range-track">
+                                <ui:VisualElement class="range-fill range-monday"/>
+                            </ui:VisualElement>
+                            <ui:Label text="29°" class="day-high"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:Label text="Forecast follows your world’s weather cycle" class="footer"/>
+            </ui:VisualElement>
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>

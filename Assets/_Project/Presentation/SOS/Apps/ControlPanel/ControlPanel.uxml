@@ -1,0 +1,242 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         editor-extension-mode="False">
+
+    <Style src="ControlPanel.uss"/>
+
+    <ui:VisualElement name="WindowRoot" class="window cp-window">
+
+        <ui:VisualElement name="WindowHeader" class="cp-header">
+            <ui:VisualElement name="WindowIcon"
+                              class="cp-icon cp-settings-icon"/>
+
+            <ui:Label name="WindowTitle"
+                      text="Control Panel"
+                      class="cp-window-title"/>
+
+            <ui:VisualElement name="WindowControls" class="cp-controls">
+                <ui:Button name="WindowMinimizeButton"
+                           tooltip="Minimize"
+                           class="cp-window-button">
+                    <ui:VisualElement name="MinimizeIcon"
+                                      picking-mode="Ignore"
+                                      class="cp-icon cp-minimize-icon"/>
+                </ui:Button>
+
+                <ui:Button name="WindowMaximizeButton"
+                           tooltip="Maximize"
+                           class="cp-window-button">
+                    <ui:VisualElement name="FullscreenIcon"
+                                      picking-mode="Ignore"
+                                      class="cp-icon cp-maximize-icon"/>
+                    <ui:VisualElement name="ExitFullscreenIcon"
+                                      picking-mode="Ignore"
+                                      class="cp-icon cp-restore-icon cp-hidden"/>
+                </ui:Button>
+
+                <ui:Button name="WindowCloseButton"
+                           tooltip="Close"
+                           class="cp-window-button cp-close-button">
+                    <ui:VisualElement name="CloseIcon"
+                                      picking-mode="Ignore"
+                                      class="cp-icon cp-close-icon"/>
+                </ui:Button>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="WindowContent" class="cp-content">
+
+            <ui:VisualElement class="cp-toolbar">
+                <ui:Button name="CP-BackButton"
+                           tooltip="Back"
+                           class="cp-navigation-button">
+                    <ui:VisualElement picking-mode="Ignore"
+                                      class="cp-icon cp-back-icon"/>
+                </ui:Button>
+
+                <ui:Button name="CP-ForwardButton"
+                           tooltip="Forward"
+                           class="cp-navigation-button">
+                    <ui:VisualElement picking-mode="Ignore"
+                                      class="cp-icon cp-forward-icon"/>
+                </ui:Button>
+
+                <ui:VisualElement class="cp-address">
+                    <ui:VisualElement class="cp-icon cp-home-icon"/>
+                    <ui:Label text="Control Panel" class="cp-breadcrumb"/>
+                </ui:VisualElement>
+
+                <ui:VisualElement class="cp-search">
+                    <ui:VisualElement class="cp-icon cp-search-icon"/>
+                    <ui:TextField name="CP-SearchField"
+                                  label="Search"
+                                  tooltip="Search Control Panel"
+                                  class="cp-search-field"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:ScrollView name="CP-ScrollView"
+                           mode="Vertical"
+                           horizontal-scroller-visibility="Hidden"
+                           class="cp-scroll">
+
+                <ui:VisualElement class="cp-page">
+
+                    <ui:VisualElement class="cp-page-header">
+                        <ui:VisualElement class="cp-heading">
+                            <ui:Label text="Control Panel" class="cp-title"/>
+                            <ui:Label text="Make this computer work for you."
+                                      class="cp-subtitle"/>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="cp-view-control">
+                            <ui:Label text="View by" class="cp-muted"/>
+                            <ui:DropdownField name="CP-ViewDropdown"
+                                              choices="Category,Large icons,Small icons"
+                                              index="0"
+                                              class="cp-view-dropdown"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:Label text="Explore settings" class="cp-section-title"/>
+
+                    <ui:VisualElement name="CP-CategoryGrid" class="cp-grid">
+
+                        <ui:Button name="CP-SystemSecurityButton"
+                                   class="cp-card">
+                            <ui:VisualElement picking-mode="Ignore"
+                                              class="cp-icon-container cp-blue">
+                                <ui:VisualElement class="cp-category-icon cp-security-icon"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="cp-card-body">
+                                <ui:Label text="System and Security" class="cp-card-title"/>
+                                <ui:Label text="Security, backups, and system health"
+                                          class="cp-card-description"/>
+                                <ui:Label text="Firewall · Power options · Recovery"
+                                          class="cp-card-detail"/>
+                            </ui:VisualElement>
+                        </ui:Button>
+
+                        <ui:Button name="CP-NetworkButton"
+                                   class="cp-card">
+                            <ui:VisualElement picking-mode="Ignore"
+                                              class="cp-icon-container cp-green">
+                                <ui:VisualElement class="cp-category-icon cp-network-icon"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="cp-card-body">
+                                <ui:Label text="Network and Internet" class="cp-card-title"/>
+                                <ui:Label text="Connections and sharing preferences"
+                                          class="cp-card-description"/>
+                                <ui:Label text="Network status · Internet options"
+                                          class="cp-card-detail"/>
+                            </ui:VisualElement>
+                        </ui:Button>
+
+                        <ui:Button name="CP-HardwareSoundButton"
+                                   class="cp-card">
+                            <ui:VisualElement picking-mode="Ignore"
+                                              class="cp-icon-container cp-purple">
+                                <ui:VisualElement class="cp-category-icon cp-sound-icon"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="cp-card-body">
+                                <ui:Label text="Hardware and Sound" class="cp-card-title"/>
+                                <ui:Label text="Devices, audio, and power settings"
+                                          class="cp-card-description"/>
+                                <ui:Label text="Printers · Sound · Device Manager"
+                                          class="cp-card-detail"/>
+                            </ui:VisualElement>
+                        </ui:Button>
+
+                        <ui:Button name="CP-ProgramsButton"
+                                   class="cp-card">
+                            <ui:VisualElement picking-mode="Ignore"
+                                              class="cp-icon-container cp-yellow">
+                                <ui:VisualElement class="cp-category-icon cp-programs-icon"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="cp-card-body">
+                                <ui:Label text="Programs" class="cp-card-title"/>
+                                <ui:Label text="Manage applications and features"
+                                          class="cp-card-description"/>
+                                <ui:Label text="Uninstall a program · Default programs"
+                                          class="cp-card-detail"/>
+                            </ui:VisualElement>
+                        </ui:Button>
+
+                        <ui:Button name="CP-AccountsButton"
+                                   class="cp-card">
+                            <ui:VisualElement picking-mode="Ignore"
+                                              class="cp-icon-container cp-red">
+                                <ui:VisualElement class="cp-category-icon cp-accounts-icon"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="cp-card-body">
+                                <ui:Label text="User Accounts" class="cp-card-title"/>
+                                <ui:Label text="Accounts, passwords, and credentials"
+                                          class="cp-card-description"/>
+                                <ui:Label text="Account type · Credential Manager"
+                                          class="cp-card-detail"/>
+                            </ui:VisualElement>
+                        </ui:Button>
+
+                        <ui:Button name="CP-AppearanceButton"
+                                   class="cp-card">
+                            <ui:VisualElement picking-mode="Ignore"
+                                              class="cp-icon-container cp-blue">
+                                <ui:VisualElement class="cp-category-icon cp-appearance-icon"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="cp-card-body">
+                                <ui:Label text="Appearance and Personalization"
+                                          class="cp-card-title"/>
+                                <ui:Label text="Personalize your desktop experience"
+                                          class="cp-card-description"/>
+                                <ui:Label text="Taskbar · File Explorer options · Fonts"
+                                          class="cp-card-detail"/>
+                            </ui:VisualElement>
+                        </ui:Button>
+
+                        <ui:Button name="CP-ClockRegionButton"
+                                   class="cp-card">
+                            <ui:VisualElement picking-mode="Ignore"
+                                              class="cp-icon-container cp-green">
+                                <ui:VisualElement class="cp-category-icon cp-clock-icon"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="cp-card-body">
+                                <ui:Label text="Clock and Region" class="cp-card-title"/>
+                                <ui:Label text="Time, location, and regional formats"
+                                          class="cp-card-description"/>
+                                <ui:Label text="Date and time · Region"
+                                          class="cp-card-detail"/>
+                            </ui:VisualElement>
+                        </ui:Button>
+
+                        <ui:Button name="CP-AccessibilityButton"
+                                   class="cp-card">
+                            <ui:VisualElement picking-mode="Ignore"
+                                              class="cp-icon-container cp-purple">
+                                <ui:VisualElement class="cp-category-icon cp-accessibility-icon"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="cp-card-body">
+                                <ui:Label text="Ease of Access" class="cp-card-title"/>
+                                <ui:Label text="Make your computer easier to use"
+                                          class="cp-card-description"/>
+                                <ui:Label text="Accessibility tools · Display settings"
+                                          class="cp-card-detail"/>
+                            </ui:VisualElement>
+                        </ui:Button>
+
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="cp-help">
+                        <ui:VisualElement class="cp-icon cp-help-icon"/>
+                        <ui:Label text="Looking for something else?"
+                                  class="cp-muted"/>
+                        <ui:Button name="CP-OpenSettingsButton"
+                                   text="Open Settings"
+                                   class="cp-text-button"/>
+                    </ui:VisualElement>
+
+                </ui:VisualElement>
+            </ui:ScrollView>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="WindowFooter" class="cp-hidden"/>
+    </ui:VisualElement>
+</ui:UXML>

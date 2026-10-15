@@ -1,0 +1,146 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="Clock.uss" />
+
+    <ui:VisualElement class="clock-window">
+        <!-- Title bar -->
+        <ui:VisualElement class="titlebar">
+            <ui:Label text="◷" class="app-icon" />
+            <ui:Label text="Clock" class="app-title" />
+
+            <ui:VisualElement class="window-controls">
+                <ui:Button text="─" class="window-button" />
+                <ui:Button text="□" class="window-button" />
+                <ui:Button text="×" class="window-button close-button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement class="window-body">
+            <!-- Navigation -->
+            <ui:VisualElement class="sidebar">
+                <ui:Button text="☰" class="menu-button" />
+
+                <ui:Button name="focus-tab" class="nav-item selected">
+                    <ui:Label text="◉" class="nav-icon" />
+                    <ui:Label text="Focus sessions" class="nav-label" />
+                </ui:Button>
+
+                <ui:Button name="timer-tab" class="nav-item">
+                    <ui:Label text="◴" class="nav-icon" />
+                    <ui:Label text="Timer" class="nav-label" />
+                </ui:Button>
+
+                <ui:Button name="alarm-tab" class="nav-item">
+                    <ui:Label text="♧" class="nav-icon" />
+                    <ui:Label text="Alarm" class="nav-label" />
+                </ui:Button>
+
+                <ui:Button name="stopwatch-tab" class="nav-item">
+                    <ui:Label text="◷" class="nav-icon" />
+                    <ui:Label text="Stopwatch" class="nav-label" />
+                </ui:Button>
+
+                <ui:Button name="world-clock-tab" class="nav-item">
+                    <ui:Label text="◎" class="nav-icon" />
+                    <ui:Label text="World clock" class="nav-label" />
+                </ui:Button>
+
+                <ui:VisualElement class="sidebar-spacer" />
+
+                <ui:Button name="settings-button" class="nav-item">
+                    <ui:Label text="⚙" class="nav-icon" />
+                    <ui:Label text="Settings" class="nav-label" />
+                </ui:Button>
+            </ui:VisualElement>
+
+            <!-- Main content -->
+            <ui:ScrollView class="content-scroll">
+                <ui:VisualElement class="content">
+                    <ui:Label text="Focus sessions" class="page-title" />
+
+                    <ui:VisualElement class="card-row">
+                        <ui:VisualElement class="card focus-card">
+                            <ui:Label text="Ready, set, focus!" class="card-title" />
+                            <ui:Label
+                                text="Make time for what matters. Set a timer and get started."
+                                class="description" />
+
+                            <ui:VisualElement class="duration-picker">
+                                <ui:Label name="duration-label" text="30" class="duration-number" />
+
+                                <ui:VisualElement class="duration-controls">
+                                    <ui:Button name="increase-duration" text="⌃" class="step-button" />
+                                    <ui:Button name="decrease-duration" text="⌄" class="step-button" />
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+
+                            <ui:Label text="minutes" class="duration-unit" />
+                            <ui:Label text="You'll have 1 break." class="break-description" />
+                            <ui:Toggle name="skip-breaks" label="Skip breaks" class="skip-breaks" />
+
+                            <ui:Button
+                                name="start-focus"
+                                text="▶   Start focus session"
+                                class="primary-button" />
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="card progress-card">
+                            <ui:VisualElement class="card-heading">
+                                <ui:Label text="Daily progress" class="card-title" />
+                                <ui:Button text="···" class="more-button" />
+                            </ui:VisualElement>
+
+                            <ui:VisualElement class="progress-ring">
+                                <ui:Label text="0" class="progress-number" />
+                                <ui:Label text="minutes" class="muted" />
+                                <ui:Label text="of 60 minute goal" class="goal-label" />
+                            </ui:VisualElement>
+
+                            <ui:VisualElement class="stats-row">
+                                <ui:VisualElement class="stat">
+                                    <ui:Label text="0" class="stat-number" />
+                                    <ui:Label text="Yesterday" class="muted" />
+                                </ui:VisualElement>
+
+                                <ui:VisualElement class="stat-divider" />
+
+                                <ui:VisualElement class="stat">
+                                    <ui:Label text="0 days" class="stat-number" />
+                                    <ui:Label text="Streak" class="muted" />
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="card-row bottom-row">
+                        <ui:VisualElement class="card tasks-card">
+                            <ui:VisualElement class="card-heading">
+                                <ui:Label text="Tasks" class="card-title" />
+                                <ui:Button text="+" class="more-button" />
+                            </ui:VisualElement>
+
+                            <ui:Label
+                                text="Choose a task to work on during your focus session."
+                                class="description" />
+
+                            <ui:Toggle label="Plan today's priorities" class="task-toggle" />
+                            <ui:Toggle label="Work on your project" class="task-toggle" />
+                            <ui:Toggle label="Review and organize notes" class="task-toggle" />
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="card music-card">
+                            <ui:Label text="♫" class="music-icon" />
+                            <ui:Label text="Focus with music" class="card-title" />
+                            <ui:Label
+                                text="Find your flow with a playlist that helps you concentrate."
+                                class="description centered" />
+                            <ui:Button
+                                name="link-spotify"
+                                text="Link your Spotify"
+                                class="secondary-button" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:ScrollView>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

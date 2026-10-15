@@ -1,0 +1,200 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="Solitaire.uss" />
+
+    <ui:VisualElement name="solitaire-root" class="app">
+        <!-- Header -->
+        <ui:VisualElement class="header">
+            <ui:VisualElement class="brand">
+                <ui:Label text="♠" class="brand-icon" />
+
+                <ui:VisualElement>
+                    <ui:Label text="Solitaire" class="title" />
+                    <ui:Label text="A little time for yourself" class="subtitle" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="header-actions">
+                <ui:Button
+                    name="settings-button"
+                    text="Settings"
+                    class="button button-secondary"
+                />
+                <ui:Button
+                    name="new-game-button"
+                    text="New game"
+                    class="button button-primary"
+                />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Game surface -->
+        <ui:VisualElement class="game-panel">
+            <ui:VisualElement class="game-info">
+                <ui:Label text="KLONDIKE · DRAW 1" class="game-mode" />
+
+                <ui:VisualElement class="stats">
+                    <ui:VisualElement class="stat">
+                        <ui:Label text="SCORE" class="stat-label" />
+                        <ui:Label name="score-label" text="0" class="stat-value" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="stat">
+                        <ui:Label text="TIME" class="stat-label" />
+                        <ui:Label name="time-label" text="00:00" class="stat-value" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="stat stat-last">
+                        <ui:Label text="MOVES" class="stat-label" />
+                        <ui:Label name="moves-label" text="0" class="stat-value" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="board" class="board">
+                <!-- Stock, waste, spacer, foundations -->
+                <ui:VisualElement class="top-row">
+                    <ui:VisualElement class="board-column">
+                        <ui:VisualElement name="stock-pile" class="card card-back">
+                            <ui:VisualElement class="card-back-inner">
+                                <ui:Label text="✦" class="card-back-symbol" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:Label text="STOCK" class="pile-caption" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="board-column">
+                        <ui:VisualElement name="waste-pile" class="card-slot">
+                            <ui:Label text="↺" class="slot-symbol" />
+                        </ui:VisualElement>
+                        <ui:Label text="WASTE" class="pile-caption" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="board-column" />
+
+                    <ui:VisualElement class="board-column">
+                        <ui:VisualElement name="foundation-clubs" class="card-slot">
+                            <ui:Label text="♣" class="slot-symbol" />
+                        </ui:VisualElement>
+                        <ui:Label text="FOUNDATION" class="pile-caption" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="board-column">
+                        <ui:VisualElement name="foundation-diamonds" class="card-slot">
+                            <ui:Label text="♦" class="slot-symbol" />
+                        </ui:VisualElement>
+                        <ui:Label text="FOUNDATION" class="pile-caption" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="board-column">
+                        <ui:VisualElement name="foundation-spades" class="card-slot">
+                            <ui:Label text="♠" class="slot-symbol" />
+                        </ui:VisualElement>
+                        <ui:Label text="FOUNDATION" class="pile-caption" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="board-column">
+                        <ui:VisualElement name="foundation-hearts" class="card-slot">
+                            <ui:Label text="♥" class="slot-symbol" />
+                        </ui:VisualElement>
+                        <ui:Label text="FOUNDATION" class="pile-caption" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <!-- Example starting tableau -->
+                <ui:VisualElement name="tableau" class="tableau">
+                    <ui:VisualElement name="tableau-1" class="tableau-column">
+                        <ui:VisualElement class="card card-face black depth-0">
+                            <ui:Label text="K ♠" class="card-corner" />
+                            <ui:Label text="♠" class="card-suit" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="tableau-2" class="tableau-column">
+                        <ui:VisualElement class="card card-back depth-0" />
+                        <ui:VisualElement class="card card-face red depth-1">
+                            <ui:Label text="Q ♥" class="card-corner" />
+                            <ui:Label text="♥" class="card-suit" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="tableau-3" class="tableau-column">
+                        <ui:VisualElement class="card card-back depth-0" />
+                        <ui:VisualElement class="card card-back depth-1" />
+                        <ui:VisualElement class="card card-face black depth-2">
+                            <ui:Label text="8 ♣" class="card-corner" />
+                            <ui:Label text="♣" class="card-suit" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="tableau-4" class="tableau-column">
+                        <ui:VisualElement class="card card-back depth-0" />
+                        <ui:VisualElement class="card card-back depth-1" />
+                        <ui:VisualElement class="card card-back depth-2" />
+                        <ui:VisualElement class="card card-face red depth-3">
+                            <ui:Label text="J ♦" class="card-corner" />
+                            <ui:Label text="♦" class="card-suit" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="tableau-5" class="tableau-column">
+                        <ui:VisualElement class="card card-back depth-0" />
+                        <ui:VisualElement class="card card-back depth-1" />
+                        <ui:VisualElement class="card card-back depth-2" />
+                        <ui:VisualElement class="card card-back depth-3" />
+                        <ui:VisualElement class="card card-face black depth-4">
+                            <ui:Label text="5 ♠" class="card-corner" />
+                            <ui:Label text="♠" class="card-suit" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="tableau-6" class="tableau-column">
+                        <ui:VisualElement class="card card-back depth-0" />
+                        <ui:VisualElement class="card card-back depth-1" />
+                        <ui:VisualElement class="card card-back depth-2" />
+                        <ui:VisualElement class="card card-back depth-3" />
+                        <ui:VisualElement class="card card-back depth-4" />
+                        <ui:VisualElement class="card card-face red depth-5">
+                            <ui:Label text="9 ♥" class="card-corner" />
+                            <ui:Label text="♥" class="card-suit" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="tableau-7" class="tableau-column">
+                        <ui:VisualElement class="card card-back depth-0" />
+                        <ui:VisualElement class="card card-back depth-1" />
+                        <ui:VisualElement class="card card-back depth-2" />
+                        <ui:VisualElement class="card card-back depth-3" />
+                        <ui:VisualElement class="card card-back depth-4" />
+                        <ui:VisualElement class="card card-back depth-5" />
+                        <ui:VisualElement class="card card-face black depth-6">
+                            <ui:Label text="A ♣" class="card-corner" />
+                            <ui:Label text="♣" class="card-suit" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Bottom controls -->
+            <ui:VisualElement class="footer">
+                <ui:Label
+                    name="status-label"
+                    text="Take your time. Make your move."
+                    class="footer-message"
+                />
+
+                <ui:VisualElement class="footer-actions">
+                    <ui:Button
+                        name="undo-button"
+                        text="↶  Undo"
+                        class="button button-secondary"
+                    />
+                    <ui:Button
+                        name="hint-button"
+                        text="✦  Hint"
+                        class="button button-hint"
+                    />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

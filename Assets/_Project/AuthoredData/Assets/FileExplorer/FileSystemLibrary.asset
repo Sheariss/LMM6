@@ -730,6 +730,18 @@ MonoBehaviour:
           previewImage: {fileID: 0}
           contentId: guest-company-profile-content
           progressionEventId: 
+        - id: guest-welcome-whiteboard-content
+          name: Company Profile 2027.pdf
+          fileType: 6
+          size: 31355
+          modifiedDate: 2026-09-16
+          hidden: 0
+          readOnly: 0
+          starred: 0
+          textContent: 
+          previewImage: {fileID: 0}
+          contentId: guest-welcome-whiteboard-content
+          progressionEventId: 
       - id: guest-pictures
         name: Pictures
         hidden: 0

@@ -1,0 +1,534 @@
+/* Dark Material-inspired palette, scoped to this window. */
+
+.cp-window {
+    --cp-background: rgb(19, 19, 20);
+    --cp-surface: rgb(30, 31, 32);
+    --cp-surface-hover: rgb(39, 41, 44);
+    --cp-border: rgb(58, 60, 64);
+    --cp-text: rgb(227, 227, 227);
+    --cp-secondary: rgb(170, 176, 184);
+    --cp-accent: rgb(168, 199, 250);
+
+    width: 100%;
+    height: 100%;
+    min-width: 760px;
+    min-height: 560px;
+    flex-direction: column;
+    overflow: hidden;
+
+    border-width: 1px;
+    border-color: var(--cp-border);
+    border-radius: 16px;
+
+    background-color: var(--cp-background);
+    color: var(--cp-text);
+    font-size: 13px;
+}
+
+.cp-window Label {
+    margin: 0;
+    padding: 0;
+}
+
+.cp-window Button {
+    margin: 0;
+    background-image: none;
+    color: var(--cp-text);
+    -unity-font-style: normal;
+}
+
+.cp-window Button:focus {
+    border-color: var(--cp-accent);
+}
+
+.cp-hidden {
+    display: none;
+}
+
+/* Window frame */
+
+.cp-header {
+    height: 48px;
+    min-height: 48px;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 18px;
+    background-color: var(--cp-surface);
+}
+
+.cp-window-title {
+    flex-grow: 1;
+    margin-left: 10px;
+    font-size: 12px;
+    color: var(--cp-secondary);
+}
+
+.cp-controls {
+    height: 100%;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.cp-window .cp-window-button {
+    width: 48px;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    border-width: 1px;
+    border-color: transparent;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+.cp-window .cp-window-button:hover {
+    background-color: rgb(49, 51, 54);
+}
+
+.cp-window .cp-close-button:hover {
+    background-color: rgb(168, 49, 58);
+}
+
+.cp-content {
+    flex-grow: 1;
+    min-height: 0;
+}
+
+/* Navigation and search */
+
+.cp-toolbar {
+    min-height: 66px;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 16px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgb(42, 44, 47);
+}
+
+.cp-window .cp-navigation-button {
+    width: 36px;
+    height: 36px;
+    margin-right: 4px;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    border-width: 1px;
+    border-color: transparent;
+    border-radius: 18px;
+    background-color: transparent;
+}
+
+.cp-window .cp-navigation-button:hover {
+    background-color: var(--cp-surface-hover);
+}
+
+.cp-address {
+    height: 40px;
+    min-width: 160px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 10px;
+    padding-left: 14px;
+    padding-right: 14px;
+    border-radius: 20px;
+    background-color: var(--cp-surface);
+}
+
+.cp-breadcrumb {
+    margin-left: 10px;
+    font-size: 12px;
+}
+
+.cp-search {
+    width: 250px;
+    height: 40px;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 12px;
+    padding-left: 14px;
+    padding-right: 12px;
+    border-width: 1px;
+    border-color: transparent;
+    border-radius: 20px;
+    background-color: var(--cp-surface);
+}
+
+.cp-search:focus-within {
+    border-color: var(--cp-accent);
+}
+
+.cp-search-field {
+    flex-grow: 1;
+    min-width: 0;
+    margin: 0 0 0 8px;
+}
+
+.cp-search-field > .unity-base-field__label {
+    min-width: 0;
+    width: 46px;
+    margin: 0;
+    padding: 0;
+    color: var(--cp-secondary);
+}
+
+.cp-search-field .unity-base-text-field__input {
+    min-width: 0;
+    padding: 2px 0;
+    border-width: 0;
+    border-radius: 0;
+    background-color: transparent;
+    color: var(--cp-text);
+    -unity-text-align: middle-left;
+}
+
+/* Page */
+
+.cp-scroll {
+    flex-grow: 1;
+    min-height: 0;
+}
+
+.cp-page {
+    width: 100%;
+    max-width: 1120px;
+    align-self: center;
+    padding: 30px 28px 20px;
+}
+
+.cp-page-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+
+.cp-heading {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+.cp-title {
+    font-size: 30px;
+    -unity-font-style: normal;
+}
+
+.cp-subtitle {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--cp-secondary);
+}
+
+.cp-view-control {
+    flex-direction: row;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.cp-muted {
+    color: var(--cp-secondary);
+    font-size: 12px;
+}
+
+.cp-view-dropdown {
+    width: 124px;
+    margin: 0 0 0 10px;
+}
+
+.cp-view-dropdown .unity-base-popup-field__input {
+    min-height: 34px;
+    padding-left: 12px;
+    padding-right: 10px;
+    border-width: 1px;
+    border-color: var(--cp-border);
+    border-radius: 17px;
+    background-color: var(--cp-surface);
+}
+
+.cp-view-dropdown .unity-base-popup-field__text {
+    color: var(--cp-accent);
+    font-size: 12px;
+}
+
+.cp-section-title {
+    margin-bottom: 14px;
+    font-size: 14px;
+    color: var(--cp-secondary);
+}
+
+/* Wrapping two-column category grid */
+
+.cp-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: -6px;
+    margin-right: -6px;
+}
+
+.cp-window .cp-card {
+    flex-basis: 46%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 300px;
+    min-height: 134px;
+
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    margin: 6px;
+    padding: 20px;
+
+    border-width: 1px;
+    border-color: rgb(47, 49, 52);
+    border-radius: 20px;
+    background-color: var(--cp-surface);
+
+    transition-property: background-color, border-color;
+    transition-duration: 0.15s;
+}
+
+.cp-window .cp-card:hover {
+    border-color: rgb(82, 88, 99);
+    background-color: var(--cp-surface-hover);
+}
+
+.cp-window .cp-card:focus {
+    border-color: var(--cp-accent);
+}
+
+.cp-window .cp-card:active {
+    background-color: rgb(45, 53, 66);
+}
+
+.cp-icon-container {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+}
+
+.cp-card-body {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    margin-left: 16px;
+}
+
+.cp-card-title {
+    margin-top: 2px;
+    font-size: 15px;
+    color: var(--cp-text);
+    white-space: normal;
+    -unity-text-align: middle-left;
+}
+
+.cp-card-description {
+    margin-top: 7px;
+    font-size: 12px;
+    color: var(--cp-secondary);
+    white-space: normal;
+    -unity-text-align: middle-left;
+}
+
+.cp-card-detail {
+    margin-top: 12px;
+    font-size: 11px;
+    color: var(--cp-accent);
+    white-space: normal;
+    -unity-text-align: middle-left;
+}
+
+/* Soft Google-like accent colors */
+
+.cp-blue {
+    background-color: rgb(39, 56, 80);
+}
+
+.cp-blue .cp-category-icon {
+    -unity-background-image-tint-color: rgb(168, 199, 250);
+}
+
+.cp-green {
+    background-color: rgb(31, 57, 46);
+}
+
+.cp-green .cp-category-icon {
+    -unity-background-image-tint-color: rgb(129, 201, 149);
+}
+
+.cp-purple {
+    background-color: rgb(55, 44, 71);
+}
+
+.cp-purple .cp-category-icon {
+    -unity-background-image-tint-color: rgb(211, 184, 247);
+}
+
+.cp-yellow {
+    background-color: rgb(66, 55, 30);
+}
+
+.cp-yellow .cp-category-icon {
+    -unity-background-image-tint-color: rgb(253, 214, 99);
+}
+
+.cp-red {
+    background-color: rgb(68, 42, 42);
+}
+
+.cp-red .cp-category-icon {
+    -unity-background-image-tint-color: rgb(242, 161, 154);
+}
+
+/* Help footer */
+
+.cp-help {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 24px;
+    padding: 16px 4px;
+}
+
+.cp-help > .cp-icon {
+    margin-right: 10px;
+}
+
+.cp-window .cp-text-button {
+    height: 32px;
+    margin-left: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-width: 1px;
+    border-color: transparent;
+    border-radius: 16px;
+    background-color: transparent;
+    color: var(--cp-accent);
+    font-size: 12px;
+}
+
+.cp-window .cp-text-button:hover {
+    background-color: rgb(37, 48, 65);
+}
+
+/* Existing project resources */
+
+.cp-icon,
+.cp-category-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    -unity-background-image-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: rgb(196, 199, 205);
+}
+
+.cp-category-icon {
+    width: 26px;
+    height: 26px;
+}
+
+.cp-settings-icon {
+    background-image: resource("Icons/System/Settings/settings_32dp");
+}
+
+.cp-home-icon {
+    background-image: resource("Icons/Nav/Home/home_32dp");
+}
+
+.cp-back-icon {
+    background-image: resource("Icons/Arrows 1/Arrow-Back/arrow_back_32dp");
+}
+
+.cp-forward-icon {
+    background-image: resource("Icons/Arrows 1/Arrow-Foward/arrow_forward_32dp");
+}
+
+.cp-search-icon {
+    background-image: resource("Icons/UI/Search/search_32dp");
+}
+
+.cp-minimize-icon {
+    background-image: resource("Icons/UI/Minimize/remove_32dp_");
+}
+
+.cp-maximize-icon {
+    background-image: resource("Icons/UI/Maximize-Exit/crop_square_32dp");
+}
+
+.cp-restore-icon {
+    background-image: resource("Icons/UI/Maximize/filter_none_32dp");
+}
+
+.cp-close-icon {
+    background-image: resource("Icons/UI/Close/close_32dp");
+}
+
+.cp-security-icon {
+    background-image: resource("Icons/System/Power/Lock/lock_32dp");
+}
+
+.cp-network-icon {
+    background-image: resource("Icons/System/Network/Wifi-3-Bar/wifi_32dp");
+}
+
+.cp-sound-icon {
+    background-image: resource("Icons/System/Volume/volume_up_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40");
+}
+
+.cp-programs-icon {
+    background-image: resource("Icons/Layout/Grid/grid_view_32dp");
+}
+
+.cp-accounts-icon {
+    background-image: resource("Icons/System/Visibility/Visibility-Locked/visibility_lock_32dp");
+}
+
+.cp-appearance-icon {
+    background-image: resource("Icons/Files/Storage-Types/Desktop/desktop_windows_32dp");
+}
+
+.cp-clock-icon {
+    background-image: resource("Icons/System/Recent/schedule_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40");
+}
+
+.cp-accessibility-icon {
+    background-image: resource("Icons/System/Accessibility/accessibility_new_32dp");
+}
+
+.cp-help-icon {
+    background-image: resource("Icons/System/Status/Help/help_32dp");
+}
+
+/* Scrollbar */
+
+.cp-scroll .unity-scroller--vertical {
+    width: 10px;
+}
+
+.cp-scroll .unity-scroller--vertical .unity-base-slider__tracker {
+    background-color: transparent;
+}
+
+.cp-scroll .unity-scroller--vertical .unity-base-slider__dragger {
+    width: 5px;
+    min-height: 32px;
+    border-width: 0;
+    border-radius: 4px;
+    background-color: rgb(82, 85, 90);
+}
+
+.cp-scroll .unity-scroller--vertical .unity-base-slider__dragger:hover {
+    background-color: rgb(119, 124, 132);
+}
+
+.cp-scroll .unity-scroller--vertical .unity-scroller__low-button,
+.cp-scroll .unity-scroller--vertical .unity-scroller__high-button {
+    display: none;
+}

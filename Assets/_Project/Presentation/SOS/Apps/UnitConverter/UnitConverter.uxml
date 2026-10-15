@@ -1,0 +1,171 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="../../../Tokens/Global-Colors.uss"/>
+    <Style src="../../../Tokens/Global-Tokens.uss"/>
+    <Style src="../../../Tokens/ATLAS.uss"/>
+    <Style src="../../Window/Window.uss"/>
+    <Style src="UnitConverter.uss"/>
+
+    <ui:VisualElement name="WindowRoot" class="window converter-window">
+        <ui:VisualElement name="WindowHeader" class="flex-row header">
+            <ui:VisualElement class="header-icon-area">
+                <ui:Image name="WindowIcon" class="header-icon"/>
+            </ui:VisualElement>
+
+            <ui:Label
+                name="WindowTitle"
+                text="Unit Converter"
+                class="spacing-reset header-title"/>
+
+            <ui:GroupBox
+                name="WindowControls"
+                class="flex-row spacing-reset window-controls">
+
+                <ui:Button
+                    name="WindowMinimizeButton"
+                    class="button-reset wc-button">
+                    <ui:Image
+                        name="MinimizeIcon"
+                        class="wc-btn-icon minimize-icon"
+                        style="background-image: resource('Icons/UI/Minimize/remove_32dp_');"/>
+                </ui:Button>
+
+                <ui:Button
+                    name="WindowMaximizeButton"
+                    class="button-reset wc-button">
+                    <ui:Image
+                        name="FullscreenIcon"
+                        class="wc-btn-icon window-maximize-icon"
+                        style="background-image: resource('Icons/UI/Maximize-Exit/crop_square_32dp');"/>
+                    <ui:Image
+                        name="ExitFullscreenIcon"
+                        class="wc-btn-icon window-maximize-icon"
+                        style="display: none; background-image: resource('Icons/UI/Maximize/filter_none_32dp');"/>
+                </ui:Button>
+
+                <ui:Button
+                    name="WindowCloseButton"
+                    class="button-reset wc-button window-close-button">
+                    <ui:Image
+                        name="CloseIcon"
+                        class="wc-btn-icon"
+                        style="background-image: resource('Icons/UI/Close/close_32dp');"/>
+                </ui:Button>
+            </ui:GroupBox>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="WindowContent" class="content">
+            <ui:ScrollView
+                class="converter-scroll"
+                horizontal-scroller-visibility="Hidden">
+
+                <ui:VisualElement name="UnitConverterRoot" class="converter-root">
+                    <ui:DropdownField
+                        name="CategoryDropdown"
+                        class="converter-dropdown converter-category"
+                        tooltip="Conversion category"/>
+
+                    <ui:VisualElement class="converter-card">
+                        <ui:Label text="From" class="converter-caption"/>
+
+                        <ui:TextField
+                            name="InputField"
+                            value="0"
+                            max-length="64"
+                            keyboard-type="NumbersAndPunctuation"
+                            auto-correction="false"
+                            class="converter-input"/>
+
+                        <ui:DropdownField
+                            name="FromDropdown"
+                            class="converter-dropdown"
+                            tooltip="Source unit"/>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="converter-swap-row">
+                        <ui:Button
+                            name="SwapButton"
+                            text="⇅"
+                            class="converter-swap"
+                            tooltip="Swap units and values"/>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="converter-card converter-result-card">
+                        <ui:VisualElement class="converter-result-header">
+                            <ui:Label text="To" class="converter-caption"/>
+
+                            <ui:Button
+                                name="CopyButton"
+                                text="Copy"
+                                class="converter-copy"
+                                tooltip="Copy the conversion result"/>
+                        </ui:VisualElement>
+
+                        <ui:Label
+                            name="ResultLabel"
+                            text="0"
+                            class="converter-result"
+                            tooltip="Conversion result"/>
+
+                        <ui:DropdownField
+                            name="ToDropdown"
+                            class="converter-dropdown"
+                            tooltip="Destination unit"/>
+                    </ui:VisualElement>
+
+                    <ui:Label
+                        name="ReferenceLabel"
+                        class="converter-reference"/>
+
+                    <ui:VisualElement class="converter-keypad">
+                        <ui:VisualElement class="converter-row">
+                            <ui:Button
+                                name="ClearButton"
+                                text="CE"
+                                class="converter-key converter-utility"/>
+                            <ui:Button
+                                name="BackspaceButton"
+                                text="⌫"
+                                class="converter-key converter-utility"
+                                tooltip="Delete the last character"/>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="converter-row">
+                            <ui:Button name="Digit7" text="7" class="converter-key"/>
+                            <ui:Button name="Digit8" text="8" class="converter-key"/>
+                            <ui:Button name="Digit9" text="9" class="converter-key"/>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="converter-row">
+                            <ui:Button name="Digit4" text="4" class="converter-key"/>
+                            <ui:Button name="Digit5" text="5" class="converter-key"/>
+                            <ui:Button name="Digit6" text="6" class="converter-key"/>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="converter-row">
+                            <ui:Button name="Digit1" text="1" class="converter-key"/>
+                            <ui:Button name="Digit2" text="2" class="converter-key"/>
+                            <ui:Button name="Digit3" text="3" class="converter-key"/>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="converter-row">
+                            <ui:Button
+                                name="SignButton"
+                                text="±"
+                                class="converter-key"/>
+                            <ui:Button
+                                name="Digit0"
+                                text="0"
+                                class="converter-key"/>
+                            <ui:Button
+                                name="DecimalButton"
+                                text="."
+                                class="converter-key"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:ScrollView>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="WindowFooter" class="footer"/>
+    </ui:VisualElement>
+</ui:UXML>

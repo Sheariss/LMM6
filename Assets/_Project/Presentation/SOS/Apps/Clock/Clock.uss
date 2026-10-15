@@ -1,0 +1,400 @@
+VisualElement {}.clock-window {
+    flex-grow: 1;
+    min-width: 800px;
+    min-height: 650px;
+    background-color: #202020;
+    color: #f5f5f5;
+    font-size: 14px;
+}
+
+.titlebar {
+    height: 42px;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 16px;
+    background-color: #202020;
+}
+
+.app-icon {
+    color: #78c9f5;
+    font-size: 23px;
+    margin-right: 10px;
+}
+
+.app-title {
+    font-size: 12px;
+}
+
+.window-controls {
+    flex-grow: 1;
+    flex-direction: row;
+    justify-content: flex-end;
+    height: 100%;
+}
+
+.window-button {
+    width: 46px;
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    border-radius: 0;
+    background-color: transparent;
+    color: #dddddd;
+    font-size: 17px;
+}
+
+.window-button:hover {
+    background-color: #383838;
+}
+
+.close-button:hover {
+    background-color: #c42b1c;
+    color: white;
+}
+
+.window-body {
+    flex-grow: 1;
+    flex-direction: row;
+}
+
+.sidebar {
+    width: 218px;
+    flex-shrink: 0;
+    padding: 6px 8px 12px;
+    background-color: #202020;
+}
+
+.menu-button {
+    width: 40px;
+    height: 38px;
+    margin: 0 0 12px 4px;
+    border-width: 0;
+    border-radius: 5px;
+    background-color: transparent;
+    color: #ededed;
+    font-size: 20px;
+}
+
+.menu-button:hover {
+    background-color: #2d2d2d;
+}
+
+.nav-item {
+    height: 42px;
+    flex-direction: row;
+    align-items: center;
+    margin: 2px 0;
+    padding: 0 12px;
+    border-width: 0;
+    border-left-width: 3px;
+    border-left-color: transparent;
+    border-radius: 5px;
+    background-color: transparent;
+    color: #eeeeee;
+}
+
+.nav-item:hover {
+    background-color: #2c2c2c;
+}
+
+.nav-item.selected {
+    border-left-color: #76c9f4;
+    background-color: #333333;
+}
+
+.nav-icon {
+    width: 28px;
+    margin-right: 8px;
+    font-size: 21px;
+    -unity-text-align: middle-center;
+}
+
+.nav-label {
+    font-size: 14px;
+}
+
+.sidebar-spacer {
+    flex-grow: 1;
+    min-height: 30px;
+}
+
+.content-scroll {
+    flex-grow: 1;
+    background-color: #272727;
+    border-top-left-radius: 8px;
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-top-color: #343434;
+    border-left-color: #343434;
+}
+
+.content {
+    flex-grow: 1;
+    padding: 28px;
+}
+
+.page-title {
+    margin: 0 0 26px;
+    font-size: 28px;
+    -unity-font-style: bold;
+}
+
+.card-row {
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.card {
+    padding: 24px;
+    border-width: 1px;
+    border-color: #414141;
+    border-radius: 8px;
+    background-color: #303030;
+}
+
+.focus-card,
+.tasks-card {
+    flex-grow: 1;
+    flex-basis: 0;
+    margin-right: 16px;
+}
+
+.progress-card,
+.music-card {
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.focus-card {
+    align-items: center;
+    min-height: 365px;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 18px;
+    -unity-font-style: bold;
+}
+
+.description {
+    margin: 10px 0 0;
+    color: #bdbdbd;
+    font-size: 13px;
+    white-space: normal;
+}
+
+.focus-card > .description {
+    max-width: 300px;
+    -unity-text-align: middle-center;
+}
+
+.duration-picker {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 24px;
+}
+
+.duration-number {
+    min-width: 105px;
+    margin: 0;
+    font-size: 76px;
+    -unity-text-align: middle-center;
+}
+
+.duration-controls {
+    margin-left: 12px;
+}
+
+.step-button {
+    width: 32px;
+    height: 27px;
+    margin: 2px 0;
+    padding: 0;
+    border-width: 1px;
+    border-color: #555555;
+    border-radius: 4px;
+    background-color: #3b3b3b;
+    color: #eeeeee;
+    font-size: 18px;
+}
+
+.step-button:hover {
+    background-color: #484848;
+}
+
+.duration-unit {
+    margin-top: -4px;
+    color: #c6c6c6;
+    font-size: 14px;
+}
+
+.break-description {
+    margin-top: 18px;
+    color: #c6c6c6;
+    font-size: 12px;
+}
+
+.skip-breaks {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color: #dddddd;
+    font-size: 12px;
+}
+
+.primary-button {
+    height: 36px;
+    padding: 0 22px;
+    margin: 0;
+    border-width: 0;
+    border-radius: 5px;
+    background-color: #78c9f5;
+    color: #12212a;
+    font-size: 13px;
+    -unity-font-style: bold;
+}
+
+.primary-button:hover {
+    background-color: #91d6fa;
+}
+
+.primary-button:active {
+    background-color: #63b4e0;
+}
+
+.card-heading {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.more-button {
+    width: 30px;
+    height: 28px;
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    border-radius: 4px;
+    background-color: transparent;
+    color: #dddddd;
+    font-size: 22px;
+}
+
+.more-button:hover {
+    background-color: #444444;
+}
+
+.progress-ring {
+    width: 190px;
+    height: 190px;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    margin-top: 26px;
+    border-width: 7px;
+    border-color: #484848;
+    border-radius: 100px;
+}
+
+.progress-number {
+    margin: 0;
+    font-size: 48px;
+}
+
+.muted {
+    color: #bdbdbd;
+    font-size: 12px;
+}
+
+.goal-label {
+    margin-top: 7px;
+    color: #a6a6a6;
+    font-size: 11px;
+}
+
+.stats-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 26px;
+}
+
+.stat {
+    flex-grow: 1;
+    align-items: center;
+}
+
+.stat-number {
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 36px;
+    background-color: #505050;
+}
+
+.bottom-row {
+    margin-top: 16px;
+}
+
+.tasks-card,
+.music-card {
+    min-height: 230px;
+}
+
+.task-toggle {
+    margin-top: 16px;
+    color: #e4e4e4;
+    font-size: 13px;
+}
+
+.music-card {
+    align-items: center;
+    justify-content: center;
+}
+
+.music-icon {
+    margin-bottom: 10px;
+    color: #1ed760;
+    font-size: 34px;
+}
+
+.centered {
+    max-width: 280px;
+    -unity-text-align: middle-center;
+}
+
+.secondary-button {
+    height: 34px;
+    margin-top: 20px;
+    padding: 0 20px;
+    border-width: 1px;
+    border-color: #5a5a5a;
+    border-radius: 5px;
+    background-color: #414141;
+    color: #f5f5f5;
+    font-size: 13px;
+}
+
+.secondary-button:hover {
+    background-color: #4c4c4c;
+}
+
+Toggle > .unity-toggle__input > .unity-toggle__checkmark {
+    width: 18px;
+    height: 18px;
+    border-width: 1px;
+    border-color: #969696;
+    border-radius: 3px;
+    background-color: #252525;
+}
+
+Toggle:checked > .unity-toggle__input > .unity-toggle__checkmark {
+    border-color: #78c9f5;
+    background-color: #78c9f5;
+}
+
+Toggle > .unity-toggle__input > .unity-toggle__text {
+    margin-left: 8px;
+}

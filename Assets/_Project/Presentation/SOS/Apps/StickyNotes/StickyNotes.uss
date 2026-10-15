@@ -1,0 +1,408 @@
+/* Shared defaults */
+
+.app-root,
+.widget-root {
+    flex-grow: 1;
+    color: #242424;
+    -unity-font-style: normal;
+    font-size: 14px;
+}
+
+.app-root {
+    align-items: center;
+    justify-content: center;
+    background-color: #e8edf3;
+    padding: 24px;
+}
+
+.widget-root {
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 16px;
+}
+
+.spacer {
+    flex-grow: 1;
+}
+
+/* Remove Unity's default button appearance */
+
+Button {
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    border-radius: 0;
+    background-image: none;
+    background-color: transparent;
+    color: #242424;
+    -unity-font-style: normal;
+}
+
+Button:focus {
+    border-width: 0;
+}
+
+Button:active {
+    background-color: rgba(0, 0, 0, 0.09);
+}
+
+/* Controller window */
+
+.notes-app {
+    width: 1040px;
+    height: 700px;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    border-width: 1px;
+    border-color: #c9cdd3;
+    background-color: #f7f7f8;
+}
+
+.titlebar {
+    height: 44px;
+    min-height: 44px;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 16px;
+    background-color: #f3f3f5;
+    border-bottom-width: 1px;
+    border-bottom-color: #e4e4e7;
+}
+
+.app-icon {
+    width: 17px;
+    height: 19px;
+    margin-right: 10px;
+    border-radius: 3px;
+    background-color: #f2c94c;
+    border-bottom-width: 5px;
+    border-bottom-color: #deb53a;
+}
+
+.window-title {
+    font-size: 12px;
+    color: #414145;
+}
+
+.window-button {
+    width: 46px;
+    height: 43px;
+    font-size: 18px;
+}
+
+.window-button:hover {
+    background-color: #e5e5e9;
+}
+
+.close-button:hover {
+    background-color: #c42b1c;
+    color: white;
+}
+
+.app-content {
+    flex-grow: 1;
+    flex-direction: row;
+    min-height: 0;
+}
+
+/* Sidebar */
+
+.sidebar {
+    width: 330px;
+    min-width: 280px;
+    flex-shrink: 0;
+    background-color: #fbfbfc;
+    border-right-width: 1px;
+    border-right-color: #e2e2e6;
+}
+
+.sidebar-heading {
+    flex-direction: row;
+    align-items: center;
+    margin: 22px 18px 16px 22px;
+}
+
+.heading {
+    font-size: 27px;
+    -unity-font-style: bold;
+}
+
+.icon-button {
+    width: 34px;
+    height: 32px;
+    margin-left: 3px;
+    border-radius: 5px;
+    font-size: 22px;
+    -unity-text-align: middle-center;
+}
+
+.icon-button:hover {
+    background-color: rgba(0, 0, 0, 0.065);
+}
+
+.search-field {
+    height: 36px;
+    margin: 0 20px 0 20px;
+    padding: 0;
+}
+
+.search-field > .unity-text-field__input {
+    padding: 7px 10px;
+    border-width: 1px;
+    border-color: #dedee3;
+    border-bottom-color: #99999f;
+    border-radius: 5px;
+    background-color: white;
+    color: #303036;
+    font-size: 13px;
+}
+
+.search-field:focus > .unity-text-field__input {
+    border-bottom-width: 2px;
+    border-bottom-color: #8067cb;
+}
+
+/* Hide this hint in C# when the search field has text. */
+.search-hint {
+    position: absolute;
+    top: 99px;
+    left: 31px;
+    color: #77777e;
+    font-size: 13px;
+    -unity-picking-mode: ignore;
+}
+
+.notes-list {
+    flex-grow: 1;
+    min-height: 0;
+    margin-top: 18px;
+}
+
+.notes-list > .unity-scroll-view__content-viewport
+    > .unity-scroll-view__content-container {
+    padding: 0 18px 6px 18px;
+}
+
+.note-card {
+    flex-shrink: 0;
+    align-items: stretch;
+    margin-bottom: 12px;
+    padding: 14px;
+    border-radius: 6px;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.045);
+    border-top-width: 4px;
+    white-space: normal;
+}
+
+.note-card:hover {
+    border-left-color: rgba(0, 0, 0, 0.19);
+    border-right-color: rgba(0, 0, 0, 0.19);
+    border-bottom-color: rgba(0, 0, 0, 0.19);
+}
+
+.note-card.selected {
+    border-left-color: #a58d43;
+    border-right-color: #a58d43;
+    border-bottom-color: #a58d43;
+}
+
+.card-header {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 14px;
+    -unity-font-style: bold;
+}
+
+.card-time {
+    margin: 0 0 0 8px;
+    color: rgba(35, 35, 35, 0.58);
+    font-size: 10px;
+}
+
+.card-subtitle {
+    margin: 0 0 7px 0;
+    font-size: 13px;
+    -unity-font-style: bold;
+    white-space: normal;
+}
+
+.card-preview {
+    margin: 0;
+    font-size: 13px;
+    color: #45423a;
+    white-space: normal;
+}
+
+.sidebar-footer {
+    margin: 0;
+    padding: 12px 22px;
+    font-size: 11px;
+    color: #85858b;
+}
+
+/* Selected note editor */
+
+.editor-pane {
+    flex-grow: 1;
+    min-width: 0;
+    padding: 30px;
+    background-color: #efeff2;
+}
+
+.editor-note {
+    flex-grow: 1;
+    overflow: hidden;
+    border-radius: 7px;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.10);
+}
+
+.note-toolbar {
+    height: 44px;
+    min-height: 44px;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 8px 0 16px;
+    background-color: rgba(0, 0, 0, 0.035);
+}
+
+.note-caption {
+    font-size: 12px;
+    color: rgba(30, 30, 25, 0.65);
+}
+
+.note-input {
+    flex-grow: 1;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    background-color: transparent;
+}
+
+.note-input > .unity-text-field__input {
+    flex-grow: 1;
+    margin: 0;
+    padding: 20px;
+    border-width: 0;
+    border-radius: 0;
+    background-color: transparent;
+    color: #333026;
+    white-space: normal;
+    -unity-text-align: upper-left;
+}
+
+.note-input:focus > .unity-text-field__input {
+    border-width: 0;
+    background-color: transparent;
+}
+
+.large-input {
+    font-size: 18px;
+}
+
+.format-toolbar {
+    height: 44px;
+    min-height: 44px;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 8px;
+    border-top-width: 1px;
+    border-top-color: rgba(0, 0, 0, 0.055);
+}
+
+.format-button {
+    width: 32px;
+    height: 30px;
+    margin-right: 2px;
+    border-radius: 4px;
+    font-size: 15px;
+}
+
+.format-button:hover {
+    background-color: rgba(0, 0, 0, 0.07);
+}
+
+.bold-button {
+    -unity-font-style: bold;
+}
+
+.italic-button {
+    -unity-font-style: italic;
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 18px;
+    margin: 0 8px 0 4px;
+    background-color: rgba(0, 0, 0, 0.12);
+}
+
+.editor-status {
+    margin-right: 6px;
+    font-size: 10px;
+    color: rgba(30, 30, 25, 0.5);
+}
+
+/* Floating sticky note */
+
+.sticky-widget {
+    width: 310px;
+    height: 330px;
+    min-width: 240px;
+    min-height: 200px;
+    overflow: hidden;
+    border-radius: 7px;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.16);
+}
+
+.widget-toolbar {
+    height: 38px;
+    min-height: 38px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.widget-input {
+    font-size: 16px;
+}
+
+.widget-input > .unity-text-field__input {
+    padding: 16px;
+}
+
+/* Note colors */
+
+.yellow {
+    background-color: #fff2b2;
+    border-top-color: #e8ce69;
+}
+
+.pink {
+    background-color: #f8d5e6;
+    border-top-color: #e5a6c6;
+}
+
+.green {
+    background-color: #dff0c5;
+    border-top-color: #aecb85;
+}
+
+.blue {
+    background-color: #d5eafa;
+    border-top-color: #98c4e4;
+}
+
+.purple {
+    background-color: #e8dcf5;
+    border-top-color: #c3a7df;
+}

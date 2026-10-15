@@ -1,0 +1,267 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         editor-extension-mode="False">
+    <Style src="Email.uss"/>
+
+    <ui:VisualElement name="MailRoot" class="mail">
+
+        <!-- Shared header -->
+        <ui:VisualElement class="mail-header">
+            <ui:VisualElement class="mail-brand">
+                <ui:Button name="MenuButton" text="≡"
+                           tooltip="Toggle navigation"
+                           class="mail-icon-button mail-menu"/>
+                <ui:VisualElement class="mail-logo"/>
+                <ui:Label text="Mail" class="mail-wordmark"/>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="mail-search">
+                <ui:VisualElement class="mail-icon icon-search"/>
+                <ui:TextField name="SearchField"
+                              placeholder-text="Search mail"
+                              class="mail-search-field"/>
+                <ui:Button name="SearchOptionsButton" text="⋮"
+                           tooltip="Search options"
+                           class="mail-icon-button"/>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="mail-header-actions">
+                <ui:Button name="HelpButton" tooltip="Help"
+                           class="mail-icon-button">
+                    <ui:VisualElement class="mail-icon icon-help"/>
+                </ui:Button>
+                <ui:Button name="SettingsButton" tooltip="Settings"
+                           class="mail-icon-button">
+                    <ui:VisualElement class="mail-icon icon-settings"/>
+                </ui:Button>
+                <ui:Button name="AccountButton" text="JD"
+                           tooltip="Your account"
+                           class="mail-account"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement class="mail-body">
+
+            <!-- Navigation -->
+            <ui:VisualElement name="MailSidebar" class="mail-sidebar">
+                <ui:Button name="ComposeButton" class="mail-compose">
+                    <ui:Label text="+" class="mail-compose-icon"/>
+                    <ui:Label text="Compose"/>
+                </ui:Button>
+
+                <ui:Button name="InboxButton"
+                           class="mail-nav mail-nav--active">
+                    <ui:VisualElement class="mail-icon icon-mail"/>
+                    <ui:Label text="Inbox" class="mail-nav-label"/>
+                    <ui:Label name="InboxCount" text="3"
+                              class="mail-count"/>
+                </ui:Button>
+
+                <ui:Button name="StarredButton" class="mail-nav">
+                    <ui:VisualElement class="mail-icon icon-star"/>
+                    <ui:Label text="Starred" class="mail-nav-label"/>
+                </ui:Button>
+
+                <ui:Button name="SnoozedButton" class="mail-nav">
+                    <ui:VisualElement class="mail-icon icon-clock"/>
+                    <ui:Label text="Snoozed" class="mail-nav-label"/>
+                </ui:Button>
+
+                <ui:Button name="SentButton" class="mail-nav">
+                    <ui:Label text="›" class="mail-nav-symbol"/>
+                    <ui:Label text="Sent" class="mail-nav-label"/>
+                </ui:Button>
+
+                <ui:Button name="DraftsButton" class="mail-nav">
+                    <ui:Label text="▤" class="mail-nav-symbol"/>
+                    <ui:Label text="Drafts" class="mail-nav-label"/>
+                    <ui:Label name="DraftsCount" text="1"
+                              class="mail-count"/>
+                </ui:Button>
+
+                <ui:Button name="MoreFoldersButton" class="mail-nav">
+                    <ui:Label text="⌄" class="mail-nav-symbol"/>
+                    <ui:Label text="More" class="mail-nav-label"/>
+                </ui:Button>
+
+                <ui:VisualElement class="mail-labels-heading">
+                    <ui:Label text="Labels" class="mail-labels-title"/>
+                    <ui:Button name="AddLabelButton" text="+"
+                               tooltip="Create label"
+                               class="mail-icon-button"/>
+                </ui:VisualElement>
+
+                <ui:Button name="WorkLabelButton" class="mail-nav">
+                    <ui:VisualElement class="mail-label-dot mail-label-dot--blue"/>
+                    <ui:Label text="Work" class="mail-nav-label"/>
+                </ui:Button>
+
+                <ui:Button name="PersonalLabelButton" class="mail-nav">
+                    <ui:VisualElement class="mail-label-dot mail-label-dot--green"/>
+                    <ui:Label text="Personal" class="mail-nav-label"/>
+                </ui:Button>
+
+                <ui:VisualElement class="mail-sidebar-spacer"/>
+                <ui:Label text="Everything in one place."
+                          class="mail-sidebar-caption"/>
+            </ui:VisualElement>
+
+            <!-- Inbox -->
+            <ui:VisualElement name="InboxPanel" class="mail-inbox">
+                <ui:VisualElement class="mail-toolbar">
+                    <ui:Toggle name="SelectAllToggle"
+                               tooltip="Select all messages"
+                               class="mail-check"/>
+                    <ui:Button name="RefreshButton" tooltip="Refresh"
+                               class="mail-icon-button">
+                        <ui:VisualElement class="mail-icon icon-refresh"/>
+                    </ui:Button>
+                    <ui:Button name="MoreActionsButton" text="⋮"
+                               tooltip="More actions"
+                               class="mail-icon-button"/>
+
+                    <ui:VisualElement class="mail-toolbar-spacer"/>
+                    <ui:Label name="MessageRangeLabel" text="1–6 of 6"
+                              class="mail-range"/>
+                    <ui:Button name="PreviousPageButton" text="‹"
+                               tooltip="Previous page"
+                               class="mail-icon-button"/>
+                    <ui:Button name="NextPageButton" text="›"
+                               tooltip="Next page"
+                               class="mail-icon-button"/>
+                </ui:VisualElement>
+
+                <ui:VisualElement class="mail-tabs">
+                    <ui:Button name="PrimaryTab"
+                               class="mail-tab mail-tab--active">
+                        <ui:VisualElement class="mail-icon icon-mail"/>
+                        <ui:Label text="Primary"/>
+                        <ui:Label text="3 new" class="mail-badge"/>
+                    </ui:Button>
+                    <ui:Button name="PromotionsTab" text="Promotions"
+                               class="mail-tab"/>
+                    <ui:Button name="SocialTab" text="Social"
+                               class="mail-tab"/>
+                </ui:VisualElement>
+
+                <ui:ScrollView name="MessageScroll"
+                               mode="Vertical"
+                               horizontal-scroller-visibility="Hidden"
+                               class="mail-message-scroll">
+                    <ui:VisualElement name="MessageList" class="mail-message-list">
+
+                        <!-- Sample rows: replace with bound message data -->
+                        <ui:VisualElement class="mail-row mail-row--unread">
+                            <ui:Toggle tooltip="Select message" class="mail-check"/>
+                            <ui:Button tooltip="Star message" class="mail-star">
+                                <ui:VisualElement class="mail-icon icon-star"/>
+                            </ui:Button>
+                            <ui:Button name="OpenMessage001" class="mail-message">
+                                <ui:Label text="Alex Morgan" class="mail-sender"/>
+                                <ui:VisualElement class="mail-summary">
+                                    <ui:Label text="A quick update"
+                                              class="mail-subject"/>
+                                    <ui:Label text=" — The revised schedule is ready whenever you are."
+                                              class="mail-preview"/>
+                                </ui:VisualElement>
+                                <ui:Label text="10:42 AM" class="mail-time"/>
+                            </ui:Button>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="mail-row mail-row--unread">
+                            <ui:Toggle tooltip="Select message" class="mail-check"/>
+                            <ui:Button tooltip="Star message" class="mail-star">
+                                <ui:VisualElement class="mail-icon icon-star"/>
+                            </ui:Button>
+                            <ui:Button name="OpenMessage002" class="mail-message">
+                                <ui:Label text="Jamie Chen" class="mail-sender"/>
+                                <ui:VisualElement class="mail-summary">
+                                    <ui:Label text="Notes from this morning"
+                                              class="mail-subject"/>
+                                    <ui:Label text=" — Here are the details we discussed."
+                                              class="mail-preview"/>
+                                </ui:VisualElement>
+                                <ui:Label text="9:18 AM" class="mail-time"/>
+                            </ui:Button>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="mail-row mail-row--unread">
+                            <ui:Toggle tooltip="Select message" class="mail-check"/>
+                            <ui:Button tooltip="Star message" class="mail-star">
+                                <ui:VisualElement class="mail-icon icon-star"/>
+                            </ui:Button>
+                            <ui:Button name="OpenMessage003" class="mail-message">
+                                <ui:Label text="Orbilo" class="mail-sender"/>
+                                <ui:VisualElement class="mail-summary">
+                                    <ui:Label text="Welcome to your new inbox"
+                                              class="mail-subject"/>
+                                    <ui:Label text=" — A little less clutter. A little more clarity."
+                                              class="mail-preview"/>
+                                </ui:VisualElement>
+                                <ui:Label text="8:05 AM" class="mail-time"/>
+                            </ui:Button>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="mail-row">
+                            <ui:Toggle tooltip="Select message" class="mail-check"/>
+                            <ui:Button tooltip="Unstar message"
+                                       class="mail-star mail-star--active">
+                                <ui:VisualElement class="mail-icon icon-star"/>
+                            </ui:Button>
+                            <ui:Button name="OpenMessage004" class="mail-message">
+                                <ui:Label text="Taylor Reed" class="mail-sender"/>
+                                <ui:VisualElement class="mail-summary">
+                                    <ui:Label text="Saturday plans"
+                                              class="mail-subject"/>
+                                    <ui:Label text=" — Does the usual place still work for you?"
+                                              class="mail-preview"/>
+                                </ui:VisualElement>
+                                <ui:Label text="Yesterday" class="mail-time"/>
+                            </ui:Button>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="mail-row">
+                            <ui:Toggle tooltip="Select message" class="mail-check"/>
+                            <ui:Button tooltip="Star message" class="mail-star">
+                                <ui:VisualElement class="mail-icon icon-star"/>
+                            </ui:Button>
+                            <ui:Button name="OpenMessage005" class="mail-message">
+                                <ui:Label text="Building Services" class="mail-sender"/>
+                                <ui:VisualElement class="mail-summary">
+                                    <ui:Label text="Scheduled maintenance"
+                                              class="mail-subject"/>
+                                    <ui:Label text=" — Please review the updated access hours."
+                                              class="mail-preview"/>
+                                </ui:VisualElement>
+                                <ui:Label text="Oct 13" class="mail-time"/>
+                            </ui:Button>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="mail-row">
+                            <ui:Toggle tooltip="Select message" class="mail-check"/>
+                            <ui:Button tooltip="Star message" class="mail-star">
+                                <ui:VisualElement class="mail-icon icon-star"/>
+                            </ui:Button>
+                            <ui:Button name="OpenMessage006" class="mail-message">
+                                <ui:Label text="Morgan, me (2)" class="mail-sender"/>
+                                <ui:VisualElement class="mail-summary">
+                                    <ui:Label text="Re: Project files"
+                                              class="mail-subject"/>
+                                    <ui:Label text=" — Thanks, I have everything I need."
+                                              class="mail-preview"/>
+                                </ui:VisualElement>
+                                <ui:Label text="Oct 12" class="mail-time"/>
+                            </ui:Button>
+                        </ui:VisualElement>
+
+                    </ui:VisualElement>
+                </ui:ScrollView>
+
+                <ui:VisualElement class="mail-footer">
+                    <ui:Label name="StorageLabel" text="0.2 GB of 15 GB used"/>
+                    <ui:VisualElement class="mail-toolbar-spacer"/>
+                    <ui:Label name="SyncStatusLabel" text="All changes saved"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

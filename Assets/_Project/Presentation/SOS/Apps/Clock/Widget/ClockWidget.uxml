@@ -1,0 +1,41 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="ClockWidget.uss" />
+
+    <ui:VisualElement class="clock-widget">
+        <ui:VisualElement class="clock-header">
+            <ui:Label text="Clock" class="widget-title" />
+            <ui:Button name="options-button"
+                       text="···"
+                       class="options-button" />
+        </ui:VisualElement>
+
+        <ui:VisualElement class="clock-content">
+            <ui:Label text="Thursday, October 15"
+                      name="date-label"
+                      class="date-label" />
+
+            <ui:VisualElement class="time-row">
+                <ui:Label text="10:08"
+                          name="time-label"
+                          class="time-label" />
+                <ui:Label text="AM"
+                          name="period-label"
+                          class="period-label" />
+            </ui:VisualElement>
+
+            <ui:Label text="Local time"
+                      class="location-label" />
+        </ui:VisualElement>
+
+        <ui:VisualElement class="divider" />
+
+        <ui:VisualElement class="clock-footer">
+            <ui:VisualElement class="status-dot" />
+            <ui:Label text="No upcoming alarms"
+                      class="alarm-label" />
+            <ui:Button name="add-alarm-button"
+                       text="+"
+                       class="add-button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

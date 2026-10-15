@@ -7,6 +7,10 @@ namespace Atlas.SOS.FileSystem
         Image,
         PDF,
         Archive,
-        Shortcut
+        Shortcut,
+        Whiteboard,
+        Video,
+        Audio
+
     }
 }

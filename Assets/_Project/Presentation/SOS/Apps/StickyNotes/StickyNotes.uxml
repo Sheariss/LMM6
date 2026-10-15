@@ -1,0 +1,151 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="StickyNotes.uss" />
+
+    <ui:VisualElement class="app-root">
+        <ui:VisualElement class="notes-app">
+
+            <!-- Window title bar -->
+            <ui:VisualElement class="titlebar">
+                <ui:VisualElement class="app-icon" />
+                <ui:Label text="Sticky Notes" class="window-title" />
+
+                <ui:VisualElement class="spacer" />
+
+                <ui:Button name="minimize-button" text="—"
+                           class="window-button" />
+                <ui:Button name="maximize-button" text="□"
+                           class="window-button" />
+                <ui:Button name="close-button" text="×"
+                           class="window-button close-button" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="app-content">
+
+                <!-- Notes list -->
+                <ui:VisualElement class="sidebar">
+                    <ui:VisualElement class="sidebar-heading">
+                        <ui:Label text="Notes" class="heading" />
+                        <ui:VisualElement class="spacer" />
+                        <ui:Button name="new-note-button" text="+"
+                                   class="icon-button" />
+                        <ui:Button name="settings-button" text="⚙"
+                                   class="icon-button" />
+                    </ui:VisualElement>
+
+                    <ui:TextField name="search-field"
+                                  class="search-field" />
+                    <ui:Label text="Search your notes"
+                              name="search-placeholder"
+                              class="search-hint" />
+
+                    <ui:ScrollView name="notes-list"
+                                   mode="Vertical"
+                                   class="notes-list">
+
+                        <ui:Button name="note-1"
+                                   class="note-card yellow selected">
+                            <ui:VisualElement class="card-header">
+                                <ui:Label text="Today"
+                                          class="card-title" />
+                                <ui:VisualElement class="spacer" />
+                                <ui:Label text="10:42 AM"
+                                          class="card-time" />
+                            </ui:VisualElement>
+                            <ui:Label text="Little things to remember"
+                                      class="card-subtitle" />
+                            <ui:Label text="Review the new designs&#10;Finish the Unity UI&#10;Take a proper lunch break"
+                                      class="card-preview" />
+                        </ui:Button>
+
+                        <ui:Button name="note-2"
+                                   class="note-card pink">
+                            <ui:VisualElement class="card-header">
+                                <ui:Label text="Ideas"
+                                          class="card-title" />
+                                <ui:VisualElement class="spacer" />
+                                <ui:Label text="Yesterday"
+                                          class="card-time" />
+                            </ui:VisualElement>
+                            <ui:Label text="A small space for big thoughts."
+                                      class="card-preview" />
+                        </ui:Button>
+
+                        <ui:Button name="note-3"
+                                   class="note-card green">
+                            <ui:VisualElement class="card-header">
+                                <ui:Label text="Shopping list"
+                                          class="card-title" />
+                                <ui:VisualElement class="spacer" />
+                                <ui:Label text="Tuesday"
+                                          class="card-time" />
+                            </ui:VisualElement>
+                            <ui:Label text="Coffee&#10;Avocados&#10;Something sweet"
+                                      class="card-preview" />
+                        </ui:Button>
+
+                        <ui:Button name="note-4"
+                                   class="note-card blue">
+                            <ui:VisualElement class="card-header">
+                                <ui:Label text="Project notes"
+                                          class="card-title" />
+                                <ui:VisualElement class="spacer" />
+                                <ui:Label text="Monday"
+                                          class="card-time" />
+                            </ui:VisualElement>
+                            <ui:Label text="Keep it simple. Make it feel good to use."
+                                      class="card-preview" />
+                        </ui:Button>
+
+                    </ui:ScrollView>
+
+                    <ui:Label name="notes-count"
+                              text="4 notes"
+                              class="sidebar-footer" />
+                </ui:VisualElement>
+
+                <!-- Selected note -->
+                <ui:VisualElement class="editor-pane">
+                    <ui:VisualElement class="editor-note yellow">
+
+                        <ui:VisualElement class="note-toolbar">
+                            <ui:Label text="Today"
+                                      class="note-caption" />
+                            <ui:VisualElement class="spacer" />
+                            <ui:Button name="pop-out-button" text="↗"
+                                       class="icon-button" />
+                            <ui:Button name="note-menu-button" text="···"
+                                       class="icon-button" />
+                        </ui:VisualElement>
+
+                        <ui:TextField
+                            name="note-editor"
+                            multiline="true"
+                            value="Little things to remember&#10;&#10;Review the new designs&#10;Finish the Unity UI&#10;Take a proper lunch break&#10;&#10;One thing at a time."
+                            class="note-input large-input" />
+
+                        <ui:VisualElement class="format-toolbar">
+                            <ui:Button name="bold-button" text="B"
+                                       class="format-button bold-button" />
+                            <ui:Button name="italic-button" text="I"
+                                       class="format-button italic-button" />
+                            <ui:Button name="underline-button" text="U"
+                                       class="format-button" />
+                            <ui:Button name="strike-button" text="S"
+                                       class="format-button" />
+                            <ui:VisualElement class="toolbar-divider" />
+                            <ui:Button name="list-button" text="≡"
+                                       class="format-button" />
+                            <ui:Button name="image-button" text="+"
+                                       class="format-button" />
+                            <ui:VisualElement class="spacer" />
+                            <ui:Label text="Edited just now"
+                                      class="editor-status" />
+                        </ui:VisualElement>
+
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

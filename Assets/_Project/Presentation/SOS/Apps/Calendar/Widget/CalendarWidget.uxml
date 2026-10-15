@@ -1,0 +1,107 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="CalendarWidget.uss"/>
+
+    <ui:VisualElement name="CalendarWidget" class="calendar-widget">
+        <ui:VisualElement class="calendar-header">
+            <ui:Label name="CurrentDateLabel"
+                      text="Thursday, October 15"
+                      class="calendar-date"/>
+            <ui:Button name="CollapseCalendarButton"
+                       text="⌄"
+                       tooltip="Collapse calendar"
+                       class="calendar-icon-button"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="CalendarBody" class="calendar-body">
+            <ui:VisualElement class="calendar-month-header">
+                <ui:Label name="MonthLabel"
+                          text="October 2026"
+                          class="calendar-month"/>
+                <ui:VisualElement class="calendar-navigation">
+                    <ui:Button name="PreviousMonthButton"
+                               text="⌃"
+                               tooltip="Previous month"
+                               class="calendar-icon-button"/>
+                    <ui:Button name="NextMonthButton"
+                               text="⌄"
+                               tooltip="Next month"
+                               class="calendar-icon-button"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="calendar-weekdays">
+                <ui:Label text="Su" class="calendar-weekday"/>
+                <ui:Label text="Mo" class="calendar-weekday"/>
+                <ui:Label text="Tu" class="calendar-weekday"/>
+                <ui:Label text="We" class="calendar-weekday"/>
+                <ui:Label text="Th" class="calendar-weekday"/>
+                <ui:Label text="Fr" class="calendar-weekday"/>
+                <ui:Label text="Sa" class="calendar-weekday"/>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="DaysGrid" class="calendar-grid">
+                <ui:VisualElement class="calendar-week">
+                    <ui:Button text="27" class="calendar-day calendar-day-outside"/>
+                    <ui:Button text="28" class="calendar-day calendar-day-outside"/>
+                    <ui:Button text="29" class="calendar-day calendar-day-outside"/>
+                    <ui:Button text="30" class="calendar-day calendar-day-outside"/>
+                    <ui:Button text="1" class="calendar-day"/>
+                    <ui:Button text="2" class="calendar-day"/>
+                    <ui:Button text="3" class="calendar-day"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="calendar-week">
+                    <ui:Button text="4" class="calendar-day"/>
+                    <ui:Button text="5" class="calendar-day"/>
+                    <ui:Button text="6" class="calendar-day"/>
+                    <ui:Button text="7" class="calendar-day"/>
+                    <ui:Button text="8" class="calendar-day"/>
+                    <ui:Button text="9" class="calendar-day"/>
+                    <ui:Button text="10" class="calendar-day"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="calendar-week">
+                    <ui:Button text="11" class="calendar-day"/>
+                    <ui:Button text="12" class="calendar-day"/>
+                    <ui:Button text="13" class="calendar-day"/>
+                    <ui:Button text="14" class="calendar-day"/>
+                    <ui:Button name="TodayButton" text="15"
+                               class="calendar-day calendar-day-today"/>
+                    <ui:Button text="16" class="calendar-day"/>
+                    <ui:Button text="17" class="calendar-day"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="calendar-week">
+                    <ui:Button text="18" class="calendar-day"/>
+                    <ui:Button text="19" class="calendar-day"/>
+                    <ui:Button text="20" class="calendar-day"/>
+                    <ui:Button text="21" class="calendar-day"/>
+                    <ui:Button text="22" class="calendar-day"/>
+                    <ui:Button text="23" class="calendar-day"/>
+                    <ui:Button text="24" class="calendar-day"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="calendar-week">
+                    <ui:Button text="25" class="calendar-day"/>
+                    <ui:Button text="26" class="calendar-day"/>
+                    <ui:Button text="27" class="calendar-day"/>
+                    <ui:Button text="28" class="calendar-day"/>
+                    <ui:Button text="29" class="calendar-day"/>
+                    <ui:Button text="30" class="calendar-day"/>
+                    <ui:Button text="31" class="calendar-day"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement class="calendar-focus-footer">
+            <ui:VisualElement class="calendar-focus-duration">
+                <ui:Button name="DecreaseFocusButton" text="−"
+                           tooltip="Decrease focus duration"
+                           class="calendar-icon-button calendar-duration-button"/>
+                <ui:Label name="FocusDurationLabel" text="30 min"
+                          class="calendar-duration-label"/>
+                <ui:Button name="IncreaseFocusButton" text="+"
+                           tooltip="Increase focus duration"
+                           class="calendar-icon-button calendar-duration-button"/>
+            </ui:VisualElement>
+            <ui:Button name="StartFocusButton" text="▷  Focus"
+                       class="calendar-focus-button"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

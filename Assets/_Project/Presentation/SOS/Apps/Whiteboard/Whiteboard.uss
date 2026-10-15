@@ -1,26 +1,105 @@
-/* Window */
+/* =========================================================
+   WINDOW SHELL
+   Shared Window.uss supplies the standard window styles.
+   ========================================================= */
 
 .wb-window {
-    position: absolute;
     flex-direction: column;
     min-width: 800px;
     min-height: 680px;
-    background-color: var(--window-bg);
-    border-width: var(--border-thin);
-    border-color: var(--window-border);
-    border-radius: var(--radius-md);
     overflow: hidden;
+    background-color: var(--window-bg);
     color: var(--text-primary);
     font-size: var(--text-sm);
 }
 
-.wb-window Button {
+.wb-window > .header {
+    height: 42px;
+    min-height: 42px;
+    flex-shrink: 0;
+    background-color: var(--window-header);
+}
+
+.wb-window > .header > .header-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    margin-left: 12px;
+    margin-right: 10px;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0);
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.wb-window .window-controls {
+    height: 42px;
+    flex-shrink: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    border-width: 0;
+}
+
+.wb-window .wc-button {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 6px;
+    border-width: 0;
+    border-radius: 0;
+}
+
+.wb-window .wc-btn-icon {
+    width: 25px;
+    height: 25px;
+    flex-shrink: 0;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.wb-window .window-maximize-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.wb-window .window-close-button:hover {
+    background-color: var(--error-button-hover);
+}
+
+.wb-window .window-close-button:active {
+    background-color: var(--error-button-pressed);
+}
+
+.wb-window > .wb-window-content {
+    width: 100%;
+    height: auto;
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.wb-root {
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+}
+
+/* =========================================================
+   APP CONTROLS
+   Scoped to app content so window controls stay independent.
+   ========================================================= */
+
+.wb-root Button {
     margin: 0;
     padding: 0;
     flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    border-width: 1px;
+    border-width: var(--border-thin);
     border-color: rgba(0, 0, 0, 0);
     border-radius: var(--radius-md);
     background-color: rgba(0, 0, 0, 0);
@@ -28,23 +107,23 @@
     -unity-text-align: middle-center;
 }
 
-.wb-window Button:hover {
+.wb-root Button:hover {
     background-color: var(--surface-hover);
 }
 
-.wb-window Button:active {
+.wb-root Button:active {
     background-color: var(--surface-active);
 }
 
-.wb-window Button:focus {
+.wb-root Button:focus {
     border-color: var(--border-focus);
 }
 
-.wb-window Button:disabled {
+.wb-root Button:disabled {
     opacity: var(--opacity-disabled);
 }
 
-.wb-window Label {
+.wb-root Label {
     margin: 0;
     padding: 0;
 }
@@ -53,69 +132,21 @@
     flex-grow: 1;
 }
 
-.wb-window-header {
-    height: 36px;
-    min-height: 36px;
-    flex-shrink: 0;
-    flex-direction: row;
-    align-items: center;
+.wb-root .wb-icon-button {
+    width: var(--control-md);
+    height: var(--control-md);
+}
+
+.wb-root .wb-text-button {
+    height: var(--control-md);
     padding-left: var(--space-3);
-    background-color: var(--window-header);
-    border-bottom-width: var(--border-thin);
-    border-bottom-color: var(--window-border);
-}
-
-.wb-window-header > .wb-app-icon {
-    width: var(--icon-sm);
-    height: var(--icon-sm);
-    margin-right: var(--space-2);
-}
-
-.wb-window-title {
-    flex-grow: 1;
-    color: var(--text-muted);
+    padding-right: var(--space-3);
     font-size: var(--text-xs);
 }
 
-.wb-window-controls {
-    height: 100%;
-    flex-direction: row;
-}
-
-.wb-window .wb-window-button {
-    width: 42px;
-    height: 35px;
-    border-radius: 0;
-}
-
-.wb-window .wb-window-close:hover {
-    background-color: var(--error-button-hover);
-}
-
-.wb-window .wb-window-close:active {
-    background-color: var(--error-button-pressed);
-}
-
-#ExitFullscreenIcon {
-    display: none;
-}
-
-.window-button--restore #FullscreenIcon {
-    display: none;
-}
-
-.window-button--restore #ExitFullscreenIcon {
-    display: flex;
-}
-
-.wb-window-content,
-.wb-root {
-    flex-grow: 1;
-    min-width: 0;
-    min-height: 0;
-}
-
-/* Document header */
+/* =========================================================
+   DOCUMENT HEADER
+   ========================================================= */
 
 .wb-header {
     height: 88px;
@@ -136,9 +167,6 @@
     min-width: 200px;
     max-width: 520px;
 }
-
-/* Explicitly reset both the field and its internal input.
-   This gives the title enough vertical room for ascenders/descenders. */
 
 .wb-board-title {
     height: var(--control-md);
@@ -187,39 +215,41 @@
     flex-direction: row;
 }
 
-.wb-window .wb-menu-button {
+.wb-root .wb-menu-button {
     height: var(--control-xs);
     padding-left: var(--space-2);
     padding-right: var(--space-2);
+    border-radius: var(--radius-sm);
     color: var(--text-muted);
     font-size: var(--text-xs);
-    border-radius: var(--radius-sm);
 }
 
-.wb-save-status {
+.wb-root .wb-save-status {
     margin-left: var(--space-4);
     margin-right: var(--space-3);
     color: var(--text-muted);
     font-size: var(--text-xs);
 }
 
-.wb-window .wb-text-button {
-    height: var(--control-md);
-    padding-left: var(--space-3);
-    padding-right: var(--space-3);
-    font-size: var(--text-xs);
-}
-
-.wb-window .wb-export-button {
+.wb-root .wb-export-button {
+    min-width: 88px;
     margin-left: var(--space-2);
-    border-color: var(--border-primary);
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
+    height: 40px;
+    border-radius: 20px;
+    border-color: var(--accent-primary);
+    color: var(--accent-hover);
 }
 
-.wb-window .wb-export-button:hover {
-    border-color: var(--border-focus);
+.wb-root .wb-export-button:hover {
+    background-color: var(--atlas-ui-950);
+    border-color: var(--accent-hover);
 }
 
-/* Workspace */
+/* =========================================================
+   CANVAS
+   ========================================================= */
 
 .wb-workspace {
     flex-grow: 1;
@@ -249,16 +279,15 @@
     transform-origin: 0% 0%;
 }
 
-/* Tool rail */
+/* =========================================================
+   TOOL RAIL
+   ========================================================= */
 
-.wb-sidebar {
+.wb-tool-rail {
     position: absolute;
     left: var(--space-3);
     top: var(--space-4);
     width: 56px;
-}
-
-.wb-tool-group {
     padding: var(--space-1);
     background-color: var(--surface-primary);
     border-width: var(--border-thin);
@@ -266,7 +295,7 @@
     border-radius: var(--radius-lg);
 }
 
-.wb-window .wb-tool {
+.wb-root .wb-tool {
     width: 46px;
     height: 42px;
     min-height: 42px;
@@ -274,18 +303,14 @@
     margin-bottom: 1px;
 }
 
-.wb-window .wb-tool--selected,
-.wb-window .wb-tool--selected:hover {
+.wb-root .wb-tool--selected,
+.wb-root .wb-tool--selected:hover {
     background-color: var(--atlas-ui-950);
     border-color: var(--accent-primary);
 }
 
 .wb-tool--selected > .wb-icon {
     -unity-background-image-tint-color: var(--accent-hover);
-}
-
-.wb-history {
-    margin-top: var(--space-2);
 }
 
 .wb-horizontal-divider {
@@ -301,6 +326,8 @@
     display: none;
 }
 
+/* Apply this state class to NavigationToolButton for hand mode. */
+
 .wb-navigation--pan #CursorToolIcon {
     display: none;
 }
@@ -309,7 +336,9 @@
     display: flex;
 }
 
-/* Floating controls */
+/* =========================================================
+   FLOATING CONTROLS
+   ========================================================= */
 
 .wb-floating-row {
     position: absolute;
@@ -322,6 +351,11 @@
     border-radius: var(--radius-lg);
 }
 
+.wb-history-toolbar {
+    left: 80px;
+    top: var(--space-4);
+}
+
 .wb-bottom-left {
     left: var(--space-3);
     bottom: var(--space-3);
@@ -332,12 +366,7 @@
     bottom: var(--space-3);
 }
 
-.wb-window .wb-icon-button {
-    width: var(--control-md);
-    height: var(--control-md);
-}
-
-.wb-window .wb-zoom-value {
+.wb-root .wb-zoom-value {
     width: 60px;
     height: var(--control-md);
     font-size: var(--text-xs);
@@ -346,12 +375,13 @@
 .wb-vertical-divider {
     width: 1px;
     height: var(--icon-md);
+    flex-shrink: 0;
     margin-left: var(--space-1);
     margin-right: var(--space-1);
     background-color: var(--border-primary);
 }
 
-.wb-tool-hint {
+.wb-root .wb-tool-hint {
     position: absolute;
     left: 180px;
     right: 240px;
@@ -362,27 +392,129 @@
 }
 
 .wb-context-toolbar {
-    left: 84px;
-    top: var(--space-4);
+    left: 80px;
+    top: 76px;
 }
 
-.wb-properties {
+/* =========================================================
+   BOARD SETTINGS
+   ========================================================= */
+
+.wb-settings-panel {
     position: absolute;
-    right: var(--space-3);
+    right: var(--space-4);
     top: var(--space-4);
-    width: 240px;
-    padding: var(--space-4);
+    width: 248px;
     background-color: var(--surface-primary);
     border-width: var(--border-thin);
     border-color: var(--border-primary);
     border-radius: var(--radius-lg);
+    overflow: hidden;
 }
 
-.wb-hidden {
-    display: none;
+.wb-settings-header {
+    height: 48px;
+    min-height: 48px;
+    flex-direction: row;
+    align-items: center;
+    padding-left: var(--space-4);
+    padding-right: var(--space-1);
+    border-bottom-width: var(--border-thin);
+    border-bottom-color: var(--border-primary);
 }
 
-/* Every icon is an Image using a background resource. */
+.wb-panel-title {
+    color: var(--text-primary);
+    font-size: var(--text-sm);
+    -unity-font-style: bold;
+}
+
+.wb-settings-body {
+    padding: var(--space-4);
+}
+
+.wb-root .wb-section-label {
+    margin-bottom: var(--space-3);
+    color: var(--text-muted);
+    font-size: var(--text-xs);
+}
+
+.wb-swatch-row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.wb-root .wb-swatch {
+    width: 30px;
+    height: 30px;
+    margin-right: var(--space-2);
+    border-width: var(--border-thin);
+    border-color: var(--border-secondary);
+    border-radius: var(--radius-full);
+}
+
+.wb-root .wb-swatch:hover {
+    border-color: var(--text-primary);
+}
+
+.wb-root .wb-swatch-dark,
+.wb-root .wb-swatch-dark:hover {
+    background-color: var(--bg-primary);
+}
+
+.wb-root .wb-swatch-slate,
+.wb-root .wb-swatch-slate:hover {
+    background-color: var(--bg-tertiary);
+}
+
+.wb-root .wb-swatch-blue,
+.wb-root .wb-swatch-blue:hover {
+    background-color: var(--atlas-ui-950);
+}
+
+.wb-root .wb-swatch-green,
+.wb-root .wb-swatch-green:hover {
+    background-color: var(--success-bg-subtle);
+}
+
+.wb-root .wb-swatch-selected {
+    border-width: var(--border-medium);
+    border-color: var(--accent-hover);
+}
+
+.wb-root .wb-swatch-custom {
+    margin-right: 0;
+}
+
+.wb-swatch-custom > .wb-icon {
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+}
+
+.wb-settings-divider {
+    height: 1px;
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-4);
+    background-color: var(--border-primary);
+}
+
+.wb-setting {
+    margin: 0;
+    margin-bottom: var(--space-3);
+    color: var(--text-secondary);
+    font-size: var(--text-xs);
+}
+
+.wb-setting > .unity-toggle__label {
+    min-width: 0;
+    flex-grow: 1;
+    color: var(--text-secondary);
+}
+
+/* =========================================================
+   ICONS
+   Resource paths are relative to a Resources folder.
+   ========================================================= */
 
 .wb-icon {
     width: var(--icon-lg);
@@ -391,8 +523,6 @@
     -unity-background-scale-mode: scale-to-fit;
     -unity-background-image-tint-color: var(--text-primary);
 }
-
-/* Existing resources */
 
 .wb-icon-minimize {
     background-image: resource("Icons/UI/Minimize/remove_32dp_");
@@ -408,10 +538,6 @@
 
 .wb-icon-close {
     background-image: resource("Icons/UI/Close/close_32dp");
-}
-
-.wb-icon-more {
-    background-image: resource("Icons/UI/More-Horiz-Menu/more_horiz_32dp");
 }
 
 .wb-icon-undo {
@@ -434,15 +560,52 @@
     background-image: resource("Icons/Arrows 1/Open-in-Full/open_in_full_32dp");
 }
 
-/* Add resource links here as the board icons become available. */
+/* Add your resource links to these classes. */
 
-.wb-app-icon {}
-.wb-icon-cursor {}
-.wb-icon-hand {}
-.wb-icon-note {}
-.wb-icon-text {}
-.wb-icon-shapes {}
-.wb-icon-draw {}
+.wb-app-icon {
+    background-image: resource("AppIcons/Whiteboard/icons8-whiteboard-48")
+}
+
+.wb-icon-cursor {
+    background-image: resource("Icons/Apps/Whiteboard/arrow_selector_tool_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40");
+}
+
+.wb-icon-hand {
+     background-image: resource("Icons/Apps/Whiteboard/pan_tool_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40");
+}
+
+.wb-icon-note {
+     background-image: resource("Icons/Apps/Whiteboard/sticky_note_2_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40");
+}
+
+.wb-icon-text {
+    background-image: resource("Icons/Apps/Whiteboard/title_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40");
+}
+
+.wb-icon-shapes {
+    background-image: resource("Icons/Apps/Whiteboard/shapes_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40");
+}
+
+.wb-icon-draw {
+    background-image: resource("Icons/Apps/Whiteboard/stylus_note_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40");
+}
+
 .wb-icon-frame {}
-.wb-icon-sticker {}
-.wb-icon-grid {}
+
+.wb-icon-sticker {
+    background-image: resource("Icons/Apps/Whiteboard/sticker_add_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40");
+}
+
+.wb-icon-settings {}
+
+.wb-icon-help {
+    background-image: resource("Icons/Apps/Whiteboard/question_mark_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40");
+}
+
+/* =========================================================
+   VISIBILITY
+   ========================================================= */
+
+.wb-hidden {
+    display: none;
+}

@@ -1,0 +1,283 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="TaskManager.uss" />
+
+    <ui:VisualElement class="task-manager">
+        <!-- Window header -->
+        <ui:VisualElement class="titlebar">
+            <ui:VisualElement class="app-mark">
+                <ui:VisualElement class="mark-bar mark-bar-small" />
+                <ui:VisualElement class="mark-bar mark-bar-tall" />
+                <ui:VisualElement class="mark-bar mark-bar-medium" />
+            </ui:VisualElement>
+
+            <ui:Label text="Task Manager" class="window-title" />
+            <ui:VisualElement class="spacer" />
+            <ui:Label text="SYSTEM MONITOR" class="titlebar-caption" />
+        </ui:VisualElement>
+
+        <ui:VisualElement class="workspace">
+            <!-- Navigation -->
+            <ui:VisualElement class="sidebar">
+                <ui:Label text="WORKSPACE" class="section-caption" />
+
+                <ui:Button name="processes-nav" class="nav-item nav-selected">
+                    <ui:Label text="PR" class="nav-icon" />
+                    <ui:Label text="Processes" class="nav-label" />
+                    <ui:Label text="8" class="nav-count" />
+                </ui:Button>
+
+                <ui:Button name="performance-nav" class="nav-item">
+                    <ui:Label text="PF" class="nav-icon" />
+                    <ui:Label text="Performance" class="nav-label" />
+                </ui:Button>
+
+                <ui:Button name="history-nav" class="nav-item">
+                    <ui:Label text="AH" class="nav-icon" />
+                    <ui:Label text="App history" class="nav-label" />
+                </ui:Button>
+
+                <ui:Button name="startup-nav" class="nav-item">
+                    <ui:Label text="ST" class="nav-icon" />
+                    <ui:Label text="Startup apps" class="nav-label" />
+                </ui:Button>
+
+                <ui:Button name="users-nav" class="nav-item">
+                    <ui:Label text="US" class="nav-icon" />
+                    <ui:Label text="Users" class="nav-label" />
+                </ui:Button>
+
+                <ui:Button name="details-nav" class="nav-item">
+                    <ui:Label text="DT" class="nav-icon" />
+                    <ui:Label text="Details" class="nav-label" />
+                </ui:Button>
+
+                <ui:Button name="services-nav" class="nav-item">
+                    <ui:Label text="SV" class="nav-icon" />
+                    <ui:Label text="Services" class="nav-label" />
+                </ui:Button>
+
+                <ui:VisualElement class="spacer" />
+
+                <ui:VisualElement class="sidebar-status">
+                    <ui:VisualElement class="status-dot" />
+                    <ui:Label text="System running normally" />
+                </ui:VisualElement>
+
+                <ui:Button name="settings-button" class="nav-item">
+                    <ui:Label text="SE" class="nav-icon" />
+                    <ui:Label text="Settings" class="nav-label" />
+                </ui:Button>
+            </ui:VisualElement>
+
+            <!-- Main content -->
+            <ui:VisualElement class="main">
+                <ui:VisualElement class="page-header">
+                    <ui:VisualElement>
+                        <ui:Label text="Processes" class="page-title" />
+                        <ui:Label
+                            text="A little clarity on everything running."
+                            class="page-subtitle" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="spacer" />
+                    <ui:Button
+                        name="run-task-button"
+                        text="+  Run new task"
+                        class="button button-primary" />
+                </ui:VisualElement>
+
+                <!-- Summary cards -->
+                <ui:VisualElement class="metrics">
+                    <ui:VisualElement class="metric-card">
+                        <ui:Label text="CPU" class="metric-label" />
+                        <ui:VisualElement class="metric-value-row">
+                            <ui:Label name="cpu-value" text="12%" class="metric-value" />
+                            <ui:Label text="Utilization" class="metric-description" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="meter-track">
+                            <ui:VisualElement class="meter-fill cpu-fill" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="metric-card">
+                        <ui:Label text="MEMORY" class="metric-label" />
+                        <ui:VisualElement class="metric-value-row">
+                            <ui:Label name="memory-value" text="48%" class="metric-value" />
+                            <ui:Label text="7.7 / 16 GB" class="metric-description" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="meter-track">
+                            <ui:VisualElement class="meter-fill memory-fill" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="metric-card">
+                        <ui:Label text="DISK" class="metric-label" />
+                        <ui:VisualElement class="metric-value-row">
+                            <ui:Label name="disk-value" text="2%" class="metric-value" />
+                            <ui:Label text="Active time" class="metric-description" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="meter-track">
+                            <ui:VisualElement class="meter-fill disk-fill" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="metric-card metric-card-last">
+                        <ui:Label text="NETWORK" class="metric-label" />
+                        <ui:VisualElement class="metric-value-row">
+                            <ui:Label name="network-value" text="0.1" class="metric-value" />
+                            <ui:Label text="Mbps" class="metric-description" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="meter-track">
+                            <ui:VisualElement class="meter-fill network-fill" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <!-- Process list -->
+                <ui:VisualElement class="process-panel">
+                    <ui:VisualElement class="toolbar">
+                        <ui:TextField
+                            name="process-search"
+                            tooltip="Search by process name"
+                            class="search-field" />
+
+                        <ui:Label text="Filter processes" class="search-hint" />
+                        <ui:VisualElement class="spacer" />
+
+                        <ui:Button
+                            name="efficiency-button"
+                            text="Efficiency mode"
+                            class="button button-secondary" />
+
+                        <ui:Button
+                            name="end-task-button"
+                            text="End task"
+                            class="button button-secondary end-task-button" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="table-header">
+                        <ui:Label text="Name" class="cell name-cell" />
+                        <ui:Label text="Status" class="cell status-cell" />
+                        <ui:Label text="CPU" class="cell number-cell" />
+                        <ui:Label text="Memory" class="cell number-cell" />
+                        <ui:Label text="Disk" class="cell number-cell" />
+                        <ui:Label text="Network" class="cell number-cell" />
+                    </ui:VisualElement>
+
+                    <ui:ScrollView name="process-list" class="process-scroll">
+                        <ui:Label text="Apps (4)" class="group-label" />
+
+                        <ui:VisualElement name="chrome-row" class="process-row selected-row">
+                            <ui:VisualElement class="cell name-cell process-name">
+                                <ui:Label text="G" class="app-icon icon-google" />
+                                <ui:Label text="Google Chrome (12)" />
+                            </ui:VisualElement>
+                            <ui:VisualElement class="cell status-cell">
+                                <ui:Label text="Efficient" class="status-pill" />
+                            </ui:VisualElement>
+                            <ui:Label text="4.2%" class="cell number-cell" />
+                            <ui:Label text="1,248.6 MB" class="cell number-cell warm-cell" />
+                            <ui:Label text="0.1 MB/s" class="cell number-cell" />
+                            <ui:Label text="0.1 Mbps" class="cell number-cell" />
+                        </ui:VisualElement>
+
+                        <ui:VisualElement name="unity-row" class="process-row">
+                            <ui:VisualElement class="cell name-cell process-name">
+                                <ui:Label text="U" class="app-icon icon-unity" />
+                                <ui:Label text="Unity Editor" />
+                            </ui:VisualElement>
+                            <ui:VisualElement class="cell status-cell" />
+                            <ui:Label text="6.1%" class="cell number-cell warm-cell" />
+                            <ui:Label text="2,416.2 MB" class="cell number-cell warm-cell" />
+                            <ui:Label text="0.3 MB/s" class="cell number-cell" />
+                            <ui:Label text="0 Mbps" class="cell number-cell" />
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="process-row">
+                            <ui:VisualElement class="cell name-cell process-name">
+                                <ui:Label text="VS" class="app-icon icon-code" />
+                                <ui:Label text="Visual Studio Code" />
+                            </ui:VisualElement>
+                            <ui:VisualElement class="cell status-cell" />
+                            <ui:Label text="1.2%" class="cell number-cell" />
+                            <ui:Label text="482.4 MB" class="cell number-cell" />
+                            <ui:Label text="0 MB/s" class="cell number-cell" />
+                            <ui:Label text="0 Mbps" class="cell number-cell" />
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="process-row">
+                            <ui:VisualElement class="cell name-cell process-name">
+                                <ui:Label text="F" class="app-icon icon-folder" />
+                                <ui:Label text="Windows Explorer" />
+                            </ui:VisualElement>
+                            <ui:VisualElement class="cell status-cell" />
+                            <ui:Label text="0.3%" class="cell number-cell" />
+                            <ui:Label text="96.8 MB" class="cell number-cell" />
+                            <ui:Label text="0 MB/s" class="cell number-cell" />
+                            <ui:Label text="0 Mbps" class="cell number-cell" />
+                        </ui:VisualElement>
+
+                        <ui:Label text="Background processes (4)" class="group-label" />
+
+                        <ui:VisualElement class="process-row">
+                            <ui:VisualElement class="cell name-cell process-name">
+                                <ui:Label text="W" class="app-icon icon-system" />
+                                <ui:Label text="Desktop Window Manager" />
+                            </ui:VisualElement>
+                            <ui:VisualElement class="cell status-cell" />
+                            <ui:Label text="0.1%" class="cell number-cell" />
+                            <ui:Label text="84.2 MB" class="cell number-cell" />
+                            <ui:Label text="0 MB/s" class="cell number-cell" />
+                            <ui:Label text="0 Mbps" class="cell number-cell" />
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="process-row">
+                            <ui:VisualElement class="cell name-cell process-name">
+                                <ui:Label text="S" class="app-icon icon-system" />
+                                <ui:Label text="Service Host: Local System" />
+                            </ui:VisualElement>
+                            <ui:VisualElement class="cell status-cell" />
+                            <ui:Label text="0.1%" class="cell number-cell" />
+                            <ui:Label text="32.1 MB" class="cell number-cell" />
+                            <ui:Label text="0 MB/s" class="cell number-cell" />
+                            <ui:Label text="0 Mbps" class="cell number-cell" />
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="process-row">
+                            <ui:VisualElement class="cell name-cell process-name">
+                                <ui:Label text="D" class="app-icon icon-cloud" />
+                                <ui:Label text="Google Drive" />
+                            </ui:VisualElement>
+                            <ui:VisualElement class="cell status-cell">
+                                <ui:Label text="Efficient" class="status-pill" />
+                            </ui:VisualElement>
+                            <ui:Label text="0%" class="cell number-cell" />
+                            <ui:Label text="124.5 MB" class="cell number-cell" />
+                            <ui:Label text="0 MB/s" class="cell number-cell" />
+                            <ui:Label text="0 Mbps" class="cell number-cell" />
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="process-row">
+                            <ui:VisualElement class="cell name-cell process-name">
+                                <ui:Label text="A" class="app-icon icon-system" />
+                                <ui:Label text="Windows Audio" />
+                            </ui:VisualElement>
+                            <ui:VisualElement class="cell status-cell" />
+                            <ui:Label text="0%" class="cell number-cell" />
+                            <ui:Label text="18.7 MB" class="cell number-cell" />
+                            <ui:Label text="0 MB/s" class="cell number-cell" />
+                            <ui:Label text="0 Mbps" class="cell number-cell" />
+                        </ui:VisualElement>
+                    </ui:ScrollView>
+
+                    <ui:VisualElement class="panel-footer">
+                        <ui:VisualElement class="status-dot" />
+                        <ui:Label text="8 processes" />
+                        <ui:VisualElement class="spacer" />
+                        <ui:Label text="Update speed: Normal" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

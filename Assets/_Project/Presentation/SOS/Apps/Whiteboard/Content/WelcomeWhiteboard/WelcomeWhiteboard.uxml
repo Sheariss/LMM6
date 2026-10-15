@@ -1,0 +1,94 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         editor-extension-mode="False">
+    <Style src="WelcomeWhiteboard.uss"/>
+
+    <ui:VisualElement name="WelcomeBoardContent"
+                      picking-mode="Ignore"
+                      class="welcome-board">
+
+        <ui:VisualElement picking-mode="Ignore"
+                          class="welcome-intro">
+            <ui:Label text="YOUR FIRST WHITEBOARD"
+                      class="welcome-eyebrow"/>
+            <ui:Label text="A little space for big ideas."
+                      class="welcome-title"/>
+            <ui:Label text="Explore the tools, move things around, and make this board yours."
+                      class="welcome-subtitle"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="NavigationNote"
+                          class="welcome-note welcome-note--yellow">
+            <ui:Label text="01 / FIND YOUR WAY"
+                      class="welcome-kicker"/>
+            <ui:Label text="Move around"
+                      class="welcome-heading"/>
+            <ui:Label text="Hold Space and drag to pan. Use the zoom controls to take a closer look."
+                      class="welcome-body"/>
+            <ui:Label text="Lost your place? Try Fit to content."
+                      class="welcome-footnote"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="StickyNoteLesson"
+                          class="welcome-note welcome-note--pink">
+            <ui:Label text="02 / CAPTURE AN IDEA"
+                      class="welcome-kicker"/>
+            <ui:Label text="Start with a sticky"
+                      class="welcome-heading"/>
+            <ui:Label text="Choose the sticky-note tool, then click the board to add a thought."
+                      class="welcome-body"/>
+            <ui:Label text="Try it: write one thing you want to learn."
+                      class="welcome-footnote"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="TextAndShapesLesson"
+                          class="welcome-note welcome-note--blue">
+            <ui:Label text="03 / MAKE IT CLEAR"
+                      class="welcome-kicker"/>
+            <ui:Label text="Give ideas some shape"
+                      class="welcome-heading"/>
+            <ui:Label text="Add a heading with the text tool. Use shapes and lines to explain how ideas connect."
+                      class="welcome-body"/>
+            <ui:Label text="Try it: connect two related ideas."
+                      class="welcome-footnote"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="OrganizationLesson"
+                          class="welcome-note welcome-note--green">
+            <ui:Label text="04 / BRING IT TOGETHER"
+                      class="welcome-kicker"/>
+            <ui:Label text="Make room for a plan"
+                      class="welcome-heading"/>
+            <ui:Label text="Move related items together. Use frames to organize a topic, a task, or a whole project."
+                      class="welcome-body"/>
+            <ui:Label text="Made a mistake? Use Undo."
+                      class="welcome-footnote"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="PracticeArea"
+                          picking-mode="Ignore"
+                          class="welcome-practice">
+            <ui:Label text="YOUR TURN"
+                      class="welcome-eyebrow"/>
+            <ui:Label text="Leave your first mark."
+                      class="welcome-practice-title"/>
+            <ui:Label text="Add a note, draw something, or rearrange the sample items below."
+                      class="welcome-practice-description"/>
+
+            <ui:VisualElement name="PracticeSticky"
+                              class="welcome-sample-note">
+                <ui:Label text="One idea I want to explore..."
+                          class="welcome-sample-note-text"/>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="PracticeShape"
+                              class="welcome-sample-shape">
+                <ui:Label text="A small beginning"
+                          class="welcome-shape-text"/>
+            </ui:VisualElement>
+
+            <ui:Label name="PracticeText"
+                      text="Your next big idea starts here."
+                      class="welcome-sample-text"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

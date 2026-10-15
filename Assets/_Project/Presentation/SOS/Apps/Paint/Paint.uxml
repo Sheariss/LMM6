@@ -1,0 +1,421 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         editor-extension-mode="False">
+
+    <Style src="../../../Tokens/Global-Colors.uss"/>
+    <Style src="../../../Tokens/Global-Tokens.uss"/>
+    <Style src="../../Window/Window.uss"/>
+    <Style src="Paint.uss"/>
+
+    <ui:VisualElement name="WindowRoot" class="window paint-window">
+
+        <!-- TITLE BAR -->
+        <ui:VisualElement name="WindowHeader" class="paint-header">
+
+            <ui:VisualElement name="WindowIcon" class="paint-app-icon">
+                <ui:VisualElement class="paint-logo-dot paint-logo-blue"/>
+                <ui:VisualElement class="paint-logo-dot paint-logo-red"/>
+                <ui:VisualElement class="paint-logo-dot paint-logo-yellow"/>
+                <ui:VisualElement class="paint-logo-dot paint-logo-green"/>
+            </ui:VisualElement>
+
+            <ui:Label name="WindowTitle"
+                      text="Untitled — Paint"
+                      class="paint-title"/>
+
+            <ui:VisualElement name="WindowControls" class="paint-row">
+
+                <ui:Button name="WindowMinimizeButton"
+                           tooltip="Minimize"
+                           class="paint-button paint-window-button">
+                    <ui:Image name="MinimizeIcon"
+                              picking-mode="Ignore"
+                              class="paint-icon paint-icon-minimize"/>
+                </ui:Button>
+
+                <ui:Button name="WindowMaximizeButton"
+                           tooltip="Maximize or restore"
+                           class="paint-button paint-window-button">
+                    <ui:Image name="FullscreenIcon"
+                              picking-mode="Ignore"
+                              class="paint-icon paint-icon-maximize"/>
+                    <ui:Image name="ExitFullscreenIcon"
+                              picking-mode="Ignore"
+                              class="paint-icon paint-icon-restore"/>
+                </ui:Button>
+
+                <ui:Button name="WindowCloseButton"
+                           tooltip="Close"
+                           class="paint-button paint-window-button paint-close">
+                    <ui:Image name="CloseIcon"
+                              picking-mode="Ignore"
+                              class="paint-icon paint-icon-close"/>
+                </ui:Button>
+
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="WindowContent" class="paint-content">
+
+            <!-- MENUS / QUICK ACTIONS -->
+            <ui:VisualElement name="MenuBar" class="paint-menubar">
+
+                <ui:Button name="FileMenuButton"
+                           text="File"
+                           class="paint-button paint-menu-button"/>
+                <ui:Button name="EditMenuButton"
+                           text="Edit"
+                           class="paint-button paint-menu-button"/>
+                <ui:Button name="ViewMenuButton"
+                           text="View"
+                           class="paint-button paint-menu-button"/>
+
+                <ui:VisualElement class="paint-divider"/>
+
+                <ui:Button name="UndoButton"
+                           tooltip="Undo (Ctrl+Z)"
+                           class="paint-button paint-icon-button">
+                    <ui:Image picking-mode="Ignore"
+                              class="paint-icon paint-icon-undo"/>
+                </ui:Button>
+
+                <ui:Button name="RedoButton"
+                           tooltip="Redo (Ctrl+Y)"
+                           class="paint-button paint-icon-button">
+                    <ui:Image picking-mode="Ignore"
+                              class="paint-icon paint-icon-redo"/>
+                </ui:Button>
+
+                <ui:VisualElement class="paint-spacer"/>
+
+                <ui:Label name="SaveState"
+                          text="Not saved"
+                          class="paint-muted"/>
+
+                <ui:Button name="SaveButton"
+                           text="Save"
+                           tooltip="Save image (Ctrl+S)"
+                           class="paint-button paint-save-button"/>
+
+            </ui:VisualElement>
+
+            <!-- HORIZONTALLY SCROLLABLE RIBBON -->
+            <ui:ScrollView name="RibbonScroll"
+                           mode="Horizontal"
+                           horizontal-scroller-visibility="Auto"
+                           vertical-scroller-visibility="Hidden"
+                           class="paint-ribbon-scroll">
+
+                <ui:VisualElement name="Ribbon" class="paint-ribbon">
+
+                    <ui:VisualElement class="paint-ribbon-group">
+                        <ui:VisualElement class="paint-row paint-group-body">
+                            <ui:Button name="PasteButton"
+                                       text="Paste"
+                                       tooltip="Paste (Ctrl+V)"
+                                       class="paint-button paint-large-button"/>
+
+                            <ui:VisualElement>
+                                <ui:Button name="CutButton"
+                                           text="Cut"
+                                           class="paint-button paint-small-button"/>
+                                <ui:Button name="CopyButton"
+                                           text="Copy"
+                                           class="paint-button paint-small-button"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:Label text="Clipboard" class="paint-group-label"/>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="paint-ribbon-group">
+                        <ui:VisualElement class="paint-row paint-group-body">
+                            <ui:Button name="SelectButton"
+                                       text="Select"
+                                       tooltip="Rectangular selection"
+                                       class="paint-button paint-large-button"/>
+
+                            <ui:VisualElement>
+                                <ui:Button name="CropButton"
+                                           text="Crop"
+                                           class="paint-button paint-small-button"/>
+                                <ui:Button name="ResizeButton"
+                                           text="Resize"
+                                           class="paint-button paint-small-button"/>
+                            </ui:VisualElement>
+
+                            <ui:VisualElement>
+                                <ui:Button name="RotateButton"
+                                           text="Rotate"
+                                           class="paint-button paint-small-button"/>
+                                <ui:Button name="FlipButton"
+                                           text="Flip"
+                                           class="paint-button paint-small-button"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:Label text="Image" class="paint-group-label"/>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="paint-ribbon-group">
+                        <ui:VisualElement class="paint-group-body">
+                            <ui:VisualElement class="paint-row">
+                                <ui:Button name="PencilTool"
+                                           text="Pencil"
+                                           tooltip="Pencil"
+                                           class="paint-button paint-tool"/>
+                                <ui:Button name="FillTool"
+                                           text="Fill"
+                                           tooltip="Fill with color"
+                                           class="paint-button paint-tool"/>
+                                <ui:Button name="TextTool"
+                                           text="Text"
+                                           tooltip="Insert text"
+                                           class="paint-button paint-tool"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement class="paint-row">
+                                <ui:Button name="EraserTool"
+                                           text="Eraser"
+                                           tooltip="Eraser"
+                                           class="paint-button paint-tool"/>
+                                <ui:Button name="PickerTool"
+                                           text="Picker"
+                                           tooltip="Pick a color"
+                                           class="paint-button paint-tool"/>
+                                <ui:Button name="MagnifierTool"
+                                           text="Zoom"
+                                           tooltip="Magnifier"
+                                           class="paint-button paint-tool"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:Label text="Tools" class="paint-group-label"/>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="paint-ribbon-group">
+                        <ui:VisualElement class="paint-row paint-group-body">
+                            <ui:Button name="BrushTool"
+                                       tooltip="Brush"
+                                       class="paint-button paint-brush-button is-selected">
+                                <ui:Image picking-mode="Ignore"
+                                          class="paint-brush-icon"/>
+                                <ui:Label text="Brush"
+                                          picking-mode="Ignore"/>
+                            </ui:Button>
+
+                            <ui:VisualElement>
+                                <ui:Button name="BrushTypeButton"
+                                           text="Type"
+                                           tooltip="Choose brush type"
+                                           class="paint-button paint-small-button"/>
+                                <ui:Button name="BrushSizeButton"
+                                           text="4 px"
+                                           tooltip="Choose brush size"
+                                           class="paint-button paint-small-button"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:Label text="Brushes" class="paint-group-label"/>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="paint-ribbon-group">
+                        <ui:VisualElement class="paint-group-body">
+                            <ui:VisualElement class="paint-row">
+                                <ui:Button name="LineTool"
+                                           tooltip="Line"
+                                           class="paint-button paint-shape-button">
+                                    <ui:VisualElement picking-mode="Ignore"
+                                                      class="paint-shape-line"/>
+                                </ui:Button>
+                                <ui:Button name="RectangleTool"
+                                           tooltip="Rectangle"
+                                           class="paint-button paint-shape-button">
+                                    <ui:VisualElement picking-mode="Ignore"
+                                                      class="paint-shape-rectangle"/>
+                                </ui:Button>
+                                <ui:Button name="EllipseTool"
+                                           tooltip="Ellipse"
+                                           class="paint-button paint-shape-button">
+                                    <ui:VisualElement picking-mode="Ignore"
+                                                      class="paint-shape-ellipse"/>
+                                </ui:Button>
+                            </ui:VisualElement>
+                            <ui:VisualElement class="paint-row">
+                                <ui:Button name="ShapeOutlineButton"
+                                           text="Outline"
+                                           class="paint-button paint-small-button"/>
+                                <ui:Button name="ShapeFillButton"
+                                           text="Fill"
+                                           class="paint-button paint-small-button"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:Label text="Shapes" class="paint-group-label"/>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="paint-ribbon-group paint-colors-group">
+                        <ui:VisualElement class="paint-row paint-group-body">
+
+                            <ui:Button name="PrimaryColorButton"
+                                       tooltip="Primary color"
+                                       class="paint-button paint-current-color is-selected">
+                                <ui:VisualElement name="PrimaryColorPreview"
+                                                  picking-mode="Ignore"
+                                                  class="paint-color-preview paint-black"/>
+                                <ui:Label text="Color 1"
+                                          picking-mode="Ignore"
+                                          class="paint-color-caption"/>
+                            </ui:Button>
+
+                            <ui:Button name="SecondaryColorButton"
+                                       tooltip="Secondary color"
+                                       class="paint-button paint-current-color">
+                                <ui:VisualElement name="SecondaryColorPreview"
+                                                  picking-mode="Ignore"
+                                                  class="paint-color-preview paint-white"/>
+                                <ui:Label text="Color 2"
+                                          picking-mode="Ignore"
+                                          class="paint-color-caption"/>
+                            </ui:Button>
+
+                            <ui:VisualElement name="ColorPalette" class="paint-palette">
+                                <ui:VisualElement class="paint-row">
+                                    <ui:Button name="ColorBlack" tooltip="#202124" class="paint-button paint-swatch paint-black"/>
+                                    <ui:Button name="ColorGray" tooltip="#80868B" class="paint-button paint-swatch paint-gray"/>
+                                    <ui:Button name="ColorRed" tooltip="#EA4335" class="paint-button paint-swatch paint-red"/>
+                                    <ui:Button name="ColorOrange" tooltip="#FA7B17" class="paint-button paint-swatch paint-orange"/>
+                                    <ui:Button name="ColorYellow" tooltip="#FBBC04" class="paint-button paint-swatch paint-yellow"/>
+                                    <ui:Button name="ColorGreen" tooltip="#34A853" class="paint-button paint-swatch paint-green"/>
+                                    <ui:Button name="ColorTeal" tooltip="#12B5CB" class="paint-button paint-swatch paint-teal"/>
+                                    <ui:Button name="ColorBlue" tooltip="#4285F4" class="paint-button paint-swatch paint-blue"/>
+                                    <ui:Button name="ColorPurple" tooltip="#A142F4" class="paint-button paint-swatch paint-purple"/>
+                                </ui:VisualElement>
+
+                                <ui:VisualElement class="paint-row">
+                                    <ui:Button name="ColorWhite" tooltip="#FFFFFF" class="paint-button paint-swatch paint-white"/>
+                                    <ui:Button name="ColorLightGray" tooltip="#DADCE0" class="paint-button paint-swatch paint-light-gray"/>
+                                    <ui:Button name="ColorPink" tooltip="#FAD2CF" class="paint-button paint-swatch paint-pink"/>
+                                    <ui:Button name="ColorPeach" tooltip="#FEDFC8" class="paint-button paint-swatch paint-peach"/>
+                                    <ui:Button name="ColorCream" tooltip="#FEEFC3" class="paint-button paint-swatch paint-cream"/>
+                                    <ui:Button name="ColorMint" tooltip="#CEEAD6" class="paint-button paint-swatch paint-mint"/>
+                                    <ui:Button name="ColorAqua" tooltip="#CBF0F8" class="paint-button paint-swatch paint-aqua"/>
+                                    <ui:Button name="ColorSky" tooltip="#D2E3FC" class="paint-button paint-swatch paint-sky"/>
+                                    <ui:Button name="ColorLavender" tooltip="#E9D2FD" class="paint-button paint-swatch paint-lavender"/>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+
+                            <ui:Button name="EditColorsButton"
+                                       text="Edit&#10;colors"
+                                       class="paint-button paint-large-button"/>
+                        </ui:VisualElement>
+                        <ui:Label text="Colors" class="paint-group-label"/>
+                    </ui:VisualElement>
+
+                </ui:VisualElement>
+            </ui:ScrollView>
+
+            <!-- ACTIVE TOOL OPTIONS -->
+            <ui:VisualElement name="ToolOptions" class="paint-options">
+                <ui:Label name="ActiveToolLabel"
+                          text="Brush"
+                          class="paint-active-tool"/>
+
+                <ui:VisualElement class="paint-divider"/>
+
+                <ui:Label text="Size" class="paint-muted"/>
+                <ui:SliderInt name="BrushSizeSlider"
+                              low-value="1"
+                              high-value="64"
+                              value="4"
+                              tooltip="Brush size"
+                              class="paint-size-slider"/>
+                <ui:Label name="BrushSizeLabel"
+                          text="4 px"
+                          class="paint-value-label"/>
+
+                <ui:VisualElement class="paint-divider"/>
+
+                <ui:Label text="Opacity" class="paint-muted"/>
+                <ui:Slider name="OpacitySlider"
+                           low-value="0"
+                           high-value="100"
+                           value="100"
+                           tooltip="Brush opacity"
+                           class="paint-opacity-slider"/>
+                <ui:Label name="OpacityLabel"
+                          text="100%"
+                          class="paint-value-label"/>
+            </ui:VisualElement>
+
+            <!-- DRAWING WORKSPACE -->
+            <ui:ScrollView name="CanvasScroll"
+                           mode="VerticalAndHorizontal"
+                           horizontal-scroller-visibility="Auto"
+                           vertical-scroller-visibility="Auto"
+                           class="paint-canvas-scroll">
+
+                <ui:VisualElement name="CanvasStage" class="paint-canvas-stage">
+
+                    <ui:VisualElement name="CanvasFrame" class="paint-canvas-frame">
+
+                        <!-- Assign a Texture2D to this Image from C#. -->
+                        <ui:Image name="DrawingCanvas"
+                                  class="paint-drawing-canvas"/>
+
+                        <ui:VisualElement name="SelectionOverlay"
+                                          picking-mode="Ignore"
+                                          class="paint-selection paint-hidden"/>
+
+                        <ui:VisualElement name="CanvasResizeRight"
+                                          tooltip="Resize canvas width"
+                                          class="paint-resize-handle paint-handle-right"/>
+                        <ui:VisualElement name="CanvasResizeBottom"
+                                          tooltip="Resize canvas height"
+                                          class="paint-resize-handle paint-handle-bottom"/>
+                        <ui:VisualElement name="CanvasResizeCorner"
+                                          tooltip="Resize canvas"
+                                          class="paint-resize-handle paint-handle-corner"/>
+
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:ScrollView>
+
+        </ui:VisualElement>
+
+        <!-- STATUS / ZOOM -->
+        <ui:VisualElement name="WindowFooter" class="paint-statusbar">
+
+            <ui:Label name="CursorPositionLabel"
+                      text="X: 0   Y: 0"
+                      class="paint-status-label"/>
+            <ui:VisualElement class="paint-divider"/>
+            <ui:Label name="CanvasDimensionsLabel"
+                      text="960 × 540 px"
+                      class="paint-status-label"/>
+
+            <ui:VisualElement class="paint-spacer"/>
+
+            <ui:Button name="FitCanvasButton"
+                       text="Fit"
+                       tooltip="Fit canvas to window"
+                       class="paint-button paint-status-button"/>
+
+            <ui:Button name="ZoomOutButton"
+                       text="−"
+                       tooltip="Zoom out"
+                       class="paint-button paint-status-button"/>
+
+            <ui:Slider name="ZoomSlider"
+                       low-value="10"
+                       high-value="800"
+                       value="100"
+                       tooltip="Canvas zoom"
+                       class="paint-zoom-slider"/>
+
+            <ui:Button name="ZoomInButton"
+                       text="+"
+                       tooltip="Zoom in"
+                       class="paint-button paint-status-button"/>
+
+            <ui:Button name="ResetZoomButton"
+                       text="100%"
+                       tooltip="Reset zoom"
+                       class="paint-button paint-zoom-value"/>
+
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

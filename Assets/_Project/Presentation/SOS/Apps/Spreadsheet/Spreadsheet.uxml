@@ -1,0 +1,266 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="Spreadsheet.uss" />
+
+    <ui:VisualElement class="sheets">
+        <!-- Document header -->
+        <ui:VisualElement class="document-header">
+            <ui:VisualElement class="sheets-logo">
+                <ui:Label text="▦" class="logo-symbol" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="document-details">
+                <ui:VisualElement class="title-row">
+                    <ui:TextField
+                        name="document-title"
+                        value="Untitled spreadsheet"
+                        class="document-title" />
+                    <ui:Button text="☆" class="icon-button" />
+                    <ui:Label text="Saved to Drive" class="save-status" />
+                </ui:VisualElement>
+
+                <ui:VisualElement class="menu-row">
+                    <ui:Button text="File" class="menu-button" />
+                    <ui:Button text="Edit" class="menu-button" />
+                    <ui:Button text="View" class="menu-button" />
+                    <ui:Button text="Insert" class="menu-button" />
+                    <ui:Button text="Format" class="menu-button" />
+                    <ui:Button text="Data" class="menu-button" />
+                    <ui:Button text="Tools" class="menu-button" />
+                    <ui:Button text="Extensions" class="menu-button" />
+                    <ui:Button text="Help" class="menu-button" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="header-actions">
+                <ui:Button text="History" class="header-button" />
+                <ui:Button text="Comments" class="header-button" />
+                <ui:Button text="Share" class="share-button" />
+                <ui:VisualElement class="avatar">
+                    <ui:Label text="K" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Formatting toolbar -->
+        <ui:VisualElement class="toolbar">
+            <ui:Button text="↶" tooltip="Undo" class="tool-button" />
+            <ui:Button text="↷" tooltip="Redo" class="tool-button" />
+            <ui:Button text="Print" class="tool-button wide-tool" />
+            <ui:Button text="100% ▾" class="tool-button zoom-tool" />
+
+            <ui:VisualElement class="separator" />
+
+            <ui:Button text="$" class="tool-button" />
+            <ui:Button text="%" class="tool-button" />
+            <ui:Button text=".0" class="tool-button" />
+            <ui:Button text=".00" class="tool-button" />
+            <ui:Button text="123 ▾" class="tool-button wide-tool" />
+
+            <ui:VisualElement class="separator" />
+
+            <ui:Button text="Arial ▾" class="tool-button font-tool" />
+
+            <ui:VisualElement class="font-size-control">
+                <ui:Button text="−" class="tool-button" />
+                <ui:TextField value="10" class="font-size-input" />
+                <ui:Button text="+" class="tool-button" />
+            </ui:VisualElement>
+
+            <ui:Button text="B" class="tool-button bold-tool" />
+            <ui:Button text="I" class="tool-button italic-tool" />
+            <ui:Button text="S̶" class="tool-button" />
+
+            <ui:VisualElement class="text-color-tool">
+                <ui:Button text="A" class="tool-button" />
+                <ui:VisualElement class="color-indicator" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="separator" />
+
+            <ui:Button text="Fill ▾" class="tool-button wide-tool" />
+            <ui:Button text="▦" tooltip="Borders" class="tool-button" />
+            <ui:Button text="Align ▾" class="tool-button wide-tool" />
+
+            <ui:VisualElement class="toolbar-spacer" />
+
+            <ui:Button text="Σ" tooltip="Functions" class="tool-button" />
+            <ui:Button text="⋮" class="tool-button" />
+        </ui:VisualElement>
+
+        <!-- Formula bar -->
+        <ui:VisualElement class="formula-bar">
+            <ui:Label name="cell-reference" text="B2" class="cell-reference" />
+            <ui:Label text="▾" class="reference-arrow" />
+            <ui:VisualElement class="formula-divider" />
+            <ui:Label text="fx" class="formula-symbol" />
+            <ui:TextField
+                name="formula-input"
+                value="Website redesign"
+                class="formula-input" />
+        </ui:VisualElement>
+
+        <!-- Spreadsheet -->
+        <ui:ScrollView
+            name="sheet-scroll"
+            mode="VerticalAndHorizontal"
+            class="sheet-scroll">
+
+            <ui:VisualElement class="sheet-grid">
+                <ui:VisualElement class="grid-row column-headers">
+                    <ui:Label class="corner-cell" />
+                    <ui:Label text="A" class="column-header" />
+                    <ui:Label text="B" class="column-header selected-header" />
+                    <ui:Label text="C" class="column-header" />
+                    <ui:Label text="D" class="column-header" />
+                    <ui:Label text="E" class="column-header" />
+                    <ui:Label text="F" class="column-header" />
+                    <ui:Label text="G" class="column-header" />
+                    <ui:Label text="H" class="column-header" />
+                </ui:VisualElement>
+
+                <ui:VisualElement class="grid-row table-heading">
+                    <ui:Label text="1" class="row-header" />
+                    <ui:Label text="PROJECT ID" class="cell" />
+                    <ui:Label text="PROJECT" class="cell" />
+                    <ui:Label text="OWNER" class="cell" />
+                    <ui:Label text="STATUS" class="cell" />
+                    <ui:Label text="DUE DATE" class="cell" />
+                    <ui:Label text="BUDGET" class="cell" />
+                    <ui:Label text="PROGRESS" class="cell" />
+                    <ui:Label text="NOTES" class="cell" />
+                </ui:VisualElement>
+
+                <ui:VisualElement class="grid-row">
+                    <ui:Label text="2" class="row-header selected-header" />
+                    <ui:Label text="PRJ-001" class="cell muted-cell" />
+                    <ui:VisualElement name="selected-cell" class="cell selected-cell">
+                        <ui:Label text="Website redesign" />
+                        <ui:VisualElement class="selection-handle" />
+                    </ui:VisualElement>
+                    <ui:Label text="Alex Morgan" class="cell" />
+                    <ui:VisualElement class="cell">
+                        <ui:Label text="In progress" class="status status-blue" />
+                    </ui:VisualElement>
+                    <ui:Label text="Oct 24, 2026" class="cell" />
+                    <ui:Label text="$12,000" class="cell numeric" />
+                    <ui:Label text="65%" class="cell numeric" />
+                    <ui:Label text="Review homepage" class="cell muted-cell" />
+                </ui:VisualElement>
+
+                <ui:VisualElement class="grid-row">
+                    <ui:Label text="3" class="row-header" />
+                    <ui:Label text="PRJ-002" class="cell muted-cell" />
+                    <ui:Label text="Mobile application" class="cell" />
+                    <ui:Label text="Jamie Lee" class="cell" />
+                    <ui:VisualElement class="cell">
+                        <ui:Label text="Planning" class="status status-purple" />
+                    </ui:VisualElement>
+                    <ui:Label text="Nov 12, 2026" class="cell" />
+                    <ui:Label text="$24,500" class="cell numeric" />
+                    <ui:Label text="20%" class="cell numeric" />
+                    <ui:Label text="Scope approved" class="cell muted-cell" />
+                </ui:VisualElement>
+
+                <ui:VisualElement class="grid-row">
+                    <ui:Label text="4" class="row-header" />
+                    <ui:Label text="PRJ-003" class="cell muted-cell" />
+                    <ui:Label text="Brand guidelines" class="cell" />
+                    <ui:Label text="Sam Rivera" class="cell" />
+                    <ui:VisualElement class="cell">
+                        <ui:Label text="Complete" class="status status-green" />
+                    </ui:VisualElement>
+                    <ui:Label text="Oct 10, 2026" class="cell" />
+                    <ui:Label text="$4,800" class="cell numeric" />
+                    <ui:Label text="100%" class="cell numeric" />
+                    <ui:Label text="Files delivered" class="cell muted-cell" />
+                </ui:VisualElement>
+
+                <ui:VisualElement class="grid-row">
+                    <ui:Label text="5" class="row-header" />
+                    <ui:Label text="PRJ-004" class="cell muted-cell" />
+                    <ui:Label text="Product launch" class="cell" />
+                    <ui:Label text="Taylor Kim" class="cell" />
+                    <ui:VisualElement class="cell">
+                        <ui:Label text="On hold" class="status status-amber" />
+                    </ui:VisualElement>
+                    <ui:Label text="Nov 05, 2026" class="cell" />
+                    <ui:Label text="$8,200" class="cell numeric" />
+                    <ui:Label text="40%" class="cell numeric" />
+                    <ui:Label text="Awaiting assets" class="cell muted-cell" />
+                </ui:VisualElement>
+
+                <ui:VisualElement class="grid-row">
+                    <ui:Label text="6" class="row-header" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                </ui:VisualElement>
+
+                <ui:VisualElement class="grid-row">
+                    <ui:Label text="7" class="row-header" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                </ui:VisualElement>
+
+                <ui:VisualElement class="grid-row">
+                    <ui:Label text="8" class="row-header" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                </ui:VisualElement>
+
+                <ui:VisualElement class="grid-row">
+                    <ui:Label text="9" class="row-header" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                </ui:VisualElement>
+
+                <ui:VisualElement class="grid-row">
+                    <ui:Label text="10" class="row-header" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                    <ui:Label class="cell" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:ScrollView>
+
+        <!-- Sheet tabs -->
+        <ui:VisualElement class="sheet-footer">
+            <ui:Button text="+" tooltip="Add sheet" class="footer-icon" />
+            <ui:Button text="☰" tooltip="All sheets" class="footer-icon" />
+            <ui:VisualElement class="footer-divider" />
+            <ui:Button text="Projects ▾" class="sheet-tab active-tab" />
+            <ui:Button text="Budget ▾" class="sheet-tab" />
+            <ui:Button text="Archive ▾" class="sheet-tab" />
+            <ui:VisualElement class="footer-spacer" />
+            <ui:Label text="Sum: 0" class="footer-summary" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

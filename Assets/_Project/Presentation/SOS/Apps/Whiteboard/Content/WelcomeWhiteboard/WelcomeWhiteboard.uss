@@ -1,0 +1,160 @@
+.welcome-board {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1320px;
+    height: 900px;
+    color: rgb(242, 244, 248);
+}
+
+.welcome-board Label {
+    margin: 0;
+    padding: 0;
+    white-space: normal;
+}
+
+.welcome-intro {
+    position: absolute;
+    left: 100px;
+    top: 64px;
+    width: 1120px;
+}
+
+.welcome-eyebrow {
+    color: rgb(162, 183, 219);
+    font-size: 12px;
+    -unity-font-style: bold;
+}
+
+.welcome-title {
+    margin-top: 12px;
+    font-size: 42px;
+    -unity-font-style: bold;
+}
+
+.welcome-subtitle {
+    margin-top: 12px;
+    color: rgb(184, 195, 214);
+    font-size: 17px;
+}
+
+.welcome-note {
+    position: absolute;
+    top: 230px;
+    width: 262px;
+    height: 246px;
+    padding: 22px;
+    border-radius: 3px;
+    color: rgb(39, 43, 53);
+}
+
+.welcome-note--yellow {
+    left: 100px;
+    background-color: rgb(255, 230, 151);
+}
+
+.welcome-note--pink {
+    left: 386px;
+    background-color: rgb(247, 194, 214);
+}
+
+.welcome-note--blue {
+    left: 672px;
+    background-color: rgb(180, 217, 250);
+}
+
+.welcome-note--green {
+    left: 958px;
+    background-color: rgb(192, 228, 190);
+}
+
+.welcome-kicker {
+    font-size: 10px;
+    -unity-font-style: bold;
+    color: rgba(39, 43, 53, 0.72);
+}
+
+.welcome-heading {
+    margin-top: 15px;
+    font-size: 23px;
+    -unity-font-style: bold;
+}
+
+.welcome-body {
+    margin-top: 14px;
+    font-size: 15px;
+}
+
+.welcome-footnote {
+    margin-top: 16px;
+    font-size: 12px;
+    -unity-font-style: italic;
+}
+
+.welcome-practice {
+    position: absolute;
+    left: 100px;
+    top: 532px;
+    width: 1120px;
+    height: 310px;
+    padding: 24px;
+    border-width: 2px;
+    border-color: rgb(104, 125, 161);
+    border-radius: 14px;
+}
+
+.welcome-practice-title {
+    margin-top: 8px;
+    font-size: 26px;
+    -unity-font-style: bold;
+}
+
+.welcome-practice-description {
+    margin-top: 8px;
+    color: rgb(184, 195, 214);
+    font-size: 14px;
+}
+
+.welcome-sample-note {
+    position: absolute;
+    left: 28px;
+    top: 142px;
+    width: 230px;
+    height: 140px;
+    padding: 22px;
+    background-color: rgb(255, 230, 151);
+    border-radius: 3px;
+}
+
+.welcome-sample-note-text {
+    color: rgb(49, 44, 32);
+    font-size: 20px;
+}
+
+.welcome-sample-shape {
+    position: absolute;
+    left: 326px;
+    top: 166px;
+    width: 240px;
+    height: 92px;
+    align-items: center;
+    justify-content: center;
+    border-width: 3px;
+    border-color: rgb(157, 193, 255);
+    border-radius: 46px;
+}
+
+.welcome-shape-text {
+    color: rgb(200, 220, 255);
+    font-size: 17px;
+}
+
+.welcome-sample-text {
+    position: absolute;
+    left: 638px;
+    top: 174px;
+    width: 360px;
+    color: rgb(228, 216, 255);
+    font-size: 26px;
+    -unity-font-style: italic;
+}
