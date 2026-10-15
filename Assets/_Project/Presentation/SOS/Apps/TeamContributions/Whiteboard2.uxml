@@ -1,0 +1,148 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/TeamContributions/Whiteboard2.uss?fileID=7433441132597879392&amp;guid=4c5dccb0c18f3294987d3d218e668713&amp;type=3#Whiteboard2"/>
+    <ui:VisualElement name="WindowRoot" class="wb-window">
+        <ui:VisualElement name="WindowHeader" class="wb-window-header">
+            <ui:VisualElement name="WindowIcon" class="wb-window-icon"/>
+            <ui:Label name="WindowTitle" text="Whiteboard" class="wb-window-title"/>
+            <ui:VisualElement class="wb-window-controls">
+                <ui:Button name="WindowMinimizeButton" text="−" tooltip="Minimize" class="wb-window-button"/>
+                <ui:Button name="WindowMaximizeButton" tooltip="Maximize or restore" class="wb-window-button">
+                    <ui:Label name="FullscreenIcon" text="□" picking-mode="Ignore"/>
+                    <ui:Label name="ExitFullscreenIcon" text="❐" picking-mode="Ignore"/>
+                </ui:Button>
+                <ui:Button name="WindowCloseButton" text="×" tooltip="Close" class="wb-window-button wb-window-close"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="WindowContent" class="wb-window-content">
+            <ui:VisualElement name="WhiteboardRoot" class="wb-root">
+                <ui:VisualElement class="wb-header">
+                    <ui:VisualElement picking-mode="Ignore" class="wb-brand">
+                        <ui:VisualElement class="wb-brand-row">
+                            <ui:VisualElement class="wb-brand-tile wb-blue"/>
+                            <ui:VisualElement class="wb-brand-tile wb-red"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="wb-brand-row">
+                            <ui:VisualElement class="wb-brand-tile wb-yellow"/>
+                            <ui:VisualElement class="wb-brand-tile wb-green"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="wb-board-heading">
+                        <ui:TextField name="BoardTitleField" value="Untitled board" max-length="80" tooltip="Board name" class="wb-board-title"/>
+                        <ui:VisualElement class="wb-menu-row">
+                            <ui:Button name="FileMenuButton" text="File" class="wb-menu-button"/>
+                            <ui:Button name="EditMenuButton" text="Edit" class="wb-menu-button"/>
+                            <ui:Button name="ViewMenuButton" text="View" class="wb-menu-button"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="wb-spacer"/>
+                    <ui:Label name="SaveStatusLabel" text="Unsaved board" class="wb-save-status"/>
+                    <ui:Button name="BoardOptionsButton" text="•••" tooltip="Board options" class="wb-icon-button"/>
+                    <ui:Button name="ExportButton" text="Export" class="wb-button wb-button-outlined"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="Workspace" class="wb-workspace">
+                    <ui:VisualElement name="BoardViewport" class="wb-viewport">
+                        <ui:VisualElement name="BoardTransform" class="wb-board-transform">
+                            <ui:VisualElement name="FrameLayer" picking-mode="Ignore" class="wb-board-layer"/>
+                            <ui:VisualElement name="ConnectorLayer" picking-mode="Ignore" class="wb-board-layer"/>
+                            <ui:VisualElement name="ObjectLayer" picking-mode="Ignore" class="wb-board-layer"/>
+                            <ui:VisualElement name="DrawingLayer" picking-mode="Ignore" class="wb-board-layer"/>
+                            <ui:VisualElement name="SelectionLayer" picking-mode="Ignore" class="wb-board-layer"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="EmptyState" picking-mode="Ignore" class="wb-empty-state">
+                        <ui:Label text="A little space for big connections." picking-mode="Ignore" class="wb-empty-title"/>
+                        <ui:Label text="Add a note, drop in an image, or start drawing." picking-mode="Ignore" class="wb-empty-description"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="ToolRail" class="wb-tool-rail">
+                        <ui:Button name="SelectToolButton" tooltip="Select · V" class="wb-tool wb-tool--selected">
+                            <ui:Label text="↖" picking-mode="Ignore" class="wb-tool-symbol"/>
+                            <ui:Label text="Select" picking-mode="Ignore" class="wb-tool-caption"/>
+                        </ui:Button>
+                        <ui:Button name="PanToolButton" tooltip="Pan · H" class="wb-tool">
+                            <ui:Label text="✥" picking-mode="Ignore" class="wb-tool-symbol"/>
+                            <ui:Label text="Pan" picking-mode="Ignore" class="wb-tool-caption"/>
+                        </ui:Button>
+                        <ui:VisualElement class="wb-divider-horizontal"/>
+                        <ui:Button name="StickyNoteToolButton" tooltip="Sticky note · N" class="wb-tool">
+                            <ui:VisualElement picking-mode="Ignore" class="wb-note-symbol"/>
+                            <ui:Label text="Note" picking-mode="Ignore" class="wb-tool-caption"/>
+                        </ui:Button>
+                        <ui:Button name="TextToolButton" tooltip="Text · T" class="wb-tool">
+                            <ui:Label text="T" picking-mode="Ignore" class="wb-tool-symbol"/>
+                            <ui:Label text="Text" picking-mode="Ignore" class="wb-tool-caption"/>
+                        </ui:Button>
+                        <ui:Button name="ShapeToolButton" tooltip="Shapes · S" class="wb-tool">
+                            <ui:Label text="◇" picking-mode="Ignore" class="wb-tool-symbol"/>
+                            <ui:Label text="Shape" picking-mode="Ignore" class="wb-tool-caption"/>
+                        </ui:Button>
+                        <ui:Button name="ConnectorToolButton" tooltip="Connector · L" class="wb-tool">
+                            <ui:Label text="↗" picking-mode="Ignore" class="wb-tool-symbol"/>
+                            <ui:Label text="Connect" picking-mode="Ignore" class="wb-tool-caption"/>
+                        </ui:Button>
+                        <ui:Button name="DrawToolButton" tooltip="Draw · P" class="wb-tool">
+                            <ui:Label text="✎" picking-mode="Ignore" class="wb-tool-symbol"/>
+                            <ui:Label text="Draw" picking-mode="Ignore" class="wb-tool-caption"/>
+                        </ui:Button>
+                        <ui:VisualElement class="wb-divider-horizontal"/>
+                        <ui:Button name="ImageToolButton" tooltip="Add image · I" class="wb-tool">
+                            <ui:Label text="▧" picking-mode="Ignore" class="wb-tool-symbol"/>
+                            <ui:Label text="Image" picking-mode="Ignore" class="wb-tool-caption"/>
+                        </ui:Button>
+                        <ui:Button name="SnipToolButton" tooltip="Capture a snip" class="wb-tool">
+                            <ui:Label text="✂" picking-mode="Ignore" class="wb-tool-symbol"/>
+                            <ui:Label text="Snip" picking-mode="Ignore" class="wb-tool-caption"/>
+                        </ui:Button>
+                        <ui:Button name="FrameToolButton" tooltip="Frame · F" class="wb-tool">
+                            <ui:Label text="▣" picking-mode="Ignore" class="wb-tool-symbol"/>
+                            <ui:Label text="Frame" picking-mode="Ignore" class="wb-tool-caption"/>
+                        </ui:Button>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="wb-top-controls">
+                        <ui:Button name="UndoButton" text="↶" tooltip="Undo · Ctrl+Z" class="wb-icon-button"/>
+                        <ui:Button name="RedoButton" text="↷" tooltip="Redo · Ctrl+Y" class="wb-icon-button"/>
+                        <ui:VisualElement class="wb-divider-vertical"/>
+                        <ui:Button name="TogglePropertiesButton" text="Properties" tooltip="Show or hide properties" class="wb-button"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="PropertiesPanel" class="wb-properties">
+                        <ui:VisualElement class="wb-panel-header">
+                            <ui:Label name="PropertiesTitle" text="Board" class="wb-panel-title"/>
+                            <ui:VisualElement class="wb-spacer"/>
+                            <ui:Button name="ClosePropertiesButton" text="×" tooltip="Close properties" class="wb-icon-button wb-icon-button-small"/>
+                        </ui:VisualElement>
+                        <ui:ScrollView class="wb-properties-scroll">
+                            <ui:Label text="BACKGROUND" class="wb-section-label"/>
+                            <ui:VisualElement class="wb-swatch-row">
+                                <ui:Button name="BackgroundWhiteButton" tooltip="White" class="wb-swatch wb-swatch-white"/>
+                                <ui:Button name="BackgroundWarmButton" tooltip="Warm" class="wb-swatch wb-swatch-warm wb-swatch--selected"/>
+                                <ui:Button name="BackgroundBlueButton" tooltip="Blue" class="wb-swatch wb-swatch-blue"/>
+                                <ui:Button name="BackgroundGreenButton" tooltip="Green" class="wb-swatch wb-swatch-green"/>
+                            </ui:VisualElement>
+                            <ui:Label text="CANVAS" class="wb-section-label"/>
+                            <ui:Toggle name="ShowGridToggle" label="Show dot grid" value="false" class="wb-setting"/>
+                            <ui:Toggle name="SnapToGridToggle" label="Snap to grid" value="false" class="wb-setting"/>
+                            <ui:VisualElement class="wb-panel-divider"/>
+                            <ui:Label text="SELECTION" class="wb-section-label"/>
+                            <ui:Label name="SelectionHintLabel" text="Select an object to change its appearance." class="wb-panel-hint"/>
+                            <ui:VisualElement name="ObjectProperties" class="wb-hidden"/>
+                        </ui:ScrollView>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="wb-bottom-left">
+                        <ui:Button name="FramesButton" text="Frames" tooltip="Browse board frames" class="wb-button"/>
+                        <ui:VisualElement class="wb-divider-vertical"/>
+                        <ui:Button name="HelpButton" text="?" tooltip="Keyboard shortcuts" class="wb-icon-button"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="wb-zoom-controls">
+                        <ui:Button name="ZoomOutButton" text="−" tooltip="Zoom out" class="wb-icon-button"/>
+                        <ui:Button name="ZoomValueButton" text="100%" tooltip="Zoom options" class="wb-zoom-value"/>
+                        <ui:Button name="ZoomInButton" text="+" tooltip="Zoom in" class="wb-icon-button"/>
+                        <ui:VisualElement class="wb-divider-vertical"/>
+                        <ui:Button name="FitToContentButton" text="Fit" tooltip="Fit board content" class="wb-button"/>
+                    </ui:VisualElement>
+                    <ui:Label name="ToolHintLabel" text="Select objects · Hold Space to pan" picking-mode="Ignore" class="wb-tool-hint"/>
+                    <ui:VisualElement name="ContextToolbar" class="wb-context-toolbar wb-hidden"/>
+                    <ui:VisualElement name="PopupLayer" picking-mode="Ignore" class="wb-overlay-layer"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -33,6 +33,8 @@ MonoBehaviour:
     - cmd
     - photos
     - pdf-viewer
+    - whiteboard
+    - notepad
     desktopShortcutAppIDs:
     - assistant
     - messenger
@@ -43,6 +45,8 @@ MonoBehaviour:
     - cmd
     - photos
     - pdf-viewer
+    - whiteboard
+    - notepad
     pinnedAppIDs:
     - browser
     - file-explorer

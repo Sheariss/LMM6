@@ -51,7 +51,7 @@
     padding-left: 22px;
     padding-right: 16px;
 }
-.orbilo-search-row:focus-within { border-color: var(--border-focus); }
+.orbilo-search-row:focus { border-color: var(--border-focus); }
 .orbilo-search-icon {
     font-size: 34px;
     color: var(--text-muted);

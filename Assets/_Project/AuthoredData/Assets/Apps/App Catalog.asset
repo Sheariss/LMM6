@@ -157,3 +157,15 @@ MonoBehaviour:
     minimumWindowSize: {x: 800, y: 450}
     showDesktopShortcut: 1
     pinToTaskbar: 0
+  - appID: whiteboard
+    displayName: WhiteBoard
+    appIcon48: {fileID: 21300000, guid: 12f088446c63a7748b6903add623b805, type: 3}
+    appIcon96: {fileID: 21300000, guid: fe54d8283ab046c4c85c9edf2d857639, type: 3}
+    appUXML: {fileID: 0}
+    runtimePrefab: {fileID: 0}
+    isResizable: 1
+    allowMultipleInstances: 1
+    defaultWindowSize: {x: 1100, y: 750}
+    minimumWindowSize: {x: 800, y: 450}
+    showDesktopShortcut: 1
+    pinToTaskbar: 0

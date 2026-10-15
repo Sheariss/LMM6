@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36225a62d93887043b88531a9d6fbda1, type: 3}
   m_Name: FolderSpriteConverter
   m_EditorClassIdentifier: Assembly-CSharp-Editor::Atlas.Development.FolderSpriteConverter
-  folderPath: Assets/_Project/Resources/Content
+  folderPath: Assets/_Project/Resources/AppIcons/Whiteboard
   includeSubfolders: 1

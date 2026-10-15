@@ -1,0 +1,448 @@
+/* Window */
+
+.wb-window {
+    position: absolute;
+    flex-direction: column;
+    min-width: 800px;
+    min-height: 680px;
+    background-color: var(--window-bg);
+    border-width: var(--border-thin);
+    border-color: var(--window-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    color: var(--text-primary);
+    font-size: var(--text-sm);
+}
+
+.wb-window Button {
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0);
+    border-radius: var(--radius-md);
+    background-color: rgba(0, 0, 0, 0);
+    color: var(--text-primary);
+    -unity-text-align: middle-center;
+}
+
+.wb-window Button:hover {
+    background-color: var(--surface-hover);
+}
+
+.wb-window Button:active {
+    background-color: var(--surface-active);
+}
+
+.wb-window Button:focus {
+    border-color: var(--border-focus);
+}
+
+.wb-window Button:disabled {
+    opacity: var(--opacity-disabled);
+}
+
+.wb-window Label {
+    margin: 0;
+    padding: 0;
+}
+
+.wb-spacer {
+    flex-grow: 1;
+}
+
+.wb-window-header {
+    height: 36px;
+    min-height: 36px;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    padding-left: var(--space-3);
+    background-color: var(--window-header);
+    border-bottom-width: var(--border-thin);
+    border-bottom-color: var(--window-border);
+}
+
+.wb-window-header > .wb-app-icon {
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+    margin-right: var(--space-2);
+}
+
+.wb-window-title {
+    flex-grow: 1;
+    color: var(--text-muted);
+    font-size: var(--text-xs);
+}
+
+.wb-window-controls {
+    height: 100%;
+    flex-direction: row;
+}
+
+.wb-window .wb-window-button {
+    width: 42px;
+    height: 35px;
+    border-radius: 0;
+}
+
+.wb-window .wb-window-close:hover {
+    background-color: var(--error-button-hover);
+}
+
+.wb-window .wb-window-close:active {
+    background-color: var(--error-button-pressed);
+}
+
+#ExitFullscreenIcon {
+    display: none;
+}
+
+.window-button--restore #FullscreenIcon {
+    display: none;
+}
+
+.window-button--restore #ExitFullscreenIcon {
+    display: flex;
+}
+
+.wb-window-content,
+.wb-root {
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+}
+
+/* Document header */
+
+.wb-header {
+    height: 88px;
+    min-height: 88px;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+    background-color: var(--surface-primary);
+    border-bottom-width: var(--border-thin);
+    border-bottom-color: var(--border-primary);
+}
+
+.wb-board-heading {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 200px;
+    max-width: 520px;
+}
+
+/* Explicitly reset both the field and its internal input.
+   This gives the title enough vertical room for ascenders/descenders. */
+
+.wb-board-title {
+    height: var(--control-md);
+    min-height: var(--control-md);
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.wb-board-title .unity-base-text-field__input {
+    height: var(--control-md);
+    min-height: var(--control-md);
+    margin: 0;
+    padding-left: var(--space-2);
+    padding-right: var(--space-2);
+    padding-top: 0;
+    padding-bottom: 0;
+    border-width: var(--border-thin);
+    border-color: rgba(0, 0, 0, 0);
+    border-radius: var(--radius-sm);
+    background-color: rgba(0, 0, 0, 0);
+    color: var(--text-primary);
+    font-size: var(--text-lg);
+    -unity-text-align: middle-left;
+}
+
+.wb-board-title .unity-text-element {
+    margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    -unity-text-align: middle-left;
+}
+
+.wb-board-title .unity-base-text-field__input:hover {
+    border-color: var(--border-primary);
+}
+
+.wb-board-title .unity-base-text-field__input:focus {
+    border-color: var(--border-focus);
+    background-color: var(--bg-primary);
+}
+
+.wb-menu-row {
+    height: var(--control-xs);
+    flex-shrink: 0;
+    flex-direction: row;
+}
+
+.wb-window .wb-menu-button {
+    height: var(--control-xs);
+    padding-left: var(--space-2);
+    padding-right: var(--space-2);
+    color: var(--text-muted);
+    font-size: var(--text-xs);
+    border-radius: var(--radius-sm);
+}
+
+.wb-save-status {
+    margin-left: var(--space-4);
+    margin-right: var(--space-3);
+    color: var(--text-muted);
+    font-size: var(--text-xs);
+}
+
+.wb-window .wb-text-button {
+    height: var(--control-md);
+    padding-left: var(--space-3);
+    padding-right: var(--space-3);
+    font-size: var(--text-xs);
+}
+
+.wb-window .wb-export-button {
+    margin-left: var(--space-2);
+    border-color: var(--border-primary);
+}
+
+.wb-window .wb-export-button:hover {
+    border-color: var(--border-focus);
+}
+
+/* Workspace */
+
+.wb-workspace {
+    flex-grow: 1;
+    min-height: 0;
+    overflow: hidden;
+    background-color: var(--bg-primary);
+}
+
+.wb-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.wb-viewport {
+    overflow: hidden;
+}
+
+.wb-board-transform {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: 0% 0%;
+}
+
+/* Tool rail */
+
+.wb-sidebar {
+    position: absolute;
+    left: var(--space-3);
+    top: var(--space-4);
+    width: 56px;
+}
+
+.wb-tool-group {
+    padding: var(--space-1);
+    background-color: var(--surface-primary);
+    border-width: var(--border-thin);
+    border-color: var(--border-primary);
+    border-radius: var(--radius-lg);
+}
+
+.wb-window .wb-tool {
+    width: 46px;
+    height: 42px;
+    min-height: 42px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.wb-window .wb-tool--selected,
+.wb-window .wb-tool--selected:hover {
+    background-color: var(--atlas-ui-950);
+    border-color: var(--accent-primary);
+}
+
+.wb-tool--selected > .wb-icon {
+    -unity-background-image-tint-color: var(--accent-hover);
+}
+
+.wb-history {
+    margin-top: var(--space-2);
+}
+
+.wb-horizontal-divider {
+    height: 1px;
+    margin-top: var(--space-1);
+    margin-bottom: var(--space-1);
+    margin-left: var(--space-2);
+    margin-right: var(--space-2);
+    background-color: var(--border-primary);
+}
+
+#HandToolIcon {
+    display: none;
+}
+
+.wb-navigation--pan #CursorToolIcon {
+    display: none;
+}
+
+.wb-navigation--pan #HandToolIcon {
+    display: flex;
+}
+
+/* Floating controls */
+
+.wb-floating-row {
+    position: absolute;
+    flex-direction: row;
+    align-items: center;
+    padding: var(--space-1);
+    background-color: var(--surface-primary);
+    border-width: var(--border-thin);
+    border-color: var(--border-primary);
+    border-radius: var(--radius-lg);
+}
+
+.wb-bottom-left {
+    left: var(--space-3);
+    bottom: var(--space-3);
+}
+
+.wb-zoom-controls {
+    right: var(--space-3);
+    bottom: var(--space-3);
+}
+
+.wb-window .wb-icon-button {
+    width: var(--control-md);
+    height: var(--control-md);
+}
+
+.wb-window .wb-zoom-value {
+    width: 60px;
+    height: var(--control-md);
+    font-size: var(--text-xs);
+}
+
+.wb-vertical-divider {
+    width: 1px;
+    height: var(--icon-md);
+    margin-left: var(--space-1);
+    margin-right: var(--space-1);
+    background-color: var(--border-primary);
+}
+
+.wb-tool-hint {
+    position: absolute;
+    left: 180px;
+    right: 240px;
+    bottom: 28px;
+    color: var(--text-muted);
+    font-size: var(--text-xs);
+    -unity-text-align: middle-center;
+}
+
+.wb-context-toolbar {
+    left: 84px;
+    top: var(--space-4);
+}
+
+.wb-properties {
+    position: absolute;
+    right: var(--space-3);
+    top: var(--space-4);
+    width: 240px;
+    padding: var(--space-4);
+    background-color: var(--surface-primary);
+    border-width: var(--border-thin);
+    border-color: var(--border-primary);
+    border-radius: var(--radius-lg);
+}
+
+.wb-hidden {
+    display: none;
+}
+
+/* Every icon is an Image using a background resource. */
+
+.wb-icon {
+    width: var(--icon-lg);
+    height: var(--icon-lg);
+    flex-shrink: 0;
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: var(--text-primary);
+}
+
+/* Existing resources */
+
+.wb-icon-minimize {
+    background-image: resource("Icons/UI/Minimize/remove_32dp_");
+}
+
+.wb-icon-maximize {
+    background-image: resource("Icons/UI/Maximize-Exit/crop_square_32dp");
+}
+
+.wb-icon-restore {
+    background-image: resource("Icons/UI/Maximize/filter_none_32dp");
+}
+
+.wb-icon-close {
+    background-image: resource("Icons/UI/Close/close_32dp");
+}
+
+.wb-icon-more {
+    background-image: resource("Icons/UI/More-Horiz-Menu/more_horiz_32dp");
+}
+
+.wb-icon-undo {
+    background-image: resource("Icons/Arrows 1/Undo/undo_32dp");
+}
+
+.wb-icon-redo {
+    background-image: resource("Icons/Arrows 1/Redo/redo_32dp");
+}
+
+.wb-icon-minus {
+    background-image: resource("Icons/Math/Minus/remove_32dp");
+}
+
+.wb-icon-add {
+    background-image: resource("Icons/Math/Add/add_2_32dp");
+}
+
+.wb-icon-fit {
+    background-image: resource("Icons/Arrows 1/Open-in-Full/open_in_full_32dp");
+}
+
+/* Add resource links here as the board icons become available. */
+
+.wb-app-icon {}
+.wb-icon-cursor {}
+.wb-icon-hand {}
+.wb-icon-note {}
+.wb-icon-text {}
+.wb-icon-shapes {}
+.wb-icon-draw {}
+.wb-icon-frame {}
+.wb-icon-sticker {}
+.wb-icon-grid {}

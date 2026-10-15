@@ -1,0 +1,304 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="../../../Tokens/Global-Colors.uss" />
+    <Style src="../../../Tokens/Global-Tokens.uss" />
+    <Style src="../../../Tokens/ATLAS.uss" />
+    <Style src="../../Window/Window.uss" />
+    <Style src="Whiteboard.uss" />
+
+    <ui:VisualElement name="WindowRoot" class="wb-window">
+
+        <ui:VisualElement name="WindowHeader" class="wb-window-header">
+            <ui:Image
+                    name="WindowIcon"
+                    picking-mode="Ignore"
+                    class="wb-icon wb-app-icon" />
+
+            <ui:Label
+                    name="WindowTitle"
+                    text="Whiteboard"
+                    class="wb-window-title" />
+
+            <ui:VisualElement class="wb-window-controls">
+                <ui:Button
+                        name="WindowMinimizeButton"
+                        tooltip="Minimize"
+                        class="wb-window-button">
+                    <ui:Image
+                            picking-mode="Ignore"
+                            class="wb-icon wb-icon-minimize" />
+                </ui:Button>
+
+                <ui:Button
+                        name="WindowMaximizeButton"
+                        tooltip="Maximize or restore"
+                        class="wb-window-button">
+                    <ui:Image
+                            name="FullscreenIcon"
+                            picking-mode="Ignore"
+                            class="wb-icon wb-icon-maximize" />
+                    <ui:Image
+                            name="ExitFullscreenIcon"
+                            picking-mode="Ignore"
+                            class="wb-icon wb-icon-restore" />
+                </ui:Button>
+
+                <ui:Button
+                        name="WindowCloseButton"
+                        tooltip="Close"
+                        class="wb-window-button wb-window-close">
+                    <ui:Image
+                            picking-mode="Ignore"
+                            class="wb-icon wb-icon-close" />
+                </ui:Button>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="WindowContent" class="wb-window-content">
+            <ui:VisualElement name="WhiteboardRoot" class="wb-root">
+
+                <ui:VisualElement class="wb-header">
+                    <ui:VisualElement class="wb-board-heading">
+                        <ui:TextField
+                                name="BoardTitleField"
+                                value="Untitled board"
+                                max-length="80"
+                                tooltip="Board name"
+                                class="wb-board-title" />
+
+                        <ui:VisualElement class="wb-menu-row">
+                            <ui:Button name="FileMenuButton"
+                                    text="File"
+                                    class="wb-menu-button" />
+                            <ui:Button name="EditMenuButton"
+                                    text="Edit"
+                                    class="wb-menu-button" />
+                            <ui:Button name="ViewMenuButton"
+                                    text="View"
+                                    class="wb-menu-button" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="wb-spacer" />
+
+                    <ui:Label
+                            name="SaveStatusLabel"
+                            text="Unsaved board"
+                            class="wb-save-status" />
+
+                    <ui:Button
+                            name="BoardOptionsButton"
+                            tooltip="Board options"
+                            class="wb-icon-button">
+                        <ui:Image
+                                picking-mode="Ignore"
+                                class="wb-icon wb-icon-more" />
+                    </ui:Button>
+
+                    <ui:Button
+                            name="ExportButton"
+                            text="Export"
+                            class="wb-text-button wb-export-button" />
+                </ui:VisualElement>
+
+                <ui:VisualElement name="Workspace" class="wb-workspace">
+
+                    <ui:VisualElement name="BoardViewport" class="wb-fill wb-viewport">
+
+                        <!-- Draw the grid here in viewport coordinates. -->
+                        <ui:VisualElement
+                                name="GridLayer"
+                                picking-mode="Ignore"
+                                class="wb-fill" />
+
+                        <!-- Only board content receives the pan/zoom transform. -->
+                        <ui:VisualElement
+                                name="BoardTransform"
+                                class="wb-board-transform">
+
+                            <ui:VisualElement name="FrameLayer"
+                                    picking-mode="Ignore"
+                                    class="wb-fill" />
+                            <ui:VisualElement name="ConnectorLayer"
+                                    picking-mode="Ignore"
+                                    class="wb-fill" />
+                            <ui:VisualElement name="ObjectLayer"
+                                    picking-mode="Ignore"
+                                    class="wb-fill" />
+                            <ui:VisualElement name="DrawingLayer"
+                                    picking-mode="Ignore"
+                                    class="wb-fill" />
+                        </ui:VisualElement>
+
+                        <!-- Selection handles can retain a constant screen size. -->
+                        <ui:VisualElement
+                                name="SelectionLayer"
+                                picking-mode="Ignore"
+                                class="wb-fill" />
+                    </ui:VisualElement>
+
+                    <!-- Compact Miro-style rail -->
+                    <ui:VisualElement class="wb-sidebar">
+
+                        <ui:VisualElement name="ToolRail" class="wb-tool-group">
+
+                            <!-- Add the pan-state class to show the hand icon. -->
+                            <ui:Button
+                                    name="NavigationToolButton"
+                                    tooltip="Select / hand · V / H"
+                                    class="wb-tool wb-tool--selected">
+                                <ui:Image
+                                        name="CursorToolIcon"
+                                        picking-mode="Ignore"
+                                        class="wb-icon wb-icon-cursor" />
+                                <ui:Image
+                                        name="HandToolIcon"
+                                        picking-mode="Ignore"
+                                        class="wb-icon wb-icon-hand" />
+                            </ui:Button>
+
+                            <ui:VisualElement class="wb-horizontal-divider" />
+
+                            <ui:Button
+                                    name="StickyNoteToolButton"
+                                    tooltip="Sticky note · N"
+                                    class="wb-tool">
+                                <ui:Image picking-mode="Ignore"
+                                        class="wb-icon wb-icon-note" />
+                            </ui:Button>
+
+                            <ui:Button
+                                    name="TextToolButton"
+                                    tooltip="Text · T"
+                                    class="wb-tool">
+                                <ui:Image picking-mode="Ignore"
+                                        class="wb-icon wb-icon-text" />
+                            </ui:Button>
+
+                            <ui:Button
+                                    name="ShapesAndLinesToolButton"
+                                    tooltip="Shapes and lines"
+                                    class="wb-tool">
+                                <ui:Image picking-mode="Ignore"
+                                        class="wb-icon wb-icon-shapes" />
+                            </ui:Button>
+
+                            <ui:Button
+                                    name="DrawToolButton"
+                                    tooltip="Freehand · P"
+                                    class="wb-tool">
+                                <ui:Image picking-mode="Ignore"
+                                        class="wb-icon wb-icon-draw" />
+                            </ui:Button>
+
+                            <ui:Button
+                                    name="FrameToolButton"
+                                    tooltip="Frame · F"
+                                    class="wb-tool">
+                                <ui:Image picking-mode="Ignore"
+                                        class="wb-icon wb-icon-frame" />
+                            </ui:Button>
+
+                            <ui:Button
+                                    name="StickerToolButton"
+                                    tooltip="Stickers"
+                                    class="wb-tool">
+                                <ui:Image picking-mode="Ignore"
+                                        class="wb-icon wb-icon-sticker" />
+                            </ui:Button>
+
+                            <ui:VisualElement class="wb-horizontal-divider" />
+
+                            <ui:Button
+                                    name="MoreToolsButton"
+                                    tooltip="More tools · Images and snips"
+                                    class="wb-tool">
+                                <ui:Image picking-mode="Ignore"
+                                        class="wb-icon wb-icon-add" />
+                            </ui:Button>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement name="HistoryTools" class="wb-tool-group wb-history">
+                            <ui:Button
+                                    name="UndoButton"
+                                    tooltip="Undo · Ctrl+Z"
+                                    class="wb-tool">
+                                <ui:Image picking-mode="Ignore"
+                                        class="wb-icon wb-icon-undo" />
+                            </ui:Button>
+
+                            <ui:Button
+                                    name="RedoButton"
+                                    tooltip="Redo · Ctrl+Y"
+                                    class="wb-tool">
+                                <ui:Image picking-mode="Ignore"
+                                        class="wb-icon wb-icon-redo" />
+                            </ui:Button>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="wb-bottom-left wb-floating-row">
+                        <ui:Button name="FramesButton"
+                                text="Frames"
+                                class="wb-text-button" />
+                        <ui:VisualElement class="wb-vertical-divider" />
+                        <ui:Button name="ToggleGridButton"
+                                tooltip="Show or hide grid"
+                                class="wb-icon-button">
+                            <ui:Image picking-mode="Ignore"
+                                    class="wb-icon wb-icon-grid" />
+                        </ui:Button>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="wb-zoom-controls wb-floating-row">
+                        <ui:Button name="ZoomOutButton"
+                                tooltip="Zoom out"
+                                class="wb-icon-button">
+                            <ui:Image picking-mode="Ignore"
+                                    class="wb-icon wb-icon-minus" />
+                        </ui:Button>
+
+                        <ui:Button name="ZoomValueButton"
+                                text="100%"
+                                tooltip="Zoom options"
+                                class="wb-zoom-value" />
+
+                        <ui:Button name="ZoomInButton"
+                                tooltip="Zoom in"
+                                class="wb-icon-button">
+                            <ui:Image picking-mode="Ignore"
+                                    class="wb-icon wb-icon-add" />
+                        </ui:Button>
+
+                        <ui:VisualElement class="wb-vertical-divider" />
+
+                        <ui:Button name="FitToContentButton"
+                                tooltip="Fit board content"
+                                class="wb-icon-button">
+                            <ui:Image picking-mode="Ignore"
+                                    class="wb-icon wb-icon-fit" />
+                        </ui:Button>
+                    </ui:VisualElement>
+
+                    <ui:Label
+                            name="ToolHintLabel"
+                            text="Select objects · Hold Space to pan"
+                            picking-mode="Ignore"
+                            class="wb-tool-hint" />
+
+                    <ui:VisualElement
+                            name="ContextToolbar"
+                            class="wb-context-toolbar wb-floating-row wb-hidden" />
+
+                    <ui:VisualElement
+                            name="PropertiesPanel"
+                            class="wb-properties wb-hidden" />
+
+                    <ui:VisualElement
+                            name="PopupLayer"
+                            picking-mode="Ignore"
+                            class="wb-fill" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
