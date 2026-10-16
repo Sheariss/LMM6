@@ -11,59 +11,25 @@ namespace Atlas.Presentation.SOS.Assistant
         [SerializeField] private VisualTreeAsset assistantMessageTemplate;
         [SerializeField] private VisualTreeAsset playerMessageTemplate;
 
-        [Header("Authored Topics")]
-        [SerializeField]
-        private AssistantTopic[] topics =
-        {
-            new AssistantTopic
-            {
-                buttonLabel = "Review evidence",
-                question = "How should I review the evidence?",
-                keywords = new[] { "evidence", "findings" },
-                response =
-                    "Start with the material you have collected. " +
-                    "Compare names, dates, and claims, and note which " +
-                    "details are supported by more than one source."
-            },
-            new AssistantTopic
-            {
-                buttonLabel = "Evaluate a clue",
-                question = "How should I evaluate a clue?",
-                keywords = new[] { "clue", "clues" },
-                response =
-                    "Check where the clue came from, what it directly " +
-                    "shows, and what you are inferring. Look for another " +
-                    "source that can confirm or challenge your interpretation."
-            },
-            new AssistantTopic
-            {
-                buttonLabel = "Get unstuck",
-                question = "What can I do when I am stuck?",
-                keywords = new[] { "stuck", "hint", "help" },
-                response =
-                    "Revisit your current objective and look for an " +
-                    "unanswered question. Review any messages or files " +
-                    "you have not examined, then compare them with your notes."
-            }
-        };
-
-        [TextArea(2, 5)]
-        [SerializeField]
-        private string fallbackResponse =
-            "I do not have an authored answer for that question yet. " +
-            "Try asking about evidence, clues, or getting unstuck.";
-
+        private AssistantManager manager;
         private AssistantBinder binder;
         private AssistantView view;
-        private AssistantEngine engine;
 
         protected override void OnInitialize()
         {
+            manager = AssistantManager.Instance;
+
+            if (manager == null)
+            {
+                throw new InvalidOperationException(
+                    "[AssistantController] AssistantManager was not found.");
+            }
+
             if (assistantMessageTemplate == null ||
                 playerMessageTemplate == null)
             {
                 throw new InvalidOperationException(
-                    "[Assistant] Assign both message templates.");
+                    "[AssistantController] Assign both message templates.");
             }
 
             binder = new AssistantBinder(InstanceRoot);
@@ -71,30 +37,23 @@ namespace Atlas.Presentation.SOS.Assistant
             if (!binder.IsValid)
             {
                 throw new InvalidOperationException(
-                    "[Assistant] Required UI elements are missing.");
+                    "[AssistantController] Required UI elements are missing.");
             }
 
-            engine = new AssistantEngine(topics, fallbackResponse);
-
-            view = new AssistantView(
-                binder,
+            var builder = new AssistantViewBuilder(
                 assistantMessageTemplate,
                 playerMessageTemplate);
 
-            foreach (AssistantTopic topic in engine.Topics)
-            {
-                AssistantTopic selectedTopic = topic;
+            view = new AssistantView(binder, builder);
 
-                string label = string.IsNullOrWhiteSpace(topic.buttonLabel)
-                    ? topic.question
-                    : topic.buttonLabel;
+            view.ConversationSelected += OnConversationSelected;
+            view.ChoiceSelected += OnChoiceSelected;
 
-                Button button = view.AddPrompt(label);
+            view.OfferAccepted += OnOfferAccepted;
+            view.OfferDeferred += OnOfferDeferred;
+            view.OfferDismissed += OnOfferDismissed;
 
-                BindClick(
-                    button,
-                    () => Submit(selectedTopic.question, selectedTopic));
-            }
+            manager.Changed += Render;
 
             BindClick(binder.SendButton, SendTypedMessage);
 
@@ -107,11 +66,57 @@ namespace Atlas.Presentation.SOS.Assistant
                 OnInputKeyDown,
                 TrickleDown.TrickleDown);
 
-            view.RefreshComposer();
+            Render();
+        }
+
+        private void Render()
+        {
+            if (manager == null || view == null)
+                return;
+
+            view.Render(manager);
+        }
+
+        private void OnConversationSelected(string conversationId)
+        {
+            view.Capture();
+            manager.SelectConversation(conversationId);
+        }
+
+        private void OnChoiceSelected(
+            string conversationId,
+            string nodeId,
+            string choiceId)
+        {
+            view.Capture();
+
+            manager.SelectChoice(
+                conversationId,
+                nodeId,
+                choiceId);
+        }
+
+        private void OnOfferAccepted(string offerId)
+        {
+            view.Capture();
+            manager.AcceptOffer(offerId);
+        }
+
+        private void OnOfferDeferred(string offerId)
+        {
+            view.Capture();
+            manager.DeferOffer(offerId);
+        }
+
+        private void OnOfferDismissed(string offerId)
+        {
+            view.Capture();
+            manager.DismissOffer(offerId);
         }
 
         private void OnInputChanged(ChangeEvent<string> evt)
         {
+            view.Capture();
             view.RefreshComposer();
         }
 
@@ -130,7 +135,7 @@ namespace Atlas.Presentation.SOS.Assistant
                 return;
             }
 
-            // Prevent the multiline field from also adding a newline.
+            // Prevent the multiline field from adding a newline.
             evt.PreventDefault();
             evt.StopPropagation();
 
@@ -139,38 +144,43 @@ namespace Atlas.Presentation.SOS.Assistant
 
         private void SendTypedMessage()
         {
+            var conversation = manager.SelectedConversation;
             string text = binder.Input.value;
 
-            if (string.IsNullOrWhiteSpace(text))
+            if (conversation == null ||
+                string.IsNullOrWhiteSpace(text))
+            {
                 return;
+            }
 
-            Submit(text);
             view.ClearInput();
-        }
 
-        private void Submit(
-            string text,
-            AssistantTopic selectedTopic = null)
-        {
-            if (!IsInitialized || string.IsNullOrWhiteSpace(text))
-                return;
+            manager.SubmitText(conversation.id, text);
 
-            view.AddMessage(text.Trim(), fromPlayer: true);
-
-            string response = engine.Respond(text, selectedTopic);
-            view.AddMessage(response, fromPlayer: false);
-
-            // Clicking a suggestion preserves any unfinished draft.
             binder.Input.Focus();
         }
 
         protected override void OnShutdown()
         {
-            view?.Dispose();
+            // AppContentController unregisters bound UI callbacks first.
+            if (manager != null)
+                manager.Changed -= Render;
+
+            if (view != null)
+            {
+                view.ConversationSelected -= OnConversationSelected;
+                view.ChoiceSelected -= OnChoiceSelected;
+
+                view.OfferAccepted -= OnOfferAccepted;
+                view.OfferDeferred -= OnOfferDeferred;
+                view.OfferDismissed -= OnOfferDismissed;
+
+                view.Dispose();
+            }
 
             view = null;
             binder = null;
-            engine = null;
+            manager = null;
         }
     }
 }

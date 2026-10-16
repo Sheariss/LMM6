@@ -1,4 +1,4 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements"
+﻿<ui:UXML xmlns:ui="UnityEngine.UIElements"
          editor-extension-mode="False">
 
     <Style src="../../../Tokens/Global-Colors.uss"/>
@@ -10,6 +10,7 @@
     <ui:VisualElement name="WindowRoot"
                       class="window assistant-window">
 
+        <!-- Window header -->
         <ui:VisualElement name="WindowHeader"
                           class="flex-row header">
 
@@ -26,21 +27,21 @@
                          class="flex-row spacing-reset window-controls">
 
                 <ui:Button name="WindowMinimizeButton"
-                           tooltip="Collapse chat"
+                           tooltip="Minimize Assistant"
                            class="button-reset wc-button assistant-collapse-button">
 
                     <ui:Image picking-mode="Ignore"
                               class="assistant-collapse-icon"/>
                 </ui:Button>
 
-                <!-- Required by the existing WindowBinder. -->
+                <!-- Required by WindowBinder. -->
                 <ui:Button name="WindowMaximizeButton"
                            focusable="false"
-                           class="assistant-hidden-control"/>
+                           class="assistant-hidden"/>
 
                 <ui:Button name="WindowCloseButton"
                            focusable="false"
-                           class="assistant-hidden-control"/>
+                           class="assistant-hidden"/>
             </ui:GroupBox>
         </ui:VisualElement>
 
@@ -50,52 +51,57 @@
             <ui:VisualElement name="AssistantRoot"
                               class="assistant-root">
 
+                <!-- Assistant identity -->
                 <ui:VisualElement name="AssistantHeader"
                                   class="assistant-header">
 
-                    <ui:VisualElement class="assistant-profile">
+                    <ui:VisualElement name="AssistantAvatar"
+                                      class="assistant-avatar"/>
 
-                        <ui:VisualElement name="AssistantAvatar"
-                                          class="assistant-avatar"/>
+                    <ui:VisualElement class="assistant-profile-text">
 
-                        <ui:VisualElement class="assistant-profile-text">
+                        <ui:Label name="AssistantName"
+                                  text="ATLAS"
+                                  class="assistant-name"/>
 
-                            <ui:Label name="AssistantName"
-                                      text="ATLAS"
-                                      class="assistant-name"/>
-
-                            <ui:Label name="AssistantSubtitle"
-                                      text="Investigation support"
-                                      class="assistant-subtitle"/>
-                        </ui:VisualElement>
+                        <ui:Label name="AssistantSubtitle"
+                                  text="Your workspace companion"
+                                  class="assistant-subtitle"/>
                     </ui:VisualElement>
                 </ui:VisualElement>
 
+                <!-- Conversation -->
                 <ui:ScrollView name="AssistantMessageScrollView"
                                mode="Vertical"
                                horizontal-scroller-visibility="Hidden"
                                class="assistant-message-scroll">
 
+                    <!-- Hidden by AssistantView after the first message. -->
                     <ui:VisualElement name="AssistantWelcome"
                                       class="assistant-welcome">
 
-                        <ui:Label text="Let's get started."
+                        <ui:Label text="Where shall we start?"
                                   class="assistant-welcome-title"/>
 
-                        <ui:Label text="I can help you find your way around the workstation and explore your next lead."
-                                  class="assistant-welcome-description"/>
+                        <ui:Label
+                            text="I can help you navigate the workspace, use unfamiliar tools, and find opportunities to learn."
+                            class="assistant-welcome-description"/>
+
+                        <ui:Label
+                            text="Choose a suggestion or ask a question below."
+                            class="assistant-welcome-caption"/>
                     </ui:VisualElement>
 
-                    <!-- Message templates are added here. -->
+                    <!-- Existing message templates are inserted here. -->
                     <ui:VisualElement name="AssistantMessageList"
                                       class="assistant-message-list"/>
 
-                    <!-- Only the current interaction's choices appear here. -->
+                    <!-- Populated by AssistantView. -->
                     <ui:VisualElement name="AssistantChoices"
-                                      class="assistant-choices assistant-hidden">
+                                      class="assistant-choices">
 
                         <ui:Label name="AssistantChoicesLabel"
-                                  text="Choose a response"
+                                  text="SUGGESTED RESPONSES"
                                   class="assistant-choices-label"/>
 
                         <ui:VisualElement name="AssistantPromptList"
@@ -103,17 +109,42 @@
                     </ui:VisualElement>
                 </ui:ScrollView>
 
-                <ui:VisualElement name="AssistantFooter"
-                                  class="assistant-footer">
+                <!-- Pill-shaped question composer -->
+                <ui:VisualElement name="AssistantComposer"
+                                  class="assistant-composer">
 
-                    <ui:Label name="AssistantStatusLabel"
-                              text="Explore at your own pace."
-                              class="assistant-footer-status"/>
+                    <ui:VisualElement class="assistant-input-shell">
 
-                    <ui:Button name="AssistantHelpButton"
-                               text="Help"
-                               tooltip="Show available help"
-                               class="assistant-help-button"/>
+                        <ui:VisualElement class="assistant-input-area">
+
+                            <ui:TextField name="AssistantMessageInput"
+                                          multiline="true"
+                                          max-length="1000"
+                                          tooltip="Ask Atlas Assistant a question"
+                                          class="assistant-input"/>
+
+                            <ui:Label name="AssistantInputPlaceholder"
+                                      text="Ask ATLAS a question..."
+                                      picking-mode="Ignore"
+                                      class="assistant-input-placeholder"/>
+                        </ui:VisualElement>
+
+                        <ui:Button name="AssistantSendButton"
+                                   text="↑"
+                                   tooltip="Send message"
+                                   class="assistant-send-button"/>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="AssistantFooter"
+                                      class="assistant-footer">
+
+                        <ui:Label name="AssistantStatusLabel"
+                                  text="Explore at your own pace."
+                                  class="assistant-footer-status"/>
+
+                        <ui:Label text="Enter to send"
+                                  class="assistant-keyboard-hint"/>
+                    </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>

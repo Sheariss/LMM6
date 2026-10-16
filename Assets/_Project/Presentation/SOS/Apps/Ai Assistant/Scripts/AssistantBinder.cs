@@ -8,11 +8,13 @@ namespace Atlas.Presentation.SOS.Assistant
         public ScrollView MessageScroll { get; }
         public VisualElement MessageList { get; }
         public VisualElement Welcome { get; }
+        public VisualElement Choices { get; }
         public VisualElement PromptList { get; }
 
         public TextField Input { get; }
         public Label Placeholder { get; }
         public Button SendButton { get; }
+        public Label Status { get; }
 
         public AssistantBinder(VisualElement root)
         {
@@ -25,6 +27,9 @@ namespace Atlas.Presentation.SOS.Assistant
             Welcome = Bind<VisualElement>(
                 root, "AssistantWelcome");
 
+            Choices = Bind<VisualElement>(
+                root, "AssistantChoices");
+
             PromptList = Bind<VisualElement>(
                 root, "AssistantPromptList");
 
@@ -36,6 +41,9 @@ namespace Atlas.Presentation.SOS.Assistant
 
             SendButton = Bind<Button>(
                 root, "AssistantSendButton");
+
+            Status = Bind<Label>(
+                root, "AssistantStatusLabel");
         }
     }
 }

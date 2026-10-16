@@ -1,101 +1,150 @@
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using UnityEngine;
 
 namespace Atlas.Presentation.SOS.Assistant
 {
-    [Serializable]
-    public sealed class AssistantTopic
-    {
-        public string buttonLabel;
-
-        [TextArea(1, 3)]
-        public string question;
-
-        public string[] keywords;
-
-        [TextArea(3, 8)]
-        public string response;
-    }
-
     public sealed class AssistantEngine
     {
-        private readonly List<AssistantTopic> topics = new();
-        private readonly string fallbackResponse;
-
-        public IReadOnlyList<AssistantTopic> Topics => topics;
-
-        public AssistantEngine(
-            IEnumerable<AssistantTopic> authoredTopics,
-            string fallbackResponse)
+        public bool Meets(
+            AssistantCondition[] conditions,
+            AssistantSaveData state,
+            long nodeEnteredSequence)
         {
-            this.fallbackResponse = fallbackResponse;
+            if (conditions == null)
+                return true;
 
-            if (authoredTopics == null)
-                return;
-
-            foreach (AssistantTopic topic in authoredTopics)
+            foreach (var condition in conditions)
             {
-                if (topic != null &&
-                    !string.IsNullOrWhiteSpace(topic.question) &&
-                    !string.IsNullOrWhiteSpace(topic.response))
-                {
-                    topics.Add(topic);
-                }
-            }
-        }
-
-        public string Respond(
-            string message,
-            AssistantTopic selectedTopic = null)
-        {
-            // Preset questions identify their topic directly.
-            if (selectedTopic != null && topics.Contains(selectedTopic))
-                return selectedTopic.response;
-
-            string text = message?.Trim() ?? string.Empty;
-
-            // Prefer an exact authored question before keyword matching.
-            foreach (AssistantTopic topic in topics)
-            {
-                if (string.Equals(
-                    text,
-                    topic.question.Trim(),
-                    StringComparison.OrdinalIgnoreCase))
-                {
-                    return topic.response;
-                }
-            }
-
-            foreach (AssistantTopic topic in topics)
-            {
-                if (topic.keywords == null)
+                if (condition == null)
                     continue;
 
-                foreach (string keyword in topic.keywords)
+                bool actual;
+
+                switch (condition.kind)
                 {
-                    if (string.IsNullOrWhiteSpace(keyword))
-                        continue;
+                    case AssistantConditionKind.Fact:
+                        {
+                            var fact = state.facts.Find(
+                                item => item.key == condition.key);
 
-                    // Match whole words or phrases.
-                    string pattern =
-                        @"(?<!\w)" +
-                        Regex.Escape(keyword.Trim()) +
-                        @"(?!\w)";
+                            actual = fact != null && fact.value;
+                            break;
+                        }
 
-                    if (Regex.IsMatch(
-                        text,
-                        pattern,
-                        RegexOptions.IgnoreCase |
-                        RegexOptions.CultureInvariant))
-                    {
-                        return topic.response;
-                    }
+                    case AssistantConditionKind.SignalReceived:
+                        {
+                            actual = state.signals.Exists(
+                                item => item.key == condition.key);
+
+                            break;
+                        }
+
+                    case AssistantConditionKind.SignalAfterNodeEntered:
+                        {
+                            actual = state.signals.Exists(
+                                item => item.key == condition.key &&
+                                        item.sequence > nodeEnteredSequence);
+
+                            break;
+                        }
+
+                    default:
+                        return false;
+                }
+
+                if (actual != condition.expectedValue)
+                    return false;
+            }
+
+            return true;
+        }
+
+        public List<AssistantChoiceDefinition> GetChoices(
+            AssistantNodeDefinition node,
+            AssistantSaveData state,
+            long nodeEnteredSequence)
+        {
+            var result = new List<AssistantChoiceDefinition>();
+
+            if (node == null)
+                return result;
+
+            foreach (var choice in node.choices)
+            {
+                if (choice != null &&
+                    Meets(
+                        choice.conditions,
+                        state,
+                        nodeEnteredSequence))
+                {
+                    result.Add(choice);
                 }
             }
 
-            return fallbackResponse;
+            return result;
+        }
+
+        public AssistantTransition Choose(
+            AssistantConversationDefinition conversation,
+            AssistantConversationState runtime,
+            string choiceId,
+            AssistantSaveData state)
+        {
+            var node = conversation.FindNode(runtime.currentNodeId);
+
+            if (node == null || runtime.finished)
+                return null;
+
+            var choice = Array.Find(
+                node.choices,
+                item => item != null && item.id == choiceId);
+
+            if (choice == null ||
+                !Meets(
+                    choice.conditions,
+                    state,
+                    runtime.nodeEnteredSequence))
+            {
+                return null;
+            }
+
+            return new AssistantTransition
+            {
+                conversationId = conversation.id,
+                fromNodeId = node.id,
+                nextNodeId = choice.nextNodeId,
+                playerText = string.IsNullOrWhiteSpace(choice.playerText)
+                    ? choice.label
+                    : choice.playerText,
+                effects = choice.effects
+            };
+        }
+
+        public AssistantTransition EvaluateAutomatic(
+            AssistantConversationDefinition conversation,
+            AssistantConversationState runtime,
+            AssistantSaveData state)
+        {
+            var node = conversation.FindNode(runtime.currentNodeId);
+
+            if (node == null ||
+                runtime.finished ||
+                node.advanceWhen.Length == 0 ||
+                !Meets(
+                    node.advanceWhen,
+                    state,
+                    runtime.nodeEnteredSequence))
+            {
+                return null;
+            }
+
+            return new AssistantTransition
+            {
+                conversationId = conversation.id,
+                fromNodeId = node.id,
+                nextNodeId = node.automaticNextNodeId,
+                effects = Array.Empty<AssistantEffect>()
+            };
         }
     }
 }

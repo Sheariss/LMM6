@@ -3,43 +3,185 @@ using UnityEngine.UIElements;
 
 namespace Atlas.Presentation.SOS.Assistant
 {
-    public sealed class AssistantView
+    public sealed class AssistantView : IDisposable
     {
         private readonly AssistantBinder binder;
-        private readonly VisualTreeAsset assistantTemplate;
-        private readonly VisualTreeAsset playerTemplate;
+        private readonly AssistantViewBuilder builder;
 
-        private VisualElement lastMessage;
+        private readonly VisualElement conversationBar;
+        private readonly VisualElement offerArea;
+
+        private AssistantConversationState renderedConversation;
+        private int renderedMessageCount;
+        private int renderVersion;
         private bool disposed;
+
+        public event Action<string> ConversationSelected;
+
+        public event Action<string, string, string> ChoiceSelected;
+
+        public event Action<string> OfferAccepted;
+        public event Action<string> OfferDeferred;
+        public event Action<string> OfferDismissed;
 
         public AssistantView(
             AssistantBinder binder,
-            VisualTreeAsset assistantTemplate,
-            VisualTreeAsset playerTemplate)
+            AssistantViewBuilder builder)
         {
             this.binder = binder;
-            this.assistantTemplate = assistantTemplate;
-            this.playerTemplate = playerTemplate;
+            this.builder = builder;
 
-            binder.MessageScroll.RegisterCallback<GeometryChangedEvent>(
-                OnGeometryChanged);
-
-            binder.MessageList.RegisterCallback<GeometryChangedEvent>(
-                OnGeometryChanged);
-        }
-
-        public Button AddPrompt(string text)
-        {
-            var button = new Button
+            conversationBar = new VisualElement
             {
-                text = text,
-                tooltip = text
+                name = "AssistantConversationBar"
             };
 
-            button.AddToClassList("assistant-prompt-button");
-            binder.PromptList.Add(button);
+            offerArea = new VisualElement
+            {
+                name = "AssistantOfferArea"
+            };
 
-            return button;
+            conversationBar.style.flexShrink = 0;
+
+            offerArea.style.flexShrink = 0;
+            offerArea.style.maxHeight = 220;
+
+            var offerScroll = new ScrollView();
+            offerScroll.style.maxHeight = 220;
+            offerScroll.Add(offerArea);
+
+            var parent = binder.MessageScroll.parent;
+            int index = parent.IndexOf(binder.MessageScroll);
+
+            parent.Insert(index, conversationBar);
+            parent.Insert(index + 1, offerScroll);
+
+            // Retain this wrapper for disposal.
+            OfferScroll = offerScroll;
+        }
+
+        private ScrollView OfferScroll { get; }
+
+        public void Capture()
+        {
+            if (renderedConversation == null)
+                return;
+
+            renderedConversation.draft = binder.Input.value;
+            renderedConversation.scrollY =
+                binder.MessageScroll.scrollOffset.y;
+        }
+
+        public void Render(AssistantManager manager)
+        {
+            if (disposed)
+                return;
+
+            bool wasNearBottom =
+                binder.MessageScroll.verticalScroller.highValue -
+                binder.MessageScroll.scrollOffset.y < 48f;
+
+            Capture();
+
+            var selected = manager.SelectedConversation;
+
+            bool sameConversation =
+                renderedConversation != null &&
+                selected != null &&
+                renderedConversation.id == selected.id;
+
+            bool receivedMessage =
+                sameConversation &&
+                selected.messages.Count > renderedMessageCount;
+
+            conversationBar.Clear();
+
+            foreach (var conversation in manager.Conversations)
+            {
+                string id = conversation.id;
+
+                string title = manager.Catalog
+                    .FindConversation(id).title;
+
+                conversationBar.Add(builder.BuildConversation(
+                    title,
+                    selected?.id == id,
+                    () => ConversationSelected?.Invoke(id)));
+            }
+
+            RenderOffers(manager);
+
+            binder.MessageList.Clear();
+            binder.PromptList.Clear();
+
+            binder.Welcome.style.display =
+                selected == null || selected.messages.Count == 0
+                    ? DisplayStyle.Flex
+                    : DisplayStyle.None;
+
+            if (selected != null)
+            {
+                foreach (var message in selected.messages)
+                    binder.MessageList.Add(
+                        builder.BuildMessage(message));
+
+                string conversationId = selected.id;
+                string nodeId = selected.currentNodeId;
+
+                foreach (var choice in manager.GetChoices(selected))
+                {
+                    string choiceId = choice.id;
+
+                    binder.PromptList.Add(builder.BuildChoice(
+                        choice.label,
+                        () => ChoiceSelected?.Invoke(
+                            conversationId,
+                            nodeId,
+                            choiceId)));
+                }
+            }
+
+            binder.Choices.style.display =
+                binder.PromptList.childCount > 0
+                    ? DisplayStyle.Flex
+                    : DisplayStyle.None;
+
+            binder.Input.SetValueWithoutNotify(
+                selected?.draft ?? string.Empty);
+
+            binder.Input.SetEnabled(selected != null);
+
+            binder.Status.text = selected == null
+                ? "Choose a conversation to begin."
+                : selected.finished
+                    ? "You can return to another conversation."
+                    : "Explore at your own pace.";
+
+            renderedConversation = selected;
+            renderedMessageCount = selected?.messages.Count ?? 0;
+
+            RefreshComposer();
+
+            int version = ++renderVersion;
+            float restoreY = selected?.scrollY ?? 0;
+
+            bool followNewMessage =
+                sameConversation &&
+                receivedMessage &&
+                wasNearBottom;
+
+            binder.MessageScroll.schedule.Execute(() =>
+            {
+                if (disposed || version != renderVersion)
+                    return;
+
+                float y = followNewMessage
+                    ? binder.MessageScroll.verticalScroller.highValue
+                    : restoreY;
+
+                binder.MessageScroll.scrollOffset =
+                    new UnityEngine.Vector2(0, y);
+            });
         }
 
         public void RefreshComposer()
@@ -50,52 +192,53 @@ namespace Atlas.Presentation.SOS.Assistant
                 empty ? DisplayStyle.Flex : DisplayStyle.None;
 
             binder.SendButton.SetEnabled(
+                renderedConversation != null &&
                 !string.IsNullOrWhiteSpace(binder.Input.value));
         }
 
         public void ClearInput()
         {
             binder.Input.SetValueWithoutNotify(string.Empty);
+
+            if (renderedConversation != null)
+                renderedConversation.draft = string.Empty;
+
             RefreshComposer();
         }
 
-        public void AddMessage(string text, bool fromPlayer)
+        private void RenderOffers(AssistantManager manager)
         {
-            VisualTreeAsset template =
-                fromPlayer ? playerTemplate : assistantTemplate;
+            offerArea.Clear();
 
-            TemplateContainer message = template.CloneTree();
-            Label messageText = message.Q<Label>("MessageText");
+            // A blocking moment hides presentation without losing offers.
+            if (manager.GetFact("assistant.offers.blocked"))
+                return;
 
-            if (messageText == null)
+            foreach (var offer in manager.Offers)
             {
-                throw new InvalidOperationException(
-                    "Assistant message template needs a MessageText label.");
+                bool deferred =
+                    offer.status == AssistantOfferStatus.Deferred;
+
+                if (!deferred &&
+                    offer.status != AssistantOfferStatus.Presented)
+                {
+                    continue;
+                }
+
+                var definition = manager.Catalog.FindOffer(offer.id);
+
+                if (definition == null)
+                    continue;
+
+                string id = offer.id;
+
+                offerArea.Add(builder.BuildOffer(
+                    definition,
+                    deferred,
+                    () => OfferAccepted?.Invoke(id),
+                    () => OfferDeferred?.Invoke(id),
+                    () => OfferDismissed?.Invoke(id)));
             }
-
-            // Player input should appear literally.
-            messageText.enableRichText = false;
-            messageText.text = text;
-
-            Label sender = message.Q<Label>("MessageSender");
-            if (sender != null)
-                sender.text = "ATLAS";
-
-            Label time = message.Q<Label>("MessageTime");
-            if (time != null)
-                time.text = DateTime.Now.ToString("HH:mm");
-
-            binder.Welcome.style.display = DisplayStyle.None;
-            binder.MessageList.Add(message);
-
-            lastMessage = message;
-        }
-
-        private void OnGeometryChanged(GeometryChangedEvent evt)
-        {
-            // Wait until layout has measured the newly added message.
-            if (!disposed && lastMessage?.panel != null)
-                binder.MessageScroll.ScrollTo(lastMessage);
         }
 
         public void Dispose()
@@ -103,18 +246,15 @@ namespace Atlas.Presentation.SOS.Assistant
             if (disposed)
                 return;
 
+            Capture();
             disposed = true;
+            renderVersion++;
 
-            binder.MessageScroll.UnregisterCallback<GeometryChangedEvent>(
-                OnGeometryChanged);
+            conversationBar.RemoveFromHierarchy();
+            OfferScroll.RemoveFromHierarchy();
 
-            binder.MessageList.UnregisterCallback<GeometryChangedEvent>(
-                OnGeometryChanged);
-
-            binder.PromptList.Clear();
             binder.MessageList.Clear();
-
-            lastMessage = null;
+            binder.PromptList.Clear();
         }
     }
 }

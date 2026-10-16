@@ -1,4 +1,6 @@
-/* WINDOW */
+/* =========================================================
+   WINDOW
+   ========================================================= */
 
 .assistant-window {
     flex-direction: column;
@@ -20,10 +22,10 @@
 }
 
 .assistant-window .header-icon-area {
-    width: 32px;
-    height: 32px;
-    margin: 0 4px 0 8px;
-    padding: 6px;
+    width: 28px;
+    height: 28px;
+    margin: 0 4px 0 10px;
+    padding: 5px;
     flex-shrink: 0;
 }
 
@@ -38,6 +40,8 @@
 
 .assistant-window .header-title {
     min-width: 0;
+    margin: 0;
+    padding: 0;
     flex-grow: 1;
     flex-shrink: 1;
     color: #e3e3e3;
@@ -51,18 +55,15 @@
     margin: 0;
     padding: 0;
     flex-direction: row;
-    flex-shrink: 0;
     align-items: center;
+    flex-shrink: 0;
     border-width: 0;
-}
-
-.assistant-window .assistant-hidden-control {
-    display: none;
 }
 
 .assistant-window > .assistant-window-content {
     width: 100%;
     height: auto;
+    min-width: 0;
     min-height: 0;
     flex-grow: 1;
     flex-shrink: 1;
@@ -70,8 +71,6 @@
     background-color: #131314;
     overflow: hidden;
 }
-
-/* COLLAPSE BUTTON */
 
 .assistant-window .assistant-collapse-button {
     width: 36px;
@@ -88,12 +87,11 @@
     border-radius: 18px;
 }
 
-.assistant-window .assistant-collapse-icon {
+.assistant-collapse-icon {
     width: 24px;
     height: 24px;
     margin: 0;
     padding: 0;
-    flex-shrink: 0;
     background-image: resource("Icons/Arrows 1/Expand-Arrow/keyboard_arrow_down_32dp");
     -unity-background-scale-mode: scale-to-fit;
     -unity-background-image-tint-color: #ffce4a;
@@ -111,7 +109,9 @@
     border-color: #ffce4a;
 }
 
-/* ASSISTANT HEADER */
+/* =========================================================
+   ASSISTANT IDENTITY
+   ========================================================= */
 
 .assistant-root {
     min-width: 0;
@@ -124,52 +124,55 @@
 }
 
 .assistant-header {
-    height: 60px;
-    min-height: 60px;
-    padding: 0 20px;
+    height: auto;
+    min-height: 72px;
+    padding: 12px 22px;
+    flex-direction: row;
+    align-items: center;
     flex-shrink: 0;
-    flex-direction: row;
-    align-items: center;
-}
-
-.assistant-profile {
-    min-width: 0;
-    flex-direction: row;
-    align-items: center;
 }
 
 .assistant-avatar {
-    width: 32px;
-    min-width: 32px;
-    height: 32px;
-    margin-right: 10px;
+    width: 35px;
+    min-width: 35px;
+    height: 35px;
+    margin-right: 12px;
     flex-shrink: 0;
-    border-radius: 16px;
     background-color: #ffb81c;
-    background-size: cover;
-    background-position: center;
+    border-radius: 18px;
+    -unity-background-scale-mode: scale-to-fit;
 }
 
 .assistant-profile-text {
     min-width: 0;
+    flex-grow: 1;
     flex-shrink: 1;
     justify-content: center;
 }
 
 .assistant-name {
     margin: 0;
+    padding: 0;
     color: #e3e3e3;
-    font-size: 15px;
+    font-size: 17px;
     -unity-font-style: bold;
 }
 
 .assistant-subtitle {
-    margin: 3px 0 0 0;
+    height: auto;
+    min-height: 18px;
+    margin: 2px 0 0 0;
+    padding: 0;
+    flex-shrink: 0;
     color: #9aa0a6;
-    font-size: 11px;
+    font-size: 12px;
+    white-space: normal;
+    overflow: visible;
 }
 
-/* CONVERSATION */
+/* =========================================================
+   CONVERSATION
+   ========================================================= */
 
 .assistant-message-scroll {
     min-width: 0;
@@ -181,42 +184,55 @@
 
 .assistant-message-scroll .unity-scroll-view__content-container {
     min-width: 0;
+    padding-bottom: 8px;
 }
 
 .assistant-welcome {
-    padding: 24px 20px 12px 20px;
+    padding: 26px 22px 24px 22px;
     flex-shrink: 0;
 }
 
 .assistant-welcome-title {
-    margin: 0 0 8px 0;
+    margin: 0 0 14px 0;
+    padding: 0;
     color: #ffce4a;
-    font-size: 24px;
+    font-size: 26px;
+    -unity-font-style: normal;
     white-space: normal;
 }
 
 .assistant-welcome-description {
     margin: 0;
+    padding: 0;
     color: #b7b9bd;
-    font-size: 13px;
+    font-size: 14px;
+    white-space: normal;
+}
+
+.assistant-welcome-caption {
+    margin: 14px 0 0 0;
+    padding: 0;
+    color: #9aa0a6;
+    font-size: 12px;
     white-space: normal;
 }
 
 .assistant-message-list {
     min-width: 0;
     padding: 16px 20px 0 20px;
-    flex-grow: 0;
     flex-shrink: 0;
 }
 
-/* MESSAGE TEMPLATES */
+/* =========================================================
+   MESSAGE TEMPLATES
+   ========================================================= */
 
 .assistant-message-row {
     width: 100%;
     margin-bottom: 20px;
     flex-direction: row;
-    flex-shrink: 0;
     align-items: flex-start;
+    flex-shrink: 0;
 }
 
 .assistant-message-row--assistant {
@@ -233,10 +249,9 @@
     height: 28px;
     margin-right: 10px;
     flex-shrink: 0;
-    border-radius: 14px;
     background-color: #ffb81c;
-    background-size: cover;
-    background-position: center;
+    border-radius: 14px;
+    -unity-background-scale-mode: scale-to-fit;
 }
 
 .assistant-message-column {
@@ -245,9 +260,18 @@
     flex-shrink: 1;
 }
 
+.assistant-message-sender {
+    margin: 0 0 5px 2px;
+    padding: 0;
+    color: #ffce4a;
+    font-size: 11px;
+    -unity-font-style: bold;
+}
+
 .assistant-message-bubble {
     min-width: 0;
     padding: 12px 16px;
+    border-width: 0;
     border-radius: 18px;
 }
 
@@ -267,13 +291,6 @@
     white-space: normal;
 }
 
-.assistant-message-sender {
-    margin: 0 0 5px 2px;
-    color: #ffce4a;
-    font-size: 10px;
-    -unity-font-style: bold;
-}
-
 .assistant-message-meta {
     margin-top: 5px;
     flex-direction: row;
@@ -290,21 +307,24 @@
 
 .assistant-message-time {
     margin: 0 2px;
+    padding: 0;
     color: #9aa0a6;
-    font-size: 9px;
+    font-size: 10px;
 }
 
 .assistant-message-read {
     display: none;
 }
 
-/* TYPING INDICATOR */
+/* =========================================================
+   TYPING INDICATOR TEMPLATE
+   ========================================================= */
 
 .assistant-typing-row {
     margin-bottom: 20px;
     flex-direction: row;
-    flex-shrink: 0;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .assistant-typing-bubble {
@@ -320,26 +340,31 @@
     width: 5px;
     height: 5px;
     margin-right: 4px;
-    border-radius: 3px;
     background-color: #ffb81c;
+    border-radius: 3px;
 }
 
 .assistant-typing-dot--three {
     margin-right: 0;
 }
 
-/* CURRENT RESPONSE OPTIONS */
+/* =========================================================
+   RESPONSE CHOICES
+   ========================================================= */
 
 .assistant-choices {
     min-width: 0;
-    padding: 0 20px 20px 20px;
+    padding: 4px 20px 12px 20px;
     flex-shrink: 0;
 }
 
 .assistant-choices-label {
-    margin: 0 0 8px 0;
+    margin: 0 0 10px 0;
+    padding: 0;
     color: #9aa0a6;
-    font-size: 10px;
+    font-size: 11px;
+    -unity-font-style: bold;
+    white-space: normal;
 }
 
 .assistant-choice-list {
@@ -348,10 +373,11 @@
     align-items: stretch;
 }
 
-/* The builder adds this class to each response button. */
+/* The current View creates assistant-prompt-button. */
+.assistant-prompt-button,
 .assistant-choice-button {
     min-width: 0;
-    min-height: 42px;
+    min-height: 44px;
     margin: 0 0 8px 0;
     padding: 11px 16px;
     flex-shrink: 0;
@@ -363,31 +389,22 @@
     border-color: #594326;
     border-radius: 16px;
 
-    font-size: 12px;
+    font-size: 13px;
     white-space: normal;
     -unity-text-align: middle-left;
 }
 
+.assistant-prompt-button:hover:enabled,
 .assistant-choice-button:hover:enabled {
     background-color: #44331d;
     border-color: #9c742b;
 }
 
+.assistant-prompt-button:active:enabled,
 .assistant-choice-button:active:enabled {
     background-color: #594022;
 }
 
-.assistant-choice-button:focus {
-    border-color: #ffce4a;
-}
-
-.assistant-choice-button:disabled {
-    background-color: #232323;
-    color: #898989;
-    border-color: #353535;
-}
-
-/* Optional modifier for the main action. */
 .assistant-choice-button--primary {
     background-color: #ffb81c;
     color: #30200b;
@@ -405,7 +422,6 @@
     border-color: #f99707;
 }
 
-/* Optional modifier for "I'll explore" and similar choices. */
 .assistant-choice-button--secondary {
     background-color: transparent;
     color: #c4c7c5;
@@ -417,68 +433,215 @@
     border-color: #77716a;
 }
 
-/* PERSISTENT HELP FOOTER */
+/* =========================================================
+   PILL COMPOSER
+   ========================================================= */
 
-.assistant-footer {
-    min-height: 58px;
-    padding: 10px 16px;
+.assistant-composer {
+    padding: 12px 16px 10px 16px;
     flex-shrink: 0;
-    flex-direction: row;
-    align-items: center;
-
     background-color: #181819;
     border-top-width: 1px;
     border-top-color: #2b2b2d;
 }
 
-.assistant-footer-status {
+.assistant-input-shell {
     min-width: 0;
-    margin: 0 12px 0 0;
+    min-height: 56px;
+    padding: 6px;
+    flex-direction: row;
+    align-items: center;
+
+    background-color: #131314;
+
+    border-width: 1px;
+    border-color: #353537;
+    border-radius: 999px;
+}
+
+.assistant-input-area {
+    position: relative;
+    min-width: 0;
+    min-height: 42px;
+    margin-left: 8px;
     flex-grow: 1;
     flex-shrink: 1;
+}
 
-    color: #9aa0a6;
-    font-size: 10px;
+.assistant-input {
+    min-width: 0;
+    min-height: 42px;
+    max-height: 112px;
+    margin: 0;
+    padding: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+    color: #e3e3e3;
+    font-size: 13px;
+}
+
+.assistant-input .unity-text-field__input {
+    min-width: 0;
+    min-height: 42px;
+    margin: 0;
+    padding: 11px 8px;
+
+    background-color: transparent;
+    color: #e3e3e3;
+
+    border-width: 1px;
+    border-color: transparent;
+    border-radius: 20px;
+
     white-space: normal;
 }
 
-.assistant-help-button {
-    min-width: 64px;
-    min-height: 34px;
-    margin: 0;
-    padding: 7px 16px;
-    flex-shrink: 0;
-
-    background-color: #30271b;
-    color: #ffe388;
-
-    border-width: 1px;
-    border-color: #594326;
-    border-radius: 17px;
-
-    font-size: 12px;
-}
-
-.assistant-help-button:hover:enabled {
-    background-color: #44331d;
-}
-
-.assistant-help-button:active:enabled {
-    background-color: #594022;
-}
-
-.assistant-help-button:focus {
+.assistant-input .unity-text-field__input:focus {
     border-color: #ffce4a;
 }
 
-.assistant-help-button:disabled {
+.assistant-input-placeholder {
+    position: absolute;
+    top: 12px;
+    left: 9px;
+    right: 8px;
+    margin: 0;
+    padding: 0;
+    color: #9aa0a6;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Circular arrow button */
+.assistant-send-button {
+    width: 42px;
+    min-width: 42px;
+    max-width: 42px;
+
+    height: 42px;
+    min-height: 42px;
+    max-height: 42px;
+
+    margin: 0 0 0 6px;
+    padding: 0;
+    flex-shrink: 0;
+    align-self: center;
+
+    background-color: #ffb81c;
+    color: #30200b;
+
+    border-width: 1px;
+    border-color: #ffb81c;
+    border-radius: 999px;
+
+    font-size: 26px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.assistant-send-button:hover:enabled {
+    background-color: #ffce4a;
+    border-color: #ffce4a;
+}
+
+.assistant-send-button:active:enabled {
+    background-color: #f99707;
+    border-color: #f99707;
+}
+
+/* =========================================================
+   KEYBOARD FOCUS AND DISABLED STATES
+   ========================================================= */
+
+.assistant-prompt-button:focus,
+.assistant-choice-button:focus {
+    border-color: #ffce4a;
+    border-width: 2px;
+}
+
+.assistant-send-button:focus {
+    border-color: #ffe388;
+    border-width: 2px;
+}
+
+.assistant-prompt-button:disabled,
+.assistant-choice-button:disabled {
     background-color: #232323;
     color: #898989;
     border-color: #353535;
 }
 
-/* VISIBILITY */
+.assistant-send-button:disabled {
+    background-color: #30271b;
+    color: #9aa0a6;
+    border-color: #594326;
+}
 
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.assistant-footer {
+    margin-top: 8px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.assistant-footer-status {
+    min-width: 0;
+    margin: 0 10px 4px 0;
+    padding: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+    color: #9aa0a6;
+    font-size: 11px;
+    white-space: normal;
+}
+
+.assistant-keyboard-hint {
+    margin: 0 0 4px 0;
+    padding: 0;
+    color: #9aa0a6;
+    font-size: 11px;
+}
+
+/* Keep visibility overrides last. */
 .assistant-hidden {
     display: none;
+}
+
+/* Fixed-height pill with semicircular ends. */
+.assistant-input-shell {
+    height: 56px;
+    min-height: 56px;
+    max-height: 56px;
+    padding: 6px;
+    border-radius: 28px;
+    align-items: center;
+}
+
+.assistant-input-area {
+    height: 42px;
+    min-height: 42px;
+    max-height: 42px;
+}
+
+.assistant-input {
+    height: 42px;
+    min-height: 42px;
+    max-height: 42px;
+}
+
+/* The outer shell supplies the pill shape. */
+.assistant-input .unity-text-field__input {
+    border-radius: 8px;
+}
+
+/* Explicit half-height radius for the circular send button. */
+.assistant-send-button {
+    border-radius: 21px;
 }

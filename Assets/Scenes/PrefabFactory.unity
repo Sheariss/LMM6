@@ -361,6 +361,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1412579402}
   - component: {fileID: 1412579403}
+  - component: {fileID: 1412579404}
   m_Layer: 0
   m_Name: AssistantRuntime
   m_TagString: Untagged
@@ -395,6 +396,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddad4a79761d2141985a4c2a2b56004, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Windows.WindowController
+--- !u!114 &1412579404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412579401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3724c4aed8472a341bc309050a477295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Assistant.AssistantController
+  manager: {fileID: 0}
+  assistantMessageTemplate: {fileID: 9197481963319205126, guid: fc8f6c9fefcbc6b4e820dd5c757b5c48, type: 3}
+  playerMessageTemplate: {fileID: 9197481963319205126, guid: 5fc015c945a2a234e979db1537911442, type: 3}
 --- !u!4 &1543290610 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8580871968913475674, guid: 47427e0a73469ed4b9eedb8b84744eb6, type: 3}
