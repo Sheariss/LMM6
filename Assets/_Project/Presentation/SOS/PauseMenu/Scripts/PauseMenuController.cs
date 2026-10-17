@@ -1,7 +1,6 @@
 using Atlas.Core.GameState;
 using Atlas.Presentation.GameUI.SecurityScreen;
 using System.Reflection;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -136,12 +135,12 @@ namespace Atlas.Presentation.GameUI.PauseMenu
             Debug.Log("[PauseMenuController] Settings pressed.");
 
             // TODO: Show settings via MainMenu Controller or SettingsController
-        
+
             // Is it possible to enter main menu without unloading the SOS scene>
             // Or perhaps we just include duplicate panels in a similar way to the pause menu
             // where hiting back just returns you to the pause menu
             // the same with accessibility
-            // game state can perhasp remain in paused while settings are fiddled with 
+            // game state can perhasp remain in paused while settings are fiddled with
         }
 
         private void OnAccessibilityPressed()
