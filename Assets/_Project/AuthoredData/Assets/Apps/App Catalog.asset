@@ -54,8 +54,8 @@ MonoBehaviour:
     pinToTaskbar: 1
   - appID: messenger
     displayName: Messenger
-    appIcon48: {fileID: 6630927261847639050, guid: acb22d3ad13de9e45aeba62f6826c1f8, type: 3}
-    appIcon96: {fileID: -2265978824201132125, guid: 1a2f6b2d272a23e448ce04e78a170c14, type: 3}
+    appIcon48: {fileID: 21300000, guid: acb22d3ad13de9e45aeba62f6826c1f8, type: 3}
+    appIcon96: {fileID: 21300000, guid: 1a2f6b2d272a23e448ce04e78a170c14, type: 3}
     category: 2
     appUXML: {fileID: 9197481963319205126, guid: 2142d17954aaca54c99768c68fb17706, type: 3}
     runtimePrefab: {fileID: 460072022803693853, guid: 47427e0a73469ed4b9eedb8b84744eb6, type: 3}
@@ -93,8 +93,8 @@ MonoBehaviour:
     pinToTaskbar: 1
   - appID: email
     displayName: Email
-    appIcon48: {fileID: 6622987487043434500, guid: 52ab2f2743e198c4caf86640c0fb927e, type: 3}
-    appIcon96: {fileID: 8657413132315104106, guid: 03fc838232f60784892a2a0ceb30c384, type: 3}
+    appIcon48: {fileID: 21300000, guid: 52ab2f2743e198c4caf86640c0fb927e, type: 3}
+    appIcon96: {fileID: 21300000, guid: 03fc838232f60784892a2a0ceb30c384, type: 3}
     category: 2
     appUXML: {fileID: 0}
     runtimePrefab: {fileID: 0}
@@ -106,8 +106,8 @@ MonoBehaviour:
     pinToTaskbar: 1
   - appID: news
     displayName: News
-    appIcon48: {fileID: -8554027319003177030, guid: 93a31dccacc238348940aef3384d4555, type: 3}
-    appIcon96: {fileID: 7775220601029501873, guid: acaa9fc1699c87e409bfcd985088cd6c, type: 3}
+    appIcon48: {fileID: 21300000, guid: 93a31dccacc238348940aef3384d4555, type: 3}
+    appIcon96: {fileID: 21300000, guid: acaa9fc1699c87e409bfcd985088cd6c, type: 3}
     category: 4
     appUXML: {fileID: 9197481963319205126, guid: a6d3332f4413ac4409dbdb9c528fb549, type: 3}
     runtimePrefab: {fileID: 4678264279840244800, guid: 70701a3a6b2144248afca7e78c1684b0, type: 3}
@@ -119,8 +119,8 @@ MonoBehaviour:
     pinToTaskbar: 1
   - appID: browser
     displayName: Web Browser
-    appIcon48: {fileID: -8692082910617970706, guid: 8cb0174e302776b439aa815a8eb87bc5, type: 3}
-    appIcon96: {fileID: -3927905213550672675, guid: 9f529cfb89eb7cb47b7aa7d7ca5a6495, type: 3}
+    appIcon48: {fileID: 21300000, guid: 8cb0174e302776b439aa815a8eb87bc5, type: 3}
+    appIcon96: {fileID: 21300000, guid: 9f529cfb89eb7cb47b7aa7d7ca5a6495, type: 3}
     category: 1
     appUXML: {fileID: 9197481963319205126, guid: 9a31d5a082b52e741ba83e0a6fb05ccb, type: 3}
     runtimePrefab: {fileID: 685469545303948612, guid: bc9958415db99984dabb288e53ca38d7, type: 3}
@@ -145,8 +145,8 @@ MonoBehaviour:
     pinToTaskbar: 0
   - appID: pdf-viewer
     displayName: PDF Viewer
-    appIcon48: {fileID: 2081229772717681874, guid: e53a33a284d8e7746b06adce99bfd090, type: 3}
-    appIcon96: {fileID: 8093248978165781046, guid: 3b6e8055c2aca0547b32800f717969ea, type: 3}
+    appIcon48: {fileID: 21300000, guid: e53a33a284d8e7746b06adce99bfd090, type: 3}
+    appIcon96: {fileID: 21300000, guid: 3b6e8055c2aca0547b32800f717969ea, type: 3}
     category: 1
     appUXML: {fileID: 9197481963319205126, guid: acfd149fb29a6324a9655801a83e7362, type: 3}
     runtimePrefab: {fileID: 8228470272741409234, guid: 3bf758cd4b5736e48b6101f0b598475f, type: 3}
@@ -184,8 +184,8 @@ MonoBehaviour:
     pinToTaskbar: 0
   - appID: calendar
     displayName: Calendar
-    appIcon48: {fileID: -5971649255504818168, guid: e6fa53164dbf5e1478379e63c6ad69e9, type: 3}
-    appIcon96: {fileID: 6965787213145144613, guid: 55c5b4096ded464449a116904f4a8393, type: 3}
+    appIcon48: {fileID: 21300000, guid: e6fa53164dbf5e1478379e63c6ad69e9, type: 3}
+    appIcon96: {fileID: 21300000, guid: 55c5b4096ded464449a116904f4a8393, type: 3}
     category: 1
     appUXML: {fileID: 9197481963319205126, guid: 22f221cf28d1eee4e82800122974d70c, type: 3}
     runtimePrefab: {fileID: 0}
