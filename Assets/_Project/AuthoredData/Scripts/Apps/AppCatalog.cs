@@ -6,6 +6,18 @@ using UnityEngine.UIElements;
 
 namespace Atlas.SOS.Apps
 {
+    public enum AppCategory
+    {
+        Other = 0,
+        Productivity = 1,
+        Communication = 2,
+        Creativity = 3,
+        Entertainment = 4,
+        DeveloperTools = 5,
+        UtilitiesAndTools = 6,
+        System = 7
+    }
+
     [Serializable]
     public sealed class AppDefinition
     {
@@ -14,6 +26,9 @@ namespace Atlas.SOS.Apps
         [SerializeField] private string displayName;
         [SerializeField] private Sprite appIcon48;
         [SerializeField] private Sprite appIcon96;
+
+        [Header("Organization")]
+        [SerializeField] private AppCategory category = AppCategory.Other;
 
         [Header("Window")]
         [SerializeField] private VisualTreeAsset appUXML;
@@ -37,6 +52,8 @@ namespace Atlas.SOS.Apps
         public string DisplayName => displayName;
         public Sprite AppIcon48 => appIcon48;
         public Sprite AppIcon96 => appIcon96;
+
+        public AppCategory Category => category;
 
         public VisualTreeAsset AppUXML => appUXML;
         public AppContentController RuntimePrefab => runtimePrefab;

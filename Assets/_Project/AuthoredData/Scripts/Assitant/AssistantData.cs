@@ -85,10 +85,14 @@ namespace Atlas.Presentation.SOS.Assistant
         [TextArea(2, 8)]
         public string message;
 
+        // Optional guided overlay configuration.
+        public TutorialPresentationDefinition presentation =
+            new TutorialPresentationDefinition();
+
         public AssistantChoiceDefinition[] choices =
             Array.Empty<AssistantChoiceDefinition>();
 
-        // These effects run once when this node is entered.
+        // Run once when this node is entered.
         public AssistantEffect[] enterEffects =
             Array.Empty<AssistantEffect>();
 
@@ -97,6 +101,7 @@ namespace Atlas.Presentation.SOS.Assistant
         public AssistantCondition[] advanceWhen =
             Array.Empty<AssistantCondition>();
 
+        // Empty completes the conversation when automatic advancement occurs.
         public string automaticNextNodeId;
     }
 

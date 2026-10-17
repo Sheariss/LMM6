@@ -1,0 +1,51 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="../../../../Tokens/Global-Colors.uss"/>
+    <Style src="../../../../Tokens/Global-Tokens.uss"/>
+    <Style src="StartMenu.uss"/>
+
+    <ui:VisualElement name="StartMenuRoot" class="start-menu">
+        <ui:VisualElement class="start-menu-search">
+            <ui:Image picking-mode="Ignore" class="start-menu-search-icon"/>
+            <ui:VisualElement class="start-menu-search-input">
+                <ui:TextField name="StartMenuSearchField" tooltip="Search available apps" class="start-menu-search-field"/>
+                <ui:Label name="StartMenuSearchPlaceholder" text="Search apps" picking-mode="Ignore" class="start-menu-search-placeholder"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:ScrollView name="StartMenuScrollView" mode="Vertical" horizontal-scroller-visibility="Hidden" class="start-menu-scroll">
+            <ui:VisualElement name="StartMenuPinnedSection" class="start-menu-section">
+                <ui:Label text="Pinned" class="start-menu-heading"/>
+                <ui:VisualElement name="StartMenuPinnedGrid" class="start-menu-app-grid"/>
+                <ui:Label name="StartMenuPinnedEmpty" text="No pinned apps." class="start-menu-empty start-menu-hidden"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="StartMenuRecentSection" class="start-menu-section">
+                <ui:VisualElement class="start-menu-section-header">
+                    <ui:Label text="Recent documents" class="start-menu-heading"/>
+                    <ui:Label text="Recently modified" class="start-menu-caption"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="StartMenuRecentGrid" class="start-menu-recent-grid"/>
+                <ui:Label name="StartMenuRecentEmpty" text="No recent documents." class="start-menu-empty start-menu-hidden"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="StartMenuAppsSection" class="start-menu-section">
+                <ui:VisualElement class="start-menu-section-header">
+                    <ui:Label name="StartMenuAppsHeading" text="All apps" class="start-menu-heading"/>
+                    <ui:DropdownField name="StartMenuViewDropdown" label="View" value="Category" tooltip="Choose how apps are displayed" class="start-menu-view-dropdown"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="StartMenuCategoryGrid" class="start-menu-category-grid"/>
+                <ui:VisualElement name="StartMenuAlphabeticalList" class="start-menu-alphabetical-list start-menu-hidden"/>
+                <ui:Label name="StartMenuAppsEmpty" text="No apps available." class="start-menu-empty start-menu-hidden"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="StartMenuSearchSection" class="start-menu-section start-menu-hidden">
+                <ui:Label text="Search results" class="start-menu-heading"/>
+                <ui:VisualElement name="StartMenuSearchResults" class="start-menu-alphabetical-list"/>
+                <ui:Label name="StartMenuSearchEmpty" text="No apps found." class="start-menu-empty start-menu-hidden"/>
+            </ui:VisualElement>
+        </ui:ScrollView>
+        <ui:VisualElement class="start-menu-footer">
+            <ui:VisualElement class="start-menu-profile">
+                <ui:Image name="StartMenuProfileImage" picking-mode="Ignore" class="start-menu-avatar"/>
+                <ui:Label name="StartMenuProfileName" text="Player" class="start-menu-profile-name"/>
+            </ui:VisualElement>
+            <ui:Label text="ATLAS" picking-mode="Ignore" class="start-menu-brand"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

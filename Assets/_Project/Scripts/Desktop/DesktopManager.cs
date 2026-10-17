@@ -33,6 +33,12 @@ namespace Atlas.Presentation.SOS.Desktop
         public event Action DesktopReady;
         public event Action<string> DesktopFailed;
 
+        public event Action DesktopShown;
+
+        public bool IsDesktopShown { get; private set; }
+
+        public event Action DesktopCleared;
+
         private void OnEnable()
         {
             ClearDesktop();
@@ -220,11 +226,19 @@ namespace Atlas.Presentation.SOS.Desktop
                 $"[DesktopManager] Desktop shown for '{ActiveUser.UserId}'.",
                 this);
 
+            IsDesktopShown = true;
+            DesktopShown?.Invoke();
+
+            return true;
+
             return true;
         }
 
         public void ClearDesktop()
         {
+            bool wasShown = IsDesktopShown;
+            IsDesktopShown = false;
+
             CancelPreparation();
 
             sessionController?.Clear();
@@ -237,6 +251,9 @@ namespace Atlas.Presentation.SOS.Desktop
             ActiveUser = null;
             FailureMessage = null;
             State = DesktopPreparationState.Idle;
+
+            if (wasShown)
+                DesktopCleared?.Invoke();
         }
 
         private bool ValidateSession(out string error)

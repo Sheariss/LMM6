@@ -12,6 +12,183 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a08cc8ed30f723438e26639b0959c9b, type: 3}
   m_Name: AssistantCatalog
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Assistant.AssistantCatalog
-  conversations: []
-  tutorials: []
-  offers: []
+  conversations:
+  - id: tutorial.guest
+    title: Workspace introduction
+    entryNodeId: desktop
+    prerequisites:
+    - kind: 0
+      key: desktop.guest.visible
+      expectedValue: 1
+    nodes:
+    - id: desktop
+      message: "This is your desktop. From here, you can open applications, browse
+        files, and switch between the tools you\u2019re using."
+      presentation:
+        enabled: 1
+        highlightMode: 0
+        dimOpacity: 0.65
+        targets: []
+        cardPlacement: 5
+        inputPolicy: 0
+        additionalAllowedTargetIds: []
+        missingTargetPolicy: 0
+        missingTargetMessage: 
+        waitingStatus: 
+        showBackButton: 0
+        showSkipButton: 1
+      choices:
+      - id: continue
+        label: Continue
+        playerText: Continue.
+        nextNodeId: opening.shortcuts
+        conditions: []
+        effects: []
+      enterEffects: []
+      advanceWhen: []
+      automaticNextNodeId: 
+    - id: opening.shortcuts
+      message: Desktop shortcuts provide another way to open applications. Double-click
+        a shortcut to launch the application it represents.
+      presentation:
+        enabled: 1
+        highlightMode: 2
+        dimOpacity: 0.65
+        targets:
+        - targetId: desktop.shortcuts
+          pointer: 1
+          padding: 8
+          canAnchorCard: 1
+        cardPlacement: 0
+        inputPolicy: 0
+        additionalAllowedTargetIds: []
+        missingTargetPolicy: 0
+        missingTargetMessage: ' When an application has a desktop shortcut, you can
+          double-click that shortcut to open it.'
+        waitingStatus: 
+        showBackButton: 1
+        showSkipButton: 1
+      choices:
+      - id: next
+        label: Next
+        playerText: Continue.
+        nextNodeId: opening.start_menu
+        conditions: []
+        effects: []
+      enterEffects: []
+      advanceWhen: []
+      automaticNextNodeId: 
+    - id: opening.taskbar
+      message: "The taskbar keeps pinned applications within reach.\nClick an application\u2019s
+        icon here to open it."
+      presentation:
+        enabled: 1
+        highlightMode: 2
+        dimOpacity: 0.65
+        targets:
+        - targetId: desktop.taskbar.apps
+          pointer: 1
+          padding: 8
+          canAnchorCard: 1
+        cardPlacement: 1
+        inputPolicy: 0
+        additionalAllowedTargetIds: []
+        missingTargetPolicy: 0
+        missingTargetMessage: You can open pinned applications from the taskbar at
+          the bottom of the desktop.
+        waitingStatus: 
+        showBackButton: 1
+        showSkipButton: 1
+      choices:
+      - id: next
+        label: Next
+        playerText: Continue.
+        nextNodeId: opening.shortcuts
+        conditions: []
+        effects: []
+      enterEffects: []
+      advanceWhen: []
+      automaticNextNodeId: 
+    - id: opening.start_menu
+      message: The Start menu gives you another way to find applications.
+      presentation:
+        enabled: 1
+        highlightMode: 2
+        dimOpacity: 0.65
+        targets:
+        - targetId: desktop.start
+          pointer: 1
+          padding: 8
+          canAnchorCard: 1
+        cardPlacement: 0
+        inputPolicy: 0
+        additionalAllowedTargetIds: []
+        missingTargetPolicy: 0
+        missingTargetMessage: 
+        waitingStatus: 
+        showBackButton: 1
+        showSkipButton: 1
+      choices:
+      - id: continue
+        label: Continue
+        playerText: Continue.
+        nextNodeId: opening.explorer
+        conditions: []
+        effects: []
+      enterEffects: []
+      advanceWhen: []
+      automaticNextNodeId: 
+    - id: opening.explorer
+      message: Try opening File Explorer. You can use its pinned taskbar button or
+        find it in the Start menu.
+      presentation:
+        enabled: 1
+        highlightMode: 2
+        dimOpacity: 0.65
+        targets:
+        - targetId: desktop.taskbar.file-explorer
+          pointer: 1
+          padding: 8
+          canAnchorCard: 1
+        - targetId: desktop.taskbar.file-explorer
+          pointer: 1
+          padding: 8
+          canAnchorCard: 1
+        - targetId: desktop.start
+          pointer: 1
+          padding: 8
+          canAnchorCard: 1
+        cardPlacement: 0
+        inputPolicy: 1
+        additionalAllowedTargetIds:
+        - 
+        missingTargetPolicy: 0
+        missingTargetMessage: desktop.start.file-explorer
+        waitingStatus: Waiting for File Explorer...
+        showBackButton: 1
+        showSkipButton: 1
+      choices: []
+      enterEffects: []
+      advanceWhen:
+      - kind: 2
+        key: app.file-explorer.opened
+        expectedValue: 1
+      automaticNextNodeId: 
+  tutorials:
+  - id: guest.introduction
+    conversationId: tutorial.guest
+    prerequisites:
+    - kind: 0
+      key: desktop.guest.visible
+      expectedValue: 1
+  offers:
+  - id: guest.introduction.offer
+    title: Welcome to ATLAS!
+    description: Would you like a short introduction to this workspace?
+    conversationId: tutorial.guest
+    triggerSignal: guest.introduction.ready
+    priority: 10
+    conditions:
+    - kind: 0
+      key: desktop.guest.visible
+      expectedValue: 1

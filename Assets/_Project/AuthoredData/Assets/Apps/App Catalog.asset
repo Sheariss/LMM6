@@ -13,6 +13,18 @@ MonoBehaviour:
   m_Name: App Catalog
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.SOS.Apps.AppCatalog
   apps:
+  - appID: assistant
+    displayName: Assistant
+    appIcon48: {fileID: 21300000, guid: 8181b436624566b419e3f18d75e710a2, type: 3}
+    appIcon96: {fileID: 21300000, guid: 9fc980fe4872d8d409c619573a6fd67f, type: 3}
+    appUXML: {fileID: 9197481963319205126, guid: 37ee9bded0bda734a8ed102cf2845e1e, type: 3}
+    runtimePrefab: {fileID: 6148565572058984977, guid: 793e4da4f576a6d488079585cbaac86d, type: 3}
+    isResizable: 0
+    allowMultipleInstances: 0
+    defaultWindowSize: {x: 420, y: 600}
+    minimumWindowSize: {x: 420, y: 600}
+    showDesktopShortcut: 1
+    pinToTaskbar: 0
   - appID: calculator
     displayName: Calculator
     appIcon48: {fileID: 21300000, guid: f926d9de82c4ba949b10e86316bf62d3, type: 3}
@@ -73,18 +85,6 @@ MonoBehaviour:
     minimumWindowSize: {x: 200, y: 200}
     showDesktopShortcut: 0
     pinToTaskbar: 1
-  - appID: assistant
-    displayName: Assistant
-    appIcon48: {fileID: 21300000, guid: 8181b436624566b419e3f18d75e710a2, type: 3}
-    appIcon96: {fileID: 21300000, guid: 9fc980fe4872d8d409c619573a6fd67f, type: 3}
-    appUXML: {fileID: 9197481963319205126, guid: 37ee9bded0bda734a8ed102cf2845e1e, type: 3}
-    runtimePrefab: {fileID: 0}
-    isResizable: 0
-    allowMultipleInstances: 0
-    defaultWindowSize: {x: 420, y: 600}
-    minimumWindowSize: {x: 420, y: 600}
-    showDesktopShortcut: 1
-    pinToTaskbar: 0
   - appID: email
     displayName: Email
     appIcon48: {fileID: 6622987487043434500, guid: 52ab2f2743e198c4caf86640c0fb927e, type: 3}

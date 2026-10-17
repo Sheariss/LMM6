@@ -41,6 +41,7 @@ namespace Atlas.AuthoredData.Users
             [Header("Desktop Placement")]
             [SerializeField] private List<string> desktopShortcutAppIDs = new();
             [SerializeField] private List<string> pinnedAppIDs = new();
+            [SerializeField] private List<string> startPinnedAppIDs = new();
 
             public string UserId => userId;
             public string DisplayName => displayName;
@@ -59,6 +60,8 @@ namespace Atlas.AuthoredData.Users
             public IReadOnlyList<string> DesktopShortcutAppIDs =>
                 desktopShortcutAppIDs;
             public IReadOnlyList<string> PinnedAppIDs => pinnedAppIDs;
+
+            public IReadOnlyList<string> StartPinnedAppIDs => startPinnedAppIDs;
 
             public bool CanAccessApp(string appID)
             {
