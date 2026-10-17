@@ -359,6 +359,9 @@ MonoBehaviour:
   shortcutIconSize: {x: 48, y: 48}
   shortcutLabelFontSize: 14
   pinnedButtonTemplate: {fileID: 9197481963319205126, guid: 43aefdb6befc1f8408ec67900f2d6e82, type: 3}
+  startMenuTemplate: {fileID: 9197481963319205126, guid: 89cb9a4ba133d45498195ecc60b36cc4, type: 3}
+  fileSystemLibrary: {fileID: 11400000, guid: 193bb63488853ea49b85a95156e9d42e, type: 2}
+  fileAssociationCatalog: {fileID: 11400000, guid: d6e357d953dc9634cbaf9db9f95975b6, type: 2}
 --- !u!1 &753936948
 GameObject:
   m_ObjectHideFlags: 0

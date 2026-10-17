@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static Atlas.AuthoredData.Users.UserLibrarySO;
+using Atlas.SOS.FileSystem;
 
 namespace Atlas.Presentation.SOS.Desktop
 {
@@ -40,6 +41,11 @@ namespace Atlas.Presentation.SOS.Desktop
         [Header("Taskbar")]
         [SerializeField] private VisualTreeAsset pinnedButtonTemplate;
 
+        [Header("Start Menu")]
+        [SerializeField] private VisualTreeAsset startMenuTemplate;
+        [SerializeField] private FileSystemLibrary fileSystemLibrary;
+        [SerializeField] private FileAssociationCatalog fileAssociationCatalog;
+
         private DesktopBinder binder;
         private DesktopView view;
 
@@ -50,6 +56,9 @@ namespace Atlas.Presentation.SOS.Desktop
 
         private readonly List<AppDefinition> availableApps = new();
         private readonly List<AppDefinition> pinnedApps = new();
+
+        private TemplateContainer startMenuHost;
+        private StartMenuController startMenuController;
 
         public UserInfo ActiveUser { get; private set; }
         public bool IsPrepared { get; private set; }
@@ -96,6 +105,9 @@ namespace Atlas.Presentation.SOS.Desktop
             if (appCatalog == null ||
                 shortcutTemplate == null ||
                 pinnedButtonTemplate == null ||
+                startMenuTemplate == null ||
+                fileSystemLibrary == null ||
+                fileAssociationCatalog == null ||
                 appController == null ||
                 !appController.isActiveAndEnabled)
             {
@@ -170,6 +182,46 @@ namespace Atlas.Presentation.SOS.Desktop
                 // Cache all available app buttons once.
                 // Only pinned buttons are attached initially.
                 pinnedButtonController.Build(availableApps, pinnedApps);
+
+                startMenuHost = startMenuTemplate.CloneTree();
+                startMenuHost.name = "StartMenuHost";
+                startMenuHost.pickingMode = PickingMode.Ignore;
+
+                startMenuHost.style.position = Position.Absolute;
+                startMenuHost.style.left = 0;
+                startMenuHost.style.right = 0;
+                startMenuHost.style.top = 0;
+                startMenuHost.style.bottom = 0;
+                startMenuHost.style.alignItems = Align.Center;
+
+                binder.Workspace.Add(startMenuHost);
+                startMenuHost.BringToFront();
+
+                var startMenuBinder = new StartMenuBinder(startMenuHost);
+
+                var startMenuEngine = new StartMenuEngine(
+                    user,
+                    appCatalog,
+                    fileSystemLibrary,
+                    fileAssociationCatalog);
+
+                var startMenuView = new StartMenuView(
+                    startMenuBinder,
+                    new StartMenuViewBuilder());
+
+                var startMenuRouter = new FileOpenRouter(
+                    fileAssociationCatalog,
+                    appController);
+
+                startMenuController = new StartMenuController(
+                    startMenuBinder,
+                    startMenuEngine,
+                    startMenuView,
+                    startMenuRouter,
+                    binder.DocumentRoot,
+                    taskbarBinder.StartButton,
+                    () => IsPreparedForCurrentUser,
+                    RequestAppLaunch);
             }
             catch (Exception exception)
             {
@@ -230,12 +282,19 @@ namespace Atlas.Presentation.SOS.Desktop
 
         public void Hide()
         {
+            startMenuController?.Close();
             view?.Hide();
             HideCurrentDocumentRoot();
         }
 
         public void Clear()
         {
+            startMenuController?.Dispose();
+            startMenuController = null;
+
+            startMenuHost?.RemoveFromHierarchy();
+            startMenuHost = null;
+
             if (appController != null)
             {
                 appController.AppStateChanged -= OnAppStateChanged;
@@ -294,8 +353,7 @@ namespace Atlas.Presentation.SOS.Desktop
             }
 
             VisualElement documentRoot = desktopDocument.rootVisualElement;
-            VisualElement desktopRoot =
-                documentRoot?.Q<VisualElement>("DesktopRoot");
+            VisualElement desktopRoot = documentRoot?.Q<VisualElement>("DesktopRoot");
 
             if (desktopRoot == null)
             {

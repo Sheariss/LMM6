@@ -51,6 +51,11 @@ MonoBehaviour:
     - browser
     - file-explorer
     - calculator
+    startPinnedAppIDs:
+    - browser
+    - assistant
+    - notepad
+    - Calculator
   - userId: admin
     displayName: Admin
     loginMethod: 1
@@ -69,3 +74,4 @@ MonoBehaviour:
     - browser
     pinnedAppIDs:
     - browser
+    startPinnedAppIDs: []

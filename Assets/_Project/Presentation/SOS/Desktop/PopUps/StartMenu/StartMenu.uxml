@@ -1,51 +1,163 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
-    <Style src="../../../../Tokens/Global-Colors.uss"/>
-    <Style src="../../../../Tokens/Global-Tokens.uss"/>
-    <Style src="StartMenu.uss"/>
-
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Desktop/PopUps/StartMenu/StartMenu.uss?fileID=7433441132597879392&amp;guid=6b44197ebd55c4848a0a287597894ca3&amp;type=3#StartMenu"/>
     <ui:VisualElement name="StartMenuRoot" class="start-menu">
         <ui:VisualElement class="start-menu-search">
-            <ui:Image picking-mode="Ignore" class="start-menu-search-icon"/>
+            <ui:Image picking-mode="Ignore" class="start-menu-search-icon" style="background-image: resource(&quot;Icons/UI/Search/search_32dp&quot;);"/>
             <ui:VisualElement class="start-menu-search-input">
-                <ui:TextField name="StartMenuSearchField" tooltip="Search available apps" class="start-menu-search-field"/>
-                <ui:Label name="StartMenuSearchPlaceholder" text="Search apps" picking-mode="Ignore" class="start-menu-search-placeholder"/>
+                <ui:TextField
+                    name="StartMenuSearchField"
+                    tooltip="Search apps"
+                    placeholder-text="Search apps"
+                    hide-placeholder-on-focus="true"
+                    select-all-on-focus="false"
+                    class="start-menu-search-field"/>
+                </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="start-menu-content">
+            <ui:ScrollView name="StartMenuHomePanel" mode="Vertical" horizontal-scroller-visibility="Hidden" class="start-menu-scroll">
+                <ui:VisualElement name="StartMenuPinnedSection" class="start-menu-section">
+                    <ui:VisualElement class="start-menu-section-header">
+                        <ui:Label text="Pinned" class="start-menu-heading"/>
+                        <ui:Button name="StartMenuPinnedToggle" tooltip="Show all pinned apps" class="start-menu-section-button">
+                            <ui:Label name="StartMenuPinnedToggleText" text="Show all" picking-mode="Ignore" class="start-menu-button-text"/>
+                            <ui:Image name="StartMenuPinnedToggleIcon" picking-mode="Ignore" class="start-menu-chevron" style="background-image: resource(&quot;Icons/Arrows 1/Expand-Arrow/keyboard_arrow_down_32dp&quot;);"/>
+                        </ui:Button>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="StartMenuPinnedGrid" class="start-menu-app-grid"/>
+                    <ui:Label name="StartMenuPinnedEmpty" text="No pinned apps." class="start-menu-empty start-menu-hidden"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="StartMenuRecentSection" class="start-menu-section">
+                    <ui:VisualElement class="start-menu-section-header">
+                        <ui:Label text="Recent documents" class="start-menu-heading"/>
+                        <ui:Button name="StartMenuRecentShowAllButton" tooltip="Show all recent documents" class="start-menu-section-button">
+                            <ui:Label text="Show all" picking-mode="Ignore" class="start-menu-button-text"/>
+                            <ui:Image picking-mode="Ignore" class="start-menu-chevron start-menu-chevron-right" style="background-image: resource(&quot;Icons/Arrows 1/Expand-Arrow/keyboard_arrow_down_32dp&quot;);"/>
+                        </ui:Button>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="StartMenuRecentGrid" class="start-menu-recent-grid"/>
+                    <ui:Label name="StartMenuRecentEmpty" text="No recent documents." class="start-menu-empty start-menu-hidden"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="StartMenuAppsSection" class="start-menu-section">
+                    <ui:VisualElement class="start-menu-section-header">
+                        <ui:Label text="All" class="start-menu-heading"/>
+                        <ui:Button name="StartMenuViewButton" tooltip="Choose how apps are displayed" class="start-menu-section-button">
+                            <ui:Label text="View:" picking-mode="Ignore" class="start-menu-view-prefix"/>
+                            <ui:Label name="StartMenuViewValue" text="Category" picking-mode="Ignore" class="start-menu-button-text"/>
+                            <ui:Image picking-mode="Ignore" class="start-menu-chevron" style="background-image: resource(&quot;Icons/Arrows 1/Expand-Arrow/keyboard_arrow_down_32dp&quot;);"/>
+                        </ui:Button>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="StartMenuCategoryGrid" class="start-menu-category-grid"/>
+                    <ui:VisualElement name="StartMenuAllAppsGrid" class="start-menu-app-grid start-menu-hidden"/>
+                    <ui:VisualElement name="StartMenuAlphabeticalList" class="start-menu-alphabetical-list start-menu-hidden"/>
+                    <ui:Label name="StartMenuAppsEmpty" text="No apps available." class="start-menu-empty start-menu-hidden"/>
+                </ui:VisualElement>
+            </ui:ScrollView>
+            <ui:VisualElement name="StartMenuRecentPanel" class="start-menu-panel start-menu-hidden">
+                <ui:VisualElement class="start-menu-panel-header">
+                    <ui:Button
+                    name="StartMenuRecentBackButton"
+                    tooltip="Back to Start"
+                    class="start-menu-icon-button">
+
+                    <ui:Image
+                        picking-mode="Ignore"
+                        class="start-menu-action-icon"
+                        style="background-image: resource('Icons/Arrows 1/Less/arrow_back_ios_new_32dp');"/>
+                </ui:Button>
+                    <ui:Label text="Recent documents" class="start-menu-panel-heading"/>
+                </ui:VisualElement>
+                <ui:ScrollView name="StartMenuRecentScrollView" mode="Vertical" horizontal-scroller-visibility="Hidden" class="start-menu-scroll">
+                    <ui:VisualElement name="StartMenuRecentList" class="start-menu-document-list"/>
+                    <ui:Label name="StartMenuRecentPanelEmpty" text="No recent documents." class="start-menu-empty start-menu-panel-empty start-menu-hidden"/>
+                </ui:ScrollView>
+            </ui:VisualElement>
+            <ui:VisualElement name="StartMenuSearchPanel" class="start-menu-panel start-menu-hidden">
+                <ui:VisualElement class="start-menu-panel-header">
+                    <ui:Label text="Search results" class="start-menu-panel-heading"/>
+                </ui:VisualElement>
+                <ui:ScrollView name="StartMenuSearchScrollView" mode="Vertical" horizontal-scroller-visibility="Hidden" class="start-menu-scroll">
+                    <ui:VisualElement name="StartMenuSearchResults" class="start-menu-search-results"/>
+                    <ui:Label name="StartMenuSearchEmpty" text="No apps found." class="start-menu-empty start-menu-panel-empty start-menu-hidden"/>
+                </ui:ScrollView>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:ScrollView name="StartMenuScrollView" mode="Vertical" horizontal-scroller-visibility="Hidden" class="start-menu-scroll">
-            <ui:VisualElement name="StartMenuPinnedSection" class="start-menu-section">
-                <ui:Label text="Pinned" class="start-menu-heading"/>
-                <ui:VisualElement name="StartMenuPinnedGrid" class="start-menu-app-grid"/>
-                <ui:Label name="StartMenuPinnedEmpty" text="No pinned apps." class="start-menu-empty start-menu-hidden"/>
-            </ui:VisualElement>
-            <ui:VisualElement name="StartMenuRecentSection" class="start-menu-section">
-                <ui:VisualElement class="start-menu-section-header">
-                    <ui:Label text="Recent documents" class="start-menu-heading"/>
-                    <ui:Label text="Recently modified" class="start-menu-caption"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="StartMenuRecentGrid" class="start-menu-recent-grid"/>
-                <ui:Label name="StartMenuRecentEmpty" text="No recent documents." class="start-menu-empty start-menu-hidden"/>
-            </ui:VisualElement>
-            <ui:VisualElement name="StartMenuAppsSection" class="start-menu-section">
-                <ui:VisualElement class="start-menu-section-header">
-                    <ui:Label name="StartMenuAppsHeading" text="All apps" class="start-menu-heading"/>
-                    <ui:DropdownField name="StartMenuViewDropdown" label="View" value="Category" tooltip="Choose how apps are displayed" class="start-menu-view-dropdown"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="StartMenuCategoryGrid" class="start-menu-category-grid"/>
-                <ui:VisualElement name="StartMenuAlphabeticalList" class="start-menu-alphabetical-list start-menu-hidden"/>
-                <ui:Label name="StartMenuAppsEmpty" text="No apps available." class="start-menu-empty start-menu-hidden"/>
-            </ui:VisualElement>
-            <ui:VisualElement name="StartMenuSearchSection" class="start-menu-section start-menu-hidden">
-                <ui:Label text="Search results" class="start-menu-heading"/>
-                <ui:VisualElement name="StartMenuSearchResults" class="start-menu-alphabetical-list"/>
-                <ui:Label name="StartMenuSearchEmpty" text="No apps found." class="start-menu-empty start-menu-hidden"/>
-            </ui:VisualElement>
-        </ui:ScrollView>
         <ui:VisualElement class="start-menu-footer">
             <ui:VisualElement class="start-menu-profile">
                 <ui:Image name="StartMenuProfileImage" picking-mode="Ignore" class="start-menu-avatar"/>
-                <ui:Label name="StartMenuProfileName" text="Player" class="start-menu-profile-name"/>
+                <ui:Label name="StartMenuProfileName" picking-mode="Ignore" class="start-menu-profile-name"/>
             </ui:VisualElement>
-            <ui:Label text="ATLAS" picking-mode="Ignore" class="start-menu-brand"/>
+            <ui:Button name="StartMenuPowerButton" tooltip="Power" class="start-menu-icon-button">
+                <ui:Image picking-mode="Ignore" class="start-menu-action-icon" style="background-image: resource(&quot;Icons/System/Power/Shutdown/power_settings_new_32dp&quot;);"/>
+            </ui:Button>
+        </ui:VisualElement>
+        <ui:VisualElement
+            name="StartMenuViewPopup"
+            class="start-menu-popup start-menu-view-popup start-menu-hidden">
+
+            <ui:Button
+                name="StartMenuCategoryViewButton"
+                class="start-menu-popup-item">
+
+                <ui:Image
+                    picking-mode="Ignore"
+                    class="start-menu-view-check"
+                    style="background-image: resource('Icons/System/Status/Success/check_circle_24dp');"/>
+
+                <ui:Label
+                    text="Category"
+                    picking-mode="Ignore"
+                    class="start-menu-popup-text"/>
+            </ui:Button>
+
+            <ui:Button
+                name="StartMenuGridViewButton"
+                class="start-menu-popup-item">
+
+                <ui:Image
+                    picking-mode="Ignore"
+                    class="start-menu-view-check"
+                    style="background-image: resource('Icons/System/Status/Success/check_circle_24dp');"/>
+
+                <ui:Label
+                    text="Grid"
+                    picking-mode="Ignore"
+                    class="start-menu-popup-text"/>
+            </ui:Button>
+
+            <ui:Button
+                name="StartMenuListViewButton"
+                class="start-menu-popup-item">
+
+                <ui:Image
+                    picking-mode="Ignore"
+                    class="start-menu-view-check"
+                    style="background-image: resource('Icons/System/Status/Success/check_circle_24dp');"/>
+
+                <ui:Label
+                    text="List"
+                    picking-mode="Ignore"
+                    class="start-menu-popup-text"/>
+            </ui:Button>
+        </ui:VisualElement>
+        <ui:VisualElement name="StartMenuPowerPopup" class="start-menu-popup start-menu-power-popup start-menu-hidden">
+            <ui:Button name="StartMenuLockButton" class="start-menu-popup-item">
+                <ui:Image picking-mode="Ignore" class="start-menu-popup-icon" style="background-image: resource(&quot;Icons/System/Power/Lock/lock_32dp&quot;);"/>
+                <ui:Label text="Lock" picking-mode="Ignore" class="start-menu-popup-text"/>
+            </ui:Button>
+            <ui:Button name="StartMenuSleepButton" class="start-menu-popup-item">
+                <ui:Image picking-mode="Ignore" class="start-menu-popup-icon" style="background-image: resource(&quot;Icons/System/Power/Sleep/bedtime_32dp&quot;);"/>
+                <ui:Label text="Sleep" picking-mode="Ignore" class="start-menu-popup-text"/>
+            </ui:Button>
+            <ui:Button name="StartMenuShutdownButton" class="start-menu-popup-item">
+                <ui:Image picking-mode="Ignore" class="start-menu-popup-icon" style="background-image: resource(&quot;Icons/System/Power/Shutdown/power_settings_new_32dp&quot;);"/>
+                <ui:Label text="Shut down" picking-mode="Ignore" class="start-menu-popup-text"/>
+            </ui:Button>
+            <ui:Button name="StartMenuRestartButton" class="start-menu-popup-item">
+                <ui:Image picking-mode="Ignore" class="start-menu-popup-icon" style="background-image: resource(&quot;Icons/System/Power/Restart/refresh_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40&quot;);"/>
+                <ui:Label text="Restart" picking-mode="Ignore" class="start-menu-popup-text"/>
+            </ui:Button>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
