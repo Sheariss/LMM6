@@ -36,6 +36,9 @@ MonoBehaviour:
     - whiteboard
     - notepad
     - email
+    - calendar
+    - weather
+    - sticky-notes
     desktopShortcutAppIDs:
     - assistant
     - messenger
@@ -52,12 +55,14 @@ MonoBehaviour:
     - browser
     - file-explorer
     - calculator
+    - weather
     startPinnedAppIDs:
     - browser
     - assistant
     - notepad
-    - Calculator
+    - calculator
     - email
+    - calendar
   - userId: admin
     displayName: Admin
     loginMethod: 1

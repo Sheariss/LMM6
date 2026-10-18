@@ -1,10 +1,12 @@
-using System;
+using Atlas.SOS.StickyNotes;
 
 namespace Atlas.Core.Persistence.Data
 {
     [System.Serializable]
     public sealed class GameSaveData
     {
+        public StickyNotesSaveData stickyNotes = new();
+
         /*
         public SaveMetadata metadata;
         public SOSSaveData sos;

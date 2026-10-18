@@ -1,5 +1,6 @@
-using Atlas.Core.SceneManagement;
 using System;
+using Atlas.Core.SceneManagement;
+using Atlas.Development;
 using UnityEngine;
 
 namespace Atlas.Core.GameState
@@ -8,21 +9,23 @@ namespace Atlas.Core.GameState
     {
         public static GameStateManager Instance { get; private set; }
 
-        // Internal State primitives
         public GameFlowState FlowState { get; private set; }
+
         public GameplayMode GameplayMode { get; private set; }
 
-        // Events
-        public event Action<GameFlowState, GameFlowState> FlowStateChanged;
-        public event Action<GameplayMode, GameplayMode> GameplayModeChanged;
+        public event Action<GameFlowState, GameFlowState>
+            FlowStateChanged;
+
+        public event Action<GameplayMode, GameplayMode>
+            GameplayModeChanged;
 
         private void Awake()
         {
             if (Instance != null && Instance != this)
             {
                 Debug.LogWarning(
-                    $"[{nameof(GameStateManager)}] Duplicate instance detected. " +
-                    "Destroying duplicate."
+                    $"[{nameof(GameStateManager)}] Duplicate instance " +
+                    "detected. Destroying duplicate."
                 );
 
                 Destroy(gameObject);
@@ -31,20 +34,16 @@ namespace Atlas.Core.GameState
 
             Instance = this;
 
-            // Initialize Game State primitives.
             FlowState = GameFlowState.Booting;
             GameplayMode = GameplayMode.None;
 
             DontDestroyOnLoad(gameObject);
         }
 
-        // -------------------- PRIVATE PRIMITIVE OPERATIONS --------------------
         private void SetFlowState(GameFlowState state)
         {
             if (FlowState == state)
-            {
                 return;
-            }
 
             GameFlowState previousState = FlowState;
             FlowState = state;
@@ -57,17 +56,15 @@ namespace Atlas.Core.GameState
             if (FlowState != GameFlowState.Playing)
             {
                 Debug.LogWarning(
-                    $"[{nameof(GameStateManager)}] Cannot set Gameplay Mode " +
-                    $"to {mode} while Flow State is {FlowState}."
+                    $"[{nameof(GameStateManager)}] Cannot set Gameplay " +
+                    $"Mode to {mode} while Flow State is {FlowState}."
                 );
 
                 return;
             }
 
             if (GameplayMode == mode)
-            {
                 return;
-            }
 
             GameplayMode previousMode = GameplayMode;
             GameplayMode = mode;
@@ -78,9 +75,7 @@ namespace Atlas.Core.GameState
         public void ResetGameplayMode()
         {
             if (GameplayMode == GameplayMode.None)
-            {
                 return;
-            }
 
             GameplayMode previousMode = GameplayMode;
             GameplayMode = GameplayMode.None;
@@ -88,15 +83,14 @@ namespace Atlas.Core.GameState
             GameplayModeChanged?.Invoke(previousMode, GameplayMode);
         }
 
-        // -------------------- INTERNAL OPERATIONS --------------------
-        private bool IsTransitionAllowed( GameFlowState current, GameFlowState target)
+        private bool IsTransitionAllowed(
+            GameFlowState current,
+            GameFlowState target)
         {
             return current switch
             {
                 GameFlowState.Booting =>
                     target == GameFlowState.Splash ||
-                    // For dev only
-                    // TODO Removr after degv or make a matrix specifically for dev
                     target == GameFlowState.Credits,
 
                 GameFlowState.Splash =>
@@ -133,21 +127,23 @@ namespace Atlas.Core.GameState
             };
         }
 
-        private bool TryToEnterState(GameFlowState target, GameScene scene, bool resetGameplayMode = false)
+        private bool TryToEnterState(
+            GameFlowState target,
+            GameScene scene,
+            bool resetGameplayMode = false)
         {
             if (!IsTransitionAllowed(FlowState, target))
             {
                 LogInvalidTransition(target);
-                return  false;
+                return false;
             }
 
             if (resetGameplayMode)
-            {
                 ResetGameplayMode();
-            }
 
             SetFlowState(target);
             RequestSceneTransition(scene);
+
             return true;
         }
 
@@ -155,11 +151,7 @@ namespace Atlas.Core.GameState
         {
             if (!IsTransitionAllowed(FlowState, target))
             {
-                Debug.LogWarning(
-                    $"[{nameof(GameStateManager)}] Invalid flow transition: " +
-                    $"{FlowState} -> {target}."
-                );
-
+                LogInvalidTransition(target);
                 return false;
             }
 
@@ -170,8 +162,8 @@ namespace Atlas.Core.GameState
         private void LogInvalidTransition(GameFlowState targetState)
         {
             Debug.LogWarning(
-                $"[{nameof(GameStateManager)}] Invalid Game Flow transition: " +
-                $"{FlowState} -> {targetState}."
+                $"[{nameof(GameStateManager)}] Invalid Game Flow " +
+                $"transition: {FlowState} -> {targetState}."
             );
         }
 
@@ -180,34 +172,110 @@ namespace Atlas.Core.GameState
             SceneLoadManager.Instance.LoadScene(scene);
         }
 
-        // -------------------- PUBLIC OPERATIONS --------------------
-        // -------------------- Scene-Backed State Entry --------------------
+        public bool TryEnterDevelopmentStartPoint(
+            DevelopmentStartPoint startPoint)
+        {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if (!DevelopmentContext.IsEnabled ||
+                DevelopmentContext.StartPoint != startPoint ||
+                FlowState != GameFlowState.Booting)
+            {
+                return false;
+            }
+
+            GameFlowState targetState;
+            GameScene targetScene;
+
+            switch (startPoint)
+            {
+                case DevelopmentStartPoint.MainMenu:
+                    targetState = GameFlowState.MainMenu;
+                    targetScene = GameScene.MainMenu;
+                    break;
+
+                case DevelopmentStartPoint.NewGame:
+                    targetState = GameFlowState.Loading;
+                    targetScene = GameScene.Loading;
+                    break;
+
+                case DevelopmentStartPoint.SOS:
+                case DevelopmentStartPoint.GuestDesktop:
+                    targetState = GameFlowState.Playing;
+                    targetScene = GameScene.SOS;
+                    break;
+
+                case DevelopmentStartPoint.Credits:
+                    targetState = GameFlowState.Credits;
+                    targetScene = GameScene.Credits;
+                    break;
+
+                default:
+                    return false;
+            }
+
+            if (SceneLoadManager.Instance == null)
+            {
+                Debug.LogError(
+                    "[GameStateManager] Cannot start development flow: " +
+                    "SceneLoadManager was not found."
+                );
+
+                return false;
+            }
+
+            ResetGameplayMode();
+            SetFlowState(targetState);
+            RequestSceneTransition(targetScene);
+
+            return true;
+#else
+            return false;
+#endif
+        }
+
         public void EnterSplash()
         {
-            TryToEnterState(GameFlowState.Splash, GameScene.Splash, true);
+            TryToEnterState(
+                GameFlowState.Splash,
+                GameScene.Splash,
+                true
+            );
         }
 
         public void EnterMainMenu()
         {
-            TryToEnterState(GameFlowState.MainMenu, GameScene.MainMenu, true);
+            TryToEnterState(
+                GameFlowState.MainMenu,
+                GameScene.MainMenu,
+                true
+            );
         }
 
         public void EnterLoading()
         {
-            TryToEnterState(GameFlowState.Loading, GameScene.Loading, false);
+            TryToEnterState(
+                GameFlowState.Loading,
+                GameScene.Loading
+            );
         }
 
         public void EnterPlaying()
         {
-            TryToEnterState(GameFlowState.Playing, GameScene.SOS, false);
+            TryToEnterState(
+                GameFlowState.Playing,
+                GameScene.SOS
+            );
         }
 
         public void EnterCredits()
         {
-            TryToEnterState(GameFlowState.Credits, GameScene.Credits, true);
+            TryToEnterState(
+                GameFlowState.Credits,
+                GameScene.Credits,
+                true
+            );
         }
 
-        // -------------------- Specialized operations State Entry --------------------
         public void StartNewGame(int slot)
         {
             EnterLoading();
@@ -216,34 +284,33 @@ namespace Atlas.Core.GameState
         public void LoadGame(int slotId)
         {
             EnterLoading();
+
             // TODO: SaveManager loads and restores slot.
             EnterPlaying();
         }
 
-        // -------------------- Presentation Coupled State Entry --------------------
         public void LoadGame()
         {
             TryTransitionTo(GameFlowState.Loading);
-            // TO DO: Active Scene stays loaded > LoadingPanelController populates, redraws, shows, updates and hides the panel.
+
+            // TODO: LoadingPanelController handles the loading panel
+            // while the active scene remains loaded.
         }
 
         public void PauseGame()
         {
             TryTransitionTo(GameFlowState.Paused);
-            // TO DO: PauseMenuController reacts to the state change or is invoked through the presentation system.
         }
 
         public void ResumeGame()
         {
             TryTransitionTo(GameFlowState.Playing);
-            // TODO: SOS scene remains loaded. > PauseMenuController hides the panel.
         }
 
         public void EndGame()
         {
             TryTransitionTo(GameFlowState.GameOver);
             ResetGameplayMode();
-            // TODO: SOS scene remains loaded > GameOverPanelController shows the panel.
         }
     }
 }

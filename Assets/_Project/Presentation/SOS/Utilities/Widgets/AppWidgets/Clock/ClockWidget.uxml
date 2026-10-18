@@ -1,0 +1,62 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         editor-extension-mode="False">
+
+    <Style src="../../../../../Tokens/Global-Colors.uss"/>
+    <Style src="../../../../../Tokens/Global-Tokens.uss"/>
+    <Style src="../../WidgetShell.uss"/>
+    <Style src="../AppWidgets.uss"/>
+
+    <ui:Button name="WidgetRoot"
+               text=""
+               class="widget clock-widget">
+
+        <ui:VisualElement name="WidgetHeader"
+                          class="widget__header"
+                          picking-mode="Ignore">
+
+            <ui:Image name="WidgetIcon"
+                      class="widget__icon"
+                      picking-mode="Ignore"/>
+
+            <ui:Label name="WidgetTitle"
+                      text="Clock"
+                      class="widget__title"
+                      picking-mode="Ignore"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="WidgetContent"
+                          class="widget__content clock-widget__content"
+                          picking-mode="Ignore">
+
+            <ui:Label name="ClockDate"
+                      text="Thursday, October 15"
+                      class="clock-widget__date"
+                      picking-mode="Ignore"/>
+
+            <ui:Label name="ClockTime"
+                      text="09:00"
+                      class="clock-widget__time"
+                      picking-mode="Ignore"/>
+
+            <ui:Label name="ClockTimezone"
+                      text="Scenario time"
+                      class="clock-widget__timezone"
+                      picking-mode="Ignore"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="WidgetFooter"
+                          class="widget__footer"
+                          picking-mode="Ignore">
+
+            <ui:Label name="WidgetActionLabel"
+                      text="Open Clock"
+                      class="widget__action"
+                      picking-mode="Ignore"/>
+
+            <ui:Label name="WidgetActionArrow"
+                      text="›"
+                      class="widget__arrow"
+                      picking-mode="Ignore"/>
+        </ui:VisualElement>
+    </ui:Button>
+</ui:UXML>

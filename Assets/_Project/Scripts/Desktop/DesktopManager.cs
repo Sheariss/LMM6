@@ -17,7 +17,8 @@ namespace Atlas.Presentation.SOS.Desktop
     public sealed class DesktopManager : MonoBehaviour
     {
         [Header("Desktop")]
-        [SerializeField] private DesktopController desktopController;
+        [SerializeField]
+        private DesktopController desktopController;
 
         [Header("Welcome Timing")]
         [SerializeField, Min(0f)]
@@ -27,16 +28,16 @@ namespace Atlas.Presentation.SOS.Desktop
         private Coroutine preparationRoutine;
 
         public DesktopPreparationState State { get; private set; }
+
         public UserInfo ActiveUser { get; private set; }
+
         public string FailureMessage { get; private set; }
-
-        public event Action DesktopReady;
-        public event Action<string> DesktopFailed;
-
-        public event Action DesktopShown;
 
         public bool IsDesktopShown { get; private set; }
 
+        public event Action DesktopReady;
+        public event Action<string> DesktopFailed;
+        public event Action DesktopShown;
         public event Action DesktopCleared;
 
         private void OnEnable()
@@ -48,7 +49,10 @@ namespace Atlas.Presentation.SOS.Desktop
         {
             if (State == DesktopPreparationState.Preparing)
             {
-                Fail("Desktop preparation was interrupted. Please retry.");
+                Fail(
+                    "Desktop preparation was interrupted. Please retry."
+                );
+
                 return;
             }
 
@@ -65,7 +69,6 @@ namespace Atlas.Presentation.SOS.Desktop
 
             if (!IsAuthenticatedUser(ActiveUser))
             {
-                // Sign-out or account changes invalidate the old desktop.
                 ClearDesktop();
                 return;
             }
@@ -85,9 +88,15 @@ namespace Atlas.Presentation.SOS.Desktop
 
         public void LoadDesktop(UserInfo user)
         {
+            LoadDesktop(user, skipWelcome: false);
+        }
+
+        public void LoadDesktop(UserInfo user, bool skipWelcome)
+        {
             Debug.Log(
                 $"[DesktopManager] Load requested for '{user?.UserId}'.",
-                this);
+                this
+            );
 
             if (!isActiveAndEnabled)
             {
@@ -101,7 +110,6 @@ namespace Atlas.Presentation.SOS.Desktop
                 return;
             }
 
-            // Repeated requests do not rebuild a valid session.
             if (ReferenceEquals(ActiveUser, user) &&
                 ValidateSession(out _) &&
                 (State == DesktopPreparationState.Preparing ||
@@ -123,21 +131,28 @@ namespace Atlas.Presentation.SOS.Desktop
             }
 
             State = DesktopPreparationState.Preparing;
-            preparationRoutine = StartCoroutine(PrepareDesktop());
+
+            preparationRoutine = StartCoroutine(
+                PrepareDesktop(skipWelcome)
+            );
         }
 
-        private IEnumerator PrepareDesktop()
+        private IEnumerator PrepareDesktop(bool skipWelcome)
         {
             float preparationStartedAt = Time.realtimeSinceStartup;
 
             Debug.Log(
-                $"[DesktopManager] Preparation started for " +
+                "[DesktopManager] Preparation started for " +
                 $"'{ActiveUser?.UserId}'.",
-                this);
+                this
+            );
 
-            // Allow the login screen to present Welcome first.
-            yield return null;
-            yield return null;
+            // Normal login gets two frames to present Welcome.
+            if (!skipWelcome)
+            {
+                yield return null;
+                yield return null;
+            }
 
             if (!ValidateSession(out string error))
             {
@@ -146,7 +161,6 @@ namespace Atlas.Presentation.SOS.Desktop
                 yield break;
             }
 
-            // Build the desktop while Welcome remains visible.
             if (!TryPrepareController(out error))
             {
                 preparationRoutine = null;
@@ -157,24 +171,21 @@ namespace Atlas.Presentation.SOS.Desktop
             // Allow UI Toolkit to process the populated desktop.
             yield return null;
 
-            // Preparation time counts toward the minimum Welcome duration.
-            float remainingTime = minimumWelcomeDuration -
-                (Time.realtimeSinceStartup - preparationStartedAt);
-
-            if (remainingTime > 0f)
+            if (!skipWelcome)
             {
-                Debug.Log(
-                    $"[DesktopManager] Waiting {remainingTime:F2} seconds " +
-                    "before reporting readiness.",
-                    this);
+                float remainingTime = minimumWelcomeDuration -
+                    (Time.realtimeSinceStartup - preparationStartedAt);
 
-                yield return new WaitForSecondsRealtime(remainingTime);
+                if (remainingTime > 0f)
+                {
+                    yield return new WaitForSecondsRealtime(
+                        remainingTime
+                    );
+                }
             }
 
-            // Keep the coroutine cancellable until the wait finishes.
             preparationRoutine = null;
 
-            // Recheck the user and controller after waiting.
             if (!ValidateSession(out error))
             {
                 Fail(error);
@@ -192,9 +203,9 @@ namespace Atlas.Presentation.SOS.Desktop
 
             Debug.Log(
                 $"[DesktopManager] Desktop ready for '{ActiveUser.UserId}'.",
-                this);
+                this
+            );
 
-            // The login controller decides when to reveal the desktop.
             DesktopReady?.Invoke();
         }
 
@@ -203,9 +214,10 @@ namespace Atlas.Presentation.SOS.Desktop
             if (State != DesktopPreparationState.Ready)
             {
                 Debug.LogWarning(
-                    $"[DesktopManager] Cannot show desktop while " +
+                    "[DesktopManager] Cannot show desktop while " +
                     $"state is {State}.",
-                    this);
+                    this
+                );
 
                 return false;
             }
@@ -224,12 +236,11 @@ namespace Atlas.Presentation.SOS.Desktop
 
             Debug.Log(
                 $"[DesktopManager] Desktop shown for '{ActiveUser.UserId}'.",
-                this);
+                this
+            );
 
             IsDesktopShown = true;
             DesktopShown?.Invoke();
-
-            return true;
 
             return true;
         }
@@ -243,7 +254,6 @@ namespace Atlas.Presentation.SOS.Desktop
 
             sessionController?.Clear();
 
-            // Clear a replacement controller if the reference changed.
             if (desktopController != sessionController)
                 desktopController?.Clear();
 
@@ -260,20 +270,26 @@ namespace Atlas.Presentation.SOS.Desktop
         {
             if (!IsAuthenticatedUser(ActiveUser))
             {
-                error = "The authenticated account changed or signed out.";
+                error =
+                    "The authenticated account changed or signed out.";
+
                 return false;
             }
 
             if (sessionController == null ||
                 !sessionController.isActiveAndEnabled)
             {
-                error = "The desktop controller is missing or disabled.";
+                error =
+                    "The desktop controller is missing or disabled.";
+
                 return false;
             }
 
             if (sessionController != desktopController)
             {
-                error = "The desktop controller changed. Please retry.";
+                error =
+                    "The desktop controller changed. Please retry.";
+
                 return false;
             }
 
@@ -294,13 +310,18 @@ namespace Atlas.Presentation.SOS.Desktop
         {
             try
             {
-                return sessionController.Prepare(ActiveUser, out error);
+                return sessionController.Prepare(
+                    ActiveUser,
+                    out error
+                );
             }
             catch (Exception exception)
             {
                 Debug.LogException(exception, this);
 
-                error = "The desktop could not be prepared. Please retry.";
+                error =
+                    "The desktop could not be prepared. Please retry.";
+
                 return false;
             }
         }
@@ -313,7 +334,9 @@ namespace Atlas.Presentation.SOS.Desktop
             return user != null &&
                    authentication != null &&
                    authentication.IsSignedIn &&
-                   ReferenceEquals(authentication.CurrentUser, user);
+                   ReferenceEquals(
+                       authentication.CurrentUser,
+                       user);
         }
 
         private void Fail(string message)
@@ -328,7 +351,8 @@ namespace Atlas.Presentation.SOS.Desktop
 
             Debug.LogError(
                 $"[DesktopManager] {FailureMessage}",
-                this);
+                this
+            );
 
             DesktopFailed?.Invoke(FailureMessage);
         }

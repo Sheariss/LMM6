@@ -1,151 +1,197 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements">
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         editor-extension-mode="False">
+
+    <Style src="../../../Tokens/Global-Colors.uss" />
+    <Style src="../../../Tokens/Global-Tokens.uss" />
+    <Style src="../../../Tokens/ATLAS.uss" />
     <Style src="StickyNotes.uss" />
 
-    <ui:VisualElement class="app-root">
-        <ui:VisualElement class="notes-app">
+    <ui:VisualElement name="WindowRoot" class="sn-app">
 
-            <!-- Window title bar -->
-            <ui:VisualElement class="titlebar">
-                <ui:VisualElement class="app-icon" />
-                <ui:Label text="Sticky Notes" class="window-title" />
+        <ui:VisualElement name="WindowHeader" class="sn-header">
 
-                <ui:VisualElement class="spacer" />
+            <ui:VisualElement name="WindowIcon"
+                              class="sn-hidden" />
 
-                <ui:Button name="minimize-button" text="—"
-                           class="window-button" />
-                <ui:Button name="maximize-button" text="□"
-                           class="window-button" />
-                <ui:Button name="close-button" text="×"
-                           class="window-button close-button" />
-            </ui:VisualElement>
+            <ui:Button name="new-note-button"
+                       text=""
+                       tooltip="Create a note"
+                       class="sn-header-button">
+                <ui:Image picking-mode="Ignore"
+                          class="sn-icon"
+                          style="background-image: resource('Icons/Math/Add/add_2_24dp');" />
+            </ui:Button>
 
-            <ui:VisualElement class="app-content">
+            <ui:VisualElement class="sn-spacer" />
 
-                <!-- Notes list -->
-                <ui:VisualElement class="sidebar">
-                    <ui:VisualElement class="sidebar-heading">
-                        <ui:Label text="Notes" class="heading" />
-                        <ui:VisualElement class="spacer" />
-                        <ui:Button name="new-note-button" text="+"
-                                   class="icon-button" />
-                        <ui:Button name="settings-button" text="⚙"
-                                   class="icon-button" />
-                    </ui:VisualElement>
+            <ui:Button name="settings-button"
+                       text=""
+                       tooltip="Settings"
+                       class="sn-header-button">
+                <ui:Image picking-mode="Ignore"
+                          class="sn-icon"
+                          style="background-image: resource('Icons/PDW/Settings/settings_24dp');" />
+            </ui:Button>
 
-                    <ui:TextField name="search-field"
-                                  class="search-field" />
-                    <ui:Label text="Search your notes"
-                              name="search-placeholder"
-                              class="search-hint" />
+            <!-- Required by the shared window binder; hidden for this app. -->
+            <ui:Button name="WindowMinimizeButton"
+                       text=""
+                       class="sn-hidden" />
 
-                    <ui:ScrollView name="notes-list"
-                                   mode="Vertical"
-                                   class="notes-list">
+            <ui:Button name="WindowMaximizeButton"
+                       text=""
+                       class="sn-hidden" />
 
-                        <ui:Button name="note-1"
-                                   class="note-card yellow selected">
-                            <ui:VisualElement class="card-header">
-                                <ui:Label text="Today"
-                                          class="card-title" />
-                                <ui:VisualElement class="spacer" />
-                                <ui:Label text="10:42 AM"
-                                          class="card-time" />
-                            </ui:VisualElement>
-                            <ui:Label text="Little things to remember"
-                                      class="card-subtitle" />
-                            <ui:Label text="Review the new designs&#10;Finish the Unity UI&#10;Take a proper lunch break"
-                                      class="card-preview" />
-                        </ui:Button>
+            <ui:Button name="WindowCloseButton"
+                       text=""
+                       tooltip="Close notes list"
+                       class="sn-header-button sn-close-button">
+                <ui:Image picking-mode="Ignore"
+                          class="sn-icon"
+                          style="background-image: resource('Icons/UI/Close/close_24dp');" />
+            </ui:Button>
 
-                        <ui:Button name="note-2"
-                                   class="note-card pink">
-                            <ui:VisualElement class="card-header">
-                                <ui:Label text="Ideas"
-                                          class="card-title" />
-                                <ui:VisualElement class="spacer" />
-                                <ui:Label text="Yesterday"
-                                          class="card-time" />
-                            </ui:VisualElement>
-                            <ui:Label text="A small space for big thoughts."
-                                      class="card-preview" />
-                        </ui:Button>
-
-                        <ui:Button name="note-3"
-                                   class="note-card green">
-                            <ui:VisualElement class="card-header">
-                                <ui:Label text="Shopping list"
-                                          class="card-title" />
-                                <ui:VisualElement class="spacer" />
-                                <ui:Label text="Tuesday"
-                                          class="card-time" />
-                            </ui:VisualElement>
-                            <ui:Label text="Coffee&#10;Avocados&#10;Something sweet"
-                                      class="card-preview" />
-                        </ui:Button>
-
-                        <ui:Button name="note-4"
-                                   class="note-card blue">
-                            <ui:VisualElement class="card-header">
-                                <ui:Label text="Project notes"
-                                          class="card-title" />
-                                <ui:VisualElement class="spacer" />
-                                <ui:Label text="Monday"
-                                          class="card-time" />
-                            </ui:VisualElement>
-                            <ui:Label text="Keep it simple. Make it feel good to use."
-                                      class="card-preview" />
-                        </ui:Button>
-
-                    </ui:ScrollView>
-
-                    <ui:Label name="notes-count"
-                              text="4 notes"
-                              class="sidebar-footer" />
-                </ui:VisualElement>
-
-                <!-- Selected note -->
-                <ui:VisualElement class="editor-pane">
-                    <ui:VisualElement class="editor-note yellow">
-
-                        <ui:VisualElement class="note-toolbar">
-                            <ui:Label text="Today"
-                                      class="note-caption" />
-                            <ui:VisualElement class="spacer" />
-                            <ui:Button name="pop-out-button" text="↗"
-                                       class="icon-button" />
-                            <ui:Button name="note-menu-button" text="···"
-                                       class="icon-button" />
-                        </ui:VisualElement>
-
-                        <ui:TextField
-                            name="note-editor"
-                            multiline="true"
-                            value="Little things to remember&#10;&#10;Review the new designs&#10;Finish the Unity UI&#10;Take a proper lunch break&#10;&#10;One thing at a time."
-                            class="note-input large-input" />
-
-                        <ui:VisualElement class="format-toolbar">
-                            <ui:Button name="bold-button" text="B"
-                                       class="format-button bold-button" />
-                            <ui:Button name="italic-button" text="I"
-                                       class="format-button italic-button" />
-                            <ui:Button name="underline-button" text="U"
-                                       class="format-button" />
-                            <ui:Button name="strike-button" text="S"
-                                       class="format-button" />
-                            <ui:VisualElement class="toolbar-divider" />
-                            <ui:Button name="list-button" text="≡"
-                                       class="format-button" />
-                            <ui:Button name="image-button" text="+"
-                                       class="format-button" />
-                            <ui:VisualElement class="spacer" />
-                            <ui:Label text="Edited just now"
-                                      class="editor-status" />
-                        </ui:VisualElement>
-
-                    </ui:VisualElement>
-                </ui:VisualElement>
-
-            </ui:VisualElement>
         </ui:VisualElement>
+
+        <ui:VisualElement name="WindowContent" class="sn-content">
+
+            <ui:Label name="WindowTitle"
+                      text="Sticky Notes"
+                      class="sn-heading" />
+
+            <ui:VisualElement class="sn-search-container">
+
+                <ui:TextField name="search-field"
+                              placeholder-text="Search your notes"
+                              hide-placeholder-on-focus="true"
+                              multiline="false"
+                              is-delayed="false"
+                              class="sn-search" />
+
+                <ui:Image picking-mode="Ignore"
+                          class="sn-search-icon"
+                          style="background-image: resource('Icons/UI/Search/search_24dp');" />
+
+                <!-- Retained for compatibility with the existing binder.
+                     The TextField now supplies the visible placeholder. -->
+                <ui:Label name="search-placeholder"
+                          text=""
+                          picking-mode="Ignore"
+                          class="sn-legacy-placeholder" />
+
+            </ui:VisualElement>
+
+            <ui:VisualElement class="sn-list-area">
+
+                <ui:ScrollView name="notes-list"
+                               mode="Vertical"
+                               horizontal-scroller-visibility="Hidden"
+                               vertical-scroller-visibility="Auto"
+                               class="sn-list" />
+
+                <ui:VisualElement name="notes-empty-state"
+                                  picking-mode="Ignore"
+                                  class="sn-empty-state">
+
+                    <ui:VisualElement picking-mode="Ignore"
+                                      class="sn-empty-art">
+
+                        <ui:Image picking-mode="Ignore"
+                                  class="sn-empty-notes-image"
+                                  style="background-image: resource('Icons/PDW/Notes/note_stack_128dp');" />
+
+                        <ui:VisualElement picking-mode="Ignore"
+                                          class="sn-empty-add-badge">
+                            <ui:Image picking-mode="Ignore"
+                                      class="sn-empty-add-image"
+                                      style="background-image: resource('Icons/Math/Add/add_2_24dp');" />
+                        </ui:VisualElement>
+
+                    </ui:VisualElement>
+
+                    <ui:Label name="notes-empty"
+                              text="No notes yet. Use + to create one."
+                              picking-mode="Ignore"
+                              class="sn-empty-message" />
+
+                </ui:VisualElement>
+
+            </ui:VisualElement>
+
+            <ui:VisualElement class="sn-footer">
+
+                <ui:Label name="notes-count"
+                          text=""
+                          class="sn-count" />
+
+                <ui:Label name="notes-status"
+                          text=""
+                          class="sn-status" />
+
+            </ui:VisualElement>
+
+            <ui:VisualElement name="note-context-menu"
+                              class="sn-context-menu">
+
+                <ui:Button name="open-note-button"
+                           text=""
+                           class="sn-menu-action">
+
+                    <ui:Image picking-mode="Ignore"
+                              class="sn-action-icon"
+                              style="background-image: resource('Icons/Arrows 1/Open-in-Full/open_in_full_24dp');" />
+
+                    <ui:Label text="Open note"
+                              picking-mode="Ignore"
+                              class="sn-action-label" />
+
+                </ui:Button>
+
+                <ui:Button name="delete-note-button"
+                           text=""
+                           class="sn-menu-action sn-delete-action">
+
+                    <ui:Image picking-mode="Ignore"
+                              class="sn-action-icon"
+                              style="background-image: resource('Icons/Apps/Photos/Delete/delete_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24');" />
+
+                    <ui:Label text="Delete note"
+                              picking-mode="Ignore"
+                              class="sn-action-label" />
+
+                </ui:Button>
+
+            </ui:VisualElement>
+
+            <ui:VisualElement name="delete-overlay"
+                              class="sn-delete-overlay">
+
+                <ui:VisualElement class="sn-delete-dialog">
+
+                    <ui:Label text="Delete note?"
+                              class="sn-dialog-heading" />
+
+                    <ui:Label name="delete-message"
+                              text=""
+                              class="sn-dialog-message" />
+
+                    <ui:VisualElement class="sn-dialog-actions">
+
+                        <ui:Button name="cancel-delete-button"
+                                   text="Cancel"
+                                   class="sn-dialog-button" />
+
+                        <ui:Button name="confirm-delete-button"
+                                   text="Delete"
+                                   class="sn-dialog-button sn-delete-confirm" />
+
+                    </ui:VisualElement>
+
+                </ui:VisualElement>
+
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+
     </ui:VisualElement>
 </ui:UXML>

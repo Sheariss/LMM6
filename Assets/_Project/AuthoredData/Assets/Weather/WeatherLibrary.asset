@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acdef967daa06b7498cfed2e679bd901, type: 3}
+  m_Name: WeatherLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Weather.WeatherLibrary
+  locations:
+  - <DisplayName>k__BackingField: Westbrook
+    <ReportedAt>k__BackingField: 2026-10-15 14:00
+    <Condition>k__BackingField: 1
+    <Artwork>k__BackingField: {fileID: 0}
+    <TemperatureC>k__BackingField: 24
+    <HighC>k__BackingField: 26
+    <LowC>k__BackingField: 18
+    <Summary>k__BackingField: A clear afternoon ahead. Rain expected tonight.
+    <FeelsLikeC>k__BackingField: 26
+    <FeelsLikeCaption>k__BackingField: Slightly warmer
+    <WindKph>k__BackingField: 12
+    <WindCaption>k__BackingField: From the northeast
+    <HumidityPercent>k__BackingField: 64
+    <HumidityCaption>k__BackingField: Comfortable
+    <VisibilityKm>k__BackingField: 10
+    <VisibilityCaption>k__BackingField: Clear conditions
+    hourly:
+    - <TemperatureC>k__BackingField: 24
+      <Condition>k__BackingField: 1
+      <RainPercent>k__BackingField: 5
+      <PressureHpa>k__BackingField: 1012
+    - <TemperatureC>k__BackingField: 25
+      <Condition>k__BackingField: 0
+      <RainPercent>k__BackingField: 5
+      <PressureHpa>k__BackingField: 1012
+    - <TemperatureC>k__BackingField: 24
+      <Condition>k__BackingField: 2
+      <RainPercent>k__BackingField: 10
+      <PressureHpa>k__BackingField: 1011
+    - <TemperatureC>k__BackingField: 23
+      <Condition>k__BackingField: 2
+      <RainPercent>k__BackingField: 15
+      <PressureHpa>k__BackingField: 1010
+    - <TemperatureC>k__BackingField: 21
+      <Condition>k__BackingField: 3
+      <RainPercent>k__BackingField: 60
+      <PressureHpa>k__BackingField: 1009
+    - <TemperatureC>k__BackingField: 20
+      <Condition>k__BackingField: 3
+      <RainPercent>k__BackingField: 75
+      <PressureHpa>k__BackingField: 1009
+    daily:
+    - <DayTemperatureC>k__BackingField: 26
+      <NightTemperatureC>k__BackingField: 18
+      <DayCondition>k__BackingField: 1
+      <NightCondition>k__BackingField: 7
+      <WindKph>k__BackingField: 12
+      <HumidityPercent>k__BackingField: 64
+      <UVIndex>k__BackingField: 3
+      <RainPercent>k__BackingField: 5
+    - <DayTemperatureC>k__BackingField: 23
+      <NightTemperatureC>k__BackingField: 17
+      <DayCondition>k__BackingField: 3
+      <NightCondition>k__BackingField: 3
+      <WindKph>k__BackingField: 11
+      <HumidityPercent>k__BackingField: 75
+      <UVIndex>k__BackingField: 2
+      <RainPercent>k__BackingField: 60
+    - <DayTemperatureC>k__BackingField: 24
+      <NightTemperatureC>k__BackingField: 18
+      <DayCondition>k__BackingField: 2
+      <NightCondition>k__BackingField: 2
+      <WindKph>k__BackingField: 10
+      <HumidityPercent>k__BackingField: 70
+      <UVIndex>k__BackingField: 3
+      <RainPercent>k__BackingField: 20
+    - <DayTemperatureC>k__BackingField: 28
+      <NightTemperatureC>k__BackingField: 19
+      <DayCondition>k__BackingField: 0
+      <NightCondition>k__BackingField: 7
+      <WindKph>k__BackingField: 11
+      <HumidityPercent>k__BackingField: 60
+      <UVIndex>k__BackingField: 5
+      <RainPercent>k__BackingField: 5
+    - <DayTemperatureC>k__BackingField: 29
+      <NightTemperatureC>k__BackingField: 20
+      <DayCondition>k__BackingField: 0
+      <NightCondition>k__BackingField: 7
+      <WindKph>k__BackingField: 10
+      <HumidityPercent>k__BackingField: 58
+      <UVIndex>k__BackingField: 5
+      <RainPercent>k__BackingField: 5

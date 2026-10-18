@@ -1,0 +1,86 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         editor-extension-mode="False">
+
+    <Style src="../../../../../Tokens/Global-Colors.uss"/>
+    <Style src="../../../../../Tokens/Global-Tokens.uss"/>
+    <Style src="../../WidgetShell.uss"/>
+    <Style src="../AppWidgets.uss"/>
+
+    <ui:Button name="WidgetRoot"
+               text=""
+               class="widget weather-widget">
+
+        <ui:VisualElement name="WidgetHeader"
+                          class="widget__header"
+                          picking-mode="Ignore">
+
+            <ui:Image name="WidgetIcon"
+                      class="widget__icon"
+                      picking-mode="Ignore"/>
+
+            <ui:Label name="WidgetTitle"
+                      text="Weather"
+                      class="widget__title"
+                      picking-mode="Ignore"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="WidgetContent"
+                          class="widget__content"
+                          picking-mode="Ignore">
+
+            <ui:Label name="WeatherLocation"
+                      text="Westbrook"
+                      class="weather-widget__location"
+                      picking-mode="Ignore"/>
+
+            <ui:VisualElement class="weather-widget__current"
+                              picking-mode="Ignore">
+
+                <ui:VisualElement picking-mode="Ignore">
+                    <ui:Label name="WeatherTemperature"
+                              text="24°"
+                              class="weather-widget__temperature"
+                              picking-mode="Ignore"/>
+
+                    <ui:Label name="WeatherCondition"
+                              text="Partly cloudy"
+                              class="weather-widget__condition"
+                              picking-mode="Ignore"/>
+
+                    <ui:Label name="WeatherRange"
+                              text="High 26°  Low 18°"
+                              class="weather-widget__range"
+                              picking-mode="Ignore"/>
+                </ui:VisualElement>
+
+                <ui:Image name="WeatherArtwork"
+                          class="weather-widget__artwork"
+                          picking-mode="Ignore"/>
+            </ui:VisualElement>
+
+            <ui:Label name="WeatherSummary"
+                      text="A clear afternoon ahead."
+                      class="weather-widget__summary"
+                      picking-mode="Ignore"/>
+
+            <ui:VisualElement name="WeatherForecast"
+                              class="weather-widget__forecast"
+                              picking-mode="Ignore"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="WidgetFooter"
+                          class="widget__footer"
+                          picking-mode="Ignore">
+
+            <ui:Label name="WidgetActionLabel"
+                      text="See full forecast"
+                      class="widget__action"
+                      picking-mode="Ignore"/>
+
+            <ui:Label name="WidgetActionArrow"
+                      text="›"
+                      class="widget__arrow"
+                      picking-mode="Ignore"/>
+        </ui:VisualElement>
+    </ui:Button>
+</ui:UXML>

@@ -188,12 +188,38 @@ MonoBehaviour:
     appIcon96: {fileID: 21300000, guid: 55c5b4096ded464449a116904f4a8393, type: 3}
     category: 1
     appUXML: {fileID: 9197481963319205126, guid: 22f221cf28d1eee4e82800122974d70c, type: 3}
-    runtimePrefab: {fileID: 0}
+    runtimePrefab: {fileID: 3390630909545885452, guid: cb5a240ffc5f20a4098d8266f99804ce, type: 3}
     isResizable: 1
     allowMultipleInstances: 0
     defaultWindowSize: {x: 1100, y: 750}
     minimumWindowSize: {x: 800, y: 450}
     showDesktopShortcut: 1
+    pinToTaskbar: 0
+  - appID: weather
+    displayName: Weather
+    appIcon48: {fileID: 21300000, guid: 9fcd2c7517d51cd45bd0407340fc5ef8, type: 3}
+    appIcon96: {fileID: 21300000, guid: 9fcd2c7517d51cd45bd0407340fc5ef8, type: 3}
+    category: 0
+    appUXML: {fileID: 9197481963319205126, guid: a4e11551a2d01f74da1d3872b69f469b, type: 3}
+    runtimePrefab: {fileID: 87468673441273590, guid: ae786747bc1a30049b6322936cf52c7b, type: 3}
+    isResizable: 1
+    allowMultipleInstances: 0
+    defaultWindowSize: {x: 480, y: 760}
+    minimumWindowSize: {x: 420, y: 520}
+    showDesktopShortcut: 0
+    pinToTaskbar: 0
+  - appID: sticky-notes
+    displayName: Sticky Notes
+    appIcon48: {fileID: 21300000, guid: 53c9d5768050fa645be670408eda7839, type: 3}
+    appIcon96: {fileID: 21300000, guid: f42364bfe635ca74287a399336f790a8, type: 3}
+    category: 1
+    appUXML: {fileID: 9197481963319205126, guid: c31db0a07015fd8498e4ee5f6cfcbd6b, type: 3}
+    runtimePrefab: {fileID: 7770542342273670519, guid: 226643606c35a2f4b8d140771dfb0d13, type: 3}
+    isResizable: 1
+    allowMultipleInstances: 0
+    defaultWindowSize: {x: 1100, y: 750}
+    minimumWindowSize: {x: 800, y: 450}
+    showDesktopShortcut: 0
     pinToTaskbar: 0
   - appID: clock
     displayName: Clock
@@ -299,38 +325,12 @@ MonoBehaviour:
     minimumWindowSize: {x: 800, y: 450}
     showDesktopShortcut: 0
     pinToTaskbar: 0
-  - appID: sticky-notes
-    displayName: Sticky Notes
-    appIcon48: {fileID: 21300000, guid: 53c9d5768050fa645be670408eda7839, type: 3}
-    appIcon96: {fileID: 21300000, guid: f42364bfe635ca74287a399336f790a8, type: 3}
-    category: 1
-    appUXML: {fileID: 9197481963319205126, guid: c31db0a07015fd8498e4ee5f6cfcbd6b, type: 3}
-    runtimePrefab: {fileID: 0}
-    isResizable: 1
-    allowMultipleInstances: 0
-    defaultWindowSize: {x: 1100, y: 750}
-    minimumWindowSize: {x: 800, y: 450}
-    showDesktopShortcut: 0
-    pinToTaskbar: 0
   - appID: task-manager
     displayName: Task Manager
     appIcon48: {fileID: 21300000, guid: 5d7c08016d588e14b8eadb60b5558bcb, type: 3}
     appIcon96: {fileID: 21300000, guid: 905ef9c5fb798a943952e274344c08ee, type: 3}
     category: 7
     appUXML: {fileID: 9197481963319205126, guid: fdb1f61abcf8cd34aa9d0f89f79f529c, type: 3}
-    runtimePrefab: {fileID: 0}
-    isResizable: 1
-    allowMultipleInstances: 0
-    defaultWindowSize: {x: 1100, y: 750}
-    minimumWindowSize: {x: 800, y: 450}
-    showDesktopShortcut: 0
-    pinToTaskbar: 0
-  - appID: weather
-    displayName: Weather
-    appIcon48: {fileID: 21300000, guid: 9fcd2c7517d51cd45bd0407340fc5ef8, type: 3}
-    appIcon96: {fileID: 21300000, guid: 9fcd2c7517d51cd45bd0407340fc5ef8, type: 3}
-    category: 0
-    appUXML: {fileID: 9197481963319205126, guid: a4e11551a2d01f74da1d3872b69f469b, type: 3}
     runtimePrefab: {fileID: 0}
     isResizable: 1
     allowMultipleInstances: 0

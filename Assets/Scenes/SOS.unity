@@ -701,6 +701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Email.EmailManager
   emailLibrary: {fileID: 11400000, guid: 33e3855bf2097e642bc1f8a39277699d, type: 2}
+  deliveryFailureDelay: 1.5
 --- !u!1 &1360319444
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,6 +966,7 @@ Transform:
   - {fileID: 753936949}
   - {fileID: 1028079309}
   - {fileID: 1245815617}
+  - {fileID: 2113720194}
   m_Father: {fileID: 906545945}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1720606205
@@ -1171,6 +1173,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Apps.AppController
   appCatalog: {fileID: 11400000, guid: ab7cff7353a143742a455312169db2ea, type: 2}
   fileAssociations: {fileID: 11400000, guid: d6e357d953dc9634cbaf9db9f95975b6, type: 2}
+--- !u!1 &2113720193
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2113720194}
+  - component: {fileID: 2113720195}
+  m_Layer: 0
+  m_Name: StickyNotesManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2113720194
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113720193}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1664625964}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2113720195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113720193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fc4d51f193d56b49803516712986bc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Atlas.SOS.StickyNotes.StickyNotesManager
+  library: {fileID: 11400000, guid: abe7a9b233782c04bae693793cf3c75c, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

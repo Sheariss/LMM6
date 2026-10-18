@@ -1,408 +1,705 @@
-/* Shared defaults */
+/* =========================================================
+   PANEL
+   ========================================================= */
 
-.app-root,
-.widget-root {
+.sn-app {
     flex-grow: 1;
-    color: #242424;
+    min-width: 0;
+    min-height: 0;
+
+    overflow: hidden;
+
+    border-width: 1px;
+    border-color: var(--window-border);
+    border-radius: var(--radius-xl);
+
+    background-color: var(--window-bg);
+    color: var(--text-primary);
+
+    font-size: var(--text-sm);
     -unity-font-style: normal;
-    font-size: 14px;
 }
 
-.app-root {
-    align-items: center;
-    justify-content: center;
-    background-color: #e8edf3;
-    padding: 24px;
-}
-
-.widget-root {
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 16px;
-}
-
-.spacer {
-    flex-grow: 1;
-}
-
-/* Remove Unity's default button appearance */
-
-Button {
+.sn-app Button {
     margin: 0;
     padding: 0;
+
     border-width: 0;
     border-radius: 0;
+
     background-image: none;
     background-color: transparent;
-    color: #242424;
+
+    color: var(--text-primary);
     -unity-font-style: normal;
 }
 
-Button:focus {
-    border-width: 0;
+.sn-app Label {
+    margin: 0;
+    padding: 0;
 }
 
-Button:active {
-    background-color: rgba(0, 0, 0, 0.09);
+.sn-hidden {
+    display: none;
 }
 
-/* Controller window */
-
-.notes-app {
-    width: 1040px;
-    height: 700px;
-    max-width: 100%;
-    max-height: 100%;
-    overflow: hidden;
-    border-radius: 10px;
-    border-width: 1px;
-    border-color: #c9cdd3;
-    background-color: #f7f7f8;
+.sn-spacer {
+    flex-grow: 1;
 }
 
-.titlebar {
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.sn-header {
     height: 44px;
     min-height: 44px;
+
     flex-direction: row;
     align-items: center;
-    padding-left: 16px;
-    background-color: #f3f3f5;
-    border-bottom-width: 1px;
-    border-bottom-color: #e4e4e7;
+
+    padding: 4px 8px;
+
+    background-color: var(--window-header);
 }
 
-.app-icon {
-    width: 17px;
-    height: 19px;
-    margin-right: 10px;
-    border-radius: 3px;
-    background-color: #f2c94c;
-    border-bottom-width: 5px;
-    border-bottom-color: #deb53a;
-}
-
-.window-title {
-    font-size: 12px;
-    color: #414145;
-}
-
-.window-button {
-    width: 46px;
-    height: 43px;
-    font-size: 18px;
-}
-
-.window-button:hover {
-    background-color: #e5e5e9;
-}
-
-.close-button:hover {
-    background-color: #c42b1c;
-    color: white;
-}
-
-.app-content {
-    flex-grow: 1;
-    flex-direction: row;
-    min-height: 0;
-}
-
-/* Sidebar */
-
-.sidebar {
-    width: 330px;
-    min-width: 280px;
+.sn-app .sn-header-button {
+    width: 36px;
+    height: 36px;
     flex-shrink: 0;
-    background-color: #fbfbfc;
-    border-right-width: 1px;
-    border-right-color: #e2e2e6;
-}
 
-.sidebar-heading {
-    flex-direction: row;
     align-items: center;
-    margin: 22px 18px 16px 22px;
+    justify-content: center;
+
+    border-width: 1px;
+    border-color: transparent;
+    border-radius: var(--radius-md);
+
+    background-color: transparent;
 }
 
-.heading {
-    font-size: 27px;
+.sn-app .sn-header-button:hover {
+    background-color: var(--surface-hover);
+}
+
+.sn-app .sn-header-button:active {
+    background-color: var(--surface-active);
+}
+
+.sn-app .sn-header-button:focus {
+    border-color: var(--border-focus);
+}
+
+.sn-app .sn-header-button:disabled {
+    opacity: var(--opacity-disabled);
+}
+
+.sn-icon {
+    width: var(--icon-md);
+    height: var(--icon-md);
+
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: var(--text-secondary);
+}
+
+.sn-close-button:hover .sn-icon {
+    -unity-background-image-tint-color: var(--true-white);
+}
+
+.sn-app .sn-close-button:hover {
+    background-color: var(--error-button);
+}
+
+.sn-app .sn-close-button:active {
+    background-color: var(--error-button-pressed);
+}
+
+/* =========================================================
+   CONTENT AND HEADING
+   ========================================================= */
+
+.sn-content {
+    position: relative;
+
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+
+    background-color: var(--window-bg);
+}
+
+.sn-app .sn-heading {
+    flex-shrink: 0;
+
+    margin: 12px 20px 16px 20px;
+
+    color: var(--text-primary);
+    font-size: var(--text-2xl);
     -unity-font-style: bold;
 }
 
-.icon-button {
-    width: 34px;
+/* =========================================================
+   SEARCH
+   40px height / 20px corner radius.
+   ========================================================= */
+
+.sn-search-container {
+    position: relative;
+
+    height: 40px;
+    min-height: 40px;
+    flex-shrink: 0;
+
+    margin: 0 20px 16px 20px;
+}
+
+.sn-search {
+    flex-grow: 1;
+    min-width: 0;
+    height: 40px;
+
+    margin: 0;
+    padding: 0;
+
+    --unity-cursor-color: var(--text-primary);
+    --unity-selection-color: var(--accent-active);
+}
+
+.sn-search > .unity-base-field__label {
+    display: none;
+}
+
+.sn-search > .unity-text-field__input {
+    flex-grow: 1;
+    min-width: 0;
+    height: 40px;
+
+    margin: 0;
+    padding: 0 16px 0 44px;
+
+    border-width: 1px;
+    border-color: var(--border-primary);
+    border-radius: 20px;
+
+    background-image: none;
+    background-color: var(--bg-tertiary);
+
+    color: var(--text-primary);
+    font-size: var(--text-sm);
+
+    -unity-text-align: middle-left;
+
+    --unity-cursor-color: var(--text-primary);
+    --unity-selection-color: var(--accent-active);
+}
+
+.sn-search > .unity-text-field__input:hover {
+    border-color: var(--border-secondary);
+}
+
+.sn-search > .unity-text-field__input:focus,
+.sn-search:focus > .unity-text-field__input {
+    border-color: var(--border-focus);
+
+    background-image: none;
+    background-color: var(--bg-tertiary);
+
+    color: var(--text-primary);
+
+    --unity-cursor-color: var(--text-primary);
+    --unity-selection-color: var(--accent-active);
+}
+
+.sn-search .unity-base-text-field__input--placeholder {
+    color: var(--text-muted);
+    -unity-font-style: normal;
+}
+
+.sn-search-icon {
+    position: absolute;
+
+    left: 16px;
+    top: 12px;
+
+    width: 16px;
+    height: 16px;
+
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: var(--text-muted);
+}
+
+/* Existing view code may toggle this label's display.
+   Keep it invisible; the native placeholder replaces it. */
+.sn-legacy-placeholder {
+    position: absolute;
+
+    width: 0;
+    height: 0;
+
+    visibility: hidden;
+    overflow: hidden;
+}
+
+/* =========================================================
+   NOTE LIST
+   ========================================================= */
+
+.sn-list-area {
+    position: relative;
+
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+
+    margin: 0 12px 0 20px;
+}
+
+.sn-list {
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+
+    margin: 0;
+    padding: 0;
+
+    background-color: transparent;
+}
+
+.sn-list > .unity-scroll-view__content-viewport {
+    min-width: 0;
+}
+
+.sn-list > .unity-scroll-view__content-viewport
+    > .unity-scroll-view__content-container {
+    padding: 1px 8px 8px 1px;
+}
+
+.sn-card {
+    flex-shrink: 0;
+
+    margin-bottom: 12px;
+    padding: 0 12px 14px 12px;
+
+    border-width: 1px;
+    border-color: transparent;
+    border-top-width: 8px;
+    border-radius: var(--radius-md);
+
+    overflow: hidden;
+}
+
+/* Body/header colors come from StickyNotesPalette in C#. */
+.sn-card:hover {
+    border-left-color: var(--border-secondary);
+    border-right-color: var(--border-secondary);
+    border-bottom-color: var(--border-secondary);
+}
+
+.sn-card:focus,
+.sn-card--selected {
+    border-left-color: var(--border-focus);
+    border-right-color: var(--border-focus);
+    border-bottom-color: var(--border-focus);
+}
+
+.sn-card-header {
+    height: 28px;
+    min-height: 28px;
+
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.sn-app .sn-card-stamp {
+    margin-right: 6px;
+
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.sn-app .sn-card-menu {
+    width: 28px;
+    height: 26px;
+    flex-shrink: 0;
+
+    align-items: center;
+    justify-content: center;
+
+    border-width: 1px;
+    border-color: transparent;
+    border-radius: var(--radius-sm);
+}
+
+.sn-app .sn-card-menu:hover {
+    background-color: rgba(0, 0, 0, 0.10);
+}
+
+.sn-app .sn-card-menu:focus {
+    border-color: var(--border-focus);
+}
+
+.sn-card-menu-image {
+    width: 18px;
+    height: 18px;
+
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.sn-app .sn-card-title {
+    font-size: var(--text-sm);
+    white-space: normal;
+    -unity-font-style: bold;
+}
+
+.sn-app .sn-card-preview {
+    margin-top: 6px;
+
+    font-size: 13px;
+    white-space: normal;
+}
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.sn-empty-state {
+    display: none;
+    position: absolute;
+
+    left: 12px;
+    right: 20px;
+    top: 0;
+    bottom: 0;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px 12px;
+}
+
+.sn-empty-art {
+    position: relative;
+
+    width: 104px;
+    height: 104px;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 20px;
+}
+
+.sn-empty-notes-image {
+    width: 80px;
+    height: 80px;
+
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: var(--text-muted);
+
+    opacity: var(--opacity-secondary);
+}
+
+.sn-empty-add-badge {
+    position: absolute;
+
+    right: 0;
+    bottom: 0;
+
+    width: 32px;
     height: 32px;
-    margin-left: 3px;
-    border-radius: 5px;
-    font-size: 22px;
+
+    align-items: center;
+    justify-content: center;
+
+    border-width: 3px;
+    border-color: var(--window-bg);
+    border-radius: 16px;
+
+    background-color: var(--accent-primary);
+}
+
+.sn-empty-add-image {
+    width: 18px;
+    height: 18px;
+
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: var(--true-white);
+}
+
+.sn-app .sn-empty-message {
+    max-width: 260px;
+
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+    white-space: normal;
+
     -unity-text-align: middle-center;
 }
 
-.icon-button:hover {
-    background-color: rgba(0, 0, 0, 0.065);
-}
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
-.search-field {
-    height: 36px;
-    margin: 0 20px 0 20px;
-    padding: 0;
-}
-
-.search-field > .unity-text-field__input {
-    padding: 7px 10px;
-    border-width: 1px;
-    border-color: #dedee3;
-    border-bottom-color: #99999f;
-    border-radius: 5px;
-    background-color: white;
-    color: #303036;
-    font-size: 13px;
-}
-
-.search-field:focus > .unity-text-field__input {
-    border-bottom-width: 2px;
-    border-bottom-color: #8067cb;
-}
-
-/* Hide this hint in C# when the search field has text. */
-.search-hint {
-    position: absolute;
-    top: 99px;
-    left: 31px;
-    color: #77777e;
-    font-size: 13px;
-    -unity-picking-mode: ignore;
-}
-
-.notes-list {
-    flex-grow: 1;
-    min-height: 0;
-    margin-top: 18px;
-}
-
-.notes-list > .unity-scroll-view__content-viewport
-    > .unity-scroll-view__content-container {
-    padding: 0 18px 6px 18px;
-}
-
-.note-card {
+.sn-footer {
     flex-shrink: 0;
-    align-items: stretch;
+
+    padding: 10px 20px 14px 20px;
+
+    background-color: var(--window-bg);
+}
+
+.sn-app .sn-count {
+    color: var(--text-muted);
+    font-size: var(--text-xs);
+}
+
+.sn-app .sn-status {
+    margin-top: 4px;
+
+    color: var(--text-muted);
+    font-size: var(--text-xs);
+    white-space: normal;
+}
+
+/* =========================================================
+   CONTEXT MENU
+   Keep dimensions aligned with ShowContextMenu's bounds.
+   ========================================================= */
+
+.sn-context-menu {
+    display: none;
+    position: absolute;
+
+    width: 174px;
+    height: 86px;
+
+    padding: 4px;
+
+    border-width: 1px;
+    border-color: var(--border-primary);
+    border-radius: var(--radius-md);
+
+    background-color: var(--surface-primary);
+}
+
+.sn-app .sn-menu-action {
+    height: 37px;
+    min-height: 37px;
+
+    flex-direction: row;
+    align-items: center;
+
+    padding: 0 10px;
+
+    border-width: 1px;
+    border-color: transparent;
+    border-radius: var(--radius-sm);
+
+    background-color: transparent;
+    color: var(--text-primary);
+}
+
+.sn-app .sn-menu-action:hover {
+    background-color: var(--surface-hover);
+}
+
+.sn-app .sn-menu-action:active {
+    background-color: var(--surface-active);
+}
+
+.sn-app .sn-menu-action:focus {
+    border-color: var(--border-focus);
+    background-color: var(--surface-hover);
+}
+
+.sn-action-icon {
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+    flex-shrink: 0;
+
+    margin-right: 10px;
+
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: var(--text-secondary);
+}
+
+.sn-app .sn-action-label {
+    color: var(--text-primary);
+    font-size: 13px;
+}
+
+.sn-delete-action .sn-action-icon {
+    -unity-background-image-tint-color: var(--error-text-light);
+}
+
+.sn-app .sn-delete-action .sn-action-label {
+    color: var(--error-text-light);
+}
+
+/* =========================================================
+   DELETE CONFIRMATION
+   ========================================================= */
+
+.sn-delete-overlay {
+    display: none;
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 16px;
+
+    background-color: var(--bg-overlay);
+}
+
+.sn-delete-dialog {
+    width: 100%;
+    max-width: 340px;
+
+    padding: 20px;
+
+    border-width: 1px;
+    border-color: var(--border-primary);
+    border-radius: var(--radius-lg);
+
+    background-color: var(--surface-primary);
+}
+
+.sn-app .sn-dialog-heading {
     margin-bottom: 12px;
-    padding: 14px;
-    border-radius: 6px;
-    border-width: 1px;
-    border-color: rgba(0, 0, 0, 0.045);
-    border-top-width: 4px;
-    white-space: normal;
-}
 
-.note-card:hover {
-    border-left-color: rgba(0, 0, 0, 0.19);
-    border-right-color: rgba(0, 0, 0, 0.19);
-    border-bottom-color: rgba(0, 0, 0, 0.19);
-}
-
-.note-card.selected {
-    border-left-color: #a58d43;
-    border-right-color: #a58d43;
-    border-bottom-color: #a58d43;
-}
-
-.card-header {
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 8px;
-}
-
-.card-title {
-    margin: 0;
-    font-size: 14px;
+    color: var(--text-primary);
+    font-size: var(--text-lg);
     -unity-font-style: bold;
 }
 
-.card-time {
-    margin: 0 0 0 8px;
-    color: rgba(35, 35, 35, 0.58);
-    font-size: 10px;
-}
+.sn-app .sn-dialog-message {
+    margin-bottom: 20px;
 
-.card-subtitle {
-    margin: 0 0 7px 0;
-    font-size: 13px;
-    -unity-font-style: bold;
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
     white-space: normal;
 }
 
-.card-preview {
-    margin: 0;
-    font-size: 13px;
-    color: #45423a;
-    white-space: normal;
-}
-
-.sidebar-footer {
-    margin: 0;
-    padding: 12px 22px;
-    font-size: 11px;
-    color: #85858b;
-}
-
-/* Selected note editor */
-
-.editor-pane {
-    flex-grow: 1;
-    min-width: 0;
-    padding: 30px;
-    background-color: #efeff2;
-}
-
-.editor-note {
-    flex-grow: 1;
-    overflow: hidden;
-    border-radius: 7px;
-    border-width: 1px;
-    border-color: rgba(0, 0, 0, 0.10);
-}
-
-.note-toolbar {
-    height: 44px;
-    min-height: 44px;
+.sn-dialog-actions {
     flex-direction: row;
-    align-items: center;
-    padding: 0 8px 0 16px;
-    background-color: rgba(0, 0, 0, 0.035);
+    justify-content: flex-end;
 }
 
-.note-caption {
-    font-size: 12px;
-    color: rgba(30, 30, 25, 0.65);
+.sn-app .sn-dialog-button {
+    height: 36px;
+    min-width: 84px;
+
+    margin-left: 8px;
+    padding: 0 12px;
+
+    border-width: 1px;
+    border-color: transparent;
+    border-radius: var(--radius-md);
+
+    background-color: var(--surface-hover);
+    color: var(--text-primary);
+
+    font-size: 13px;
+    -unity-text-align: middle-center;
 }
 
-.note-input {
-    flex-grow: 1;
-    min-height: 0;
+.sn-app .sn-dialog-button:hover {
+    background-color: var(--surface-active);
+}
+
+.sn-app .sn-dialog-button:focus {
+    border-color: var(--border-focus);
+}
+
+.sn-app .sn-delete-confirm {
+    background-color: var(--error-button);
+    color: var(--true-white);
+}
+
+.sn-app .sn-delete-confirm:hover {
+    background-color: var(--error-button-hover);
+}
+
+.sn-app .sn-delete-confirm:active {
+    background-color: var(--error-button-pressed);
+}
+
+/* =========================================================
+   SLIM SCROLLBAR
+   Matches the existing Messenger/Weather treatment.
+   ========================================================= */
+
+.sn-list .unity-scroller {
     margin: 0;
     padding: 0;
+
     border-width: 0;
+    background-image: none;
     background-color: transparent;
 }
 
-.note-input > .unity-text-field__input {
+.sn-list .unity-scroll-view__vertical-scroller {
+    width: 10px;
+    min-width: 10px;
+}
+
+.sn-list .unity-scroll-view__horizontal-scroller {
+    display: none;
+}
+
+.sn-list .unity-scroller__low-button,
+.sn-list .unity-scroller__high-button {
+    display: none;
+}
+
+.sn-list .unity-scroller__slider {
     flex-grow: 1;
+
     margin: 0;
-    padding: 20px;
-    border-width: 0;
-    border-radius: 0;
-    background-color: transparent;
-    color: #333026;
-    white-space: normal;
-    -unity-text-align: upper-left;
-}
+    padding: 0;
 
-.note-input:focus > .unity-text-field__input {
     border-width: 0;
+    background-image: none;
     background-color: transparent;
 }
 
-.large-input {
-    font-size: 18px;
+.sn-list .unity-scroller__slider
+    .unity-base-slider__drag-container,
+.sn-list .unity-scroller__slider
+    .unity-base-slider__tracker,
+.sn-list .unity-scroller__slider
+    .unity-base-slider__dragger-border {
+    border-width: 0;
+    background-image: none;
+    background-color: transparent;
 }
 
-.format-toolbar {
-    height: 44px;
-    min-height: 44px;
-    flex-direction: row;
-    align-items: center;
-    padding: 0 8px;
-    border-top-width: 1px;
-    border-top-color: rgba(0, 0, 0, 0.055);
+.sn-list .unity-scroll-view__vertical-scroller
+    .unity-base-slider__dragger {
+    width: 6px;
+    min-width: 6px;
+    min-height: 28px;
+
+    border-width: 0;
+    border-radius: 3px;
+
+    background-image: none;
+    background-color: var(--gray-600);
 }
 
-.format-button {
-    width: 32px;
-    height: 30px;
-    margin-right: 2px;
-    border-radius: 4px;
-    font-size: 15px;
+.sn-list .unity-scroll-view__vertical-scroller
+    .unity-base-slider__dragger:hover {
+    background-color: var(--gray-500);
 }
 
-.format-button:hover {
-    background-color: rgba(0, 0, 0, 0.07);
-}
-
-.bold-button {
-    -unity-font-style: bold;
-}
-
-.italic-button {
-    -unity-font-style: italic;
-}
-
-.toolbar-divider {
-    width: 1px;
-    height: 18px;
-    margin: 0 8px 0 4px;
-    background-color: rgba(0, 0, 0, 0.12);
-}
-
-.editor-status {
-    margin-right: 6px;
-    font-size: 10px;
-    color: rgba(30, 30, 25, 0.5);
-}
-
-/* Floating sticky note */
-
-.sticky-widget {
-    width: 310px;
-    height: 330px;
-    min-width: 240px;
-    min-height: 200px;
-    overflow: hidden;
-    border-radius: 7px;
-    border-width: 1px;
-    border-color: rgba(0, 0, 0, 0.16);
-}
-
-.widget-toolbar {
-    height: 38px;
-    min-height: 38px;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-.widget-input {
-    font-size: 16px;
-}
-
-.widget-input > .unity-text-field__input {
-    padding: 16px;
-}
-
-/* Note colors */
-
-.yellow {
-    background-color: #fff2b2;
-    border-top-color: #e8ce69;
-}
-
-.pink {
-    background-color: #f8d5e6;
-    border-top-color: #e5a6c6;
-}
-
-.green {
-    background-color: #dff0c5;
-    border-top-color: #aecb85;
-}
-
-.blue {
-    background-color: #d5eafa;
-    border-top-color: #98c4e4;
-}
-
-.purple {
-    background-color: #e8dcf5;
-    border-top-color: #c3a7df;
+.sn-list .unity-scroll-view__vertical-scroller
+    .unity-base-slider__dragger:active {
+    background-color: var(--gray-400);
 }

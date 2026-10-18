@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f72ff1b4b8ec64385519ac49750fd4, type: 3}
+  m_Name: Calendar Library
+  m_EditorClassIdentifier: Assembly-CSharp::Atlas.SOS.Calendar.CalendarLibrary
+  scenarioLocalNow: 2026-10-16 09:00
+  timezoneLabel: "Scenario time \xB7 GMT\u221204:00"
+  events:
+  - id: test
+    title: Test Event
+    calendar: 0
+    startLocal: 2026-10-12 09:00
+    endLocal: 2026-10-12 11:00
+    allDay: 0
+    location: Location
+    description: This is a Description.

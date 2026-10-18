@@ -4,11 +4,12 @@ namespace Atlas.Development
 {
     public enum DevelopmentStartPoint
     {
-        Normal,
-        MainMenu,
-        NewGame,
-        SOS,
-        Credits
+        Normal = 0,
+        MainMenu = 1,
+        NewGame = 2,
+        SOS = 3,
+        Credits = 4,
+        GuestDesktop = 5
     }
 
     [CreateAssetMenu(
@@ -17,32 +18,23 @@ namespace Atlas.Development
     )]
     public sealed class DevelopmentSettings : ScriptableObject
     {
-        // -------------------- GENERAL --------------------
-
         [Header("Development")]
         [SerializeField]
         private bool enabled = true;
 
-        // -------------------- STARTUP --------------------
-
         [Header("Startup")]
         [SerializeField]
-        private DevelopmentStartPoint startPoint = DevelopmentStartPoint.Normal;
-
-        // -------------------- SPLASH --------------------
+        private DevelopmentStartPoint startPoint =
+            DevelopmentStartPoint.GuestDesktop;
 
         [Header("Splash")]
         [SerializeField]
         [Range(0f, 2f)]
         private float splashDurationMultiplier = 1f;
 
-        // -------------------- PROPERTIES --------------------
+        public bool Enabled => enabled;
 
-        public bool Enabled =>
-            enabled;
-
-        public DevelopmentStartPoint StartPoint =>
-            startPoint;
+        public DevelopmentStartPoint StartPoint => startPoint;
 
         public float SplashDurationMultiplier =>
             splashDurationMultiplier;
