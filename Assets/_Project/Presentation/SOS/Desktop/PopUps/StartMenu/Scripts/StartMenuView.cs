@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Atlas.SOS.Apps;
 using UnityEngine;
@@ -13,8 +14,13 @@ namespace Atlas.Presentation.SOS.Desktop
         private readonly Label errorLabel;
 
         private VisualElement activePopup;
-        private Button popupAnchor;
+        private VisualElement popupAnchor;
         private bool popupAbove;
+
+        private Vector2 categoryHomeScrollOffset;
+        private bool preserveCategoryHomeScroll;
+        private IVisualElementScheduledItem scrollRestore;
+        private bool disposed;
 
         public bool IsOpen { get; private set; }
         public bool HasPopup => activePopup != null;
@@ -46,6 +52,11 @@ namespace Atlas.Presentation.SOS.Desktop
             binder.PowerPopup.RegisterCallback<GeometryChangedEvent>(
                 OnGeometryChanged);
 
+            binder.CategoryPopup.RegisterCallback<GeometryChangedEvent>(
+                OnGeometryChanged);
+
+            binder.CategoryPopupGrid.style.width = Length.Percent(100);
+
             Hide();
         }
 
@@ -53,11 +64,15 @@ namespace Atlas.Presentation.SOS.Desktop
             StartMenuEngine engine,
             Action<string> activateApp,
             Action<string> activateDocument,
-            Action<AppCategory?> selectCategory)
+            Action<AppCategory, VisualElement> openCategory)
         {
+            ClosePopups();
+
             binder.ProfileName.text = engine.User.DisplayName;
+
             binder.ProfileImage.style.backgroundImage =
                 new StyleBackground(StyleKeyword.None);
+
             binder.ProfileImage.sprite = engine.User.ProfileImage;
             binder.ProfileImage.scaleMode = ScaleMode.ScaleAndCrop;
 
@@ -69,12 +84,15 @@ namespace Atlas.Presentation.SOS.Desktop
                 binder.RecentPanel,
                 !engine.IsSearching && engine.ShowingRecent);
 
-            SetVisible(binder.SearchPanel, engine.IsSearching);
+            SetVisible(
+                binder.SearchPanel,
+                engine.IsSearching);
 
-            var pinned = engine.PinnedExpanded
-                ? engine.PinnedApps
-                : engine.PinnedApps.Take(
-                    StartMenuEngine.CollapsedPinnedCount);
+            IEnumerable<AppDefinition> pinned =
+                engine.PinnedExpanded
+                    ? engine.PinnedApps
+                    : engine.PinnedApps.Take(
+                        StartMenuEngine.CollapsedPinnedCount);
 
             builder.FillApps(
                 binder.PinnedGrid,
@@ -82,7 +100,9 @@ namespace Atlas.Presentation.SOS.Desktop
                 activateApp,
                 false);
 
-            SetVisible(binder.PinnedEmpty, engine.PinnedApps.Count == 0);
+            SetVisible(
+                binder.PinnedEmpty,
+                engine.PinnedApps.Count == 0);
 
             binder.PinnedToggle.SetEnabled(
                 engine.PinnedApps.Count >
@@ -102,7 +122,8 @@ namespace Atlas.Presentation.SOS.Desktop
 
             builder.FillDocuments(
                 binder.RecentGrid,
-                engine.Documents.Take(StartMenuEngine.RecentPreviewCount),
+                engine.Documents.Take(
+                    StartMenuEngine.RecentPreviewCount),
                 activateDocument);
 
             builder.FillDocuments(
@@ -115,6 +136,7 @@ namespace Atlas.Presentation.SOS.Desktop
 
             SetVisible(binder.RecentEmpty, noDocuments);
             SetVisible(binder.RecentPanelEmpty, noDocuments);
+
             binder.RecentShowAllButton.SetEnabled(!noDocuments);
 
             binder.ViewValue.text = engine.ViewMode.ToString();
@@ -131,13 +153,14 @@ namespace Atlas.Presentation.SOS.Desktop
                 binder.AlphabeticalList,
                 engine.ViewMode == StartMenuAppView.List);
 
-            SetVisible(binder.AppsEmpty, engine.Apps.Count == 0);
+            SetVisible(
+                binder.AppsEmpty,
+                engine.Apps.Count == 0);
 
             builder.FillCategories(
                 binder.CategoryGrid,
                 engine.Apps,
-                engine.ExpandedCategory,
-                selectCategory,
+                openCategory,
                 activateApp);
 
             builder.FillApps(
@@ -151,7 +174,8 @@ namespace Atlas.Presentation.SOS.Desktop
                 engine.Apps,
                 activateApp);
 
-            var results = engine.GetSearchResults().ToList();
+            List<AppDefinition> results =
+                engine.GetSearchResults().ToList();
 
             builder.FillApps(
                 binder.SearchResults,
@@ -159,7 +183,9 @@ namespace Atlas.Presentation.SOS.Desktop
                 activateApp,
                 true);
 
-            SetVisible(binder.SearchEmpty, results.Count == 0);
+            SetVisible(
+                binder.SearchEmpty,
+                results.Count == 0);
 
             binder.CategoryViewButton.EnableInClassList(
                 "start-menu-selected",
@@ -176,6 +202,9 @@ namespace Atlas.Presentation.SOS.Desktop
 
         public void Show()
         {
+            if (disposed)
+                return;
+
             binder.Root.style.display = DisplayStyle.Flex;
             IsOpen = true;
             ClearError();
@@ -184,18 +213,88 @@ namespace Atlas.Presentation.SOS.Desktop
         public void Hide()
         {
             ClosePopups();
+            scrollRestore?.Pause();
+
             binder.Root.style.display = DisplayStyle.None;
             IsOpen = false;
         }
 
         public void ToggleViewPopup()
         {
-            TogglePopup(binder.ViewPopup, binder.ViewButton, false);
+            TogglePopup(
+                binder.ViewPopup,
+                binder.ViewButton,
+                false);
         }
 
         public void TogglePowerPopup()
         {
-            TogglePopup(binder.PowerPopup, binder.PowerButton, true);
+            TogglePopup(
+                binder.PowerPopup,
+                binder.PowerButton,
+                true);
+        }
+
+        public void ShowCategoryPopup(
+            AppCategory category,
+            VisualElement anchor,
+            IEnumerable<AppDefinition> apps,
+            Action<string> activate,
+            Vector2 homeScrollOffset)
+        {
+            if (disposed)
+                return;
+
+            if (activePopup == binder.CategoryPopup &&
+                popupAnchor == anchor)
+            {
+                ClosePopups();
+                return;
+            }
+
+            List<AppDefinition> categoryApps = apps
+                .Where(app => app.Category == category)
+                .OrderBy(
+                    app => app.DisplayName,
+                    StringComparer.OrdinalIgnoreCase)
+                .ToList();
+
+            if (categoryApps.Count == 0)
+                return;
+
+            ClosePopups();
+
+            binder.CategoryPopupTitle.text =
+                StartMenuEngine.CategoryName(category);
+
+            builder.FillApps(
+                binder.CategoryPopupGrid,
+                categoryApps,
+                activate,
+                false);
+
+            int rows = Mathf.CeilToInt(categoryApps.Count / 4f);
+
+            binder.CategoryPopup.style.height = Mathf.Clamp(
+                rows * 92f + 64f,
+                156f,
+                360f);
+
+            binder.CategoryPopup.style.maxHeight = Mathf.Max(
+                1f,
+                binder.Root.contentRect.height - 32f);
+
+            binder.CategoryPopupScroll.scrollOffset = Vector2.zero;
+
+            TogglePopup(
+                binder.CategoryPopup,
+                anchor,
+                false);
+
+            categoryHomeScrollOffset = homeScrollOffset;
+            preserveCategoryHomeScroll = true;
+
+            RestoreHomeScroll(homeScrollOffset);
         }
 
         public bool IsInsidePopup(VisualElement target)
@@ -203,12 +302,27 @@ namespace Atlas.Presentation.SOS.Desktop
             return Contains(activePopup, target);
         }
 
+        public bool IsInsidePopupAnchor(VisualElement target)
+        {
+            return Contains(popupAnchor, target);
+        }
+
         public void ClosePopups()
         {
+            bool restoreScroll = preserveCategoryHomeScroll;
+            Vector2 offset = categoryHomeScrollOffset;
+
+            preserveCategoryHomeScroll = false;
+
             SetVisible(binder.ViewPopup, false);
             SetVisible(binder.PowerPopup, false);
+            SetVisible(binder.CategoryPopup, false);
+
             activePopup = null;
             popupAnchor = null;
+
+            if (restoreScroll)
+                RestoreHomeScroll(offset);
         }
 
         public void ShowError(string message)
@@ -232,16 +346,34 @@ namespace Atlas.Presentation.SOS.Desktop
                 (parent == target || parent.Contains(target));
         }
 
+        private void RestoreHomeScroll(Vector2 offset)
+        {
+            binder.HomePanel.scrollOffset = offset;
+
+            scrollRestore?.Pause();
+
+            scrollRestore = binder.Root.schedule.Execute(() =>
+            {
+                if (disposed || !IsOpen)
+                    return;
+
+                binder.HomePanel.scrollOffset = offset;
+                PositionPopup();
+            });
+        }
+
         private void TogglePopup(
             VisualElement popup,
-            Button anchor,
+            VisualElement anchor,
             bool above)
         {
-            bool wasOpen = activePopup == popup;
+            bool wasOpen =
+                activePopup == popup &&
+                popupAnchor == anchor;
 
             ClosePopups();
 
-            if (wasOpen)
+            if (wasOpen || disposed)
                 return;
 
             activePopup = popup;
@@ -257,14 +389,16 @@ namespace Atlas.Presentation.SOS.Desktop
             PositionPopup();
         }
 
-        private void OnGeometryChanged(GeometryChangedEvent geometryEvent)
+        private void OnGeometryChanged(
+            GeometryChangedEvent geometryEvent)
         {
             PositionPopup();
         }
 
         private void PositionPopup()
         {
-            if (activePopup == null ||
+            if (disposed ||
+                activePopup == null ||
                 popupAnchor == null ||
                 activePopup.layout.width <= 0f ||
                 activePopup.layout.height <= 0f)
@@ -273,6 +407,9 @@ namespace Atlas.Presentation.SOS.Desktop
             }
 
             Rect bounds = binder.Root.contentRect;
+
+            if (bounds.width <= 0f || bounds.height <= 0f)
+                return;
 
             Vector2 anchorMin = binder.Root.WorldToLocal(
                 popupAnchor.worldBound.min);
@@ -302,8 +439,11 @@ namespace Atlas.Presentation.SOS.Desktop
                 ? anchorMin.y - height - 8f
                 : anchorMax.y + 8f;
 
-            if (!popupAbove && top + height > bounds.yMax - 8f)
+            if (!popupAbove &&
+                top + height > bounds.yMax - 8f)
+            {
                 top = anchorMin.y - height - 8f;
+            }
 
             if (popupAbove && top < minTop)
                 top = anchorMax.y + 8f;
@@ -311,19 +451,29 @@ namespace Atlas.Presentation.SOS.Desktop
             activePopup.style.right = StyleKeyword.Auto;
             activePopup.style.bottom = StyleKeyword.Auto;
             activePopup.style.left = left;
-            activePopup.style.top = Mathf.Clamp(top, minTop, maxTop);
+            activePopup.style.top = Mathf.Clamp(
+                top,
+                minTop,
+                maxTop);
         }
 
         private static void SetVisible(
             VisualElement element,
             bool visible)
         {
-            element.EnableInClassList("start-menu-hidden", !visible);
+            element.EnableInClassList(
+                "start-menu-hidden",
+                !visible);
         }
 
         public void Dispose()
         {
+            if (disposed)
+                return;
+
             Hide();
+            disposed = true;
+            scrollRestore?.Pause();
 
             binder.Root.UnregisterCallback<GeometryChangedEvent>(
                 OnGeometryChanged);
@@ -334,6 +484,10 @@ namespace Atlas.Presentation.SOS.Desktop
             binder.PowerPopup.UnregisterCallback<GeometryChangedEvent>(
                 OnGeometryChanged);
 
+            binder.CategoryPopup.UnregisterCallback<GeometryChangedEvent>(
+                OnGeometryChanged);
+
+            binder.CategoryPopupGrid.Clear();
             errorLabel.RemoveFromHierarchy();
         }
     }

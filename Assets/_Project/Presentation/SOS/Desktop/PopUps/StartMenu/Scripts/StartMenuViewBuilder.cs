@@ -9,9 +9,6 @@ namespace Atlas.Presentation.SOS.Desktop
 {
     public sealed class StartMenuViewBuilder
     {
-        private readonly Texture2D backIcon = Resources.Load<Texture2D>(
-            "Icons/Arrows 1/Arrow-Back/arrow_back_32dp");
-
         private readonly Texture2D documentFallback =
             Resources.Load<Texture2D>(
                 "AppIcons/Document/icons8-document-48");
@@ -23,6 +20,7 @@ namespace Atlas.Presentation.SOS.Desktop
             bool list)
         {
             container.Clear();
+            container.style.width = Length.Percent(100);
 
             foreach (AppDefinition app in apps)
                 container.Add(CreateAppButton(app, activate, list));
@@ -34,12 +32,18 @@ namespace Atlas.Presentation.SOS.Desktop
             Action<string> activate)
         {
             container.Clear();
+            container.style.width = Length.Percent(100);
 
-            foreach (var group in apps.GroupBy(app =>
-                         Initial(app.DisplayName)))
+            var orderedApps = apps.OrderBy(
+                app => app.DisplayName,
+                StringComparer.OrdinalIgnoreCase);
+
+            foreach (var group in orderedApps.GroupBy(
+                         app => Initial(app.DisplayName)))
             {
                 var section = new VisualElement();
                 section.AddToClassList("start-menu-letter-group");
+                section.style.width = Length.Percent(100);
 
                 section.Add(CreateLabel(
                     group.Key,
@@ -55,62 +59,11 @@ namespace Atlas.Presentation.SOS.Desktop
         public void FillCategories(
             VisualElement container,
             IEnumerable<AppDefinition> apps,
-            AppCategory? expandedCategory,
-            Action<AppCategory?> selectCategory,
+            Action<AppCategory, VisualElement> openCategory,
             Action<string> activate)
         {
             container.Clear();
-
-            if (expandedCategory.HasValue)
-            {
-                var section = new VisualElement();
-                section.AddToClassList("start-menu-category-group");
-
-                var header = new VisualElement();
-                header.AddToClassList("start-menu-section-header");
-
-                var back = new Button(() => selectCategory(null))
-                {
-                    tooltip = "Back to categories"
-                };
-
-                back.AddToClassList("start-menu-section-button");
-
-                var image = new Image
-                {
-                    image = backIcon,
-                    pickingMode = PickingMode.Ignore,
-                    scaleMode = ScaleMode.ScaleToFit
-                };
-
-                image.AddToClassList("start-menu-popup-icon");
-
-                back.Add(image);
-                back.Add(CreateLabel(
-                    "Back",
-                    "start-menu-button-text"));
-
-                header.Add(CreateLabel(
-                    StartMenuEngine.CategoryName(expandedCategory.Value),
-                    "start-menu-heading"));
-
-                header.Add(back);
-                section.Add(header);
-
-                var grid = new VisualElement();
-                grid.AddToClassList("start-menu-app-grid");
-
-                FillApps(
-                    grid,
-                    apps.Where(app =>
-                        app.Category == expandedCategory.Value),
-                    activate,
-                    false);
-
-                section.Add(grid);
-                container.Add(section);
-                return;
-            }
+            container.style.width = Length.Percent(100);
 
             var groups = apps
                 .GroupBy(app => app.Category)
@@ -121,13 +74,22 @@ namespace Atlas.Presentation.SOS.Desktop
             foreach (var group in groups)
             {
                 AppCategory category = group.Key;
+                string categoryName =
+                    StartMenuEngine.CategoryName(category);
+
+                List<AppDefinition> categoryApps = group
+                    .OrderBy(
+                        app => app.DisplayName,
+                        StringComparer.OrdinalIgnoreCase)
+                    .ToList();
 
                 var item = new VisualElement();
                 item.AddToClassList("start-menu-category-item");
 
-                var card = new Button(() => selectCategory(category))
+                var card = new VisualElement
                 {
-                    tooltip = StartMenuEngine.CategoryName(category)
+                    focusable = true,
+                    tooltip = $"Open {categoryName}"
                 };
 
                 card.AddToClassList("start-menu-category-card");
@@ -139,40 +101,184 @@ namespace Atlas.Presentation.SOS.Desktop
 
                 preview.AddToClassList("start-menu-category-preview");
 
-                foreach (AppDefinition app in group.Take(4))
+                for (int index = 0; index < 3; index++)
                 {
-                    var slot = new VisualElement
+                    Button appButton;
+
+                    if (index < categoryApps.Count)
+                    {
+                        AppDefinition app = categoryApps[index];
+
+                        appButton = new Button(
+                            () => activate(app.AppID))
+                        {
+                            tooltip = app.DisplayName
+                        };
+
+                        appButton.Add(CreateImage(
+                            AppIcon(app),
+                            "start-menu-category-icon"));
+                    }
+                    else
+                    {
+                        appButton = new Button();
+                        appButton.SetEnabled(false);
+                    }
+
+                    appButton.AddToClassList(
+                        "start-menu-category-slot-button");
+
+                    preview.Add(appButton);
+                }
+
+                var moreButton = new Button(
+                    () => openCategory(category, item))
+                {
+                    tooltip = $"Show all {categoryName} apps"
+                };
+
+                moreButton.AddToClassList(
+                    "start-menu-category-slot-button");
+
+                moreButton.AddToClassList(
+                    "start-menu-category-more-button");
+
+                var miniGrid = new VisualElement
+                {
+                    pickingMode = PickingMode.Ignore
+                };
+
+                miniGrid.AddToClassList(
+                    "start-menu-category-mini-grid");
+
+                for (int index = 0; index < 4; index++)
+                {
+                    var miniSlot = new VisualElement
                     {
                         pickingMode = PickingMode.Ignore
                     };
 
-                    slot.AddToClassList("start-menu-category-icon-slot");
+                    miniSlot.AddToClassList(
+                        "start-menu-category-mini-slot");
 
-                    slot.Add(CreateImage(
-                        AppIcon(app),
-                        "start-menu-category-icon"));
+                    int appIndex = index + 3;
 
-                    preview.Add(slot);
+                    if (appIndex < categoryApps.Count)
+                    {
+                        miniSlot.Add(CreateImage(
+                            AppIcon(categoryApps[appIndex]),
+                            "start-menu-category-mini-icon"));
+                    }
+
+                    miniGrid.Add(miniSlot);
                 }
 
+                moreButton.Add(miniGrid);
+                preview.Add(moreButton);
                 card.Add(preview);
+
+                card.RegisterCallback<GeometryChangedEvent>(
+                    geometryEvent =>
+                    {
+                        float width = geometryEvent.newRect.width;
+
+                        if (width <= 0f || float.IsNaN(width))
+                            return;
+
+                        if (!Mathf.Approximately(
+                                geometryEvent.newRect.height,
+                                width))
+                        {
+                            card.style.height = width;
+                        }
+
+                        float innerSize = card.contentRect.width;
+
+                        if (innerSize <= 0f)
+                            return;
+
+                        preview.style.width = innerSize;
+                        preview.style.height = innerSize;
+
+                        foreach (VisualElement slot in preview.Children())
+                        {
+                            slot.style.width = innerSize * 0.5f;
+                            slot.style.height = innerSize * 0.5f;
+                        }
+                    });
+
+                miniGrid.RegisterCallback<GeometryChangedEvent>(
+                    geometryEvent =>
+                    {
+                        float width = geometryEvent.newRect.width;
+                        float height = geometryEvent.newRect.height;
+
+                        if (width <= 0f || height <= 0f)
+                            return;
+
+                        foreach (VisualElement slot in miniGrid.Children())
+                        {
+                            slot.style.width = width * 0.5f;
+                            slot.style.height = height * 0.5f;
+                        }
+                    });
+
+                card.RegisterCallback<ClickEvent>(clickEvent =>
+                {
+                    var target = clickEvent.target as VisualElement;
+
+                    for (VisualElement current = target;
+                         current != null && current != card;
+                         current = current.parent)
+                    {
+                        if (current is Button)
+                            return;
+                    }
+
+                    openCategory(category, item);
+                });
+
+                card.RegisterCallback<KeyDownEvent>(keyEvent =>
+                {
+                    if (keyEvent.target != card)
+                        return;
+
+                    bool activateCategory =
+                        keyEvent.keyCode == KeyCode.Return ||
+                        keyEvent.keyCode == KeyCode.KeypadEnter ||
+                        keyEvent.keyCode == KeyCode.Space;
+
+                    if (!activateCategory)
+                        return;
+
+                    keyEvent.StopPropagation();
+                    openCategory(category, item);
+                });
+
+                var nameButton = new Button(
+                    () => openCategory(category, item))
+                {
+                    text = categoryName,
+                    tooltip = $"Show all {categoryName} apps"
+                };
+
+                nameButton.AddToClassList(
+                    "start-menu-category-name-button");
+
                 item.Add(card);
-
-                item.Add(CreateLabel(
-                    StartMenuEngine.CategoryName(category),
-                    "start-menu-category-name"));
-
+                item.Add(nameButton);
                 container.Add(item);
             }
         }
 
         public void FillDocuments(
-    VisualElement container,
-    IEnumerable<StartMenuDocument> documents,
-    Action<string> activate,
-    bool expanded = false)
+            VisualElement container,
+            IEnumerable<StartMenuDocument> documents,
+            Action<string> activate,
+            bool expanded = false)
         {
             container.Clear();
+            container.style.width = Length.Percent(100);
 
             foreach (StartMenuDocument document in documents)
             {
@@ -186,7 +292,10 @@ namespace Atlas.Presentation.SOS.Desktop
                 button.AddToClassList("start-menu-document-button");
 
                 if (expanded)
-                    button.AddToClassList("start-menu-document-button-expanded");
+                {
+                    button.AddToClassList(
+                        "start-menu-document-button-expanded");
+                }
 
                 Image icon = CreateImage(
                     document.Icon,
@@ -223,7 +332,8 @@ namespace Atlas.Presentation.SOS.Desktop
 
                     button.Add(CreateLabel(
                         date,
-                        "start-menu-document-date start-menu-document-date-column"));
+                        "start-menu-document-date " +
+                        "start-menu-document-date-column"));
                 }
                 else
                 {
@@ -274,7 +384,9 @@ namespace Atlas.Presentation.SOS.Desktop
                 : app.AppIcon96;
         }
 
-        private static Image CreateImage(Sprite sprite, string className)
+        private static Image CreateImage(
+            Sprite sprite,
+            string className)
         {
             var image = new Image
             {
@@ -287,7 +399,9 @@ namespace Atlas.Presentation.SOS.Desktop
             return image;
         }
 
-        private static Label CreateLabel(string text, string classNames)
+        private static Label CreateLabel(
+            string text,
+            string classNames)
         {
             var label = new Label(text)
             {

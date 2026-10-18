@@ -59,7 +59,6 @@ namespace Atlas.Presentation.SOS.Desktop
         public StartMenuAppView ViewMode { get; set; } =
             StartMenuAppView.Category;
 
-        public AppCategory? ExpandedCategory { get; set; }
         public bool PinnedExpanded { get; set; }
         public bool ShowingRecent { get; set; }
         public string Query { get; private set; } = string.Empty;
@@ -72,7 +71,8 @@ namespace Atlas.Presentation.SOS.Desktop
             FileSystemLibrary fileSystemLibrary,
             FileAssociationCatalog associations)
         {
-            User = user ?? throw new ArgumentNullException(nameof(user));
+            User = user
+                ?? throw new ArgumentNullException(nameof(user));
 
             this.appCatalog = appCatalog != null
                 ? appCatalog
@@ -80,7 +80,8 @@ namespace Atlas.Presentation.SOS.Desktop
 
             this.fileSystemLibrary = fileSystemLibrary != null
                 ? fileSystemLibrary
-                : throw new ArgumentNullException(nameof(fileSystemLibrary));
+                : throw new ArgumentNullException(
+                    nameof(fileSystemLibrary));
 
             this.associations = associations != null
                 ? associations
@@ -103,7 +104,10 @@ namespace Atlas.Presentation.SOS.Desktop
         public AppDefinition FindApp(string appID)
         {
             return apps.FirstOrDefault(app =>
-                string.Equals(app.AppID, appID, StringComparison.Ordinal));
+                string.Equals(
+                    app.AppID,
+                    appID,
+                    StringComparison.Ordinal));
         }
 
         public StartMenuDocument FindDocument(string path)
@@ -121,15 +125,19 @@ namespace Atlas.Presentation.SOS.Desktop
             pinnedApps.Clear();
             documents.Clear();
 
-            var availableByID = new Dictionary<string, AppDefinition>(
-                StringComparer.Ordinal);
+            var availableByID =
+                new Dictionary<string, AppDefinition>(
+                    StringComparer.Ordinal);
 
             foreach (string appID in
                      User.AvailableAppIDs ?? Array.Empty<string>())
             {
                 if (string.IsNullOrWhiteSpace(appID) ||
                     availableByID.ContainsKey(appID) ||
-                    !appCatalog.TryGetApp(appID, out AppDefinition app))
+                    !appCatalog.TryGetApp(
+                        appID,
+                        out AppDefinition app) ||
+                    app == null)
                 {
                     continue;
                 }
@@ -140,9 +148,10 @@ namespace Atlas.Presentation.SOS.Desktop
 
             apps.Sort((first, second) =>
             {
-                int nameOrder = StringComparer.OrdinalIgnoreCase.Compare(
-                    first.DisplayName,
-                    second.DisplayName);
+                int nameOrder =
+                    StringComparer.OrdinalIgnoreCase.Compare(
+                        first.DisplayName,
+                        second.DisplayName);
 
                 return nameOrder != 0
                     ? nameOrder
@@ -151,7 +160,8 @@ namespace Atlas.Presentation.SOS.Desktop
                         second.AppID);
             });
 
-            var seenPins = new HashSet<string>(StringComparer.Ordinal);
+            var seenPins =
+                new HashSet<string>(StringComparer.Ordinal);
 
             foreach (string appID in
                      User.StartPinnedAppIDs ?? Array.Empty<string>())
@@ -182,12 +192,16 @@ namespace Atlas.Presentation.SOS.Desktop
 
             foreach (FileExplorerDirectory directory in directories.Values)
             {
-                List<FileSystemFileDefinition> relatedFiles = directory.Items
-                    .Where(item => !item.IsFolder &&
-                        item.FileDefinition != null)
-                    .OrderBy(item => item.Name, StringComparer.OrdinalIgnoreCase)
-                    .Select(item => item.FileDefinition)
-                    .ToList();
+                List<FileSystemFileDefinition> relatedFiles =
+                    directory.Items
+                        .Where(item =>
+                            !item.IsFolder &&
+                            item.FileDefinition != null)
+                        .OrderBy(
+                            item => item.Name,
+                            StringComparer.OrdinalIgnoreCase)
+                        .Select(item => item.FileDefinition)
+                        .ToList();
 
                 foreach (FileExplorerItem item in directory.Items)
                 {
@@ -245,9 +259,10 @@ namespace Atlas.Presentation.SOS.Desktop
                 if (dateOrder != 0)
                     return dateOrder;
 
-                int nameOrder = StringComparer.OrdinalIgnoreCase.Compare(
-                    first.Item.Name,
-                    second.Item.Name);
+                int nameOrder =
+                    StringComparer.OrdinalIgnoreCase.Compare(
+                        first.Item.Name,
+                        second.Item.Name);
 
                 return nameOrder != 0
                     ? nameOrder

@@ -7,7 +7,6 @@ namespace Atlas.Presentation.SOS.Desktop
     public sealed class StartMenuBinder : UIBinder
     {
         public VisualElement Root { get; }
-
         public TextField SearchField { get; }
 
         public ScrollView HomePanel { get; }
@@ -42,6 +41,11 @@ namespace Atlas.Presentation.SOS.Desktop
         public Image ProfileImage { get; }
         public Label ProfileName { get; }
 
+        public VisualElement CategoryPopup { get; }
+        public Label CategoryPopupTitle { get; }
+        public ScrollView CategoryPopupScroll { get; }
+        public VisualElement CategoryPopupGrid { get; }
+
         public VisualElement ViewPopup { get; }
         public Button CategoryViewButton { get; }
         public Button GridViewButton { get; }
@@ -67,67 +71,128 @@ namespace Atlas.Presentation.SOS.Desktop
                     "The Start menu template has no StartMenuRoot.");
             }
 
-            SearchField = Bind<TextField>(Root, "StartMenuSearchField");
+            SearchField = Bind<TextField>(
+                Root, "StartMenuSearchField");
 
-            HomePanel = Bind<ScrollView>(Root, "StartMenuHomePanel");
-            PinnedGrid = Bind<VisualElement>(Root, "StartMenuPinnedGrid");
-            PinnedEmpty = Bind<Label>(Root, "StartMenuPinnedEmpty");
-            PinnedToggle = Bind<Button>(Root, "StartMenuPinnedToggle");
+            HomePanel = Bind<ScrollView>(
+                Root, "StartMenuHomePanel");
+
+            PinnedGrid = Bind<VisualElement>(
+                Root, "StartMenuPinnedGrid");
+
+            PinnedEmpty = Bind<Label>(
+                Root, "StartMenuPinnedEmpty");
+
+            PinnedToggle = Bind<Button>(
+                Root, "StartMenuPinnedToggle");
+
             PinnedToggleText = Bind<Label>(
                 Root, "StartMenuPinnedToggleText");
+
             PinnedToggleIcon = Bind<Image>(
                 Root, "StartMenuPinnedToggleIcon");
 
-            RecentGrid = Bind<VisualElement>(Root, "StartMenuRecentGrid");
-            RecentEmpty = Bind<Label>(Root, "StartMenuRecentEmpty");
+            RecentGrid = Bind<VisualElement>(
+                Root, "StartMenuRecentGrid");
+
+            RecentEmpty = Bind<Label>(
+                Root, "StartMenuRecentEmpty");
+
             RecentShowAllButton = Bind<Button>(
                 Root, "StartMenuRecentShowAllButton");
 
-            ViewButton = Bind<Button>(Root, "StartMenuViewButton");
-            ViewValue = Bind<Label>(Root, "StartMenuViewValue");
+            ViewButton = Bind<Button>(
+                Root, "StartMenuViewButton");
+
+            ViewValue = Bind<Label>(
+                Root, "StartMenuViewValue");
+
             CategoryGrid = Bind<VisualElement>(
                 Root, "StartMenuCategoryGrid");
+
             AllAppsGrid = Bind<VisualElement>(
                 Root, "StartMenuAllAppsGrid");
+
             AlphabeticalList = Bind<VisualElement>(
                 Root, "StartMenuAlphabeticalList");
-            AppsEmpty = Bind<Label>(Root, "StartMenuAppsEmpty");
+
+            AppsEmpty = Bind<Label>(
+                Root, "StartMenuAppsEmpty");
 
             RecentPanel = Bind<VisualElement>(
                 Root, "StartMenuRecentPanel");
+
             RecentBackButton = Bind<Button>(
                 Root, "StartMenuRecentBackButton");
+
             RecentScrollView = Bind<ScrollView>(
                 Root, "StartMenuRecentScrollView");
-            RecentList = Bind<VisualElement>(Root, "StartMenuRecentList");
+
+            RecentList = Bind<VisualElement>(
+                Root, "StartMenuRecentList");
+
             RecentPanelEmpty = Bind<Label>(
                 Root, "StartMenuRecentPanelEmpty");
 
             SearchPanel = Bind<VisualElement>(
                 Root, "StartMenuSearchPanel");
+
             SearchScrollView = Bind<ScrollView>(
                 Root, "StartMenuSearchScrollView");
+
             SearchResults = Bind<VisualElement>(
                 Root, "StartMenuSearchResults");
-            SearchEmpty = Bind<Label>(Root, "StartMenuSearchEmpty");
 
-            ProfileImage = Bind<Image>(Root, "StartMenuProfileImage");
-            ProfileName = Bind<Label>(Root, "StartMenuProfileName");
+            SearchEmpty = Bind<Label>(
+                Root, "StartMenuSearchEmpty");
 
-            ViewPopup = Bind<VisualElement>(Root, "StartMenuViewPopup");
+            ProfileImage = Bind<Image>(
+                Root, "StartMenuProfileImage");
+
+            ProfileName = Bind<Label>(
+                Root, "StartMenuProfileName");
+
+            CategoryPopup = Bind<VisualElement>(
+                Root, "StartMenuCategoryPopup");
+
+            CategoryPopupTitle = Bind<Label>(
+                Root, "StartMenuCategoryPopupTitle");
+
+            CategoryPopupScroll = Bind<ScrollView>(
+                Root, "StartMenuCategoryPopupScroll");
+
+            CategoryPopupGrid = Bind<VisualElement>(
+                Root, "StartMenuCategoryPopupGrid");
+
+            ViewPopup = Bind<VisualElement>(
+                Root, "StartMenuViewPopup");
+
             CategoryViewButton = Bind<Button>(
                 Root, "StartMenuCategoryViewButton");
+
             GridViewButton = Bind<Button>(
                 Root, "StartMenuGridViewButton");
+
             ListViewButton = Bind<Button>(
                 Root, "StartMenuListViewButton");
 
-            PowerButton = Bind<Button>(Root, "StartMenuPowerButton");
-            PowerPopup = Bind<VisualElement>(Root, "StartMenuPowerPopup");
-            LockButton = Bind<Button>(Root, "StartMenuLockButton");
-            SleepButton = Bind<Button>(Root, "StartMenuSleepButton");
-            ShutdownButton = Bind<Button>(Root, "StartMenuShutdownButton");
-            RestartButton = Bind<Button>(Root, "StartMenuRestartButton");
+            PowerButton = Bind<Button>(
+                Root, "StartMenuPowerButton");
+
+            PowerPopup = Bind<VisualElement>(
+                Root, "StartMenuPowerPopup");
+
+            LockButton = Bind<Button>(
+                Root, "StartMenuLockButton");
+
+            SleepButton = Bind<Button>(
+                Root, "StartMenuSleepButton");
+
+            ShutdownButton = Bind<Button>(
+                Root, "StartMenuShutdownButton");
+
+            RestartButton = Bind<Button>(
+                Root, "StartMenuRestartButton");
 
             if (!IsValid)
             {

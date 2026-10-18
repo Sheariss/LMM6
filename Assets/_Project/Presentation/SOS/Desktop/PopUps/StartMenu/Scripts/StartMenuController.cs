@@ -22,6 +22,8 @@ namespace Atlas.Presentation.SOS.Desktop
 
         private readonly List<Action> unsubscribe = new();
 
+        private VisualElement categoryPointerTarget;
+        private Vector2 categoryPointerScrollOffset;
         private Vector2 homeScrollPosition;
         private bool disposed;
 
@@ -103,9 +105,10 @@ namespace Atlas.Presentation.SOS.Desktop
             if (!EnsureUsable())
                 return;
 
+            categoryPointerTarget = null;
+
             engine.SetQuery(string.Empty);
             engine.ShowingRecent = false;
-            engine.ExpandedCategory = null;
 
             binder.SearchField.SetValueWithoutNotify(string.Empty);
 
@@ -122,6 +125,7 @@ namespace Atlas.Presentation.SOS.Desktop
             if (disposed)
                 return;
 
+            categoryPointerTarget = null;
             view.Hide();
         }
 
@@ -184,22 +188,34 @@ namespace Atlas.Presentation.SOS.Desktop
                 return;
 
             engine.ViewMode = mode;
-            engine.ExpandedCategory = null;
 
             view.ClosePopups();
             Render();
+
             binder.ViewButton.Focus();
         }
 
-        private void SelectCategory(AppCategory? category)
+        private void OpenCategoryPopup(
+            AppCategory category,
+            VisualElement anchor)
         {
             if (!EnsureUsable())
                 return;
 
-            engine.ExpandedCategory = category;
-            Render();
+            Vector2 offset = StartMenuView.Contains(
+                anchor,
+                categoryPointerTarget)
+                    ? categoryPointerScrollOffset
+                    : binder.HomePanel.scrollOffset;
 
-            binder.CategoryGrid.Q<Button>()?.Focus();
+            categoryPointerTarget = null;
+
+            view.ShowCategoryPopup(
+                category,
+                anchor,
+                engine.Apps,
+                OpenApp,
+                offset);
         }
 
         private void ToggleViewPopup()
@@ -269,9 +285,10 @@ namespace Atlas.Presentation.SOS.Desktop
                         document.Request,
                         out string error))
                 {
-                    view.ShowError(string.IsNullOrWhiteSpace(error)
-                        ? "The document could not be opened."
-                        : error);
+                    view.ShowError(
+                        string.IsNullOrWhiteSpace(error)
+                            ? "The document could not be opened."
+                            : error);
 
                     return;
                 }
@@ -285,8 +302,11 @@ namespace Atlas.Presentation.SOS.Desktop
             }
         }
 
-        private void OnPointerDown(PointerDownEvent pointerEvent)
+        private void OnPointerDown(
+            PointerDownEvent pointerEvent)
         {
+            categoryPointerTarget = null;
+
             if (disposed || !view.IsOpen)
                 return;
 
@@ -294,6 +314,15 @@ namespace Atlas.Presentation.SOS.Desktop
                 return;
 
             var target = pointerEvent.target as VisualElement;
+
+            if (StartMenuView.Contains(
+                    binder.CategoryGrid,
+                    target))
+            {
+                categoryPointerTarget = target;
+                categoryPointerScrollOffset =
+                    binder.HomePanel.scrollOffset;
+            }
 
             if (StartMenuView.Contains(startButton, target))
                 return;
@@ -306,6 +335,7 @@ namespace Atlas.Presentation.SOS.Desktop
 
             if (view.HasPopup &&
                 !view.IsInsidePopup(target) &&
+                !view.IsInsidePopupAnchor(target) &&
                 !StartMenuView.Contains(binder.ViewButton, target) &&
                 !StartMenuView.Contains(binder.PowerButton, target))
             {
@@ -315,6 +345,8 @@ namespace Atlas.Presentation.SOS.Desktop
 
         private void OnKeyDown(KeyDownEvent keyEvent)
         {
+            categoryPointerTarget = null;
+
             if (disposed || !view.IsOpen || !EnsureUsable())
                 return;
 
@@ -332,10 +364,6 @@ namespace Atlas.Presentation.SOS.Desktop
                 else if (engine.ShowingRecent)
                 {
                     ShowHome();
-                }
-                else if (engine.ExpandedCategory.HasValue)
-                {
-                    SelectCategory(null);
                 }
                 else
                 {
@@ -388,7 +416,7 @@ namespace Atlas.Presentation.SOS.Desktop
                 engine,
                 OpenApp,
                 OpenDocument,
-                SelectCategory);
+                OpenCategoryPopup);
         }
 
         private void BindClick(Button button, Action action)
@@ -404,6 +432,7 @@ namespace Atlas.Presentation.SOS.Desktop
 
             view.Hide();
             disposed = true;
+            categoryPointerTarget = null;
 
             foreach (Action release in unsubscribe)
                 release();
@@ -430,6 +459,7 @@ namespace Atlas.Presentation.SOS.Desktop
             binder.AllAppsGrid.Clear();
             binder.AlphabeticalList.Clear();
             binder.SearchResults.Clear();
+            binder.CategoryPopupGrid.Clear();
         }
     }
 }
