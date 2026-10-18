@@ -35,6 +35,7 @@ MonoBehaviour:
     - pdf-viewer
     - whiteboard
     - notepad
+    - email
     desktopShortcutAppIDs:
     - assistant
     - messenger
@@ -56,6 +57,7 @@ MonoBehaviour:
     - assistant
     - notepad
     - Calculator
+    - email
   - userId: admin
     displayName: Admin
     loginMethod: 1

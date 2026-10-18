@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e8917cd91112814cb6be2b647918c3f, type: 3}
+  m_Name: TestEmailLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Email.EmailLibrary
+  mailboxes:
+  - UserId: guest
+    DisplayName: Brandi Woods
+    EmailAddress: b.woods@northstar.com
+    Initials: BW
+    Messages:
+    - Id: test-1a
+      ThreadId: thread-test
+      SenderName: Brandi Woods
+      SenderAddress: b.woods@northstar.com
+      RecipientAddress: test1@northstar.com
+      Subject: 'This is a test '
+      Body: 'Hi there! This is Brandi Woods attempting to request a test. '
+      DateLabel: 10-5-2026
+      SortOrder: 0
+      Folder: 0
+      Category: 0
+      Label: 0
+      InitiallyRead: 1
+      InitiallyStarred: 1
+      Attachments:
+      - FileId: guest-company-profile-content
+    - Id: test-1b
+      ThreadId: thread-test
+      SenderName: Test One
+      SenderAddress: test1@northstar.com
+      RecipientAddress: b.woods@northstar.com
+      Subject: 'Re: This is a test '
+      Body: Hello this email is meant to be a test to check for funtionality.
+      DateLabel: 10-6-2026
+      SortOrder: 1
+      Folder: 0
+      Category: 0
+      Label: 0
+      InitiallyRead: 1
+      InitiallyStarred: 1
+      Attachments:
+      - FileId: guest-wallpaper
+    - Id: test-1c
+      ThreadId: thread-test
+      SenderName: Brandi Woods
+      SenderAddress: b.woods@northstar.com
+      RecipientAddress: test1@northstar.com
+      Subject: 'Re: Re: This is a test '
+      Body: Thank you for your reply!
+      DateLabel: 10-5-2026
+      SortOrder: 2
+      Folder: 0
+      Category: 0
+      Label: 0
+      InitiallyRead: 1
+      InitiallyStarred: 1
+      Attachments: []
+    - Id: draft-test-1
+      ThreadId: 
+      SenderName: Draft Test One
+      SenderAddress: b.woods@northstar.com
+      RecipientAddress: 
+      Subject: 'This is a test '
+      Body: This is draft
+      DateLabel: 06-13-2024
+      SortOrder: 0
+      Folder: 2
+      Category: 0
+      Label: 0
+      InitiallyRead: 0
+      InitiallyStarred: 0
+      Attachments: []
+    - Id: promo-test-1
+      ThreadId: 
+      SenderName: Promo Test One
+      SenderAddress: do-not-reply@nothstar.come
+      RecipientAddress: b.woods@northstar.com
+      Subject: 'This is a Promo Test '
+      Body: This is a promo test.
+      DateLabel: 08-14-2026
+      SortOrder: 0
+      Folder: 0
+      Category: 1
+      Label: 1
+      InitiallyRead: 1
+      InitiallyStarred: 0
+      Attachments: []
+    - Id: social-test-1
+      ThreadId: 
+      SenderName: Social Test One
+      SenderAddress: do-not-reply@nothstar.come
+      RecipientAddress: b.woods@northstar.com
+      Subject: 'This is a Social Test '
+      Body: This is a social test.
+      DateLabel: 09-30-2026
+      SortOrder: 0
+      Folder: 0
+      Category: 2
+      Label: 0
+      InitiallyRead: 0
+      InitiallyStarred: 0
+      Attachments: []
+    - Id: sent-test-1
+      ThreadId: 
+      SenderName: Brandi Woods
+      SenderAddress: b.woods@northstar.com
+      RecipientAddress: example@orbilo.com
+      Subject: 'This is a Sent Test '
+      Body: This is a sent test.
+      DateLabel: 09-15-2026
+      SortOrder: 0
+      Folder: 1
+      Category: 0
+      Label: 0
+      InitiallyRead: 1
+      InitiallyStarred: 0
+      Attachments: []
+    - Id: archive-test-1
+      ThreadId: 
+      SenderName: Juni Vega
+      SenderAddress: example@northstar.com
+      RecipientAddress: b.woods@northstar.com
+      Subject: 'This is a Archive Test '
+      Body: This is a sent test.
+      DateLabel: 09-15-2026
+      SortOrder: 0
+      Folder: 3
+      Category: 0
+      Label: 2
+      InitiallyRead: 1
+      InitiallyStarred: 0
+      Attachments: []

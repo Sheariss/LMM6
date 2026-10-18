@@ -96,8 +96,8 @@ MonoBehaviour:
     appIcon48: {fileID: 21300000, guid: 52ab2f2743e198c4caf86640c0fb927e, type: 3}
     appIcon96: {fileID: 21300000, guid: 03fc838232f60784892a2a0ceb30c384, type: 3}
     category: 2
-    appUXML: {fileID: 0}
-    runtimePrefab: {fileID: 0}
+    appUXML: {fileID: 9197481963319205126, guid: c007f61af6bdd534193f74aedc9e41f9, type: 3}
+    runtimePrefab: {fileID: 8088803907773952702, guid: 5ebac7226f0e2b041a76a48fbf77ea48, type: 3}
     isResizable: 1
     allowMultipleInstances: 0
     defaultWindowSize: {x: 1000, y: 700}
