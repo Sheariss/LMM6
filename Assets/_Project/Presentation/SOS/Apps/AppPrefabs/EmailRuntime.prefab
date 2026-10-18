@@ -58,3 +58,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Email.EmailController
   emailLayout: {fileID: 9197481963319205126, guid: c007f61af6bdd534193f74aedc9e41f9, type: 3}
+  conversationStyles: {fileID: 7433441132597879392, guid: b680f47b99206014bab6efbbf0fc6ae4, type: 3}
+  fileSystemLibrary: {fileID: 11400000, guid: 193bb63488853ea49b85a95156e9d42e, type: 2}
+  fileAssociations: {fileID: 11400000, guid: d6e357d953dc9634cbaf9db9f95975b6, type: 2}

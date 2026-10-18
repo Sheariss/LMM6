@@ -207,7 +207,6 @@ namespace Atlas.Presentation.SOS.Email
             }
 
             evt.StopPropagation();
-            evt.PreventDefault();
         }
 
         private void MoveFocus(int direction)
