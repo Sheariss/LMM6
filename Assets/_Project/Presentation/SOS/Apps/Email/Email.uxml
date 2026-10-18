@@ -1,245 +1,174 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
-    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
-    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
-    <Style src="project://database/Assets/_Project/Presentation/SOS/Window/Window.uss?fileID=7433441132597879392&amp;guid=00c704ca2f7eb4f469f7b2b139bf1194&amp;type=3#Window"/>
-    <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/Email/Email.uss?fileID=7433441132597879392&amp;guid=5aa8c152edda905478f4612d54f524ef&amp;type=3#Email"/>
-    <ui:VisualElement name="WindowRoot" class="window">
-        <ui:VisualElement name="WindowHeader" class="flex-row header" style="opacity: 1;">
-            <ui:VisualElement name="WindowIcon" class="header-icon"/>
-            <ui:Label text="Email" name="WindowTitle" class="spacing-reset header-title"/>
-            <ui:GroupBox name="WindowControls" class="flex-row spacing-reset window-controls">
-                <ui:Button text="" name="WindowMinimizeButton" class="button-reset wc-button">
-                    <ui:Image name="MinimizeIcon" class="wc-btn-icon minimize-icon" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Minimize/remove_32dp_.png?fileID=21300000&amp;guid=8ba13ee49df28774c813618f06427c37&amp;type=3#remove_32dp_&quot;);"/>
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         editor-extension-mode="False">
+
+    <Style src="../../../Tokens/Global-Colors.uss"/>
+    <Style src="../../../Tokens/Global-Tokens.uss"/>
+    <Style src="../../../Tokens/ATLAS.uss"/>
+    <Style src="../../Window/Window.uss"/>
+    <Style src="Email.uss"/>
+
+    <ui:VisualElement name="WindowRoot"
+                      class="window email-window">
+
+        <ui:VisualElement name="WindowHeader"
+                          class="flex-row header">
+
+            <ui:VisualElement class="email-header-icon-area">
+                <ui:Image name="WindowIcon"
+                          class="header-icon"
+                          picking-mode="Ignore"/>
+            </ui:VisualElement>
+
+            <ui:Label name="WindowTitle"
+                      text="Email"
+                      class="spacing-reset header-title"/>
+
+            <ui:GroupBox name="WindowControls"
+                         class="flex-row spacing-reset window-controls">
+
+                <ui:Button name="WindowMinimizeButton"
+                           tooltip="Minimize"
+                           class="button-reset wc-button">
+                    <ui:Image name="MinimizeIcon"
+                              class="wc-btn-icon email-minimize-icon"
+                              picking-mode="Ignore"/>
                 </ui:Button>
-                <ui:Button text="" name="WindowMaximizeButton" class="button-reset wc-button">
-                    <ui:Image name="FullscreenIcon" class="wc-btn-icon window-maximize-icon" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Maximize-Exit/crop_square_32dp.png?fileID=21300000&amp;guid=2fe5b0aec98d3e84387083094b2987e4&amp;type=3#crop_square_32dp&quot;);"/>
-                    <ui:Image name="ExitFullscreenIcon" class="wc-btn-icon window-maximize-icon" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Maximize/filter_none_32dp.png?fileID=21300000&amp;guid=40a6434316977444baf5ceb2ad0f4953&amp;type=3#filter_none_32dp&quot;);"/>
+
+                <ui:Button name="WindowMaximizeButton"
+                           tooltip="Maximize"
+                           class="button-reset wc-button">
+                    <ui:Image name="FullscreenIcon"
+                              class="wc-btn-icon email-maximize-icon"
+                              picking-mode="Ignore"/>
+                    <ui:Image name="ExitFullscreenIcon"
+                              class="wc-btn-icon email-restore-icon"
+                              picking-mode="Ignore"/>
                 </ui:Button>
-                <ui:Button text="" name="WindowCloseButton" class="button-reset wc-button window-close-button">
-                    <ui:Image name="CloseIcon" class="wc-btn-icon" style="background-image: url(&quot;project://database/Assets/_Project/Resources/Icons/UI/Close/close_32dp.png?fileID=21300000&amp;guid=f388726a89c92bb42abb8d4656bb544d&amp;type=3#close_32dp&quot;);"/>
+
+                <ui:Button name="WindowCloseButton"
+                           tooltip="Close"
+                           class="button-reset wc-button window-close-button">
+                    <ui:Image name="CloseIcon"
+                              class="wc-btn-icon email-close-icon"
+                              picking-mode="Ignore"/>
                 </ui:Button>
             </ui:GroupBox>
         </ui:VisualElement>
+
         <ui:VisualElement name="WindowContent" class="content">
+
             <ui:VisualElement name="MailRoot" class="mail">
+
                 <ui:VisualElement class="mail-header">
+
                     <ui:VisualElement class="mail-brand">
-                        <ui:Button name="MenuButton" tooltip="Toggle navigation" class="mail-icon-button mail-menu">
-                            <ui:Image picking-mode="Ignore" class="mail-icon icon-menu"/>
+                        <ui:Button name="MenuButton"
+                                   tooltip="Expand or collapse navigation"
+                                   class="mail-icon-button mail-menu">
+                            <ui:Image class="mail-icon icon-menu"
+                                      picking-mode="Ignore"/>
                         </ui:Button>
-                        <ui:Image picking-mode="Ignore" class="mail-logo icon-mail"/>
+
+                        <ui:Image class="mail-logo icon-mail"
+                                  picking-mode="Ignore"/>
+
                         <ui:Label text="Mail" class="mail-wordmark"/>
                     </ui:VisualElement>
+
                     <ui:VisualElement class="mail-search">
-                        <ui:Image picking-mode="Ignore" class="mail-icon icon-search"/>
-                        <ui:TextField name="SearchField" placeholder-text="Search mail" class="mail-search-field"/>
-                        <ui:Button name="SearchOptionsButton" tooltip="Search options" class="mail-icon-button">
-                            <ui:Image picking-mode="Ignore" class="mail-icon icon-search-options"/>
+                        <ui:Image class="mail-icon icon-search"
+                                  picking-mode="Ignore"/>
+
+                        <ui:TextField name="SearchField"
+                                      class="mail-search-field"/>
+
+                        <ui:Button name="ClearSearchButton"
+                                   tooltip="Clear search"
+                                   class="mail-icon-button">
+                            <ui:Image class="mail-icon icon-close"
+                                      picking-mode="Ignore"/>
                         </ui:Button>
                     </ui:VisualElement>
-                    <ui:VisualElement class="mail-header-actions">
-                        <ui:Button name="HelpButton" tooltip="Help" class="mail-icon-button">
-                            <ui:Image picking-mode="Ignore" class="mail-icon icon-help"/>
-                        </ui:Button>
-                        <ui:Button name="SettingsButton" tooltip="Settings" class="mail-icon-button">
-                            <ui:Image picking-mode="Ignore" class="mail-icon icon-settings"/>
-                        </ui:Button>
-                        <ui:Button name="AccountButton" text="JD" tooltip="Your account" class="mail-account"/>
-                    </ui:VisualElement>
+
+                    <ui:Button name="AccountButton"
+                               tooltip="Mailbox"
+                               class="mail-account"/>
                 </ui:VisualElement>
+
                 <ui:VisualElement class="mail-body">
-                    <ui:VisualElement name="MailSidebar" class="mail-sidebar">
-                        <ui:Button name="ComposeButton" tooltip="Compose a message" class="mail-compose">
-                            <ui:Image picking-mode="Ignore" class="mail-icon mail-compose-icon icon-compose"/>
-                            <ui:Label text="Compose"/>
+
+                    <ui:VisualElement name="MailSidebar"
+                                      class="mail-sidebar">
+
+                        <ui:Button name="ComposeButton"
+                                   tooltip="Compose"
+                                   class="mail-compose">
+                            <ui:Image class="mail-icon icon-compose"
+                                      picking-mode="Ignore"/>
+                            <ui:Label text="Compose"
+                                      class="mail-compose-label"/>
                         </ui:Button>
-                        <ui:Button name="InboxButton" class="mail-nav mail-nav--active">
-                            <ui:Image picking-mode="Ignore" class="mail-icon icon-mail"/>
-                            <ui:Label text="Inbox" class="mail-nav-label"/>
-                            <ui:Label name="InboxCount" text="3" class="mail-count"/>
-                        </ui:Button>
-                        <ui:Button name="StarredButton" class="mail-nav">
-                            <ui:Image picking-mode="Ignore" class="mail-icon icon-star"/>
-                            <ui:Label text="Starred" class="mail-nav-label"/>
-                        </ui:Button>
-                        <ui:Button name="SnoozedButton" class="mail-nav">
-                            <ui:Image picking-mode="Ignore" class="mail-icon icon-clock"/>
-                            <ui:Label text="Snoozed" class="mail-nav-label"/>
-                        </ui:Button>
-                        <ui:Button name="SentButton" class="mail-nav">
-                            <ui:Image picking-mode="Ignore" class="mail-icon icon-sent"/>
-                            <ui:Label text="Sent" class="mail-nav-label"/>
-                        </ui:Button>
-                        <ui:Button name="DraftsButton" class="mail-nav">
-                            <ui:Image picking-mode="Ignore" class="mail-icon icon-draft"/>
-                            <ui:Label text="Drafts" class="mail-nav-label"/>
-                            <ui:Label name="DraftsCount" text="1" class="mail-count"/>
-                        </ui:Button>
-                        <ui:Button name="MoreFoldersButton" class="mail-nav">
-                            <ui:Image picking-mode="Ignore" class="mail-icon icon-expand"/>
-                            <ui:Label text="More" class="mail-nav-label"/>
-                        </ui:Button>
-                        <ui:VisualElement class="mail-labels-heading">
-                            <ui:Label text="Labels" class="mail-labels-title"/>
-                            <ui:Button name="AddLabelButton" tooltip="Create label" class="mail-icon-button">
-                                <ui:Image picking-mode="Ignore" class="mail-icon icon-add"/>
-                            </ui:Button>
-                        </ui:VisualElement>
-                        <ui:Button name="WorkLabelButton" class="mail-nav">
-                            <ui:Image picking-mode="Ignore" class="mail-icon mail-label-icon--work icon-work"/>
-                            <ui:Label text="Work" class="mail-nav-label"/>
-                        </ui:Button>
-                        <ui:Button name="PersonalLabelButton" class="mail-nav">
-                            <ui:Image picking-mode="Ignore" class="mail-icon mail-label-icon--personal icon-personal"/>
-                            <ui:Label text="Personal" class="mail-nav-label"/>
-                        </ui:Button>
-                        <ui:VisualElement class="mail-sidebar-spacer"/>
-                    </ui:VisualElement>
-                    <ui:VisualElement name="InboxPanel" class="mail-inbox">
-                        <ui:VisualElement class="mail-toolbar">
-                            <ui:Toggle name="SelectAllToggle" tooltip="Select this page" class="mail-check"/>
-                            <ui:Button name="RefreshButton" tooltip="Refresh" class="mail-icon-button">
-                                <ui:Image picking-mode="Ignore" class="mail-icon icon-refresh"/>
-                            </ui:Button>
-                            <ui:Button name="MoreActionsButton" tooltip="More actions" class="mail-icon-button">
-                                <ui:Image picking-mode="Ignore" class="mail-icon icon-more"/>
-                            </ui:Button>
-                            <ui:VisualElement class="mail-toolbar-spacer"/>
-                            <ui:Label name="MessageRangeLabel" text="1–6 of 6" class="mail-range"/>
-                            <ui:Button name="PreviousPageButton" tooltip="Previous page" class="mail-icon-button">
-                                <ui:Image picking-mode="Ignore" class="mail-icon mail-page-icon icon-previous"/>
-                            </ui:Button>
-                            <ui:Button name="NextPageButton" tooltip="Next page" class="mail-icon-button">
-                                <ui:Image picking-mode="Ignore" class="mail-icon mail-page-icon icon-next"/>
-                            </ui:Button>
-                        </ui:VisualElement>
-                        <ui:VisualElement class="mail-tabs">
-                            <ui:Button name="PrimaryTab" class="mail-tab mail-tab--active">
-                                <ui:Image picking-mode="Ignore" class="mail-icon icon-mail"/>
-                                <ui:VisualElement picking-mode="Ignore" class="mail-tab-copy">
-                                    <ui:VisualElement class="mail-tab-heading">
-                                        <ui:Label text="Primary" class="mail-tab-title"/>
-                                        <ui:Label text="3 new" class="mail-badge"/>
-                                    </ui:VisualElement>
-                                </ui:VisualElement>
-                            </ui:Button>
-                            <ui:Button name="PromotionsTab" class="mail-tab">
-                                <ui:Image picking-mode="Ignore" class="mail-icon icon-promotions"/>
-                                <ui:VisualElement picking-mode="Ignore" class="mail-tab-copy">
-                                    <ui:VisualElement class="mail-tab-heading">
-                                        <ui:Label text="Promotions" class="mail-tab-title"/>
-                                    </ui:VisualElement>
-                                    <ui:Label name="PromotionsPreviewLabel" text="Offers and announcements" class="mail-tab-preview"/>
-                                </ui:VisualElement>
-                            </ui:Button>
-                            <ui:Button name="SocialTab" class="mail-tab">
-                                <ui:Image picking-mode="Ignore" class="mail-icon icon-social"/>
-                                <ui:VisualElement picking-mode="Ignore" class="mail-tab-copy">
-                                    <ui:VisualElement class="mail-tab-heading">
-                                        <ui:Label text="Social" class="mail-tab-title"/>
-                                    </ui:VisualElement>
-                                    <ui:Label name="SocialPreviewLabel" text="Updates from your connections" class="mail-tab-preview"/>
-                                </ui:VisualElement>
-                            </ui:Button>
-                        </ui:VisualElement>
-                        <ui:ScrollView name="MessageScroll" mode="Vertical" horizontal-scroller-visibility="Hidden" class="mail-message-scroll">
-                            <ui:VisualElement name="MessageList" class="mail-message-list">
-                                <ui:VisualElement class="mail-row mail-row--unread">
-                                    <ui:Toggle tooltip="Select message" class="mail-check"/>
-                                    <ui:Button tooltip="Star message" class="mail-star">
-                                        <ui:Image picking-mode="Ignore" class="mail-icon icon-star"/>
-                                    </ui:Button>
-                                    <ui:Button name="OpenMessage001" class="mail-message">
-                                        <ui:Label text="Alex Morgan" class="mail-sender"/>
-                                        <ui:VisualElement class="mail-summary">
-                                            <ui:Label text="A quick update" class="mail-subject"/>
-                                            <ui:Label text=" — The revised schedule is ready whenever you are." class="mail-preview"/>
-                                        </ui:VisualElement>
-                                        <ui:Label text="10:42 AM" class="mail-time"/>
-                                    </ui:Button>
-                                </ui:VisualElement>
-                                <ui:VisualElement class="mail-row mail-row--unread">
-                                    <ui:Toggle tooltip="Select message" class="mail-check"/>
-                                    <ui:Button tooltip="Star message" class="mail-star">
-                                        <ui:Image picking-mode="Ignore" class="mail-icon icon-star"/>
-                                    </ui:Button>
-                                    <ui:Button name="OpenMessage002" class="mail-message">
-                                        <ui:Label text="Jamie Chen" class="mail-sender"/>
-                                        <ui:VisualElement class="mail-summary">
-                                            <ui:Label text="Notes from this morning" class="mail-subject"/>
-                                            <ui:Label text=" — Here are the details we discussed." class="mail-preview"/>
-                                        </ui:VisualElement>
-                                        <ui:Label text="9:18 AM" class="mail-time"/>
-                                    </ui:Button>
-                                </ui:VisualElement>
-                                <ui:VisualElement class="mail-row mail-row--unread">
-                                    <ui:Toggle tooltip="Select message" class="mail-check"/>
-                                    <ui:Button tooltip="Star message" class="mail-star">
-                                        <ui:Image picking-mode="Ignore" class="mail-icon icon-star"/>
-                                    </ui:Button>
-                                    <ui:Button name="OpenMessage003" class="mail-message">
-                                        <ui:Label text="Orbilo" class="mail-sender"/>
-                                        <ui:VisualElement class="mail-summary">
-                                            <ui:Label text="Welcome to your new inbox" class="mail-subject"/>
-                                            <ui:Label text=" — Everything you need, in one place." class="mail-preview"/>
-                                        </ui:VisualElement>
-                                        <ui:Label text="8:05 AM" class="mail-time"/>
-                                    </ui:Button>
-                                </ui:VisualElement>
-                                <ui:VisualElement class="mail-row">
-                                    <ui:Toggle tooltip="Select message" class="mail-check"/>
-                                    <ui:Button tooltip="Unstar message" class="mail-star mail-star--active">
-                                        <ui:Image picking-mode="Ignore" class="mail-icon icon-star"/>
-                                    </ui:Button>
-                                    <ui:Button name="OpenMessage004" class="mail-message">
-                                        <ui:Label text="Taylor Reed" class="mail-sender"/>
-                                        <ui:VisualElement class="mail-summary">
-                                            <ui:Label text="Saturday plans" class="mail-subject"/>
-                                            <ui:Label text=" — Does the usual place still work for you?" class="mail-preview"/>
-                                        </ui:VisualElement>
-                                        <ui:Label text="Yesterday" class="mail-time"/>
-                                    </ui:Button>
-                                </ui:VisualElement>
-                                <ui:VisualElement class="mail-row">
-                                    <ui:Toggle tooltip="Select message" class="mail-check"/>
-                                    <ui:Button tooltip="Star message" class="mail-star">
-                                        <ui:Image picking-mode="Ignore" class="mail-icon icon-star"/>
-                                    </ui:Button>
-                                    <ui:Button name="OpenMessage005" class="mail-message">
-                                        <ui:Label text="Building Services" class="mail-sender"/>
-                                        <ui:VisualElement class="mail-summary">
-                                            <ui:Label text="Scheduled maintenance" class="mail-subject"/>
-                                            <ui:Label text=" — Please review the updated access hours." class="mail-preview"/>
-                                        </ui:VisualElement>
-                                        <ui:Label text="Oct 13" class="mail-time"/>
-                                    </ui:Button>
-                                </ui:VisualElement>
-                                <ui:VisualElement class="mail-row">
-                                    <ui:Toggle tooltip="Select message" class="mail-check"/>
-                                    <ui:Button tooltip="Star message" class="mail-star">
-                                        <ui:Image picking-mode="Ignore" class="mail-icon icon-star"/>
-                                    </ui:Button>
-                                    <ui:Button name="OpenMessage006" class="mail-message">
-                                        <ui:Label text="Morgan, me" class="mail-sender"/>
-                                        <ui:VisualElement class="mail-summary">
-                                            <ui:Label text="Re: Project files" class="mail-subject"/>
-                                            <ui:Label text=" — Thanks, I have everything I need." class="mail-preview"/>
-                                        </ui:VisualElement>
-                                        <ui:Label text="Oct 12" class="mail-time"/>
-                                    </ui:Button>
-                                </ui:VisualElement>
-                            </ui:VisualElement>
+
+                        <ui:ScrollView mode="Vertical"
+                                       horizontal-scroller-visibility="Hidden"
+                                       class="mail-navigation-scroll">
+                            <ui:VisualElement name="Navigation"/>
                         </ui:ScrollView>
-                        <ui:VisualElement class="mail-footer">
-                            <ui:Label name="StorageLabel" text="Authored mailbox"/>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="InboxPanel"
+                                      class="mail-inbox">
+
+                        <ui:VisualElement name="ListToolbar"
+                                          class="mail-toolbar">
+
+                            <ui:Toggle name="SelectAllToggle"
+                                       tooltip="Select this page"
+                                       class="mail-check"/>
+
+                            <ui:Button name="RefreshButton"
+                                       tooltip="Refresh"
+                                       class="mail-icon-button">
+                                <ui:Image class="mail-icon icon-refresh"
+                                          picking-mode="Ignore"/>
+                            </ui:Button>
+
                             <ui:VisualElement class="mail-toolbar-spacer"/>
-                            <ui:Label name="SyncStatusLabel" text="Offline"/>
+
+                            <ui:Label name="MessageRangeLabel"
+                                      class="mail-range"/>
+
+                            <ui:Button name="PreviousPageButton"
+                                       tooltip="Previous page"
+                                       class="mail-icon-button">
+                                <ui:Image class="mail-icon icon-previous"
+                                          picking-mode="Ignore"/>
+                            </ui:Button>
+
+                            <ui:Button name="NextPageButton"
+                                       tooltip="Next page"
+                                       class="mail-icon-button">
+                                <ui:Image class="mail-icon icon-next"
+                                          picking-mode="Ignore"/>
+                            </ui:Button>
                         </ui:VisualElement>
+
+                        <ui:VisualElement name="MailTabs"
+                                          class="mail-tabs"/>
+
+                        <ui:ScrollView name="MessageScroll"
+                                       mode="Vertical"
+                                       horizontal-scroller-visibility="Hidden"
+                                       class="mail-message-scroll">
+                            <ui:VisualElement name="MessageList"
+                                              class="mail-message-list"/>
+                        </ui:ScrollView>
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="WindowFooter" class="footer"/>
+
+        <ui:VisualElement name="WindowFooter"
+                          class="email-window-footer"/>
     </ui:VisualElement>
 </ui:UXML>

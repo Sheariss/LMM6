@@ -9,195 +9,147 @@ namespace Atlas.Presentation.SOS.Email
     public sealed class EmailView : IDisposable
     {
         private readonly EmailBinder binder;
-
-        private readonly Dictionary<string, EmailRowElements> rows =
-            new(StringComparer.Ordinal);
-
-        private readonly Dictionary<string, EmailMessageCardElements> cards =
-            new(StringComparer.Ordinal);
-
-        private readonly Label emptyLabel;
-        private readonly Label promotionsPreview;
-        private readonly Label socialPreview;
+        private readonly EmailViewBuilder builder;
         private readonly EmailActionsMenu actionsMenu;
 
-        private EmailViewState currentState;
-        private string displayedConversationId;
+        private readonly Dictionary<string, EmailRendered<EmailRowState>> rows =
+            new(StringComparer.Ordinal);
+
+        private readonly Dictionary<string,
+            EmailRendered<EmailReaderMessageState>> cards =
+            new(StringComparer.Ordinal);
+
+        private readonly Dictionary<string, EmailNavigationElements> labels =
+            new(StringComparer.OrdinalIgnoreCase);
+
+        private readonly List<Action> cleanup = new();
+        private readonly List<Action> modalCleanup = new();
+
+        private readonly Label empty;
+        private readonly Label toast;
+
+        private VisualElement modal;
+        private Label modalError;
+        private TextField composeTo;
+        private TextField composeSubject;
+        private TextField composeBody;
+
+        private EmailComposeDraft draft;
+        private EmailViewState current;
+        private string readerId;
+
+        private bool rail;
+        private bool moreOpen;
         private bool disposed;
 
+        private IVisualElementScheduledItem toastTimer;
+
         public EmailReaderElements Reader { get; }
+        public EmailComposeDraft ActiveDraft => draft;
 
         public event Action<string> OpenRequested;
         public event Action<string> StarRequested;
         public event Action<string, bool> SelectionChanged;
-        public event Action<string> MessageExpansionRequested;
+        public event Action<string> ExpansionRequested;
         public event Action<string> MessageStarRequested;
+        public event Action<string> ReplyRequested;
+        public event Action<string> ForwardRequested;
+        public event Action<string> MessageMenuRequested;
         public event Action<string, string> AttachmentRequested;
+        public event Action<string> LabelSelected;
 
-        public EmailView(
-            EmailBinder binder,
-            EmailViewBuilder builder,
-            EmailMailboxDefinition account)
+        public event Action<EmailComposeDraft> SendRequested;
+        public event Action<EmailComposeDraft> SaveDraftRequested;
+        public event Action<EmailComposeDraft> DiscardDraftRequested;
+        public event Action<string> CreateLabelRequested;
+
+        public EmailView(EmailBinder binder, EmailViewBuilder builder)
         {
-            this.binder = binder ??
-                throw new ArgumentNullException(nameof(binder));
+            this.binder = binder;
+            this.builder = builder;
 
-            if (builder == null)
-                throw new ArgumentNullException(nameof(builder));
-
-            if (account == null)
-                throw new ArgumentNullException(nameof(account));
-
-            binder.Root.style.position = Position.Relative;
             binder.MessageList.Clear();
 
-            emptyLabel = EmailViewBuilder.Text(
-                "No conversations match this view.",
-                "mail-empty");
-
-            promotionsPreview =
-                binder.Root.Q<Label>("PromotionsPreviewLabel");
-
-            socialPreview =
-                binder.Root.Q<Label>("SocialPreviewLabel");
+            empty = EmailViewBuilder.Text(
+                "No conversations match this view.", "mail-empty");
 
             Reader = builder.CreateReader();
+            binder.InboxPanel.Add(Reader.Root);
 
-            binder.InboxPanel.Insert(
-                binder.InboxPanel.IndexOf(binder.MessageScroll) + 1,
-                Reader.Root);
+            toast = EmailViewBuilder.Text("", "mail-toast");
+            toast.style.display = DisplayStyle.None;
+            binder.Root.Add(toast);
 
             actionsMenu = new EmailActionsMenu(
-                binder.Root,
-                binder.Button("MoreActionsButton"));
+                binder.Root, binder.Actions["more"]);
 
-            Label allMail = binder.Navigation[EmailFilter.All]
-                .Q<Label>(className: "mail-nav-label");
+            binder.SearchField.textEdition.placeholder = "Search mail";
+            binder.SearchField.textEdition.hidePlaceholderOnFocus = true;
 
-            if (allMail != null)
-                allMail.text = "All mail";
-
-            Button accountButton = binder.Button("AccountButton");
-
-            accountButton.text =
-                account.Initials ?? string.Empty;
-
-            accountButton.tooltip =
-                $"{account.DisplayName}\n{account.EmailAddress}";
-
-            accountButton.SetEnabled(false);
-
-            Disable(
-                "ComposeButton",
-                "Composing is not available.");
-
-            Disable(
-                "SnoozedButton",
-                "Snoozing is not available.");
-
-            Disable(
-                "AddLabelButton",
-                "Labels are authored.");
-
-            Disable(
-                "SearchOptionsButton",
-                "Search includes messages and attachment filenames.");
-
-            Disable(
-                "SettingsButton",
-                "Mail settings are not available.");
-
-            Disable(
-                "HelpButton",
-                "Mail help is not available.");
-
-            binder.Button("RefreshButton").tooltip =
-                "Refresh the current view; no new mail arrives.";
-
-            binder.StorageLabel.text = "Authored mailbox";
-
-            binder.SyncStatus.text =
-                "Changes retained for this session";
+            SetMore(false);
         }
 
-        private void Disable(string name, string tooltip)
+        private static void Show(VisualElement element, bool visible)
         {
-            Button button = binder.Button(name);
-
-            button.tooltip = tooltip;
-            button.SetEnabled(false);
+            element.style.display =
+                visible ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
-        private static void Show(
-            VisualElement element,
-            bool visible)
+        public void ToggleSidebar()
         {
-            if (element == null)
-                return;
-
-            element.style.display = visible
-                ? DisplayStyle.Flex
-                : DisplayStyle.None;
-        }
-
-        public void SetSidebarVisible(bool visible)
-        {
-            if (disposed)
-                return;
-
+            rail = !rail;
+            binder.Root.EnableInClassList("mail--rail", rail);
             actionsMenu.Close(false);
-            Show(binder.Sidebar, visible);
         }
 
-        public void SetCompact(bool compact)
+        public void SetCompact(bool value)
         {
-            if (disposed)
-                return;
-
-            binder.Root.EnableInClassList(
-                "mail--compact",
-                compact);
+            binder.Root.EnableInClassList("mail--compact", value);
         }
 
-        public void CloseActionsMenu(bool restoreFocus)
+        public void ToggleMore() => SetMore(!moreOpen);
+
+        private void SetMore(bool value)
         {
-            actionsMenu.Close(restoreFocus);
+            moreOpen = value;
+            binder.Root.EnableInClassList("mail--more-open", value);
+            binder.MoreText.text = value ? "Less" : "More";
         }
 
-        public void ToggleActionsMenu(Action<bool> markSelected)
+        public void CloseActionsMenu(bool focus)
         {
-            if (disposed)
-                return;
+            actionsMenu.Close(focus);
+        }
 
-            if (markSelected == null)
-            {
-                throw new ArgumentNullException(
-                    nameof(markSelected));
-            }
-
-            if (currentState == null ||
-                currentState.IsReading ||
-                currentState.SelectedCount == 0)
-            {
+        public void ToggleActionsMenu(Action<bool> action)
+        {
+            if (current == null)
                 return;
-            }
 
             actionsMenu.Toggle(
-                currentState.CanMarkSelectedRead,
-                currentState.CanMarkSelectedUnread,
-                markSelected);
+                current.CanMarkSelectedRead,
+                current.CanMarkSelectedUnread,
+                action);
+        }
+
+        public void ShowToast(string text)
+        {
+            toastTimer?.Pause();
+
+            toast.text = text;
+            Show(toast, true);
+
+            toastTimer = binder.Root.schedule.Execute(() =>
+            {
+                if (!disposed)
+                    Show(toast, false);
+            }).StartingIn(2500);
         }
 
         public void ShowAttachmentError(string error)
         {
-            if (disposed)
-                return;
-
             Reader.Status.text = error ?? string.Empty;
-
-            Show(
-                Reader.Status,
-                !string.IsNullOrWhiteSpace(error));
+            Show(Reader.Status, !string.IsNullOrWhiteSpace(error));
         }
 
         public void Render(EmailViewState state)
@@ -205,83 +157,65 @@ namespace Atlas.Presentation.SOS.Email
             if (disposed)
                 return;
 
-            if (state == null)
-                throw new ArgumentNullException(nameof(state));
-
+            current = state;
             actionsMenu.Close(false);
-            currentState = state;
+
+            binder.SearchField.SetValueWithoutNotify(state.SearchText);
+            Show(binder.ClearSearch, state.SearchText.Length > 0);
+
+            Button account = binder.Root.Q<Button>("AccountButton");
+            account.text = state.AccountInitials;
+            account.tooltip = state.AccountDescription;
 
             foreach (var pair in binder.Navigation)
             {
-                pair.Value.EnableInClassList(
-                    "mail-nav--active",
-                    pair.Key == state.Filter);
+                bool active = pair.Key == state.Filter;
+
+                pair.Value.Button.EnableInClassList(
+                    "mail-nav--active", active);
+
+                int count = pair.Key switch
+                {
+                    EmailFilter.Inbox => state.InboxUnread,
+                    EmailFilter.Drafts => state.DraftCount,
+                    EmailFilter.Spam => state.SpamUnread,
+                    EmailFilter.Trash => state.TrashUnread,
+                    _ => 0
+                };
+
+                pair.Value.Count.text = count > 0 ? count.ToString() : "";
+
+                pair.Value.Button.EnableInClassList(
+                    "has-unread", count > 0);
             }
 
             foreach (var pair in binder.Categories)
             {
                 pair.Value.EnableInClassList(
-                    "mail-tab--active",
-                    pair.Key == state.Category);
+                    "mail-tab--active", pair.Key == state.Category);
             }
 
-            binder.InboxCount.text =
-                state.InboxUnread.ToString();
+            RenderLabels(state);
 
-            binder.DraftsCount.text =
-                state.DraftCount.ToString();
+            binder.SelectAllToggle.SetValueWithoutNotify(state.AllSelected);
+            binder.SelectAllToggle.SetEnabled(state.Rows.Count > 0);
 
-            binder.MessageRange.text = state.Range;
+            binder.Range.text = state.Range;
 
-            if (binder.PrimaryBadge != null)
+            binder.Actions["previous"].SetEnabled(state.CanGoBack);
+            binder.Actions["next"].SetEnabled(state.CanGoForward);
+
+            foreach (string action in new[]
+                     {
+                         "archive", "delete", "unread", "move", "labels", "more"
+                     })
             {
-                binder.PrimaryBadge.text =
-                    $"{state.PrimaryUnread} new";
-
-                Show(
-                    binder.PrimaryBadge,
-                    state.PrimaryUnread > 0);
+                binder.Actions[action].SetEnabled(state.SelectedCount > 0);
             }
-
-            SetPreview(
-                promotionsPreview,
-                state.PromotionsPreview);
-
-            SetPreview(
-                socialPreview,
-                state.SocialPreview);
-
-            binder.SelectAllToggle.SetValueWithoutNotify(
-                state.AllSelected);
-
-            binder.SelectAllToggle.SetEnabled(
-                state.Rows.Count > 0);
-
-            binder.SelectAllToggle.tooltip =
-                $"Select this page ({state.SelectedCount} selected)";
-
-            binder.Button("PreviousPageButton")
-                .SetEnabled(state.CanGoBack);
-
-            binder.Button("NextPageButton")
-                .SetEnabled(state.CanGoForward);
-
-            Button more = binder.Button("MoreActionsButton");
-
-            more.SetEnabled(
-                state.SelectedCount > 0 &&
-                (state.CanMarkSelectedRead ||
-                 state.CanMarkSelectedUnread));
-
-            more.tooltip =
-                $"Actions for {state.SelectedCount} selected conversations";
 
             Show(binder.Toolbar, !state.IsReading);
-
-            Show(
-                binder.Tabs,
-                !state.IsReading &&
-                state.Filter == EmailFilter.Inbox);
+            Show(binder.Tabs,
+                !state.IsReading && state.Filter == EmailFilter.Inbox);
 
             Show(binder.MessageScroll, !state.IsReading);
             Show(Reader.Root, state.IsReading);
@@ -291,50 +225,62 @@ namespace Atlas.Presentation.SOS.Email
             if (!state.IsReading)
             {
                 ClearCards();
-
-                displayedConversationId = null;
+                readerId = null;
                 ShowAttachmentError(null);
-
                 return;
             }
 
             Reader.Subject.text = state.ReaderSubject;
 
-            if (displayedConversationId != state.ReaderId)
+            if (readerId != state.ReaderId)
             {
                 ClearCards();
-
-                displayedConversationId = state.ReaderId;
-
+                readerId = state.ReaderId;
                 Reader.Scroll.scrollOffset = Vector2.zero;
-
                 ShowAttachmentError(null);
             }
 
             RenderCards(state.ReaderMessages);
         }
 
-        private static void SetPreview(
-            Label label,
-            string text)
+        private void RenderLabels(EmailViewState state)
         {
-            if (label == null)
-                return;
+            foreach (string name in state.Labels.Where(name =>
+                         !string.Equals(name, "Work",
+                             StringComparison.OrdinalIgnoreCase) &&
+                         !string.Equals(name, "Personal",
+                             StringComparison.OrdinalIgnoreCase)))
+            {
+                if (!labels.TryGetValue(name, out var row))
+                {
+                    string captured = name;
 
-            label.enableRichText = false;
-            label.text = text ?? string.Empty;
+                    row = EmailBinder.CreateNavigation(name, "icon-label");
+                    labels.Add(name, row);
+                    binder.CustomLabels.Add(row.Button);
 
-            Show(label, !string.IsNullOrWhiteSpace(text));
+                    EmailViewBuilder.Wire(
+                        row.Button,
+                        () => LabelSelected?.Invoke(captured),
+                        cleanup);
+                }
+
+                row.Button.EnableInClassList(
+                    "mail-nav--active",
+                    state.Filter == EmailFilter.CustomLabel &&
+                    string.Equals(
+                        state.SelectedLabel,
+                        name,
+                        StringComparison.OrdinalIgnoreCase));
+            }
         }
 
-        private void RenderRows(
-            IReadOnlyList<EmailRowState> states)
+        private void RenderRows(List<EmailRowState> states)
         {
-            emptyLabel.RemoveFromHierarchy();
+            empty.RemoveFromHierarchy();
 
-            HashSet<string> visible = new(
-                states.Select(state => state.Id),
-                StringComparer.Ordinal);
+            HashSet<string> visible =
+                new(states.Select(state => state.Id), StringComparer.Ordinal);
 
             foreach (var pair in rows)
             {
@@ -347,41 +293,30 @@ namespace Atlas.Presentation.SOS.Email
                 EmailRowState state = states[index];
                 string id = state.Id;
 
-                if (!rows.TryGetValue(
-                        id,
-                        out EmailRowElements row))
+                if (!rows.TryGetValue(id, out var row))
                 {
-                    row = new EmailRowElements(
+                    row = builder.CreateRow(
                         () => OpenRequested?.Invoke(id),
                         () => StarRequested?.Invoke(id),
-                        value => SelectionChanged?.Invoke(id, value));
+                        value => SelectionChanged?.Invoke(id, value),
+                        (messageId, fileId) =>
+                            AttachmentRequested?.Invoke(messageId, fileId));
 
                     rows.Add(id, row);
                 }
 
                 row.Render(state);
-
-                if (row.Root.parent != binder.MessageList ||
-                    binder.MessageList.IndexOf(row.Root) != index)
-                {
-                    row.Root.RemoveFromHierarchy();
-
-                    binder.MessageList.Insert(
-                        index,
-                        row.Root);
-                }
+                Place(binder.MessageList, row.Root, index);
             }
 
             if (states.Count == 0)
-                binder.MessageList.Add(emptyLabel);
+                binder.MessageList.Add(empty);
         }
 
-        private void RenderCards(
-            IReadOnlyList<EmailReaderMessageState> states)
+        private void RenderCards(List<EmailReaderMessageState> states)
         {
-            HashSet<string> visible = new(
-                states.Select(state => state.Id),
-                StringComparer.Ordinal);
+            HashSet<string> visible =
+                new(states.Select(state => state.Id), StringComparer.Ordinal);
 
             foreach (string id in cards.Keys.ToArray())
             {
@@ -397,40 +332,285 @@ namespace Atlas.Presentation.SOS.Email
                 EmailReaderMessageState state = states[index];
                 string id = state.Id;
 
-                if (!cards.TryGetValue(
-                        id,
-                        out EmailMessageCardElements card))
+                if (!cards.TryGetValue(id, out var card))
                 {
-                    card = new EmailMessageCardElements(
+                    card = builder.CreateCard(
                         state,
-                        () => MessageExpansionRequested?.Invoke(id),
+                        () => ExpansionRequested?.Invoke(id),
                         () => MessageStarRequested?.Invoke(id),
-                        fileId =>
-                            AttachmentRequested?.Invoke(id, fileId));
+                        () => ReplyRequested?.Invoke(id),
+                        () => ForwardRequested?.Invoke(id),
+                        () => MessageMenuRequested?.Invoke(id),
+                        (messageId, fileId) =>
+                            AttachmentRequested?.Invoke(messageId, fileId));
 
                     cards.Add(id, card);
                 }
 
                 card.Render(state);
-
-                if (card.Root.parent != Reader.Messages ||
-                    Reader.Messages.IndexOf(card.Root) != index)
-                {
-                    card.Root.RemoveFromHierarchy();
-
-                    Reader.Messages.Insert(
-                        index,
-                        card.Root);
-                }
+                Place(Reader.Messages, card.Root, index);
             }
+        }
+
+        private static void Place(
+            VisualElement parent,
+            VisualElement child,
+            int index)
+        {
+            if (child.parent == parent && parent.IndexOf(child) == index)
+                return;
+
+            child.RemoveFromHierarchy();
+            parent.Insert(index, child);
         }
 
         private void ClearCards()
         {
-            foreach (EmailMessageCardElements card in cards.Values)
+            foreach (var card in cards.Values)
                 card.Dispose();
 
             cards.Clear();
+        }
+
+        private VisualElement OpenDialog(string title, bool composer = false)
+        {
+            CloseDialog();
+
+            modal = EmailViewBuilder.Box("mail-modal");
+            VisualElement panel = EmailViewBuilder.Box(
+                composer ? "mail-dialog mail-composer" : "mail-dialog");
+
+            // Box accepts one class name, so add these separately.
+            panel.ClearClassList();
+            panel.AddToClassList("mail-dialog");
+
+            if (composer)
+                panel.AddToClassList("mail-composer");
+
+            VisualElement header = EmailViewBuilder.Box("mail-dialog-header");
+            header.Add(EmailViewBuilder.Text(title, "mail-dialog-title"));
+
+            Button close = EmailViewBuilder.IconButton("Close", "icon-close");
+
+            EmailViewBuilder.Wire(close, () =>
+            {
+                if (draft != null)
+                    SaveDraftRequested?.Invoke(draft);
+                else
+                    CloseDialog();
+            }, modalCleanup);
+
+            header.Add(close);
+            panel.Add(header);
+
+            modalError = EmailViewBuilder.Text("", "mail-error");
+            modalError.style.display = DisplayStyle.None;
+            panel.Add(modalError);
+
+            modal.Add(panel);
+            binder.Root.Add(modal);
+            modal.BringToFront();
+
+            return panel;
+        }
+
+        public void SetModalError(string error)
+        {
+            if (modalError == null)
+                return;
+
+            modalError.text = error ?? string.Empty;
+            Show(modalError, !string.IsNullOrWhiteSpace(error));
+        }
+
+        public void CloseDialog()
+        {
+            foreach (Action action in modalCleanup)
+                action();
+
+            modalCleanup.Clear();
+            modal?.RemoveFromHierarchy();
+
+            modal = null;
+            modalError = null;
+            composeTo = null;
+            composeSubject = null;
+            composeBody = null;
+            draft = null;
+        }
+
+        public void OpenComposer(EmailComposeDraft value)
+        {
+            VisualElement panel = OpenDialog("New message", true);
+            draft = value;
+
+            composeTo = new TextField("To")
+            {
+                value = draft.To,
+                maxLength = 254
+            };
+
+            composeSubject = new TextField("Subject")
+            {
+                value = draft.Subject,
+                maxLength = 200
+            };
+
+            composeBody = new TextField
+            {
+                value = draft.Body,
+                multiline = true,
+                maxLength = 16000
+            };
+
+            composeTo.AddToClassList("mail-field");
+            composeSubject.AddToClassList("mail-field");
+            composeBody.AddToClassList("mail-compose-body");
+
+            composeTo.textEdition.placeholder = "Recipient email address";
+            composeTo.textEdition.hidePlaceholderOnFocus = true;
+
+            BindDraftField(composeTo, text => draft.To = text);
+            BindDraftField(composeSubject, text => draft.Subject = text);
+            BindDraftField(composeBody, text => draft.Body = text);
+
+            panel.Add(composeTo);
+            panel.Add(composeSubject);
+            panel.Add(composeBody);
+
+            if (draft.AttachmentIds.Count > 0)
+            {
+                panel.Add(EmailViewBuilder.Text(
+                    $"{draft.AttachmentIds.Count} forwarded attachment(s)",
+                    "mail-reader-meta"));
+            }
+
+            VisualElement footer = EmailViewBuilder.Box("mail-dialog-footer");
+
+            Button send = EmailViewBuilder.TextButton(
+                "Send", "icon-sent", "mail-primary-button");
+
+            Button save = new() { text = "Save and close" };
+            save.AddToClassList("mail-pill-button");
+
+            Button discard = EmailViewBuilder.IconButton(
+                "Discard draft", "icon-delete");
+
+            EmailViewBuilder.Wire(send,
+                () => SendRequested?.Invoke(draft), modalCleanup);
+
+            EmailViewBuilder.Wire(save,
+                () => SaveDraftRequested?.Invoke(draft), modalCleanup);
+
+            EmailViewBuilder.Wire(discard,
+                () => DiscardDraftRequested?.Invoke(draft), modalCleanup);
+
+            footer.Add(send);
+            footer.Add(save);
+            footer.Add(discard);
+
+            panel.Add(footer);
+            composeTo.Focus();
+        }
+
+        private void BindDraftField(
+            TextField field,
+            Action<string> changed)
+        {
+            EventCallback<ChangeEvent<string>> callback =
+                evt => changed(evt.newValue);
+
+            field.RegisterValueChangedCallback(callback);
+
+            modalCleanup.Add(() =>
+                field.UnregisterValueChangedCallback(callback));
+        }
+
+        public void OpenCreateLabel()
+        {
+            VisualElement panel = OpenDialog("New label");
+
+            TextField name = new("Label name")
+            {
+                maxLength = 40
+            };
+
+            name.AddToClassList("mail-field");
+            panel.Add(name);
+
+            VisualElement footer = EmailViewBuilder.Box("mail-dialog-footer");
+
+            Button cancel = new() { text = "Cancel" };
+            cancel.AddToClassList("mail-pill-button");
+
+            Button create = new() { text = "Create" };
+            create.AddToClassList("mail-primary-button");
+
+            EmailViewBuilder.Wire(cancel, CloseDialog, modalCleanup);
+
+            EmailViewBuilder.Wire(create,
+                () => CreateLabelRequested?.Invoke(name.value),
+                modalCleanup);
+
+            footer.Add(cancel);
+            footer.Add(create);
+            panel.Add(footer);
+
+            name.Focus();
+        }
+
+        public void OpenChoices(
+            string title,
+            IEnumerable<(string Text, Action Action)> choices)
+        {
+            VisualElement panel = OpenDialog(title);
+
+            foreach (var choice in choices)
+            {
+                Button button = new() { text = choice.Text };
+                button.AddToClassList("mail-choice");
+
+                Action action = choice.Action;
+
+                EmailViewBuilder.Wire(button, () =>
+                {
+                    CloseDialog();
+                    action();
+                }, modalCleanup);
+
+                panel.Add(button);
+            }
+        }
+
+        public void OpenLabels(
+            IEnumerable<string> names,
+            Func<string, bool> allHave,
+            Action<string, bool> assign)
+        {
+            VisualElement panel = OpenDialog("Labels");
+
+            foreach (string name in names)
+            {
+                string label = name;
+
+                Toggle toggle = new(label)
+                {
+                    value = allHave(label)
+                };
+
+                toggle.labelElement.enableRichText = false;
+                toggle.AddToClassList("mail-label-toggle");
+
+                EventCallback<ChangeEvent<bool>> changed =
+                    evt => assign(label, evt.newValue);
+
+                toggle.RegisterValueChangedCallback(changed);
+
+                modalCleanup.Add(() =>
+                    toggle.UnregisterValueChangedCallback(changed));
+
+                panel.Add(toggle);
+            }
         }
 
         public void Dispose()
@@ -439,26 +619,38 @@ namespace Atlas.Presentation.SOS.Email
                 return;
 
             disposed = true;
+            toastTimer?.Pause();
 
+            CloseDialog();
             actionsMenu.Dispose();
             ClearCards();
 
-            foreach (EmailRowElements row in rows.Values)
+            foreach (var row in rows.Values)
                 row.Dispose();
 
+            foreach (Action action in cleanup)
+                action();
+
             rows.Clear();
+            cleanup.Clear();
 
-            emptyLabel.RemoveFromHierarchy();
             Reader.Root.RemoveFromHierarchy();
-
-            currentState = null;
+            toast.RemoveFromHierarchy();
 
             OpenRequested = null;
             StarRequested = null;
             SelectionChanged = null;
-            MessageExpansionRequested = null;
+            ExpansionRequested = null;
             MessageStarRequested = null;
+            ReplyRequested = null;
+            ForwardRequested = null;
+            MessageMenuRequested = null;
             AttachmentRequested = null;
+            LabelSelected = null;
+            SendRequested = null;
+            SaveDraftRequested = null;
+            DiscardDraftRequested = null;
+            CreateLabelRequested = null;
         }
     }
 }

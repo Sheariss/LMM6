@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Atlas.Presentation.SOS.Apps;
+using Atlas.Presentation.SOS.Contacts;
 using Atlas.SOS.Authentication;
 using Atlas.SOS.FileSystem;
 using UnityEngine;
@@ -9,51 +12,37 @@ namespace Atlas.Presentation.SOS.Email
 {
     public sealed class EmailController : AppContentController
     {
-        [Header("Presentation")]
-        [SerializeField] private VisualTreeAsset emailLayout;
-        [SerializeField] private StyleSheet conversationStyles;
-
         [Header("Attachments")]
         [SerializeField] private FileSystemLibrary fileSystemLibrary;
         [SerializeField] private FileAssociationCatalog fileAssociations;
 
+        [Header("Identity")]
+        [SerializeField] private ContactLibrary contacts;
+        [SerializeField] private Sprite defaultAvatar;
+        [SerializeField] private Sprite filledStar;
+
         private EmailManager manager;
         private EmailBinder binder;
         private EmailEngine engine;
-        private EmailViewBuilder builder;
         private EmailView view;
+        private EmailViewBuilder builder;
+        private EmailAttachmentResolver resolver;
+        private FileOpenRouter router;
 
-        private EmailAttachmentResolver attachmentResolver;
-        private FileOpenRouter fileOpenRouter;
-        private TemplateContainer layoutInstance;
-
-        private bool sidebarVisible = true;
-        private bool executingAction;
+        private string userId;
+        private bool executing;
 
         protected override void OnInitialize()
         {
-            if (emailLayout == null || conversationStyles == null)
-            {
-                throw new InvalidOperationException(
-                    "Email requires its layout and conversation stylesheet.");
-            }
-
-            if (fileSystemLibrary == null || fileAssociations == null)
-            {
-                throw new InvalidOperationException(
-                    "Email requires the filesystem library and file associations.");
-            }
-
             manager = EmailManager.Instance;
 
             if (manager == null)
             {
                 throw new InvalidOperationException(
-                    "An initialized EmailManager is required.");
+                    "EmailManager is not available.");
             }
 
-            string userId =
-                AuthenticationManager.Instance?.CurrentUser?.UserId;
+            userId = AuthenticationManager.Instance?.CurrentUser?.UserId;
 
             if (string.IsNullOrWhiteSpace(userId))
             {
@@ -61,77 +50,71 @@ namespace Atlas.Presentation.SOS.Email
                     "Email requires a signed-in user.");
             }
 
+            if (fileSystemLibrary == null || fileAssociations == null)
+            {
+                throw new InvalidOperationException(
+                    "Assign Email's filesystem library and file associations.");
+            }
+
             AppController launcher = GetComponentInParent<AppController>();
 
             if (launcher == null)
             {
                 throw new InvalidOperationException(
-                    "Email runtime must be launched by AppController.");
+                    "Email must be launched by AppController.");
             }
 
-            fileOpenRouter = new FileOpenRouter(
-                fileAssociations, launcher);
-
-            attachmentResolver = new EmailAttachmentResolver(
-                fileSystemLibrary, userId);
-
-            engine = new EmailEngine(
-                manager, userId, attachmentResolver);
-
-            builder = new EmailViewBuilder();
+            router = new FileOpenRouter(fileAssociations, launcher);
+            resolver = new EmailAttachmentResolver(fileSystemLibrary, userId);
+            engine = new EmailEngine(manager, userId, resolver);
 
             InstanceRoot.style.height = StyleKeyword.Auto;
             InstanceRoot.style.flexGrow = 1;
             InstanceRoot.style.flexShrink = 1;
             InstanceRoot.style.flexBasis = 0;
             InstanceRoot.style.minHeight = 0;
-            InstanceRoot.style.minWidth = 0;
 
-            layoutInstance = emailLayout.CloneTree();
+            binder = new EmailBinder(InstanceRoot);
 
-            layoutInstance.style.flexGrow = 1;
-            layoutInstance.style.flexShrink = 1;
-            layoutInstance.style.flexBasis = 0;
-            layoutInstance.style.minHeight = 0;
-            layoutInstance.style.minWidth = 0;
+            builder = new EmailViewBuilder(
+                fileAssociations, contacts, defaultAvatar, filledStar);
 
-            InstanceRoot.Add(layoutInstance);
+            view = new EmailView(binder, builder);
 
-            binder = new EmailBinder(layoutInstance);
-            binder.Root.styleSheets.Add(conversationStyles);
+            BindClick(
+                binder.Compose,
+                () => view.OpenComposer(new EmailComposeDraft()));
 
-            view = new EmailView(binder, builder, engine.Account);
+            BindClick(binder.Menu, view.ToggleSidebar);
+            BindClick(binder.MoreFoldersButton, view.ToggleMore);
+            BindClick(binder.AddLabel, view.OpenCreateLabel);
 
-            RegisterCallbacks();
+            BindClick(binder.ClearSearch, () =>
+            {
+                Execute(() => engine.Search(""));
+                binder.SearchField.Focus();
+            });
 
-            manager.MailboxChanged += OnMailboxChanged;
+            BindCallback<ChangeEvent<string>>(
+                binder.SearchField,
+                evt => Execute(() => engine.Search(evt.newValue)));
 
-            view.OpenRequested += OnOpenRequested;
-            view.StarRequested += OnStarRequested;
-            view.SelectionChanged += OnSelectionChanged;
-            view.MessageExpansionRequested += OnMessageExpansion;
-            view.MessageStarRequested += OnMessageStar;
-            view.AttachmentRequested += OnAttachmentRequested;
+            BindCallback<ChangeEvent<bool>>(
+                binder.SelectAllToggle,
+                evt => Execute(() => engine.SelectAll(evt.newValue)));
 
-            binder.SearchField.SetValueWithoutNotify("");
-            view.SetSidebarVisible(sidebarVisible);
+            BindCallback<GeometryChangedEvent>(binder.Root, evt =>
+            {
+                view.CloseActionsMenu(false);
+                view.SetCompact(evt.newRect.width < 1000f);
+            });
 
-            float width = binder.Root.resolvedStyle.width;
-
-            if (!float.IsNaN(width) && width > 0)
-                view.SetCompact(width < 1000f);
-
-            Render();
-        }
-
-        private void RegisterCallbacks()
-        {
             foreach (var pair in binder.Navigation)
             {
                 EmailFilter filter = pair.Key;
 
                 BindClick(
-                    pair.Value,
+                    pair.Value.Button,
                     () => Execute(() => engine.SetFilter(filter)));
             }
 
@@ -144,106 +127,301 @@ namespace Atlas.Presentation.SOS.Email
                     () => Execute(() => engine.SetCategory(category)));
             }
 
-            BindCallback<ChangeEvent<string>>(
-                binder.SearchField,
-                evt => Execute(() => engine.Search(evt.newValue)));
-
-            BindCallback<ChangeEvent<bool>>(
-                binder.SelectAllToggle,
-                evt => Execute(() => engine.SelectAll(evt.newValue)));
-
-            BindCallback<GeometryChangedEvent>(
-                binder.Root,
-                evt =>
-                {
-                    view.CloseActionsMenu(false);
-                    view.SetCompact(evt.newRect.width < 1000f);
-                });
-
             BindClick(
-                binder.Button("PreviousPageButton"),
+                binder.Actions["previous"],
                 () => Execute(() => engine.MovePage(-1)));
 
             BindClick(
-                binder.Button("NextPageButton"),
+                binder.Actions["next"],
                 () => Execute(() => engine.MovePage(1)));
 
-            BindClick(binder.Button("RefreshButton"), Render);
+            BindClick(binder.Actions["refresh"], Render);
 
-            BindClick(
-                binder.Button("MoreActionsButton"),
-                () => view.ToggleActionsMenu(isRead =>
-                    Execute(() => engine.MarkSelected(isRead))));
+            BindClick(binder.Actions["more"], () =>
+                view.ToggleActionsMenu(value =>
+                    Execute(() => engine.MarkSelected(value))));
+
+            BindAction(binder.Actions, "archive", false);
+            BindAction(binder.Actions, "delete", false);
+            BindAction(binder.Actions, "unread", false);
+            BindAction(binder.Actions, "move", false);
+            BindAction(binder.Actions, "labels", false);
 
             BindClick(
                 view.Reader.Back,
                 () => Execute(engine.CloseConversation));
 
-            BindClick(
-                binder.Button("MenuButton"),
-                () =>
+            foreach (string action in view.Reader.Actions.Keys)
+                BindAction(view.Reader.Actions, action, true);
+
+            view.OpenRequested += Open;
+
+            view.StarRequested += id =>
+                Execute(() => engine.ToggleConversationStar(id));
+
+            view.SelectionChanged += (id, value) =>
+                Execute(() => engine.Select(id, value));
+
+            view.ExpansionRequested += id =>
+                Execute(() => engine.ToggleExpanded(id));
+
+            view.MessageStarRequested += id =>
+                Execute(() => engine.ToggleMessageStar(id));
+
+            view.LabelSelected += label =>
+                Execute(() => engine.SetLabel(label));
+
+            view.ReplyRequested += id => ComposeFrom(id, false);
+            view.ForwardRequested += id => ComposeFrom(id, true);
+
+            view.MessageMenuRequested += id => view.OpenChoices(
+                "Message actions",
+                new (string, Action)[]
                 {
-                    sidebarVisible = !sidebarVisible;
-                    view.SetSidebarVisible(sidebarVisible);
+                    ("Reply", () => ComposeFrom(id, false)),
+                    ("Forward", () => ComposeFrom(id, true)),
+                    ("Mark unread", () => Execute(() =>
+                    {
+                        engine.Mark(new[] { id }, false);
+                        engine.CloseConversation();
+                    }))
                 });
-        }
 
-        private void OnOpenRequested(string id)
-        {
-            Execute(() => engine.OpenConversation(id));
-        }
+            view.AttachmentRequested += OpenAttachment;
+            view.SendRequested += Send;
+            view.SaveDraftRequested += SaveDraft;
 
-        private void OnStarRequested(string id)
-        {
-            Execute(() => engine.ToggleConversationStar(id));
-        }
-
-        private void OnSelectionChanged(string id, bool selected)
-        {
-            Execute(() => engine.Select(id, selected));
-        }
-
-        private void OnMessageExpansion(string id)
-        {
-            Execute(() => engine.ToggleExpanded(id));
-        }
-
-        private void OnMessageStar(string id)
-        {
-            Execute(() => engine.ToggleMessageStar(id));
-        }
-
-        private void OnAttachmentRequested(string messageId, string fileId)
-        {
-            if (!engine.IsAttachmentInOpenedConversation(messageId, fileId))
+            view.DiscardDraftRequested += draft =>
             {
-                view.ShowAttachmentError(
-                    "That attachment is not part of the open conversation.");
+                view.CloseDialog();
+                Execute(() => manager.RemoveDraft(userId, draft.Id));
+            };
+
+            view.CreateLabelRequested += name =>
+            {
+                if (!manager.TryCreateLabel(userId, name, out string error))
+                {
+                    view.SetModalError(error);
+                    return;
+                }
+
+                view.CloseDialog();
+                Render();
+            };
+
+            manager.MailboxChanged += OnMailboxChanged;
+            Render();
+        }
+
+        private void BindAction(
+            Dictionary<string, Button> buttons,
+            string action,
+            bool reader)
+        {
+            BindClick(buttons[action], () => HandleAction(action, reader));
+        }
+
+        private void HandleAction(string action, bool reader)
+        {
+            string[] ids = engine.TargetMessageIds(reader);
+
+            if (ids.Length == 0)
+                return;
+
+            if (action == "move")
+            {
+                view.OpenChoices(
+                    "Move to",
+                    Enum.GetValues(typeof(EmailDestination))
+                        .Cast<EmailDestination>()
+                        .Select(destination =>
+                            (destination.ToString(),
+                             (Action)(() => Move(ids, destination, reader)))));
+
                 return;
             }
 
-            EmailResolvedAttachment attachment =
-                attachmentResolver.Resolve(fileId);
+            if (action == "labels")
+            {
+                EmailMessageData[] targets = engine.Messages
+                    .Where(message => ids.Contains(message.Id))
+                    .ToArray();
+
+                view.OpenLabels(
+                    engine.Labels,
+
+                    label => targets.All(message =>
+                        message.UserLabels.Contains(
+                            label, StringComparer.OrdinalIgnoreCase)),
+
+                    (label, value) => Execute(() =>
+                        manager.AssignLabel(userId, ids, label, value)));
+
+                return;
+            }
+
+            if (action == "unread")
+            {
+                Execute(() =>
+                {
+                    engine.Mark(ids, false);
+
+                    if (reader)
+                        engine.CloseConversation();
+                });
+
+                return;
+            }
+
+            EmailDestination destination = action switch
+            {
+                "archive" => EmailDestination.Archive,
+                "spam" => EmailDestination.Spam,
+                _ => EmailDestination.Trash
+            };
+
+            Move(ids, destination, reader);
+        }
+
+        private void Move(
+            string[] ids,
+            EmailDestination destination,
+            bool reader)
+        {
+            Execute(() =>
+            {
+                manager.Move(userId, ids, destination);
+
+                if (reader)
+                    engine.CloseConversation();
+            });
+
+            view.ShowToast(destination == EmailDestination.Trash
+                ? "Moved to Trash"
+                : "Moved to " + destination);
+        }
+
+        private void Open(string id)
+        {
+            EmailConversationData conversation = engine.GetConversations()
+                .FirstOrDefault(item => item.Id == id);
+
+            if (conversation?.Latest.Folder == EmailFolder.Drafts)
+            {
+                EmailComposeDraft draft =
+                    manager.EditDraft(userId, conversation.Latest.Id);
+
+                if (draft != null)
+                    view.OpenComposer(draft);
+
+                return;
+            }
+
+            Execute(() => engine.OpenConversation(id));
+        }
+
+        private void ComposeFrom(string id, bool forward)
+        {
+            EmailMessageData source = engine.FindMessage(id);
+
+            if (source == null)
+                return;
+
+            string prefix = forward ? "Fwd: " : "Re: ";
+
+            string subject = source.Subject.StartsWith(
+                prefix, StringComparison.OrdinalIgnoreCase)
+                ? source.Subject
+                : prefix + source.Subject;
+
+            bool ownMessage = string.Equals(
+                source.SenderAddress,
+                engine.Account.EmailAddress,
+                StringComparison.OrdinalIgnoreCase);
+
+            view.OpenComposer(new EmailComposeDraft
+            {
+                // A forward has no reply relationship, even if its subject changes.
+                SourceMessageId = forward ? null : source.Id,
+                ThreadId = forward ? null : source.ThreadId,
+
+                To = forward
+                    ? ""
+                    : ownMessage
+                        ? source.RecipientAddress
+                        : source.SenderAddress,
+
+                Subject = subject,
+
+                Body = forward
+                    ? "---------- Forwarded message ----------\n" +
+                      $"From: {source.SenderName} <{source.SenderAddress}>\n" +
+                      $"To: {source.RecipientAddress}\n" +
+                      $"Subject: {source.Subject}\n\n{source.Body}"
+                    : "",
+
+                AttachmentIds = forward
+                    ? source.Attachments
+                        .Select(attachment => attachment.FileId)
+                        .ToList()
+                    : new List<string>()
+            });
+        }
+
+        private void Send(EmailComposeDraft draft)
+        {
+            bool sent = false;
+            string error = null;
+
+            Execute(() =>
+            {
+                sent = manager.TrySend(
+                    userId, draft, out _, out error);
+
+                if (sent)
+                    view.CloseDialog();
+            });
+
+            if (!sent)
+                view.SetModalError(error);
+            else
+                view.ShowToast("Message sent");
+        }
+
+        private void SaveDraft(EmailComposeDraft draft)
+        {
+            view.CloseDialog();
+            Execute(() => manager.SaveDraft(userId, draft));
+            view.ShowToast("Draft saved");
+        }
+
+        private void OpenAttachment(string messageId, string fileId)
+        {
+            if (!engine.HasAttachment(messageId, fileId))
+                return;
+
+            EmailResolvedAttachment attachment = resolver.Resolve(fileId);
 
             if (!attachment.IsAvailable)
             {
                 view.ShowAttachmentError(attachment.Error);
+                view.ShowToast(attachment.Error);
                 return;
             }
 
-            if (!fileOpenRouter.TryOpen(attachment.Request, out string error))
+            if (!router.TryOpen(attachment.Request, out string error))
             {
                 view.ShowAttachmentError(error);
+                view.ShowToast(error);
                 return;
             }
 
-            // Leave focus with the destination app.
             view.ShowAttachmentError(null);
         }
 
         private void Execute(Action action)
         {
-            executingAction = true;
+            executing = true;
 
             try
             {
@@ -251,25 +429,27 @@ namespace Atlas.Presentation.SOS.Email
             }
             finally
             {
-                executingAction = false;
+                executing = false;
             }
 
             Render();
         }
 
-        private void OnMailboxChanged(string userId)
+        private void OnMailboxChanged(string changedUser)
         {
-            if (executingAction || engine == null)
-                return;
-
-            if (userId == null || userId == engine.UserId)
+            if (!executing &&
+                (changedUser == null || changedUser == userId))
+            {
                 Render();
+            }
         }
 
         private void Render()
         {
-            if (view != null && engine != null)
-                view.Render(builder.Build(engine));
+            if (view == null || engine == null || builder == null)
+                return;
+
+            view.Render(builder.Build(engine));
         }
 
         protected override void OnShutdown()
@@ -277,31 +457,23 @@ namespace Atlas.Presentation.SOS.Email
             if (manager != null)
                 manager.MailboxChanged -= OnMailboxChanged;
 
-            if (view != null)
+            if (view?.ActiveDraft != null &&
+                manager != null &&
+                AuthenticationManager.Instance?.CurrentUser?.UserId == userId)
             {
-                view.OpenRequested -= OnOpenRequested;
-                view.StarRequested -= OnStarRequested;
-                view.SelectionChanged -= OnSelectionChanged;
-                view.MessageExpansionRequested -= OnMessageExpansion;
-                view.MessageStarRequested -= OnMessageStar;
-                view.AttachmentRequested -= OnAttachmentRequested;
-
-                view.Dispose();
+                manager.SaveDraft(userId, view.ActiveDraft);
             }
 
-            layoutInstance?.RemoveFromHierarchy();
+            view?.Dispose();
 
-            manager = null;
-            binder = null;
-            engine = null;
-            builder = null;
             view = null;
-            attachmentResolver = null;
-            fileOpenRouter = null;
-            layoutInstance = null;
-
-            sidebarVisible = true;
-            executingAction = false;
+            engine = null;
+            binder = null;
+            builder = null;
+            manager = null;
+            resolver = null;
+            router = null;
+            userId = null;
         }
     }
 }

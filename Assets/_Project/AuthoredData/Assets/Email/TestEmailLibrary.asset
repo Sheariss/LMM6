@@ -12,16 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e8917cd91112814cb6be2b647918c3f, type: 3}
   m_Name: TestEmailLibrary
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Email.EmailLibrary
+  contacts: {fileID: 11400000, guid: 09ed2c7de7a4fa249b87af6e5a0eff11, type: 2}
   mailboxes:
   - UserId: guest
     DisplayName: Brandi Woods
     EmailAddress: b.woods@northstar.com
     Initials: BW
-    Messages:
+    ProfileImage: {fileID: 0}
+    LabelNames: []
+    Chains: []
+    LegacyMessages:
     - Id: test-1a
       ThreadId: thread-test
       SenderName: Brandi Woods
       SenderAddress: b.woods@northstar.com
+      SenderAvatar: {fileID: 0}
       RecipientAddress: test1@northstar.com
       Subject: 'This is a test '
       Body: 'Hi there! This is Brandi Woods attempting to request a test. '
@@ -32,12 +37,16 @@ MonoBehaviour:
       Label: 0
       InitiallyRead: 1
       InitiallyStarred: 1
+      InitiallyArchived: 0
+      InitiallySpam: 0
+      InitiallyTrashed: 0
       Attachments:
       - FileId: guest-company-profile-content
     - Id: test-1b
       ThreadId: thread-test
       SenderName: Test One
       SenderAddress: test1@northstar.com
+      SenderAvatar: {fileID: 0}
       RecipientAddress: b.woods@northstar.com
       Subject: 'Re: This is a test '
       Body: Hello this email is meant to be a test to check for funtionality.
@@ -48,12 +57,16 @@ MonoBehaviour:
       Label: 0
       InitiallyRead: 1
       InitiallyStarred: 1
+      InitiallyArchived: 0
+      InitiallySpam: 0
+      InitiallyTrashed: 0
       Attachments:
       - FileId: guest-wallpaper
     - Id: test-1c
       ThreadId: thread-test
       SenderName: Brandi Woods
       SenderAddress: b.woods@northstar.com
+      SenderAvatar: {fileID: 0}
       RecipientAddress: test1@northstar.com
       Subject: 'Re: Re: This is a test '
       Body: Thank you for your reply!
@@ -64,11 +77,15 @@ MonoBehaviour:
       Label: 0
       InitiallyRead: 1
       InitiallyStarred: 1
+      InitiallyArchived: 0
+      InitiallySpam: 0
+      InitiallyTrashed: 0
       Attachments: []
     - Id: draft-test-1
       ThreadId: 
       SenderName: Draft Test One
       SenderAddress: b.woods@northstar.com
+      SenderAvatar: {fileID: 0}
       RecipientAddress: 
       Subject: 'This is a test '
       Body: This is draft
@@ -79,11 +96,15 @@ MonoBehaviour:
       Label: 0
       InitiallyRead: 0
       InitiallyStarred: 0
+      InitiallyArchived: 0
+      InitiallySpam: 0
+      InitiallyTrashed: 0
       Attachments: []
     - Id: promo-test-1
       ThreadId: 
       SenderName: Promo Test One
       SenderAddress: do-not-reply@nothstar.come
+      SenderAvatar: {fileID: 0}
       RecipientAddress: b.woods@northstar.com
       Subject: 'This is a Promo Test '
       Body: This is a promo test.
@@ -94,11 +115,15 @@ MonoBehaviour:
       Label: 1
       InitiallyRead: 1
       InitiallyStarred: 0
+      InitiallyArchived: 0
+      InitiallySpam: 0
+      InitiallyTrashed: 0
       Attachments: []
     - Id: social-test-1
       ThreadId: 
       SenderName: Social Test One
       SenderAddress: do-not-reply@nothstar.come
+      SenderAvatar: {fileID: 0}
       RecipientAddress: b.woods@northstar.com
       Subject: 'This is a Social Test '
       Body: This is a social test.
@@ -109,11 +134,15 @@ MonoBehaviour:
       Label: 0
       InitiallyRead: 0
       InitiallyStarred: 0
+      InitiallyArchived: 0
+      InitiallySpam: 0
+      InitiallyTrashed: 0
       Attachments: []
     - Id: sent-test-1
       ThreadId: 
       SenderName: Brandi Woods
       SenderAddress: b.woods@northstar.com
+      SenderAvatar: {fileID: 0}
       RecipientAddress: example@orbilo.com
       Subject: 'This is a Sent Test '
       Body: This is a sent test.
@@ -124,11 +153,15 @@ MonoBehaviour:
       Label: 0
       InitiallyRead: 1
       InitiallyStarred: 0
+      InitiallyArchived: 0
+      InitiallySpam: 0
+      InitiallyTrashed: 0
       Attachments: []
     - Id: archive-test-1
       ThreadId: 
       SenderName: Juni Vega
       SenderAddress: example@northstar.com
+      SenderAvatar: {fileID: 0}
       RecipientAddress: b.woods@northstar.com
       Subject: 'This is a Archive Test '
       Body: This is a sent test.
@@ -139,4 +172,7 @@ MonoBehaviour:
       Label: 2
       InitiallyRead: 1
       InitiallyStarred: 0
+      InitiallyArchived: 0
+      InitiallySpam: 0
+      InitiallyTrashed: 0
       Attachments: []

@@ -17,87 +17,97 @@ namespace Atlas.Presentation.SOS.Email
             new(StringComparer.Ordinal);
 
         private string openedId;
+        private EmailFilter searchOrigin = EmailFilter.Inbox;
+        private string searchOriginLabel;
 
         public string UserId { get; }
-
         public EmailMailboxDefinition Account { get; }
-
         public EmailAttachmentResolver AttachmentResolver { get; }
 
-        public EmailFilter Filter { get; private set; } =
-            EmailFilter.Inbox;
-
-        public EmailCategory Category { get; private set; } =
-            EmailCategory.Primary;
-
-        public string SearchText { get; private set; } =
-            string.Empty;
-
+        public EmailFilter Filter { get; private set; } = EmailFilter.Inbox;
+        public EmailCategory Category { get; private set; }
+        public string SelectedLabel { get; private set; }
+        public string SearchText { get; private set; } = string.Empty;
         public int PageIndex { get; private set; }
 
         public IReadOnlyList<EmailMessageData> Messages =>
             manager.GetMessages(UserId);
 
+        public IReadOnlyList<string> Labels =>
+            manager.GetLabels(UserId);
+
         public EmailConversationData OpenedConversation =>
-            GetConversations().FirstOrDefault(
-                conversation => conversation.Id == openedId);
+            GetConversations().FirstOrDefault(item => item.Id == openedId);
 
         public EmailEngine(
             EmailManager manager,
             string userId,
-            EmailAttachmentResolver attachmentResolver)
+            EmailAttachmentResolver resolver)
         {
-            this.manager = manager ??
-                throw new ArgumentNullException(nameof(manager));
-
-            AttachmentResolver = attachmentResolver ??
-                throw new ArgumentNullException(
-                    nameof(attachmentResolver));
-
+            this.manager = manager;
             UserId = userId;
             Account = manager.GetDefinition(userId);
-
-            // Resolve the mailbox during initialization.
-            _ = Messages;
+            AttachmentResolver = resolver;
         }
 
         public List<EmailConversationData> GetConversations()
         {
             return Messages
-                .GroupBy(
-                    message => message.ConversationKey,
+                .GroupBy(message => message.ConversationKey,
                     StringComparer.Ordinal)
                 .Select(group =>
                     new EmailConversationData(group.Key, group))
                 .ToList();
         }
 
-        public int GetUnreadInboxCount(
-            EmailCategory? category = null)
-        {
-            return GetConversations().Count(conversation =>
-                conversation.IsUnread &&
-                conversation.Messages.Any(message =>
-                    message.Folder == EmailFolder.Inbox &&
-                    (!category.HasValue ||
-                     message.Category == category.Value)));
-        }
-
         public void SetFilter(EmailFilter filter)
         {
             Filter = filter;
+            SearchText = string.Empty;
+            SelectedLabel = null;
+            ResetNavigation();
+        }
+
+        public void SetLabel(string label)
+        {
+            Filter = EmailFilter.CustomLabel;
+            SelectedLabel = label;
+            SearchText = string.Empty;
             ResetNavigation();
         }
 
         public void SetCategory(EmailCategory category)
         {
             Category = category;
+            Filter = EmailFilter.Inbox;
+            SearchText = string.Empty;
+            SelectedLabel = null;
             ResetNavigation();
         }
 
         public void Search(string value)
         {
-            SearchText = (value ?? string.Empty).Trim();
+            value = (value ?? string.Empty).Trim();
+
+            if (SearchText.Length == 0 && value.Length > 0)
+            {
+                searchOrigin = Filter;
+                searchOriginLabel = SelectedLabel;
+            }
+
+            SearchText = value;
+
+            if (value.Length > 0)
+            {
+                Filter = EmailFilter.All;
+                SelectedLabel = null;
+            }
+            else
+            {
+                Filter = searchOrigin;
+                SelectedLabel = searchOriginLabel;
+            }
+
             ResetNavigation();
         }
 
@@ -108,34 +118,48 @@ namespace Atlas.Presentation.SOS.Email
             CloseConversation();
         }
 
-        private bool MatchesFilter(
-            EmailConversationData conversation)
+        private bool MatchesFilter(EmailConversationData conversation)
         {
+            bool trashed = conversation.Messages.Any(message => message.IsTrashed);
+            bool spam = conversation.Messages.Any(message => message.IsSpam);
+
+            if (Filter == EmailFilter.Trash)
+                return trashed;
+
+            if (Filter == EmailFilter.Spam)
+                return spam && !trashed;
+
+            if (trashed || spam)
+                return false;
+
             return Filter switch
             {
-                EmailFilter.Inbox =>
-                    conversation.Messages.Any(message =>
-                        message.Folder == EmailFolder.Inbox &&
-                        message.Category == Category),
+                EmailFilter.Inbox => conversation.Messages.Any(message =>
+                    message.InInbox && message.Category == Category),
 
-                EmailFilter.Starred =>
-                    conversation.IsStarred,
+                EmailFilter.Starred => conversation.IsStarred,
 
-                EmailFilter.Sent =>
-                    conversation.Messages.Any(message =>
-                        message.Folder == EmailFolder.Sent),
+                EmailFilter.Sent => conversation.Messages.Any(message =>
+                    message.Folder == EmailFolder.Sent),
 
                 EmailFilter.Drafts =>
-                    conversation.Latest.Folder ==
-                    EmailFolder.Drafts,
+                    conversation.Latest.Folder == EmailFolder.Drafts,
 
-                EmailFilter.Work =>
-                    conversation.Messages.Any(message =>
-                        message.Label == EmailLabel.Work),
+                EmailFilter.Archive =>
+                    conversation.Messages.Any(message => message.IsArchived) &&
+                    !conversation.Messages.Any(message => message.InInbox),
 
-                EmailFilter.Personal =>
-                    conversation.Messages.Any(message =>
-                        message.Label == EmailLabel.Personal),
+                EmailFilter.Work => conversation.Messages.Any(message =>
+                    message.UserLabels.Contains(
+                        "Work", StringComparer.OrdinalIgnoreCase)),
+
+                EmailFilter.Personal => conversation.Messages.Any(message =>
+                    message.UserLabels.Contains(
+                        "Personal", StringComparer.OrdinalIgnoreCase)),
+
+                EmailFilter.CustomLabel => conversation.Messages.Any(message =>
+                    message.UserLabels.Contains(
+                        SelectedLabel, StringComparer.OrdinalIgnoreCase)),
 
                 _ => true
             };
@@ -144,91 +168,90 @@ namespace Atlas.Presentation.SOS.Email
         private bool Contains(string value)
         {
             return (value ?? string.Empty).IndexOf(
-                SearchText,
-                StringComparison.OrdinalIgnoreCase) >= 0;
+                SearchText, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
-        private bool MatchesSearch(
-            EmailConversationData conversation)
+        private bool MatchesSearch(EmailConversationData conversation)
         {
             if (SearchText.Length == 0)
                 return true;
 
-            foreach (EmailMessageData message
-                     in conversation.Messages)
+            foreach (EmailMessageData message in conversation.Messages)
             {
                 if (Contains(message.SenderName) ||
                     Contains(message.SenderAddress) ||
                     Contains(message.RecipientAddress) ||
                     Contains(message.Subject) ||
-                    Contains(message.Body))
+                    Contains(message.Body) ||
+                    Contains(message.Category.ToString()) ||
+                    message.UserLabels.Any(Contains))
                 {
                     return true;
                 }
 
-                foreach (EmailAttachmentData attachment
-                         in message.Attachments)
+                if (message.Attachments.Any(attachment =>
+                        Contains(AttachmentResolver.Resolve(
+                            attachment.FileId).Name)))
                 {
-                    EmailResolvedAttachment resolved =
-                        AttachmentResolver.Resolve(
-                            attachment.FileId);
-
-                    if (Contains(resolved.Name))
-                        return true;
+                    return true;
                 }
             }
 
             return false;
         }
 
-        public List<EmailConversationData> GetVisibleConversations(
-            out int total)
+        public List<EmailConversationData> GetVisibleConversations(out int total)
         {
-            List<EmailConversationData> filtered =
-                GetConversations()
-                    .Where(MatchesFilter)
-                    .Where(MatchesSearch)
-                    .OrderByDescending(conversation =>
-                        conversation.Latest.SortOrder)
-                    .ThenBy(
-                        conversation => conversation.Id,
-                        StringComparer.Ordinal)
-                    .ToList();
+            List<EmailConversationData> filtered = GetConversations()
+                .Where(MatchesFilter)
+                .Where(MatchesSearch)
+                .OrderByDescending(item => item.Latest.SortOrder)
+                .ThenBy(item => item.Id, StringComparer.Ordinal)
+                .ToList();
 
             total = filtered.Count;
 
-            int maximumPage =
-                total == 0 ? 0 : (total - 1) / PageSize;
-
             PageIndex = Math.Max(
-                0,
-                Math.Min(PageIndex, maximumPage));
+                0, Math.Min(PageIndex, total == 0 ? 0 : (total - 1) / PageSize));
 
             List<EmailConversationData> page = filtered
                 .Skip(PageIndex * PageSize)
                 .Take(PageSize)
                 .ToList();
 
-            // Bulk selection is restricted to this page.
-            selected.IntersectWith(
-                page.Select(conversation => conversation.Id));
-
+            selected.IntersectWith(page.Select(item => item.Id));
             return page;
         }
 
-        public bool IsSelected(string conversationId)
+        public int GetUnreadInboxCount(EmailCategory? category = null)
         {
-            return selected.Contains(conversationId);
+            return GetConversations().Count(conversation =>
+                conversation.IsUnread &&
+                conversation.Messages.Any(message =>
+                    message.InInbox &&
+                    (!category.HasValue ||
+                     message.Category == category.Value)));
         }
 
-        public void Select(
-            string conversationId,
-            bool value)
+        public int GetUnreadLocationCount(EmailFilter location)
+        {
+            return GetConversations().Count(conversation =>
+                conversation.IsUnread &&
+                conversation.Messages.Any(message =>
+                    location == EmailFilter.Spam
+                        ? message.IsSpam && !message.IsTrashed
+                        : message.IsTrashed));
+        }
+
+        public bool IsSelected(string id) => selected.Contains(id);
+        public bool IsExpanded(string id) => expanded.Contains(id);
+
+        public void Select(string id, bool value)
         {
             if (value)
-                selected.Add(conversationId);
+                selected.Add(id);
             else
-                selected.Remove(conversationId);
+                selected.Remove(id);
         }
 
         public void SelectAll(bool value)
@@ -238,11 +261,8 @@ namespace Atlas.Presentation.SOS.Email
 
             selected.Clear();
 
-            if (!value)
-                return;
-
-            foreach (EmailConversationData conversation in page)
-                selected.Add(conversation.Id);
+            if (value)
+                selected.UnionWith(page.Select(item => item.Id));
         }
 
         public void MovePage(int offset)
@@ -252,33 +272,26 @@ namespace Atlas.Presentation.SOS.Email
             CloseConversation();
         }
 
-        public void OpenConversation(string conversationId)
+        public void OpenConversation(string id)
         {
             EmailConversationData conversation =
-                GetConversations().FirstOrDefault(
-                    item => item.Id == conversationId);
+                GetConversations().FirstOrDefault(item => item.Id == id);
 
             if (conversation == null)
                 return;
 
-            openedId = conversationId;
+            openedId = id;
             expanded.Clear();
 
-            // Capture unread messages before marking them read.
-            foreach (EmailMessageData message
-                     in conversation.Messages)
-            {
-                if (message.IsReceived && !message.IsRead)
-                    expanded.Add(message.Id);
-            }
+            expanded.UnionWith(conversation.Messages
+                .Where(message => message.IsReceived && !message.IsRead)
+                .Select(message => message.Id));
 
-            // Always show the newest message expanded.
             expanded.Add(conversation.Latest.Id);
 
             manager.SetRead(
                 UserId,
-                conversation.Messages
-                    .Where(message => message.IsReceived)
+                conversation.Messages.Where(message => message.IsReceived)
                     .Select(message => message.Id),
                 true);
         }
@@ -289,99 +302,85 @@ namespace Atlas.Presentation.SOS.Email
             expanded.Clear();
         }
 
-        public bool IsExpanded(string messageId)
+        public void ToggleExpanded(string id)
         {
-            return expanded.Contains(messageId);
-        }
-
-        public void ToggleExpanded(string messageId)
-        {
-            EmailConversationData conversation =
-                OpenedConversation;
-
-            if (conversation == null ||
-                !conversation.Messages.Any(
-                    message => message.Id == messageId))
-            {
+            if (OpenedConversation?.Messages.Any(message => message.Id == id)
+                != true)
                 return;
-            }
 
-            if (!expanded.Add(messageId))
-                expanded.Remove(messageId);
+            if (!expanded.Add(id))
+                expanded.Remove(id);
         }
 
-        public void ToggleConversationStar(
-            string conversationId)
+        public void ToggleConversationStar(string id)
         {
             EmailConversationData conversation =
-                GetConversations().FirstOrDefault(
-                    item => item.Id == conversationId);
+                GetConversations().FirstOrDefault(item => item.Id == id);
 
             if (conversation == null)
                 return;
 
-            if (conversation.IsStarred)
-            {
-                // Clear every star represented by this row.
-                manager.SetStarred(
-                    UserId,
-                    conversation.Messages
-                        .Where(message => message.IsStarred)
-                        .Select(message => message.Id),
-                    false);
-            }
-            else
-            {
-                // A new conversation star belongs to its latest message.
-                manager.SetStarred(
-                    UserId,
-                    new[] { conversation.Latest.Id },
-                    true);
-            }
+            manager.SetStarred(
+                UserId,
+                conversation.IsStarred
+                    ? conversation.Messages.Where(message => message.IsStarred)
+                        .Select(message => message.Id)
+                    : new[] { conversation.Latest.Id },
+                !conversation.IsStarred);
         }
 
-        public void ToggleMessageStar(string messageId)
+        public void ToggleMessageStar(string id)
         {
-            EmailConversationData conversation =
-                OpenedConversation;
-
-            if (conversation == null ||
-                !conversation.Messages.Any(
-                    message => message.Id == messageId))
-            {
-                return;
-            }
-
-            manager.ToggleStar(UserId, messageId);
+            if (OpenedConversation?.Messages.Any(message => message.Id == id)
+                == true)
+                manager.ToggleStar(UserId, id);
         }
 
-        public void MarkSelected(bool isRead)
+        public EmailMessageData FindMessage(string id)
         {
-            string[] ids = GetVisibleConversations(out _)
-                .Where(conversation =>
-                    selected.Contains(conversation.Id))
-                .SelectMany(conversation =>
-                    conversation.Messages)
-                .Where(message => message.IsReceived)
+            return Messages.FirstOrDefault(message => message.Id == id);
+        }
+
+        public string[] TargetMessageIds(bool reader)
+        {
+            if (reader)
+            {
+                return OpenedConversation?.Messages
+                    .Select(message => message.Id).ToArray()
+                    ?? Array.Empty<string>();
+            }
+
+            return GetVisibleConversations(out _)
+                .Where(item => selected.Contains(item.Id))
+                .SelectMany(item => item.Messages)
                 .Select(message => message.Id)
                 .Distinct(StringComparer.Ordinal)
                 .ToArray();
-
-            manager.SetRead(UserId, ids, isRead);
         }
 
-        public bool IsAttachmentInOpenedConversation(
-            string messageId,
-            string fileId)
+        public void MarkSelected(bool value)
         {
-            EmailConversationData conversation =
-                OpenedConversation;
+            Mark(TargetMessageIds(false), value);
+        }
 
-            return conversation != null &&
-                conversation.Messages.Any(message =>
-                    message.Id == messageId &&
-                    message.Attachments.Any(attachment =>
-                        attachment.FileId == fileId));
+        public void Mark(IEnumerable<string> ids, bool value)
+        {
+            HashSet<string> requested = new(ids, StringComparer.Ordinal);
+
+            manager.SetRead(
+                UserId,
+                Messages.Where(message =>
+                        requested.Contains(message.Id) && message.IsReceived)
+                    .Select(message => message.Id),
+                value);
+        }
+
+        public bool HasAttachment(string messageId, string fileId)
+        {
+            return Messages.Any(message =>
+                message.Id == messageId &&
+                message.Attachments.Any(attachment =>
+                    attachment.FileId == fileId));
         }
     }
 }

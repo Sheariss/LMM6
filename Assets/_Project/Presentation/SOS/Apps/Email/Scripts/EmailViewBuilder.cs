@@ -1,10 +1,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Atlas.Presentation.SOS.Contacts;
+using Atlas.SOS.FileSystem;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Atlas.Presentation.SOS.Email
 {
+    public sealed class EmailAttachmentState
+    {
+        public string MessageId;
+        public string FileId;
+        public string Name;
+        public string Size;
+        public string Error;
+        public bool Available;
+        public Sprite Icon;
+        public Texture2D Fallback;
+    }
+
     public sealed class EmailRowState
     {
         public string Id;
@@ -13,53 +28,47 @@ namespace Atlas.Presentation.SOS.Email
         public string Preview;
         public string Date;
 
-        public bool IsRead;
-        public bool IsStarred;
-        public bool IsSelected;
-        public bool HasAttachments;
-    }
+        public bool Read;
+        public bool Starred;
+        public bool Selected;
 
-    public sealed class EmailAttachmentState
-    {
-        public string FileId;
-        public string Name;
-        public string Size;
-        public string Error;
-        public bool IsAvailable;
+        public List<EmailAttachmentState> Attachments = new();
     }
 
     public sealed class EmailReaderMessageState
     {
         public string Id;
         public string Sender;
-        public string SenderAddress;
+        public string Address;
         public string Recipient;
         public string Date;
         public string Preview;
         public string Body;
+        public string Status;
 
-        public bool IsExpanded;
-        public bool IsStarred;
+        public bool Expanded;
+        public bool Starred;
 
+        public Sprite Avatar;
         public List<EmailAttachmentState> Attachments = new();
     }
 
     public sealed class EmailViewState
     {
-        public List<EmailRowState> Rows = new();
-        public List<EmailReaderMessageState> ReaderMessages = new();
+        public string AccountInitials;
+        public string AccountDescription;
+        public string SearchText;
+        public string SelectedLabel;
+        public string Range;
+        public string ReaderId;
+        public string ReaderSubject;
 
         public EmailFilter Filter;
         public EmailCategory Category;
 
-        public string Range;
-        public string PromotionsPreview;
-        public string SocialPreview;
-        public string ReaderId;
-        public string ReaderSubject;
-
         public int InboxUnread;
-        public int PrimaryUnread;
+        public int SpamUnread;
+        public int TrashUnread;
         public int DraftCount;
         public int SelectedCount;
 
@@ -69,271 +78,44 @@ namespace Atlas.Presentation.SOS.Email
         public bool CanMarkSelectedRead;
         public bool CanMarkSelectedUnread;
 
-        public bool IsReading => !string.IsNullOrEmpty(ReaderId);
+        public List<string> Labels = new();
+        public List<EmailRowState> Rows = new();
+        public List<EmailReaderMessageState> ReaderMessages = new();
+
+        public bool IsReading => ReaderId != null;
     }
 
     public sealed class EmailReaderElements
     {
         public VisualElement Root;
         public Button Back;
+        public Dictionary<string, Button> Actions = new();
         public ScrollView Scroll;
         public Label Subject;
         public Label Status;
         public VisualElement Messages;
     }
 
-    public sealed class EmailRowElements : IDisposable
+    public sealed class EmailRendered<T> : IDisposable
     {
         public VisualElement Root { get; }
 
-        private readonly Toggle selection;
-        private readonly Button star;
-        private readonly Button open;
+        private readonly Action<T> render;
+        private readonly List<Action> cleanup;
 
-        private readonly Label sender;
-        private readonly Label subject;
-        private readonly Label preview;
-        private readonly Label date;
-        private readonly Image attachmentIcon;
-
-        private readonly Action openHandler;
-        private readonly Action starHandler;
-        private readonly EventCallback<ChangeEvent<bool>> selectHandler;
-
-        public EmailRowElements(
-            Action openAction,
-            Action starAction,
-            Action<bool> selectAction)
+        public EmailRendered(
+            VisualElement root,
+            Action<T> render,
+            List<Action> cleanup)
         {
-            openHandler = openAction;
-            starHandler = starAction;
-            selectHandler = evt => selectAction(evt.newValue);
-
-            Root = new VisualElement();
-            Root.AddToClassList("mail-row");
-
-            selection = new Toggle();
-            selection.AddToClassList("mail-check");
-
-            star = EmailViewBuilder.IconButton(
-                "Star conversation", "icon-star", "mail-star");
-
-            open = new Button();
-            open.AddToClassList("mail-message");
-
-            sender = EmailViewBuilder.Text("", "mail-sender");
-            subject = EmailViewBuilder.Text("", "mail-subject");
-            preview = EmailViewBuilder.Text("", "mail-preview");
-            date = EmailViewBuilder.Text("", "mail-time");
-
-            VisualElement summary = new()
-            {
-                pickingMode = PickingMode.Ignore
-            };
-
-            summary.AddToClassList("mail-summary");
-            summary.Add(subject);
-            summary.Add(preview);
-
-            attachmentIcon = EmailViewBuilder.Icon("icon-draft");
-            attachmentIcon.AddToClassList("mail-row-attachment");
-
-            open.Add(sender);
-            open.Add(summary);
-            open.Add(attachmentIcon);
-            open.Add(date);
-
-            Root.Add(selection);
-            Root.Add(star);
-            Root.Add(open);
-
-            open.clicked += openHandler;
-            star.clicked += starHandler;
-            selection.RegisterValueChangedCallback(selectHandler);
+            Root = root;
+            this.render = render;
+            this.cleanup = cleanup;
         }
 
-        public void Render(EmailRowState state)
+        public void Render(T state)
         {
-            sender.text = state.Sender;
-            subject.text = state.Subject;
-            preview.text = state.Preview;
-            date.text = state.Date;
-
-            open.tooltip = $"{state.Sender}: {state.Subject}";
-
-            selection.tooltip = "Select conversation";
-            selection.SetValueWithoutNotify(state.IsSelected);
-
-            star.tooltip = state.IsStarred
-                ? "Remove stars from conversation"
-                : "Star latest message";
-
-            Root.EnableInClassList("mail-row--unread", !state.IsRead);
-            Root.EnableInClassList("mail-row--selected", state.IsSelected);
-            star.EnableInClassList("mail-star--active", state.IsStarred);
-
-            attachmentIcon.style.display = state.HasAttachments
-                ? DisplayStyle.Flex
-                : DisplayStyle.None;
-        }
-
-        public void Dispose()
-        {
-            open.clicked -= openHandler;
-            star.clicked -= starHandler;
-            selection.UnregisterValueChangedCallback(selectHandler);
-            Root.RemoveFromHierarchy();
-        }
-    }
-
-    public sealed class EmailMessageCardElements : IDisposable
-    {
-        public VisualElement Root { get; }
-
-        private readonly Button summary;
-        private readonly Button star;
-        private readonly Image arrow;
-        private readonly Label sender;
-        private readonly Label date;
-        private readonly Label preview;
-        private readonly VisualElement details;
-
-        private readonly List<Action> cleanup = new();
-
-        public EmailMessageCardElements(
-            EmailReaderMessageState state,
-            Action toggleExpanded,
-            Action toggleStar,
-            Action<string> openAttachment)
-        {
-            Root = new VisualElement();
-            Root.AddToClassList("mail-thread-card");
-
-            VisualElement header = new();
-            header.AddToClassList("mail-thread-header");
-
-            summary = new Button();
-            summary.AddToClassList("mail-thread-summary");
-
-            arrow = EmailViewBuilder.Icon("icon-expand");
-            arrow.AddToClassList("mail-thread-chevron");
-
-            VisualElement heading = new()
-            {
-                pickingMode = PickingMode.Ignore
-            };
-            heading.AddToClassList("mail-thread-heading");
-
-            sender = EmailViewBuilder.Text(
-                state.Sender, "mail-thread-sender");
-
-            preview = EmailViewBuilder.Text(
-                state.Preview, "mail-thread-preview");
-
-            date = EmailViewBuilder.Text(
-                state.Date, "mail-thread-date");
-
-            heading.Add(sender);
-            heading.Add(preview);
-
-            summary.Add(arrow);
-            summary.Add(heading);
-            summary.Add(date);
-
-            star = EmailViewBuilder.IconButton(
-                "Star message", "icon-star", "mail-star");
-
-            header.Add(summary);
-            header.Add(star);
-
-            details = new VisualElement();
-            details.AddToClassList("mail-thread-details");
-
-            details.Add(EmailViewBuilder.Text(
-                "From: " + state.SenderAddress, "mail-reader-meta"));
-
-            details.Add(EmailViewBuilder.Text(
-                "To: " + state.Recipient, "mail-reader-meta"));
-
-            details.Add(EmailViewBuilder.Text(
-                state.Body, "mail-reader-body"));
-
-            VisualElement attachments = new();
-            attachments.AddToClassList("mail-attachments");
-
-            foreach (EmailAttachmentState attachment in state.Attachments)
-            {
-                string fileId = attachment.FileId;
-
-                Button button = new();
-                button.AddToClassList("mail-attachment");
-
-                button.tooltip = attachment.IsAvailable
-                    ? $"{attachment.Name}\n{attachment.Size}"
-                    : attachment.Error;
-
-                button.Add(EmailViewBuilder.Icon("icon-draft"));
-
-                button.Add(EmailViewBuilder.Text(
-                    attachment.Name, "mail-attachment-name"));
-
-                if (!string.IsNullOrEmpty(attachment.Size))
-                {
-                    button.Add(EmailViewBuilder.Text(
-                        attachment.Size, "mail-attachment-size"));
-                }
-
-                button.SetEnabled(attachment.IsAvailable);
-
-                Action clicked = () => openAttachment(fileId);
-                button.clicked += clicked;
-                cleanup.Add(() => button.clicked -= clicked);
-
-                attachments.Add(button);
-            }
-
-            if (state.Attachments.Count > 0)
-                details.Add(attachments);
-
-            Root.Add(header);
-            Root.Add(details);
-
-            summary.clicked += toggleExpanded;
-            star.clicked += toggleStar;
-
-            cleanup.Add(() => summary.clicked -= toggleExpanded);
-            cleanup.Add(() => star.clicked -= toggleStar);
-
-            Render(state);
-        }
-
-        public void Render(EmailReaderMessageState state)
-        {
-            sender.text = state.Sender;
-            date.text = state.Date;
-            preview.text = state.Preview;
-
-            details.style.display = state.IsExpanded
-                ? DisplayStyle.Flex
-                : DisplayStyle.None;
-
-            preview.style.display = state.IsExpanded
-                ? DisplayStyle.None
-                : DisplayStyle.Flex;
-
-            arrow.EnableInClassList("icon-expand", state.IsExpanded);
-            arrow.EnableInClassList("icon-next", !state.IsExpanded);
-
-            summary.tooltip = state.IsExpanded
-                ? "Collapse message"
-                : "Expand message";
-
-            star.tooltip = state.IsStarred
-                ? "Unstar message"
-                : "Star message";
-
-            star.EnableInClassList(
-                "mail-star--active", state.IsStarred);
+            render(state);
         }
 
         public void Dispose()
@@ -348,6 +130,23 @@ namespace Atlas.Presentation.SOS.Email
 
     public sealed class EmailViewBuilder
     {
+        private readonly FileAssociationCatalog fileAssociations;
+        private readonly ContactLibrary contacts;
+        private readonly Sprite defaultAvatar;
+        private readonly Sprite filledStar;
+
+        public EmailViewBuilder(
+            FileAssociationCatalog fileAssociations,
+            ContactLibrary contacts,
+            Sprite defaultAvatar,
+            Sprite filledStar)
+        {
+            this.fileAssociations = fileAssociations;
+            this.contacts = contacts;
+            this.defaultAvatar = defaultAvatar;
+            this.filledStar = filledStar;
+        }
+
         public EmailViewState Build(EmailEngine engine)
         {
             List<EmailConversationData> page =
@@ -357,31 +156,32 @@ namespace Atlas.Presentation.SOS.Email
 
             EmailViewState state = new()
             {
+                AccountInitials = engine.Account.Initials,
+
+                AccountDescription =
+                    $"{engine.Account.DisplayName}\n{engine.Account.EmailAddress}",
+
                 Filter = engine.Filter,
                 Category = engine.Category,
+                SearchText = engine.SearchText,
+                SelectedLabel = engine.SelectedLabel,
 
                 Range = total == 0
                     ? "0 of 0"
                     : $"{start + 1}-{start + page.Count} of {total}",
 
                 InboxUnread = engine.GetUnreadInboxCount(),
-
-                PrimaryUnread = engine.GetUnreadInboxCount(
-                    EmailCategory.Primary),
+                SpamUnread = engine.GetUnreadLocationCount(EmailFilter.Spam),
+                TrashUnread = engine.GetUnreadLocationCount(EmailFilter.Trash),
 
                 DraftCount = engine.Messages.Count(message =>
-                    message.Folder == EmailFolder.Drafts),
+                    message.Folder == EmailFolder.Drafts &&
+                    !message.IsTrashed &&
+                    !message.IsSpam),
 
                 CanGoBack = engine.PageIndex > 0,
-
-                CanGoForward =
-                    (engine.PageIndex + 1) * EmailEngine.PageSize < total,
-
-                PromotionsPreview = CategoryPreview(
-                    engine.Messages, EmailCategory.Promotions),
-
-                SocialPreview = CategoryPreview(
-                    engine.Messages, EmailCategory.Social)
+                CanGoForward = start + page.Count < total,
+                Labels = engine.Labels.ToList()
             };
 
             foreach (EmailConversationData conversation in page)
@@ -395,18 +195,49 @@ namespace Atlas.Presentation.SOS.Email
                     state.CanMarkSelectedUnread |= conversation.CanMarkUnread;
                 }
 
-                state.Rows.Add(new EmailRowState
+                string participants = string.Join(", ",
+                    conversation.Messages
+                        .Select(message =>
+                            string.Equals(
+                                message.SenderAddress,
+                                engine.Account.EmailAddress,
+                                StringComparison.OrdinalIgnoreCase)
+                                ? "me"
+                                : Sender(message))
+                        .Distinct(StringComparer.OrdinalIgnoreCase));
+
+                if (conversation.Messages.Count > 1)
+                    participants += $" ({conversation.Messages.Count})";
+
+                EmailRowState row = new()
                 {
                     Id = conversation.Id,
-                    Sender = Participants(conversation, engine.Account),
+
+                    Sender = conversation.Latest.Folder == EmailFolder.Drafts
+                        ? "Draft"
+                        : participants,
+
                     Subject = Subject(conversation.Subject),
                     Preview = " - " + Preview(conversation.Latest.Body),
                     Date = conversation.Latest.DateLabel,
-                    IsRead = !conversation.IsUnread,
-                    IsStarred = conversation.IsStarred,
-                    IsSelected = selected,
-                    HasAttachments = conversation.HasAttachments
-                });
+                    Read = !conversation.IsUnread,
+                    Starred = conversation.IsStarred,
+                    Selected = selected
+                };
+
+                HashSet<string> seen = new(StringComparer.Ordinal);
+
+                foreach (EmailMessageData message in conversation.Messages)
+                {
+                    foreach (EmailAttachmentState attachment
+                             in Attachments(message, engine.AttachmentResolver))
+                    {
+                        if (seen.Add(attachment.FileId))
+                            row.Attachments.Add(attachment);
+                    }
+                }
+
+                state.Rows.Add(row);
             }
 
             state.AllSelected =
@@ -422,48 +253,100 @@ namespace Atlas.Presentation.SOS.Email
 
             foreach (EmailMessageData message in opened.Messages)
             {
-                EmailReaderMessageState messageState = new()
+                state.ReaderMessages.Add(new EmailReaderMessageState
                 {
                     Id = message.Id,
                     Sender = Sender(message),
-                    SenderAddress = SenderAddress(message),
-
-                    Recipient = string.IsNullOrWhiteSpace(
-                        message.RecipientAddress)
-                        ? engine.Account.EmailAddress
-                        : message.RecipientAddress,
-
+                    Address = message.SenderAddress,
+                    Recipient = message.RecipientAddress,
                     Date = message.DateLabel,
-                    Preview = Preview(message.Body),
                     Body = message.Body,
-                    IsExpanded = engine.IsExpanded(message.Id),
-                    IsStarred = message.IsStarred
-                };
+                    Preview = Preview(message.Body),
+                    Expanded = engine.IsExpanded(message.Id),
+                    Starred = message.IsStarred,
 
-                if (message.Folder == EmailFolder.Drafts)
-                    messageState.Sender = "Draft - " + messageState.Sender;
+                    Avatar = message.SenderAvatar != null
+                        ? message.SenderAvatar
+                        : FindAvatar(message.SenderAddress),
 
-                foreach (EmailAttachmentData attachment in message.Attachments)
-                {
-                    EmailResolvedAttachment resolved =
-                        engine.AttachmentResolver.Resolve(attachment.FileId);
-
-                    messageState.Attachments.Add(new EmailAttachmentState
-                    {
-                        FileId = attachment.FileId,
-                        Name = resolved.Name,
-                        Size = resolved.IsAvailable
-                            ? FormatSize(resolved.Size)
+                    Status = message.DeliveryFailed
+                        ? "Delivery failed"
+                        : message.Folder == EmailFolder.Sent
+                            ? "Sent"
                             : string.Empty,
-                        Error = resolved.Error,
-                        IsAvailable = resolved.IsAvailable
-                    });
-                }
 
-                state.ReaderMessages.Add(messageState);
+                    Attachments = Attachments(
+                        message, engine.AttachmentResolver)
+                });
             }
 
             return state;
+        }
+
+        private Sprite FindAvatar(string address)
+        {
+            if (contacts != null && !string.IsNullOrWhiteSpace(address))
+            {
+                foreach (ContactData contact in contacts.Contacts)
+                {
+                    if (contact == null)
+                        continue;
+
+                    if (string.Equals(
+                            contact.PersonalEmail,
+                            address,
+                            StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(
+                            contact.WorkEmail,
+                            address,
+                            StringComparison.OrdinalIgnoreCase))
+                    {
+                        return contact.ProfileImage != null
+                            ? contact.ProfileImage
+                            : defaultAvatar;
+                    }
+                }
+            }
+
+            return defaultAvatar;
+        }
+
+        private List<EmailAttachmentState> Attachments(
+            EmailMessageData message,
+            EmailAttachmentResolver resolver)
+        {
+            List<EmailAttachmentState> result = new();
+
+            foreach (EmailAttachmentData attachment in message.Attachments)
+            {
+                EmailResolvedAttachment resolved =
+                    resolver.Resolve(attachment.FileId);
+
+                FileSystemFileType type =
+                    resolved.Request?.File?.FileType ??
+                    FileSystemFileType.Unknown;
+
+                result.Add(new EmailAttachmentState
+                {
+                    MessageId = message.Id,
+                    FileId = attachment.FileId,
+                    Name = resolved.Name,
+                    Size = resolved.AvailableSize(),
+                    Available = resolved.IsAvailable,
+                    Error = resolved.Error,
+
+                    Icon = fileAssociations != null
+                        ? fileAssociations.GetIcon(type)
+                        : null,
+
+                    Fallback = Resources.Load<Texture2D>(
+                        type == FileSystemFileType.PDF
+                            ? "AppIcons/Pdf Viewer/icons8-pdf-48"
+                            : "AppIcons/Document/icons8-document-48")
+                });
+            }
+
+            return result;
         }
 
         private static string Subject(string value)
@@ -480,86 +363,15 @@ namespace Atlas.Presentation.SOS.Email
                 : message.SenderName;
         }
 
-        private static string SenderAddress(EmailMessageData message)
+        private static string Preview(string value)
         {
-            if (string.IsNullOrWhiteSpace(message.SenderName))
-                return message.SenderAddress;
-
-            if (string.IsNullOrWhiteSpace(message.SenderAddress))
-                return message.SenderName;
-
-            return $"{message.SenderName} <{message.SenderAddress}>";
-        }
-
-        private static string Participants(
-            EmailConversationData conversation,
-            EmailMailboxDefinition account)
-        {
-            bool outgoingOnly = conversation.Messages.All(message =>
-                message.Folder == EmailFolder.Sent ||
-                message.Folder == EmailFolder.Drafts);
-
-            IEnumerable<string> names = outgoingOnly
-                ? conversation.Messages.Select(message =>
-                    message.RecipientAddress)
-                : conversation.Messages.Select(message =>
-                    string.Equals(
-                        message.SenderAddress,
-                        account.EmailAddress,
-                        StringComparison.OrdinalIgnoreCase)
-                        ? "me"
-                        : Sender(message));
-
-            string result = string.Join(
-                ", ",
-                names.Distinct(StringComparer.OrdinalIgnoreCase));
-
-            if (outgoingOnly)
-                result = "To: " + result;
-
-            if (conversation.Messages.Count > 1)
-                result += $" ({conversation.Messages.Count})";
-
-            return result;
-        }
-
-        private static string Preview(string body)
-        {
-            string result = (body ?? string.Empty)
+            string text = (value ?? string.Empty)
                 .Replace('\r', ' ')
                 .Replace('\n', ' ');
 
-            return result.Length > 120
-                ? result.Substring(0, 120) + "..."
-                : result;
-        }
-
-        private static string CategoryPreview(
-            IReadOnlyList<EmailMessageData> messages,
-            EmailCategory category)
-        {
-            EmailMessageData latest = messages
-                .Where(message =>
-                    message.Folder == EmailFolder.Inbox &&
-                    message.Category == category)
-                .OrderByDescending(message => message.SortOrder)
-                .ThenBy(message => message.Id, StringComparer.Ordinal)
-                .FirstOrDefault();
-
-            return latest == null
-                ? string.Empty
-                : $"{Sender(latest)}: {Subject(latest.Subject)}";
-        }
-
-        private static string FormatSize(long bytes)
-        {
-            if (bytes < 1024)
-                return $"{bytes} B";
-
-            if (bytes < 1024L * 1024L)
-                return $"{bytes / 1024d:0.#} KB";
-
-            return $"{bytes / (1024d * 1024d):0.#} MB";
+            return text.Length > 120
+                ? text.Substring(0, 120) + "..."
+                : text;
         }
 
         public static Label Text(string value, string className)
@@ -572,6 +384,13 @@ namespace Atlas.Presentation.SOS.Email
 
             label.AddToClassList(className);
             return label;
+        }
+
+        public static VisualElement Box(string className)
+        {
+            VisualElement element = new();
+            element.AddToClassList(className);
+            return element;
         }
 
         public static Image Icon(string className)
@@ -588,7 +407,7 @@ namespace Atlas.Presentation.SOS.Email
 
         public static Button IconButton(
             string tooltip,
-            string iconClass,
+            string icon,
             string buttonClass = "mail-icon-button")
         {
             Button button = new()
@@ -597,43 +416,369 @@ namespace Atlas.Presentation.SOS.Email
             };
 
             button.AddToClassList(buttonClass);
-            button.Add(Icon(iconClass));
+            button.Add(Icon(icon));
             return button;
+        }
+
+        public static Button TextButton(
+            string text,
+            string icon,
+            string className)
+        {
+            Button button = IconButton(text, icon, className);
+            button.Add(Text(text, "mail-button-text"));
+            return button;
+        }
+
+        public static void Wire(
+            Button button,
+            Action action,
+            List<Action> cleanup)
+        {
+            button.clicked += action;
+            cleanup.Add(() => button.clicked -= action);
+        }
+
+        private void SetStar(Button button, bool value)
+        {
+            button.EnableInClassList("mail-star--active", value);
+
+            Image image = button.Q<Image>();
+            image.EnableInClassList("icon-star-filled", value);
+
+            if (value && filledStar != null)
+                image.style.backgroundImage = new StyleBackground(filledStar);
+            else
+                image.style.backgroundImage = StyleKeyword.Null;
+
+            button.tooltip = value ? "Unstar" : "Star";
+        }
+
+        public Button AttachmentChip(
+            EmailAttachmentState attachment,
+            Action<string, string> open,
+            List<Action> cleanup)
+        {
+            Button button = new()
+            {
+                tooltip = attachment.Available
+                    ? $"{attachment.Name}\n{attachment.Size}"
+                    : attachment.Error
+            };
+
+            button.AddToClassList("mail-attachment");
+
+            Image image = new()
+            {
+                sprite = attachment.Icon,
+                scaleMode = ScaleMode.ScaleToFit,
+                pickingMode = PickingMode.Ignore
+            };
+
+            if (attachment.Icon == null)
+                image.image = attachment.Fallback;
+
+            image.AddToClassList("mail-file-icon");
+
+            button.Add(image);
+            button.Add(Text(attachment.Name, "mail-attachment-name"));
+
+            if (!string.IsNullOrEmpty(attachment.Size))
+                button.Add(Text(attachment.Size, "mail-attachment-size"));
+
+            button.SetEnabled(attachment.Available);
+
+            Wire(
+                button,
+                () => open(attachment.MessageId, attachment.FileId),
+                cleanup);
+
+            return button;
+        }
+
+        public EmailRendered<EmailRowState> CreateRow(
+            Action open,
+            Action starAction,
+            Action<bool> select,
+            Action<string, string> attachmentAction)
+        {
+            List<Action> cleanup = new();
+            List<Action> chipCleanup = new();
+
+            VisualElement root = Box("mail-row");
+
+            Toggle selection = new();
+            selection.AddToClassList("mail-check");
+
+            Button star = IconButton("Star", "icon-star", "mail-star");
+
+            VisualElement content = Box("mail-row-content");
+
+            Button message = new();
+            message.AddToClassList("mail-message");
+
+            Label sender = Text("", "mail-sender");
+            Label subject = Text("", "mail-subject");
+            Label preview = Text("", "mail-preview");
+            Label date = Text("", "mail-time");
+
+            VisualElement summary = Box("mail-summary");
+            summary.Add(subject);
+            summary.Add(preview);
+
+            message.Add(sender);
+            message.Add(summary);
+            message.Add(date);
+
+            VisualElement chips = Box("mail-list-attachments");
+
+            content.Add(message);
+            content.Add(chips);
+
+            root.Add(selection);
+            root.Add(star);
+            root.Add(content);
+
+            Wire(message, open, cleanup);
+            Wire(star, starAction, cleanup);
+
+            EventCallback<ChangeEvent<bool>> changed =
+                evt => select(evt.newValue);
+
+            selection.RegisterValueChangedCallback(changed);
+
+            cleanup.Add(() =>
+                selection.UnregisterValueChangedCallback(changed));
+
+            cleanup.Add(() =>
+            {
+                foreach (Action action in chipCleanup)
+                    action();
+
+                chipCleanup.Clear();
+            });
+
+            string chipSignature = null;
+
+            return new EmailRendered<EmailRowState>(
+                root,
+                state =>
+                {
+                    sender.text = state.Sender;
+                    subject.text = state.Subject;
+                    preview.text = state.Preview;
+                    date.text = state.Date;
+
+                    message.tooltip = state.Subject;
+                    selection.SetValueWithoutNotify(state.Selected);
+
+                    root.EnableInClassList("mail-row--unread", !state.Read);
+                    root.EnableInClassList("mail-row--selected", state.Selected);
+
+                    root.EnableInClassList(
+                        "mail-row--attachments",
+                        state.Attachments.Count > 0);
+
+                    SetStar(star, state.Starred);
+
+                    string signature = string.Join("|",
+                        state.Attachments.Select(item =>
+                            item.MessageId + ":" + item.FileId + ":" +
+                            item.Name + ":" + item.Size + ":" +
+                            item.Available + ":" + item.Error));
+
+                    if (signature == chipSignature)
+                        return;
+
+                    foreach (Action action in chipCleanup)
+                        action();
+
+                    chipCleanup.Clear();
+                    chips.Clear();
+
+                    foreach (EmailAttachmentState attachment in state.Attachments)
+                    {
+                        chips.Add(AttachmentChip(
+                            attachment, attachmentAction, chipCleanup));
+                    }
+
+                    chipSignature = signature;
+                },
+                cleanup);
+        }
+
+        public EmailRendered<EmailReaderMessageState> CreateCard(
+            EmailReaderMessageState initial,
+            Action expand,
+            Action starAction,
+            Action reply,
+            Action forward,
+            Action more,
+            Action<string, string> attachmentAction)
+        {
+            List<Action> cleanup = new();
+
+            VisualElement root = Box("mail-thread-card");
+            VisualElement header = Box("mail-thread-header");
+
+            Image avatar = new()
+            {
+                scaleMode = ScaleMode.ScaleAndCrop,
+                pickingMode = PickingMode.Ignore
+            };
+
+            avatar.AddToClassList("mail-avatar");
+            ApplyAvatar(avatar, initial.Avatar);
+
+            Button summary = new();
+            summary.AddToClassList("mail-thread-summary");
+
+            VisualElement identity = Box("mail-thread-identity");
+
+            Label sender = Text(initial.Sender, "mail-thread-sender");
+            Label address = Text(initial.Address, "mail-thread-address");
+            Label preview = Text(initial.Preview, "mail-thread-preview");
+            Label date = Text(initial.Date, "mail-thread-date");
+
+            identity.Add(sender);
+            identity.Add(address);
+            identity.Add(preview);
+
+            summary.Add(identity);
+            summary.Add(date);
+
+            Button star = IconButton("Star", "icon-star", "mail-star");
+            Button replySmall = IconButton("Reply", "icon-reply");
+            Button moreButton = IconButton("More message actions", "icon-more");
+
+            header.Add(avatar);
+            header.Add(summary);
+            header.Add(star);
+            header.Add(replySmall);
+            header.Add(moreButton);
+
+            VisualElement details = Box("mail-thread-details");
+
+            Label recipient = Text(
+                "To: " + initial.Recipient, "mail-reader-meta");
+
+            Label status = Text(initial.Status, "mail-reader-meta");
+            Label body = Text(initial.Body, "mail-reader-body");
+
+            details.Add(recipient);
+            details.Add(status);
+            details.Add(body);
+
+            VisualElement attachments = Box("mail-attachments");
+
+            foreach (EmailAttachmentState attachment in initial.Attachments)
+            {
+                attachments.Add(AttachmentChip(
+                    attachment, attachmentAction, cleanup));
+            }
+
+            details.Add(attachments);
+
+            VisualElement footer = Box("mail-message-actions");
+
+            Button replyButton = TextButton(
+                "Reply", "icon-reply", "mail-pill-button");
+
+            Button forwardButton = TextButton(
+                "Forward", "icon-forward", "mail-pill-button");
+
+            footer.Add(replyButton);
+            footer.Add(forwardButton);
+
+            details.Add(footer);
+            root.Add(header);
+            root.Add(details);
+
+            Wire(summary, expand, cleanup);
+            Wire(star, starAction, cleanup);
+            Wire(replySmall, reply, cleanup);
+            Wire(replyButton, reply, cleanup);
+            Wire(forwardButton, forward, cleanup);
+            Wire(moreButton, more, cleanup);
+
+            return new EmailRendered<EmailReaderMessageState>(
+                root,
+                state =>
+                {
+                    sender.text = state.Sender;
+                    address.text = state.Address;
+                    preview.text = state.Preview;
+                    date.text = state.Date;
+                    recipient.text = "To: " + state.Recipient;
+                    body.text = state.Body;
+                    status.text = state.Status;
+
+                    status.style.display = string.IsNullOrEmpty(state.Status)
+                        ? DisplayStyle.None
+                        : DisplayStyle.Flex;
+
+                    details.style.display = state.Expanded
+                        ? DisplayStyle.Flex
+                        : DisplayStyle.None;
+
+                    preview.style.display = state.Expanded
+                        ? DisplayStyle.None
+                        : DisplayStyle.Flex;
+
+                    summary.tooltip = state.Expanded
+                        ? "Collapse message"
+                        : "Expand message";
+
+                    ApplyAvatar(avatar, state.Avatar);
+                    SetStar(star, state.Starred);
+                },
+                cleanup);
+        }
+
+        private static void ApplyAvatar(Image image, Sprite sprite)
+        {
+            if (sprite != null)
+            {
+                image.sprite = sprite;
+                return;
+            }
+
+            image.image = Resources.Load<Texture2D>(
+                "Icons/Apps/Contacts/Person/" +
+                "person_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40");
         }
 
         public EmailReaderElements CreateReader()
         {
-            EmailReaderElements reader = new();
-
-            reader.Root = new VisualElement
+            EmailReaderElements reader = new()
             {
-                name = "EmailReaderPanel"
+                Root = Box("mail-reader"),
+                Back = IconButton("Back", "icon-previous"),
+                Scroll = new ScrollView(ScrollViewMode.Vertical),
+                Subject = Text("", "mail-reader-subject"),
+                Status = Text("", "mail-error"),
+                Messages = new VisualElement()
             };
 
-            reader.Root.AddToClassList("mail-reader");
-            reader.Root.style.display = DisplayStyle.None;
-
-            VisualElement toolbar = new();
-            toolbar.AddToClassList("mail-reader-toolbar");
-
-            reader.Back = IconButton(
-                "Back to conversations", "icon-previous");
-
+            VisualElement toolbar = Box("mail-reader-toolbar");
             toolbar.Add(reader.Back);
 
-            reader.Scroll = new ScrollView(ScrollViewMode.Vertical)
+            foreach (string action in new[]
+                     {
+                         "archive", "spam", "delete",
+                         "unread", "move", "labels"
+                     })
             {
-                horizontalScrollerVisibility = ScrollerVisibility.Hidden
-            };
+                Button button = IconButton(action, "icon-" + action);
+
+                reader.Actions.Add(action, button);
+                toolbar.Add(button);
+            }
+
+            reader.Scroll.horizontalScrollerVisibility =
+                ScrollerVisibility.Hidden;
 
             reader.Scroll.AddToClassList("mail-reader-scroll");
-
-            reader.Subject = Text("", "mail-reader-subject");
-            reader.Status = Text("", "mail-attachment-error");
-            reader.Status.style.display = DisplayStyle.None;
-
-            reader.Messages = new VisualElement();
-
             reader.Scroll.Add(reader.Subject);
             reader.Scroll.Add(reader.Status);
             reader.Scroll.Add(reader.Messages);
@@ -641,7 +786,30 @@ namespace Atlas.Presentation.SOS.Email
             reader.Root.Add(toolbar);
             reader.Root.Add(reader.Scroll);
 
+            reader.Root.style.display = DisplayStyle.None;
+            reader.Status.style.display = DisplayStyle.None;
+
             return reader;
+        }
+    }
+
+    internal static class EmailAttachmentFormatting
+    {
+        public static string AvailableSize(
+            this EmailResolvedAttachment attachment)
+        {
+            if (!attachment.IsAvailable)
+                return string.Empty;
+
+            long bytes = attachment.Size;
+
+            if (bytes < 1024)
+                return $"{bytes} B";
+
+            if (bytes < 1024L * 1024L)
+                return $"{bytes / 1024d:0.#} KB";
+
+            return $"{bytes / (1024d * 1024d):0.#} MB";
         }
     }
 }
