@@ -136,7 +136,6 @@ namespace Atlas.Presentation.SOS.Assistant
             }
 
             // Prevent the multiline field from adding a newline.
-            evt.PreventDefault();
             evt.StopPropagation();
 
             SendTypedMessage();

@@ -1,3 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/_Project/Presentation/SOS/Utilities/Widgets/AppWidgets/AppWidgets.uss?fileID=7433441132597879392&amp;guid=5c4a1406284c65449bc33cc55ff6aa01&amp;type=3#AppWidgets"/>
-</ui:UXML>

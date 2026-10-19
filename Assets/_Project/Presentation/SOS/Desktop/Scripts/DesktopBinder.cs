@@ -15,6 +15,7 @@ namespace Atlas.Presentation.SOS.Desktop
         public VisualElement ShortcutLayer { get; }
         public VisualElement ShortcutGrid { get; }
         public VisualElement WindowLayer { get; }
+        public VisualElement PanelLayer { get; }
 
         public TemplateContainer Taskbar { get; }
 
@@ -48,6 +49,9 @@ namespace Atlas.Presentation.SOS.Desktop
 
             WindowLayer = Bind<VisualElement>(
                 Workspace, "WindowLayer");
+
+            PanelLayer = Bind<VisualElement>(
+                Workspace, "PanelLayer");
 
             Taskbar = Bind<TemplateContainer>(
                 Root, "Taskbar");

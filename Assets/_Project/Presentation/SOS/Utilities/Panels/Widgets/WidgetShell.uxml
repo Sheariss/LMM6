@@ -1,0 +1,46 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         editor-extension-mode="False">
+
+    <Style src="../../../Tokens/Global-Colors.uss"/>
+    <Style src="../../../Tokens/Global-Tokens.uss"/>
+    <Style src="WidgetShell.uss"/>
+
+    <ui:Button name="WidgetRoot"
+               text=""
+               class="widget">
+
+        <ui:VisualElement name="WidgetHeader"
+                          picking-mode="Ignore"
+                          class="widget__header">
+
+            <ui:Image name="WidgetIcon"
+                      picking-mode="Ignore"
+                      class="widget__icon"/>
+
+            <ui:Label name="WidgetTitle"
+                      text="Widget title"
+                      picking-mode="Ignore"
+                      class="widget__title"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="WidgetContent"
+                          picking-mode="Ignore"
+                          class="widget__content">
+            <!-- App-specific content goes here. -->
+        </ui:VisualElement>
+
+        <ui:VisualElement name="WidgetFooter"
+                          picking-mode="Ignore"
+                          class="widget__footer">
+
+            <ui:Label name="WidgetActionLabel"
+                      text="Open app"
+                      picking-mode="Ignore"
+                      class="widget__action"/>
+
+            <ui:Image name="WidgetActionArrow"
+                      picking-mode="Ignore"
+                      class="widget__arrow"/>
+        </ui:VisualElement>
+    </ui:Button>
+</ui:UXML>

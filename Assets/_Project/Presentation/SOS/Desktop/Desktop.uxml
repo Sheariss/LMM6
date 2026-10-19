@@ -11,6 +11,7 @@
                 <ui:VisualElement name="ShortcutGrid" class="desktop-shortcut-grid"/>
             </ui:VisualElement>
             <ui:VisualElement name="WindowLayer" class="desktop-layer desktop-windows"/>
+            <ui:VisualElement name="PanelLayer" class="desktop-layer"/>
         </ui:VisualElement>
         <ui:Instance template="Taskbar" name="Taskbar"/>
     </ui:VisualElement>

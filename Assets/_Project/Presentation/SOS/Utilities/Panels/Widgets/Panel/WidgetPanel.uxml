@@ -1,0 +1,122 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         editor-extension-mode="False">
+
+    <Style src="WidgetPanel.uss"/>
+
+    <ui:VisualElement name="WidgetPanelRoot" class="widget-panel">
+
+        <ui:VisualElement class="widget-panel__sidebar">
+            <ui:Button name="DiscoverButton"
+                       tooltip="Discover"
+                       class="widget-panel__navigation">
+                <ui:Image picking-mode="Ignore"
+                          class="widget-panel__navigation-icon"
+                          style="background-image: resource(&quot;Icons/Media/Language/language_32dp&quot;);"/>
+                <ui:Label text="Discover" picking-mode="Ignore"/>
+            </ui:Button>
+
+            <ui:Button name="WidgetsButton"
+                       tooltip="Widgets"
+                       class="widget-panel__navigation">
+                <ui:Image picking-mode="Ignore"
+                          class="widget-panel__navigation-icon"
+                          style="background-image: resource(&quot;Icons/Layout/Grid/grid_view_32dp&quot;);"/>
+                <ui:Label text="Widgets" picking-mode="Ignore"/>
+            </ui:Button>
+        </ui:VisualElement>
+
+        <ui:VisualElement class="widget-panel__main">
+            <ui:VisualElement class="widget-panel__header">
+                <ui:Label name="PageTitle"
+                          text="Discover"
+                          class="widget-panel__title"/>
+
+                <ui:Button name="AddWidgetsButton"
+                           tooltip="Add widgets"
+                           class="widget-panel__icon-button">
+                    <ui:Image picking-mode="Ignore"
+                              class="widget-panel__action-icon"
+                              style="background-image: resource(&quot;Icons/Math/Add/add_2_32dp&quot;);"/>
+                </ui:Button>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="DiscoverPage"
+                              class="widget-panel__page">
+                <ui:ScrollView mode="Vertical"
+                               horizontal-scroller-visibility="Hidden"
+                               class="widget-panel__scroll">
+                    <ui:VisualElement name="DiscoverFeed"
+                                      class="widget-panel__feed"/>
+                    <ui:Label text="No stories are available."
+                              class="widget-panel__empty"/>
+                </ui:ScrollView>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="WidgetsPage"
+                              class="widget-panel__page">
+                <ui:Label name="WidgetPanelStatusLabel"
+                          class="widget-panel__status"/>
+
+                <ui:ScrollView mode="VerticalAndHorizontal"
+                               class="widget-panel__scroll">
+                    <ui:Label name="WidgetPanelEmptyState"
+                              text="Choose Add widgets to pin your first widget."
+                              class="widget-panel__empty"/>
+
+                    <ui:VisualElement name="WidgetPanelGrid"
+                                      class="widget-panel__grid"/>
+                </ui:ScrollView>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="WidgetPicker"
+                          class="widget-picker">
+            <ui:VisualElement class="widget-picker__header">
+                <ui:Label text="Add widgets"
+                          class="widget-panel__title"/>
+
+                <ui:Button name="ClosePickerButton"
+                           tooltip="Back to widgets"
+                           class="widget-panel__icon-button">
+                    <ui:Image picking-mode="Ignore"
+                              class="widget-panel__action-icon"
+                              style="background-image: resource(&quot;Icons/UI/Close/close_32dp&quot;);"/>
+                </ui:Button>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="widget-picker__body">
+                <ui:ScrollView mode="Vertical"
+                               horizontal-scroller-visibility="Hidden"
+                               class="widget-picker__catalog">
+                    <ui:VisualElement name="WidgetCatalogList"/>
+
+                    <ui:Label name="WidgetCatalogEmpty"
+                              text="No widgets are available."
+                              class="widget-panel__empty"/>
+                </ui:ScrollView>
+
+                <ui:ScrollView mode="Vertical"
+                               horizontal-scroller-visibility="Hidden"
+                               class="widget-picker__detail">
+                    <ui:Label name="WidgetPreviewTitle"
+                              class="widget-panel__title"/>
+
+                    <ui:Image name="WidgetPreviewImage"
+                              class="widget-picker__preview"/>
+
+                    <ui:Label name="WidgetPreviewEmpty"
+                              text="No preview is available."
+                              class="widget-panel__empty"/>
+
+                    <ui:Label name="WidgetPreviewDescription"
+                              class="widget-picker__description"/>
+
+                    <ui:Button name="PinWidgetButton"
+                               text="Pin widget"
+                               class="widget-picker__pin"/>
+                </ui:ScrollView>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

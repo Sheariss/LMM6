@@ -221,6 +221,19 @@ MonoBehaviour:
     minimumWindowSize: {x: 800, y: 450}
     showDesktopShortcut: 0
     pinToTaskbar: 0
+  - appID: notepad
+    displayName: Notepad
+    appIcon48: {fileID: 21300000, guid: 9940c36f840ccaf408a942cc09f89847, type: 3}
+    appIcon96: {fileID: 21300000, guid: 541b3fca9150bef44af7f0244bf95146, type: 3}
+    category: 1
+    appUXML: {fileID: 9197481963319205126, guid: 5ebdd9732a73a434b837c11ab888e80e, type: 3}
+    runtimePrefab: {fileID: 5444547654116887876, guid: 81f099541763631478b311213e24abbb, type: 3}
+    isResizable: 1
+    allowMultipleInstances: 1
+    defaultWindowSize: {x: 1100, y: 750}
+    minimumWindowSize: {x: 800, y: 450}
+    showDesktopShortcut: 0
+    pinToTaskbar: 1
   - appID: clock
     displayName: Clock
     appIcon48: {fileID: 21300000, guid: 8847d7cbc40846946b214f97064896df, type: 3}
@@ -266,19 +279,6 @@ MonoBehaviour:
     appIcon96: {fileID: 21300000, guid: 72b9db06f68dedc42b302bdfedec455e, type: 3}
     category: 4
     appUXML: {fileID: 9197481963319205126, guid: 5e03b4dc619cc4c4dbb0b0282ed91905, type: 3}
-    runtimePrefab: {fileID: 0}
-    isResizable: 1
-    allowMultipleInstances: 0
-    defaultWindowSize: {x: 1100, y: 750}
-    minimumWindowSize: {x: 800, y: 450}
-    showDesktopShortcut: 0
-    pinToTaskbar: 0
-  - appID: notepad
-    displayName: Notepad
-    appIcon48: {fileID: 21300000, guid: 9940c36f840ccaf408a942cc09f89847, type: 3}
-    appIcon96: {fileID: 21300000, guid: 541b3fca9150bef44af7f0244bf95146, type: 3}
-    category: 1
-    appUXML: {fileID: 9197481963319205126, guid: 5ebdd9732a73a434b837c11ab888e80e, type: 3}
     runtimePrefab: {fileID: 0}
     isResizable: 1
     allowMultipleInstances: 0

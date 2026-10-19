@@ -1,0 +1,53 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         editor-extension-mode="False">
+
+    <Style src="NetworkConnection.uss" />
+
+    <ui:VisualElement name="WiFiPanel"
+                      class="wifi-panel">
+
+        <ui:VisualElement class="wifi-header">
+
+            <ui:Label text="Wi-Fi"
+                      class="wifi-title" />
+
+            <ui:Toggle name="WiFiToggle"
+                       value="true"
+                       tooltip="Turn Wi-Fi on or off"
+                       class="wifi-switch" />
+
+        </ui:VisualElement>
+
+        <ui:ScrollView name="NetworkList"
+                       mode="Vertical"
+                       horizontal-scroller-visibility="Hidden"
+                       vertical-scroller-visibility="Auto"
+                       class="wifi-list">
+
+            <ui:Label name="NetworkMessage"
+                      class="wifi-message" />
+
+            <ui:VisualElement name="AvailableNetworks"
+                              class="wifi-networks" />
+
+        </ui:ScrollView>
+
+        <ui:VisualElement class="wifi-footer">
+
+            <ui:Button name="NetworkSettingsButton"
+                       text="More Wi-Fi settings"
+                       class="wifi-button wifi-settings-link" />
+
+            <ui:Button name="RefreshNetworksButton"
+                       tooltip="Refresh networks"
+                       class="wifi-button wifi-refresh-button">
+
+                <ui:Image picking-mode="Ignore"
+                          class="wifi-refresh-icon" />
+
+            </ui:Button>
+
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

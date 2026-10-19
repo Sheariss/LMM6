@@ -1,0 +1,566 @@
+/* Panel */
+
+.wifi-panel {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+    width: 360px;
+    max-width: 100%;
+
+    height: 400px;
+    max-height: 100%;
+    min-height: 0;
+
+    flex-direction: column;
+    overflow: hidden;
+
+    background-color: rgb(39, 39, 39);
+    color: rgb(245, 245, 245);
+
+    border-width: 1px;
+    border-color: rgb(65, 65, 65);
+    border-radius: 8px;
+
+    font-size: 13px;
+    -unity-font-style: normal;
+
+    --wifi-accent: rgb(207, 198, 151);
+    --wifi-accent-hover: rgb(222, 214, 172);
+}
+
+.wifi-panel Label {
+    margin: 0;
+    padding: 0;
+}
+
+/* Shared buttons */
+
+.wifi-panel .wifi-button {
+    margin: 0;
+    padding: 0;
+
+    background-image: none;
+    background-color: transparent;
+
+    border-width: 1px;
+    border-color: transparent;
+    border-radius: 4px;
+
+    color: rgb(245, 245, 245);
+    font-size: 13px;
+    -unity-font-style: normal;
+    -unity-text-align: middle-left;
+}
+
+.wifi-panel .wifi-button:focus {
+    border-color: var(--wifi-accent);
+}
+
+/* Header */
+
+.wifi-header {
+    min-height: 48px;
+    flex-shrink: 0;
+
+    flex-direction: row;
+    align-items: center;
+
+    padding: 10px 16px;
+
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(255, 255, 255, 0.04);
+}
+
+.wifi-title {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+
+    font-size: 14px;
+    white-space: normal;
+}
+
+/*
+ * Native Toggle input remains interactive.
+ * Its native checkmark is replaced by our own positioned thumb.
+ */
+
+.wifi-switch {
+    width: 40px;
+    min-width: 40px;
+    height: 22px;
+
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    margin: 0;
+    padding: 0;
+}
+
+.wifi-switch > .unity-toggle__label {
+    display: none;
+}
+
+.wifi-switch .unity-toggle__input {
+    position: relative;
+
+    width: 40px;
+    min-width: 40px;
+    height: 22px;
+    min-height: 22px;
+
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    margin: 0;
+    padding: 0;
+
+    background-image: none;
+    background-color: rgb(39, 39, 39);
+
+    border-width: 1px;
+    border-color: rgb(180, 180, 180);
+    border-radius: 11px;
+}
+
+.wifi-switch .unity-toggle__checkmark,
+.wifi-switch .unity-toggle__text {
+    display: none;
+}
+
+.wifi-switch-thumb {
+    position: absolute;
+
+    left: 3px;
+    right: auto;
+    top: 3px;
+
+    width: 14px;
+    height: 14px;
+
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    margin: 0;
+    padding: 0;
+
+    background-color: rgb(230, 230, 230);
+
+    border-width: 0;
+    border-radius: 7px;
+}
+
+.wifi-switch.wifi-switch--on .unity-toggle__input {
+    background-color: var(--wifi-accent);
+    border-color: var(--wifi-accent);
+}
+
+.wifi-switch.wifi-switch--on .wifi-switch-thumb {
+    left: auto;
+    right: 3px;
+
+    background-color: rgb(20, 20, 20);
+}
+
+.wifi-switch.wifi-switch--on:hover .unity-toggle__input {
+    background-color: var(--wifi-accent-hover);
+    border-color: var(--wifi-accent-hover);
+}
+
+.wifi-switch:focus .unity-toggle__input {
+    border-color: rgb(255, 255, 255);
+}
+
+/* Scroll area */
+
+.wifi-list {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    min-height: 0;
+
+    margin: 0;
+    padding: 0;
+}
+
+.wifi-list .unity-scroll-view__content-container {
+    padding: 0 4px 4px;
+}
+
+.wifi-message {
+    flex-shrink: 0;
+
+    padding: 14px 12px;
+
+    color: rgb(205, 205, 205);
+    white-space: normal;
+}
+
+.wifi-networks {
+    flex-shrink: 0;
+    min-width: 0;
+}
+
+/* Network card */
+
+.wifi-network {
+    position: relative;
+
+    flex-shrink: 0;
+    min-width: 0;
+
+    margin-bottom: 2px;
+
+    background-color: transparent;
+    border-radius: 4px;
+}
+
+.wifi-network:hover {
+    background-color: rgba(255, 255, 255, 0.035);
+}
+
+.wifi-network.wifi-network--selected {
+    background-color: rgb(58, 58, 56);
+}
+
+/* Narrow selection marker inside the selected card */
+
+.wifi-network-selection-indicator {
+    display: none;
+
+    position: absolute;
+    left: 0;
+    top: 18px;
+    bottom: 18px;
+
+    width: 3px;
+
+    background-color: var(--wifi-accent);
+    border-radius: 2px;
+}
+
+.wifi-network--selected .wifi-network-selection-indicator {
+    display: flex;
+}
+
+/* Clickable heading */
+
+.wifi-panel .wifi-network-header {
+    min-height: 60px;
+    flex-shrink: 0;
+
+    flex-direction: row;
+    align-items: center;
+
+    padding: 10px 12px;
+
+    background-color: transparent;
+    border-radius: 4px;
+}
+
+.wifi-panel .wifi-network-header:hover {
+    background-color: transparent;
+}
+
+.wifi-panel .wifi-network--selected .wifi-network-header {
+    min-height: 52px;
+    align-items: flex-start;
+
+    padding-top: 10px;
+    padding-bottom: 4px;
+}
+
+/* Actual Image elements, with an explicit square size */
+
+.wifi-network-icon {
+    width: 28px;
+    height: 28px;
+
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    margin-right: 12px;
+}
+
+.wifi-network-copy {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+
+    flex-direction: column;
+    justify-content: center;
+}
+
+.wifi-network-name {
+    color: rgb(245, 245, 245);
+    font-size: 13px;
+
+    white-space: normal;
+}
+
+.wifi-network-status {
+    display: none;
+
+    margin-top: 3px;
+
+    color: rgb(215, 215, 215);
+    font-size: 13px;
+
+    white-space: normal;
+}
+
+/* Expanded controls */
+
+.wifi-network-expansion {
+    display: none;
+
+    flex-shrink: 0;
+    min-width: 0;
+
+    padding: 6px 12px 8px 52px;
+}
+
+.wifi-auto {
+    flex-shrink: 0;
+    min-height: 24px;
+
+    margin: 0;
+    padding: 0;
+
+    color: rgb(245, 245, 245);
+    font-size: 13px;
+}
+
+.wifi-auto > .unity-toggle__label {
+    display: none;
+}
+
+.wifi-auto .unity-toggle__input {
+    flex-grow: 1;
+    flex-shrink: 1;
+
+    flex-direction: row;
+    align-items: center;
+
+    margin: 0;
+    padding: 0;
+
+    background-color: transparent;
+    border-width: 0;
+}
+
+/*
+ * Preserve Unity's native image-based checkbox checkmark.
+ * No text character is used as an icon.
+ */
+
+.wifi-auto .unity-toggle__checkmark {
+    width: 20px;
+    height: 20px;
+
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    margin: 0;
+    padding: 0;
+
+    border-width: 1px;
+    border-color: rgb(190, 190, 190);
+    border-radius: 4px;
+
+    background-color: transparent;
+
+    -unity-background-image-tint-color: rgb(20, 20, 20);
+}
+
+.wifi-auto .unity-toggle__input:checked .unity-toggle__checkmark {
+    background-color: var(--wifi-accent);
+    border-color: var(--wifi-accent);
+}
+
+.wifi-auto .unity-toggle__text {
+    flex-shrink: 1;
+    min-width: 0;
+
+    margin-left: 8px;
+    padding: 0;
+
+    color: rgb(245, 245, 245);
+    white-space: normal;
+}
+
+.wifi-auto:focus .unity-toggle__checkmark {
+    border-color: rgb(255, 255, 255);
+}
+
+.wifi-network-action-row {
+    flex-shrink: 0;
+
+    flex-direction: row;
+    justify-content: flex-end;
+
+    margin-top: 12px;
+}
+
+.wifi-panel .wifi-connect-button {
+    width: 148px;
+    min-height: 30px;
+
+    padding: 5px 12px;
+
+    background-color: var(--wifi-accent);
+    border-color: transparent;
+    border-radius: 4px;
+
+    color: rgb(15, 15, 15);
+    -unity-text-align: middle-center;
+}
+
+.wifi-panel .wifi-connect-button:hover {
+    background-color: var(--wifi-accent-hover);
+}
+
+.wifi-panel .wifi-connect-button:active {
+    background-color: rgb(185, 177, 133);
+}
+
+.wifi-panel .wifi-connect-button:focus {
+    border-color: rgb(255, 255, 255);
+}
+
+.wifi-panel .wifi-connect-button:disabled {
+    background-color: rgb(78, 78, 78);
+    color: rgb(175, 175, 175);
+}
+
+/* Footer */
+
+.wifi-footer {
+    min-height: 48px;
+    flex-shrink: 0;
+
+    flex-direction: row;
+    align-items: center;
+
+    padding: 6px 12px;
+
+    background-color: rgb(35, 35, 35);
+
+    border-top-width: 1px;
+    border-top-color: rgba(255, 255, 255, 0.04);
+}
+
+.wifi-panel .wifi-settings-link {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    min-height: 32px;
+
+    padding: 4px;
+
+    color: rgb(220, 220, 220);
+    font-size: 12px;
+    white-space: normal;
+}
+
+.wifi-panel .wifi-settings-link:hover {
+    color: rgb(255, 255, 255);
+}
+
+.wifi-panel .wifi-settings-link:disabled {
+    color: rgb(135, 135, 135);
+}
+
+.wifi-panel .wifi-refresh-button {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-left: 8px;
+}
+
+.wifi-panel .wifi-refresh-button:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.wifi-refresh-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+
+    background-image:
+        resource("Icons/System/Power/Restart/refresh_32dp_FFFFFF_FILL0_wght400_GRAD0_opsz40");
+
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    -unity-background-image-tint-color: rgb(245, 245, 245);
+}
+
+/* Rounded, transparent-track scrollbar convention */
+
+.wifi-list .unity-scroll-view__vertical-scroller {
+    width: 10px;
+    min-width: 10px;
+
+    margin: 3px;
+    padding: 0;
+
+    background-image: none;
+    background-color: transparent;
+
+    border-width: 0;
+}
+
+.wifi-list .unity-scroller__low-button,
+.wifi-list .unity-scroller__high-button {
+    display: none;
+}
+
+.wifi-list .unity-scroller__slider {
+    flex-grow: 1;
+
+    margin: 0;
+    padding: 0;
+
+    background-image: none;
+    background-color: transparent;
+
+    border-width: 0;
+}
+
+.wifi-list .unity-base-slider__drag-container,
+.wifi-list .unity-base-slider__tracker,
+.wifi-list .unity-base-slider__dragger-border {
+    background-image: none;
+    background-color: transparent;
+
+    border-width: 0;
+}
+
+.wifi-list .unity-scroll-view__vertical-scroller
+.unity-base-slider__dragger {
+    width: 6px;
+    min-width: 6px;
+
+    background-image: none;
+    background-color: rgba(255, 255, 255, 0.35);
+
+    border-width: 0;
+    border-radius: 3px;
+}
+
+.wifi-list .unity-scroll-view__vertical-scroller
+.unity-base-slider__dragger:hover {
+    background-color: rgba(255, 255, 255, 0.55);
+}
+
+.wifi-list .unity-scroll-view__vertical-scroller
+.unity-base-slider__dragger:active {
+    background-color: rgba(255, 255, 255, 0.75);
+}

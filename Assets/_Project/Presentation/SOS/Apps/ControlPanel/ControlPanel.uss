@@ -157,7 +157,7 @@
     background-color: var(--cp-surface);
 }
 
-.cp-search:focus-within {
+.cp-search:focus {
     border-color: var(--cp-accent);
 }
 
@@ -425,7 +425,7 @@
     width: 20px;
     height: 20px;
     flex-shrink: 0;
-    -unity-background-image-scale-mode: scale-to-fit;
+    -unity-background-scale-mode: scale-to-fit;
     -unity-background-image-tint-color: rgb(196, 199, 205);
 }
 

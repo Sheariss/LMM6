@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static Atlas.AuthoredData.Users.UserLibrarySO;
 using Atlas.SOS.FileSystem;
+using Atlas.Presentation.SOS.Panels;
 
 namespace Atlas.Presentation.SOS.Desktop
 {
@@ -45,6 +46,9 @@ namespace Atlas.Presentation.SOS.Desktop
         [SerializeField] private VisualTreeAsset startMenuTemplate;
         [SerializeField] private FileSystemLibrary fileSystemLibrary;
         [SerializeField] private FileAssociationCatalog fileAssociationCatalog;
+
+        [Header("Panels")]
+        [SerializeField] private PanelController panelController;
 
         private DesktopBinder binder;
         private DesktopView view;
@@ -109,7 +113,9 @@ namespace Atlas.Presentation.SOS.Desktop
                 fileSystemLibrary == null ||
                 fileAssociationCatalog == null ||
                 appController == null ||
-                !appController.isActiveAndEnabled)
+                !appController.isActiveAndEnabled ||
+                panelController == null ||
+                !panelController.isActiveAndEnabled)
             {
                 error =
                     "The app catalog, UI templates, or active " +
@@ -142,7 +148,9 @@ namespace Atlas.Presentation.SOS.Desktop
                     ResolveApps(user.AvailableAppIDs, allowedIDs));
 
                 List<AppDefinition> shortcutApps =
-                    ResolveApps(user.DesktopShortcutAppIDs, allowedIDs);
+                    ResolveApps(
+                        user.DesktopShortcutAppIDs,
+                        allowedIDs);
 
                 pinnedApps.AddRange(
                     ResolveApps(user.PinnedAppIDs, allowedIDs));
@@ -166,22 +174,43 @@ namespace Atlas.Presentation.SOS.Desktop
 
                 shortcutController.Build(shortcutApps);
 
-                var taskbarBinder = new TaskbarBinder(binder.Taskbar);
+                var taskbarBinder = new TaskbarBinder(
+                    binder.Taskbar);
 
                 if (!taskbarBinder.IsValid)
                 {
                     throw new InvalidOperationException(
-                        "The taskbar visual tree is missing required elements.");
+                        "The taskbar visual tree is missing " +
+                        "required elements.");
                 }
 
-                pinnedButtonController = new TaskbarPinnedButtonController(
-                    pinnedButtonTemplate,
-                    taskbarBinder.AppGroup,
-                    RequestTaskbarActivation);
+                pinnedButtonController =
+                    new TaskbarPinnedButtonController(
+                        pinnedButtonTemplate,
+                        taskbarBinder.AppGroup,
+                        RequestTaskbarActivation);
 
                 // Cache all available app buttons once.
                 // Only pinned buttons are attached initially.
-                pinnedButtonController.Build(availableApps, pinnedApps);
+                pinnedButtonController.Build(
+                    availableApps,
+                    pinnedApps);
+
+                panelController.Initialize(
+                    binder.DocumentRoot,
+                    binder.PanelLayer,
+                    () => IsPreparedForCurrentUser,
+                    appID => IsPreparedForCurrentUser &&
+                        ActiveUser.CanAccessApp(appID),
+                    RequestAppLaunch);
+
+                panelController.BindButton(
+                    DesktopPanelID.Widgets,
+                    taskbarBinder.WidgetsButton);
+
+                panelController.BindButton(
+                    DesktopPanelID.Network,
+                    taskbarBinder.NetworkButton);
 
                 startMenuHost = startMenuTemplate.CloneTree();
                 startMenuHost.name = "StartMenuHost";
@@ -192,12 +221,14 @@ namespace Atlas.Presentation.SOS.Desktop
                 startMenuHost.style.right = 0;
                 startMenuHost.style.top = 0;
                 startMenuHost.style.bottom = 0;
+
                 startMenuHost.style.alignItems = Align.Center;
 
                 binder.Workspace.Add(startMenuHost);
                 startMenuHost.BringToFront();
 
-                var startMenuBinder = new StartMenuBinder(startMenuHost);
+                var startMenuBinder = new StartMenuBinder(
+                    startMenuHost);
 
                 var startMenuEngine = new StartMenuEngine(
                     user,
@@ -282,6 +313,7 @@ namespace Atlas.Presentation.SOS.Desktop
 
         public void Hide()
         {
+            panelController?.Close();
             startMenuController?.Close();
             view?.Hide();
             HideCurrentDocumentRoot();
@@ -289,6 +321,8 @@ namespace Atlas.Presentation.SOS.Desktop
 
         public void Clear()
         {
+            panelController?.Shutdown();
+
             startMenuController?.Dispose();
             startMenuController = null;
 
@@ -316,7 +350,7 @@ namespace Atlas.Presentation.SOS.Desktop
 
             view?.ClearWallpaper();
 
-            // Release both attached and detached cached taskbar buttons.
+            // Release attached and detached cached taskbar buttons.
             pinnedButtonController?.Dispose();
             pinnedButtonController = null;
 
@@ -352,8 +386,11 @@ namespace Atlas.Presentation.SOS.Desktop
                 return false;
             }
 
-            VisualElement documentRoot = desktopDocument.rootVisualElement;
-            VisualElement desktopRoot = documentRoot?.Q<VisualElement>("DesktopRoot");
+            VisualElement documentRoot =
+                desktopDocument.rootVisualElement;
+
+            VisualElement desktopRoot =
+                documentRoot?.Q<VisualElement>("DesktopRoot");
 
             if (desktopRoot == null)
             {
@@ -361,7 +398,7 @@ namespace Atlas.Presentation.SOS.Desktop
                 return false;
             }
 
-            // Keep the desktop hidden while binding and preparing its contents.
+            // Keep the desktop hidden while preparing its contents.
             desktopRoot.SetEnabled(false);
             desktopRoot.style.visibility = Visibility.Hidden;
 
@@ -369,14 +406,16 @@ namespace Atlas.Presentation.SOS.Desktop
 
             if (!binder.IsValid)
             {
-                error = "The desktop visual tree is missing required elements.";
+                error =
+                    "The desktop visual tree is missing required elements.";
+
                 return false;
             }
 
             view = new DesktopView(binder);
             view.Hide();
 
-            // These background layers should not intercept shortcut input.
+            // Background layers should not intercept shortcut input.
             binder.Wallpaper.pickingMode = PickingMode.Ignore;
             binder.WindowLayer.pickingMode = PickingMode.Ignore;
 
@@ -419,7 +458,9 @@ namespace Atlas.Presentation.SOS.Desktop
                     authentication.UserLibrary.GetUser(user.UserId),
                     user))
             {
-                error = "The current user is missing from the user library.";
+                error =
+                    "The current user is missing from the user library.";
+
                 return false;
             }
 
@@ -432,7 +473,9 @@ namespace Atlas.Presentation.SOS.Desktop
             HashSet<string> allowedIDs)
         {
             var result = new List<AppDefinition>();
-            var addedIDs = new HashSet<string>(StringComparer.Ordinal);
+
+            var addedIDs = new HashSet<string>(
+                StringComparer.Ordinal);
 
             foreach (string appID in requestedIDs)
             {
@@ -452,7 +495,9 @@ namespace Atlas.Presentation.SOS.Desktop
                     continue;
                 }
 
-                if (!appCatalog.TryGetApp(appID, out AppDefinition app))
+                if (!appCatalog.TryGetApp(
+                        appID,
+                        out AppDefinition app))
                 {
                     Debug.LogWarning(
                         $"[DesktopController] App '{appID}' " +
@@ -472,8 +517,12 @@ namespace Atlas.Presentation.SOS.Desktop
             AppDefinition app,
             TemplateContainer root)
         {
-            var windowObject = new GameObject($"{app.AppID}Window");
-            windowObject.transform.SetParent(appController.transform, false);
+            var windowObject = new GameObject(
+                $"{app.AppID}Window");
+
+            windowObject.transform.SetParent(
+                appController.transform,
+                false);
 
             var window = windowObject.AddComponent<WindowController>();
 
@@ -537,8 +586,11 @@ namespace Atlas.Presentation.SOS.Desktop
             int instanceCount,
             bool isFocused)
         {
-            // Instance count includes minimized and maximized windows.
-            SetTaskbarAppState(appID, instanceCount > 0, isFocused);
+            // Count includes minimized and maximized windows.
+            SetTaskbarAppState(
+                appID,
+                instanceCount > 0,
+                isFocused);
         }
 
         public void SetTaskbarAppState(
@@ -561,7 +613,10 @@ namespace Atlas.Presentation.SOS.Desktop
             bool isOpen,
             bool isFocused)
         {
-            SetTaskbarAppState(appID, isOpen, isFocused);
+            SetTaskbarAppState(
+                appID,
+                isOpen,
+                isFocused);
         }
     }
 }

@@ -701,7 +701,6 @@ public sealed class WhiteboardController :
 
         Refresh();
         evt.StopPropagation();
-        evt.PreventDefault();
     }
 
     private void ZoomBy(float factor)
@@ -804,7 +803,6 @@ public sealed class WhiteboardController :
         }
 
         evt.StopPropagation();
-        evt.PreventDefault();
     }
 
     private void OnKeyUp(KeyUpEvent evt)
