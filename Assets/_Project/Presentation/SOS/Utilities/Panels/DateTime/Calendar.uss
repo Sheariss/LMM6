@@ -1,4 +1,4 @@
-.calendar-widget {
+.date-time-panel {
     position: absolute;
     right: 0;
     bottom: 0;
@@ -22,7 +22,7 @@
     font-size: 14px;
 }
 
-.calendar-widget Button {
+.date-time-panel Button {
     margin: 0;
     padding: 0;
 
@@ -40,11 +40,11 @@
     -unity-text-align: middle-center;
 }
 
-.calendar-widget Button:focus {
+.date-time-panel Button:focus {
     border-color: rgb(180, 180, 180);
 }
 
-.calendar-widget Button:disabled {
+.date-time-panel Button:disabled {
     opacity: 0.4;
 }
 
@@ -86,7 +86,7 @@
     white-space: normal;
 }
 
-.calendar-widget .calendar-icon-button {
+.date-time-panel .calendar-icon-button {
     width: 32px;
     height: 32px;
     flex-shrink: 0;
@@ -97,11 +97,11 @@
     border-radius: 4px;
 }
 
-.calendar-widget .calendar-icon-button:hover {
+.date-time-panel .calendar-icon-button:hover {
     background-color: rgb(55, 55, 55);
 }
 
-.calendar-widget .calendar-icon-button:active {
+.date-time-panel .calendar-icon-button:active {
     background-color: rgb(46, 46, 46);
 }
 
@@ -207,7 +207,7 @@
     justify-content: center;
 }
 
-.calendar-widget .calendar-day {
+.date-time-panel .calendar-day {
     width: 40px;
     max-width: 100%;
     height: 40px;
@@ -217,37 +217,37 @@
     font-size: 13px;
 }
 
-.calendar-widget .calendar-day:hover {
+.date-time-panel .calendar-day:hover {
     background-color: rgb(58, 58, 58);
 }
 
-.calendar-widget .calendar-day:active {
+.date-time-panel .calendar-day:active {
     background-color: rgb(70, 70, 70);
 }
 
-.calendar-widget .calendar-day-outside {
+.date-time-panel .calendar-day-outside {
     color: rgb(145, 145, 145);
 }
 
-.calendar-widget .calendar-day-today {
+.date-time-panel .calendar-day-today {
     background-color: rgb(96, 205, 255);
     color: rgb(0, 42, 60);
 }
 
-.calendar-widget .calendar-day-today:hover {
+.date-time-panel .calendar-day-today:hover {
     background-color: rgb(123, 215, 255);
 }
 
-.calendar-widget .calendar-day-today:active {
+.date-time-panel .calendar-day-today:active {
     background-color: rgb(80, 180, 225);
 }
 
-.calendar-widget .calendar-day-selected {
+.date-time-panel .calendar-day-selected {
     border-width: 2px;
     border-color: rgb(96, 205, 255);
 }
 
-.calendar-widget .calendar-day-selected:focus {
+.date-time-panel .calendar-day-selected:focus {
     border-color: rgb(245, 245, 245);
 }
 
@@ -273,7 +273,7 @@
     align-items: center;
 }
 
-.calendar-widget .calendar-duration-button {
+.date-time-panel .calendar-duration-button {
     width: 28px;
     height: 28px;
 
@@ -291,7 +291,7 @@
     -unity-text-align: middle-center;
 }
 
-.calendar-widget .calendar-focus-button {
+.date-time-panel .calendar-focus-button {
     min-width: 94px;
     height: 32px;
 
@@ -312,11 +312,11 @@
     font-size: 13px;
 }
 
-.calendar-widget .calendar-focus-button:hover {
+.date-time-panel .calendar-focus-button:hover {
     background-color: rgb(62, 62, 62);
 }
 
-.calendar-widget .calendar-focus-button:active {
+.date-time-panel .calendar-focus-button:active {
     background-color: rgb(42, 42, 42);
 }
 

@@ -1,0 +1,19 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         editor-extension-mode="False">
+
+    <Style src="../../../../Tokens/Global-Colors.uss"/>
+    <Style src="../../../../Tokens/Global-Tokens.uss"/>
+    <Style src="TaskbarPreview.uss"/>
+
+    <ui:VisualElement name="TaskbarPreviewRoot"
+                      class="taskbar-previews">
+
+        <ui:ScrollView mode="Horizontal"
+                       vertical-scroller-visibility="Hidden"
+                       class="taskbar-previews__scroll">
+
+            <ui:VisualElement name="TaskbarPreviewCards"
+                              class="taskbar-previews__cards"/>
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>

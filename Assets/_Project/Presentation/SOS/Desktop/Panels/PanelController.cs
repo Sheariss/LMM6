@@ -37,6 +37,10 @@ namespace Atlas.Presentation.SOS.Panels
 
         private Instance active;
 
+        public bool HasOpenPanel => active != null;
+
+        public event Action PanelOpening;
+
         public void Initialize(
             VisualElement documentRoot,
             VisualElement panelLayer,
@@ -47,8 +51,10 @@ namespace Atlas.Presentation.SOS.Panels
             Shutdown();
 
             if (!isActiveAndEnabled)
+            {
                 throw new InvalidOperationException(
                     "PanelController must be active.");
+            }
 
             this.documentRoot = documentRoot ??
                 throw new ArgumentNullException(nameof(documentRoot));
@@ -90,14 +96,12 @@ namespace Atlas.Presentation.SOS.Panels
                         });
                 }
 
-                // Empty parts of the layer allow clicks through to apps.
                 panelLayer.pickingMode = PickingMode.Ignore;
 
                 documentRoot.RegisterCallback<PointerDownEvent>(
                     OnPointerDown,
                     TrickleDown.TrickleDown);
 
-                // Bubble phase lets a panel handle its own Escape first.
                 documentRoot.RegisterCallback<KeyDownEvent>(OnKeyDown);
             }
             catch
@@ -149,6 +153,7 @@ namespace Atlas.Presentation.SOS.Panels
                 EnsureRuntime(instance);
 
                 Close();
+                PanelOpening?.Invoke();
 
                 active = instance;
                 active.Runtime.Show();
@@ -171,7 +176,6 @@ namespace Atlas.Presentation.SOS.Panels
             if (previous == null)
                 return;
 
-            // Clear active first: Hide may raise CloseRequested.
             try
             {
                 if (previous.Runtime != null)
@@ -240,7 +244,6 @@ namespace Atlas.Presentation.SOS.Panels
 
             Button button = active.Button;
 
-            // The button's clicked handler performs its own toggle.
             if (button != null &&
                 (target == button || button.Contains(target)))
             {

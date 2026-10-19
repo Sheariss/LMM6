@@ -25,7 +25,6 @@ namespace Atlas.Presentation.SOS.WebBrowser
 
         protected override void OnShutdown()
         {
-            // The base class unregisters UI callbacks before this runs.
             binder = null;
             view = null;
             viewBuilder = null;
@@ -162,6 +161,11 @@ namespace Atlas.Presentation.SOS.WebBrowser
         {
             WebBrowserViewState state = viewBuilder.Build(engine);
             view.Render(state);
+
+            NotifyPreviewChanged(
+                string.IsNullOrWhiteSpace(engine.CurrentAddress)
+                    ? "Web Browser"
+                    : engine.CurrentAddress);
         }
     }
 }

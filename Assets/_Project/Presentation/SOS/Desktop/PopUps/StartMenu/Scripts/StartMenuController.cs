@@ -27,6 +27,8 @@ namespace Atlas.Presentation.SOS.Desktop
         private Vector2 homeScrollPosition;
         private bool disposed;
 
+        public bool IsOpen => !disposed && view.IsOpen;
+
         public StartMenuController(
             StartMenuBinder binder,
             StartMenuEngine engine,
@@ -274,16 +276,15 @@ namespace Atlas.Presentation.SOS.Desktop
             if (document == null)
             {
                 Render();
-                view.ShowError(
-                    "This document is no longer available.");
+                view.ShowError("This document is no longer available.");
                 return;
             }
 
             try
             {
                 if (!fileOpenRouter.TryOpen(
-                        document.Request,
-                        out string error))
+                    document.Request,
+                    out string error))
                 {
                     view.ShowError(
                         string.IsNullOrWhiteSpace(error)
@@ -302,8 +303,7 @@ namespace Atlas.Presentation.SOS.Desktop
             }
         }
 
-        private void OnPointerDown(
-            PointerDownEvent pointerEvent)
+        private void OnPointerDown(PointerDownEvent pointerEvent)
         {
             categoryPointerTarget = null;
 
@@ -316,8 +316,8 @@ namespace Atlas.Presentation.SOS.Desktop
             var target = pointerEvent.target as VisualElement;
 
             if (StartMenuView.Contains(
-                    binder.CategoryGrid,
-                    target))
+                binder.CategoryGrid,
+                target))
             {
                 categoryPointerTarget = target;
                 categoryPointerScrollOffset =

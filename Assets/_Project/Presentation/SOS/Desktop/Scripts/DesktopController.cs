@@ -1,15 +1,15 @@
+using System;
+using System.Collections.Generic;
 using Atlas.Presentation.SOS.Apps;
+using Atlas.Presentation.SOS.Panels;
 using Atlas.Presentation.SOS.Taskbar;
 using Atlas.Presentation.SOS.Windows;
 using Atlas.SOS.Apps;
 using Atlas.SOS.Authentication;
-using System;
-using System.Collections.Generic;
+using Atlas.SOS.FileSystem;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static Atlas.AuthoredData.Users.UserLibrarySO;
-using Atlas.SOS.FileSystem;
-using Atlas.Presentation.SOS.Panels;
 
 namespace Atlas.Presentation.SOS.Desktop
 {
@@ -26,21 +26,25 @@ namespace Atlas.Presentation.SOS.Desktop
         [SerializeField] private VisualTreeAsset shortcutTemplate;
 
         [SerializeField]
-        private Vector2 shortcutSize =
-            new Vector2(128f, 128f);
+        private Vector2 shortcutSize = new(128f, 128f);
 
         [SerializeField]
-        private Vector2 shortcutGap =
-            new Vector2(16f, 16f);
+        private Vector2 shortcutGap = new(16f, 16f);
 
         [SerializeField]
-        private Vector2 shortcutIconSize = new Vector2(48f, 48f);
+        private Vector2 shortcutIconSize = new(48f, 48f);
 
         [SerializeField, Min(1f)]
         private float shortcutLabelFontSize = 14f;
 
         [Header("Taskbar")]
         [SerializeField] private VisualTreeAsset pinnedButtonTemplate;
+
+        [Header("Taskbar Previews")]
+        [SerializeField] private VisualTreeAsset taskbarPreviewTemplate;
+
+        [SerializeField]
+        private WindowPreviewCaptureService previewCaptureService;
 
         [Header("Start Menu")]
         [SerializeField] private VisualTreeAsset startMenuTemplate;
@@ -64,14 +68,16 @@ namespace Atlas.Presentation.SOS.Desktop
         private TemplateContainer startMenuHost;
         private StartMenuController startMenuController;
 
+        private VisualElement previewLayer;
+        private TaskbarPreviewController taskbarPreviewController;
+
+        private bool desktopVisible;
+
         public UserInfo ActiveUser { get; private set; }
         public bool IsPrepared { get; private set; }
 
-        public IReadOnlyList<AppDefinition> AvailableApps =>
-            availableApps;
-
-        public IReadOnlyList<AppDefinition> PinnedApps =>
-            pinnedApps;
+        public IReadOnlyList<AppDefinition> AvailableApps => availableApps;
+        public IReadOnlyList<AppDefinition> PinnedApps => pinnedApps;
 
         public bool IsPreparedForCurrentUser =>
             IsPrepared &&
@@ -80,7 +86,6 @@ namespace Atlas.Presentation.SOS.Desktop
 
         private void OnEnable()
         {
-            // Bind and hide the shell. Do not populate it yet.
             if (!TryBindDocument(out string error))
                 Debug.LogError($"[DesktopController] {error}", this);
         }
@@ -109,17 +114,20 @@ namespace Atlas.Presentation.SOS.Desktop
             if (appCatalog == null ||
                 shortcutTemplate == null ||
                 pinnedButtonTemplate == null ||
+                taskbarPreviewTemplate == null ||
                 startMenuTemplate == null ||
                 fileSystemLibrary == null ||
                 fileAssociationCatalog == null ||
                 appController == null ||
                 !appController.isActiveAndEnabled ||
                 panelController == null ||
-                !panelController.isActiveAndEnabled)
+                !panelController.isActiveAndEnabled ||
+                previewCaptureService == null ||
+                !previewCaptureService.isActiveAndEnabled)
             {
                 error =
-                    "The app catalog, UI templates, or active " +
-                    "AppController is missing.";
+                    "A required catalog, UI template, app controller, " +
+                    "panel controller, or preview capture service is missing.";
 
                 return false;
             }
@@ -147,10 +155,9 @@ namespace Atlas.Presentation.SOS.Desktop
                 availableApps.AddRange(
                     ResolveApps(user.AvailableAppIDs, allowedIDs));
 
-                List<AppDefinition> shortcutApps =
-                    ResolveApps(
-                        user.DesktopShortcutAppIDs,
-                        allowedIDs);
+                List<AppDefinition> shortcutApps = ResolveApps(
+                    user.DesktopShortcutAppIDs,
+                    allowedIDs);
 
                 pinnedApps.AddRange(
                     ResolveApps(user.PinnedAppIDs, allowedIDs));
@@ -174,24 +181,19 @@ namespace Atlas.Presentation.SOS.Desktop
 
                 shortcutController.Build(shortcutApps);
 
-                var taskbarBinder = new TaskbarBinder(
-                    binder.Taskbar);
+                var taskbarBinder = new TaskbarBinder(binder.Taskbar);
 
                 if (!taskbarBinder.IsValid)
                 {
                     throw new InvalidOperationException(
-                        "The taskbar visual tree is missing " +
-                        "required elements.");
+                        "The taskbar visual tree is missing required elements.");
                 }
 
-                pinnedButtonController =
-                    new TaskbarPinnedButtonController(
-                        pinnedButtonTemplate,
-                        taskbarBinder.AppGroup,
-                        RequestTaskbarActivation);
+                pinnedButtonController = new TaskbarPinnedButtonController(
+                    pinnedButtonTemplate,
+                    taskbarBinder.AppGroup,
+                    RequestTaskbarActivation);
 
-                // Cache all available app buttons once.
-                // Only pinned buttons are attached initially.
                 pinnedButtonController.Build(
                     availableApps,
                     pinnedApps);
@@ -212,6 +214,14 @@ namespace Atlas.Presentation.SOS.Desktop
                     DesktopPanelID.Network,
                     taskbarBinder.NetworkButton);
 
+                panelController.BindButton(
+                    DesktopPanelID.Audio,
+                    taskbarBinder.VolumeButton);
+
+                panelController.BindButton(
+                    DesktopPanelID.DateTime,
+                    taskbarBinder.DateTimeButton);
+
                 startMenuHost = startMenuTemplate.CloneTree();
                 startMenuHost.name = "StartMenuHost";
                 startMenuHost.pickingMode = PickingMode.Ignore;
@@ -221,14 +231,12 @@ namespace Atlas.Presentation.SOS.Desktop
                 startMenuHost.style.right = 0;
                 startMenuHost.style.top = 0;
                 startMenuHost.style.bottom = 0;
-
                 startMenuHost.style.alignItems = Align.Center;
 
                 binder.Workspace.Add(startMenuHost);
                 startMenuHost.BringToFront();
 
-                var startMenuBinder = new StartMenuBinder(
-                    startMenuHost);
+                var startMenuBinder = new StartMenuBinder(startMenuHost);
 
                 var startMenuEngine = new StartMenuEngine(
                     user,
@@ -253,6 +261,53 @@ namespace Atlas.Presentation.SOS.Desktop
                     taskbarBinder.StartButton,
                     () => IsPreparedForCurrentUser,
                     RequestAppLaunch);
+
+                if (desktopDocument.panelSettings == null ||
+                    desktopDocument.panelSettings.targetTexture != null ||
+                    desktopDocument.panelSettings.targetDisplay != 0)
+                {
+                    throw new InvalidOperationException(
+                        "Preview capture requires a screen-space desktop " +
+                        "on display 0.");
+                }
+
+                previewLayer = new VisualElement
+                {
+                    name = "PreviewLayer",
+                    pickingMode = PickingMode.Ignore
+                };
+
+                previewLayer.style.position = Position.Absolute;
+                previewLayer.style.left = 0;
+                previewLayer.style.right = 0;
+                previewLayer.style.top = 0;
+                previewLayer.style.bottom = 0;
+
+                binder.PanelLayer.Add(previewLayer);
+
+                taskbarPreviewController = new TaskbarPreviewController(
+                    appController,
+                    previewCaptureService,
+                    binder.DocumentRoot,
+                    previewLayer,
+                    taskbarPreviewTemplate,
+                    pinnedButtonController,
+                    availableApps,
+                    () => IsPreparedForCurrentUser &&
+                        desktopVisible &&
+                        !panelController.HasOpenPanel &&
+                        !(startMenuController?.IsOpen ?? false));
+
+                panelController.PanelOpening +=
+                    taskbarPreviewController.Hide;
+
+                previewCaptureService.Initialize(
+                    appController,
+                    () => IsPreparedForCurrentUser &&
+                        desktopVisible &&
+                        !panelController.HasOpenPanel &&
+                        !(startMenuController?.IsOpen ?? false) &&
+                        !(taskbarPreviewController?.IsVisible ?? false));
             }
             catch (Exception exception)
             {
@@ -280,7 +335,6 @@ namespace Atlas.Presentation.SOS.Desktop
             IsPrepared = true;
             error = null;
 
-            // DesktopManager decides when to reveal it.
             return true;
         }
 
@@ -307,20 +361,45 @@ namespace Atlas.Presentation.SOS.Desktop
             }
 
             view.Show();
+            desktopVisible = true;
+
             error = null;
             return true;
         }
 
         public void Hide()
         {
+            desktopVisible = false;
+            taskbarPreviewController?.Hide();
+
             panelController?.Close();
             startMenuController?.Close();
             view?.Hide();
+
             HideCurrentDocumentRoot();
         }
 
         public void Clear()
         {
+            desktopVisible = false;
+
+            if (taskbarPreviewController != null)
+            {
+                if (panelController != null)
+                {
+                    panelController.PanelOpening -=
+                        taskbarPreviewController.Hide;
+                }
+
+                taskbarPreviewController.Dispose();
+                taskbarPreviewController = null;
+            }
+
+            previewCaptureService?.Shutdown();
+
+            previewLayer?.RemoveFromHierarchy();
+            previewLayer = null;
+
             panelController?.Shutdown();
 
             startMenuController?.Dispose();
@@ -338,7 +417,6 @@ namespace Atlas.Presentation.SOS.Desktop
             IsPrepared = false;
             Hide();
 
-            // Release click handlers before removing grid instances.
             shortcutController?.Dispose();
             shortcutController = null;
 
@@ -350,7 +428,6 @@ namespace Atlas.Presentation.SOS.Desktop
 
             view?.ClearWallpaper();
 
-            // Release attached and detached cached taskbar buttons.
             pinnedButtonController?.Dispose();
             pinnedButtonController = null;
 
@@ -398,7 +475,6 @@ namespace Atlas.Presentation.SOS.Desktop
                 return false;
             }
 
-            // Keep the desktop hidden while preparing its contents.
             desktopRoot.SetEnabled(false);
             desktopRoot.style.visibility = Visibility.Hidden;
 
@@ -415,7 +491,6 @@ namespace Atlas.Presentation.SOS.Desktop
             view = new DesktopView(binder);
             view.Hide();
 
-            // Background layers should not intercept shortcut input.
             binder.Wallpaper.pickingMode = PickingMode.Ignore;
             binder.WindowLayer.pickingMode = PickingMode.Ignore;
 
@@ -426,15 +501,14 @@ namespace Atlas.Presentation.SOS.Desktop
         private bool IsDocumentCurrent()
         {
             return desktopDocument != null &&
-                   desktopDocument.isActiveAndEnabled &&
-                   binder != null &&
-                   binder.IsValid &&
-                   binder.DocumentRoot ==
-                       desktopDocument.rootVisualElement &&
-                   binder.Root ==
-                       desktopDocument.rootVisualElement
-                           .Q<VisualElement>("DesktopRoot") &&
-                   binder.Root.panel != null;
+                desktopDocument.isActiveAndEnabled &&
+                binder != null &&
+                binder.IsValid &&
+                binder.DocumentRoot == desktopDocument.rootVisualElement &&
+                binder.Root ==
+                    desktopDocument.rootVisualElement
+                        .Q<VisualElement>("DesktopRoot") &&
+                binder.Root.panel != null;
         }
 
         private static bool ValidateUser(
@@ -458,9 +532,7 @@ namespace Atlas.Presentation.SOS.Desktop
                     authentication.UserLibrary.GetUser(user.UserId),
                     user))
             {
-                error =
-                    "The current user is missing from the user library.";
-
+                error = "The current user is missing from the user library.";
                 return false;
             }
 
@@ -496,8 +568,8 @@ namespace Atlas.Presentation.SOS.Desktop
                 }
 
                 if (!appCatalog.TryGetApp(
-                        appID,
-                        out AppDefinition app))
+                    appID,
+                    out AppDefinition app))
                 {
                     Debug.LogWarning(
                         $"[DesktopController] App '{appID}' " +
@@ -547,8 +619,8 @@ namespace Atlas.Presentation.SOS.Desktop
             }
 
             return !string.IsNullOrWhiteSpace(appID) &&
-                   ActiveUser.CanAccessApp(appID) &&
-                   appCatalog.TryGetApp(appID, out _);
+                ActiveUser.CanAccessApp(appID) &&
+                appCatalog.TryGetApp(appID, out _);
         }
 
         private void RequestAppLaunch(string appID)
@@ -586,7 +658,6 @@ namespace Atlas.Presentation.SOS.Desktop
             int instanceCount,
             bool isFocused)
         {
-            // Count includes minimized and maximized windows.
             SetTaskbarAppState(
                 appID,
                 instanceCount > 0,
@@ -607,7 +678,6 @@ namespace Atlas.Presentation.SOS.Desktop
                 isFocused);
         }
 
-        // Preserve the existing public API.
         public void SetPinnedAppState(
             string appID,
             bool isOpen,

@@ -22,6 +22,7 @@ namespace Atlas.Presentation.SOS.Apps
 
         void Activate();
         void Minimize();
+        void Close();
 
         event Action Closed;
         event Action StateChanged;
@@ -74,8 +75,6 @@ namespace Atlas.Presentation.SOS.Apps
             public bool PlacementPending;
         }
 
-        // -------------------- INITIALIZATION --------------------
-
         public void Initialize(
             VisualElement windowLayer,
             Func<AppDefinition, TemplateContainer, IAppWindow> initializeWindow,
@@ -119,8 +118,6 @@ namespace Atlas.Presentation.SOS.Apps
             this.windowLayer.RegisterCallback<GeometryChangedEvent>(
                 OnWindowLayerGeometryChanged);
         }
-
-        // -------------------- APP LAUNCHING --------------------
 
         public void Launch(string appID)
         {
@@ -201,9 +198,112 @@ namespace Atlas.Presentation.SOS.Apps
             }
         }
 
-        // -------------------- FILE LAUNCHING --------------------
+        public IReadOnlyList<AppWindowPreview> GetWindowPreviews(string appID)
+        {
+            var result = new List<AppWindowPreview>();
 
-        // Implements IFileAppLauncher.TryOpenFile.
+            if (windowLayer == null ||
+                canAccessApp == null ||
+                appCatalog == null ||
+                string.IsNullOrWhiteSpace(appID) ||
+                !canAccessApp(appID) ||
+                !appCatalog.TryGetApp(appID, out AppDefinition app) ||
+                !instances.TryGetValue(appID, out List<AppInstance> running))
+            {
+                return result;
+            }
+
+            Sprite icon = app.AppIcon48 != null
+                ? app.AppIcon48
+                : app.AppIcon96;
+
+            foreach (AppInstance instance in running)
+            {
+                string title = instance.ContentController != null
+                    ? instance.ContentController.PreviewTitle
+                    : null;
+
+                if (string.IsNullOrWhiteSpace(title))
+                    title = instance.Root.Q<Label>("WindowTitle")?.text;
+
+                if (string.IsNullOrWhiteSpace(title))
+                    title = app.DisplayName;
+
+                uint revision = instance.ContentController != null
+                    ? instance.ContentController.PreviewRevision
+                    : 0;
+
+                result.Add(new AppWindowPreview(
+                    appID,
+                    instance.Window,
+                    title,
+                    icon,
+                    instance.SpawnOrder + 1,
+                    revision,
+                    instance.Root));
+            }
+
+            return result;
+        }
+
+        public IReadOnlyList<AppWindowPreview> GetAllWindowPreviews()
+        {
+            var result = new List<AppWindowPreview>();
+            var appIDs = new List<string>(instances.Keys);
+
+            foreach (string appID in appIDs)
+                result.AddRange(GetWindowPreviews(appID));
+
+            return result;
+        }
+
+        public bool TryActivateWindow(string appID, IAppWindow window)
+        {
+            if (!TryFindWindow(appID, window, out AppInstance instance))
+                return false;
+
+            Activate(instance);
+            return true;
+        }
+
+        public bool TryCloseWindow(string appID, IAppWindow window)
+        {
+            if (!TryFindWindow(appID, window, out AppInstance instance))
+                return false;
+
+            instance.Window.Close();
+            return true;
+        }
+
+        private bool TryFindWindow(
+            string appID,
+            IAppWindow window,
+            out AppInstance instance)
+        {
+            instance = null;
+
+            if (windowLayer == null ||
+                canAccessApp == null ||
+                window == null ||
+                string.IsNullOrWhiteSpace(appID) ||
+                !canAccessApp(appID) ||
+                !instances.TryGetValue(appID, out List<AppInstance> running))
+            {
+                return false;
+            }
+
+            foreach (AppInstance candidate in running)
+            {
+                if (!ReferenceEquals(candidate.Window, window))
+                    continue;
+
+                instance = candidate;
+                return true;
+            }
+
+            return false;
+        }
+
         public bool TryOpenFile(
             string appId,
             FileOpenRequest request,
@@ -234,19 +334,13 @@ namespace Atlas.Presentation.SOS.Apps
 
             if (!canAccessApp(appId))
             {
-                error =
-                    $"The current user cannot access app '{appId}'.";
-
+                error = $"The current user cannot access app '{appId}'.";
                 return false;
             }
 
-            if (!appCatalog.TryGetApp(
-                appId,
-                out AppDefinition app))
+            if (!appCatalog.TryGetApp(appId, out AppDefinition app))
             {
-                error =
-                    $"App '{appId}' does not exist in the app catalog.";
-
+                error = $"App '{appId}' does not exist in the app catalog.";
                 return false;
             }
 
@@ -258,15 +352,11 @@ namespace Atlas.Presentation.SOS.Apps
 
             if (app.RuntimePrefab is not IFileContentReceiver)
             {
-                error =
-                    $"App '{appId}' cannot receive filesystem content.";
-
+                error = $"App '{appId}' cannot receive filesystem content.";
                 return false;
             }
 
-            instances.TryGetValue(
-                appId,
-                out List<AppInstance> running);
+            instances.TryGetValue(appId, out List<AppInstance> running);
 
             bool createWindow =
                 app.AllowMultipleInstances ||
@@ -274,18 +364,13 @@ namespace Atlas.Presentation.SOS.Apps
                 running.Count == 0;
 
             if (createWindow)
-            {
-                // Spawn delivers the request before activating the window.
                 return Spawn(app, request, out error) != null;
-            }
 
             AppInstance target = GetMostRecent(running);
 
             if (target.ContentController is not IFileContentReceiver receiver)
             {
-                error =
-                    $"The running app '{appId}' cannot receive files.";
-
+                error = $"The running app '{appId}' cannot receive files.";
                 return false;
             }
 
@@ -305,19 +390,15 @@ namespace Atlas.Presentation.SOS.Apps
 
                 Activate(target);
                 error = null;
-
                 return true;
             }
             catch (Exception exception)
             {
                 error = exception.Message;
                 Debug.LogException(exception, this);
-
                 return false;
             }
         }
-
-        // -------------------- WINDOW CREATION --------------------
 
         private void Spawn(AppDefinition app)
         {
@@ -335,7 +416,6 @@ namespace Atlas.Presentation.SOS.Apps
             {
                 error = "No app definition was provided.";
                 Debug.LogError($"[AppController] {error}", this);
-
                 return null;
             }
 
@@ -346,7 +426,6 @@ namespace Atlas.Presentation.SOS.Apps
                     "or runtime prefab.";
 
                 Debug.LogError($"[AppController] {error}", this);
-
                 return null;
             }
 
@@ -430,7 +509,6 @@ namespace Atlas.Presentation.SOS.Apps
                 contentController.gameObject.name =
                     $"{app.AppID}Runtime";
 
-                // Inject the shared router into every File Explorer.
                 if (contentController is FileExplorerController explorer)
                 {
                     if (fileOpenRouter == null)
@@ -444,7 +522,6 @@ namespace Atlas.Presentation.SOS.Apps
 
                 contentController.Initialize(content);
 
-                // Deliver content after initialization and before activation.
                 if (request != null)
                 {
                     if (contentController is not IFileContentReceiver receiver)
@@ -536,8 +613,6 @@ namespace Atlas.Presentation.SOS.Apps
             }
         }
 
-        // -------------------- WINDOW PLACEMENT --------------------
-
         private void TryPlaceWindow(AppInstance instance)
         {
             if (!instance.PlacementPending ||
@@ -598,8 +673,8 @@ namespace Atlas.Presentation.SOS.Apps
         private static bool IsValidDimension(float value)
         {
             return value > 0f &&
-                   !float.IsNaN(value) &&
-                   !float.IsInfinity(value);
+                !float.IsNaN(value) &&
+                !float.IsInfinity(value);
         }
 
         private void OnWindowLayerGeometryChanged(
@@ -619,8 +694,6 @@ namespace Atlas.Presentation.SOS.Apps
             foreach (AppInstance instance in pending)
                 TryPlaceWindow(instance);
         }
-
-        // -------------------- WINDOW ACTIVATION --------------------
 
         private void Activate(AppInstance instance)
         {
@@ -656,8 +729,6 @@ namespace Atlas.Presentation.SOS.Apps
 
             return result;
         }
-
-        // -------------------- WINDOW REMOVAL --------------------
 
         private void Remove(AppInstance instance)
         {
@@ -734,8 +805,6 @@ namespace Atlas.Presentation.SOS.Apps
             }
         }
 
-        // -------------------- APP STATE --------------------
-
         private void PublishAllStates()
         {
             List<string> appIDs = new(instances.Keys);
@@ -758,14 +827,12 @@ namespace Atlas.Presentation.SOS.Apps
                 foreach (AppInstance instance in running)
                 {
                     focused |= instance.Window.IsFocused &&
-                               !instance.Window.IsMinimized;
+                        !instance.Window.IsMinimized;
                 }
             }
 
             AppStateChanged?.Invoke(appID, count, focused);
         }
-
-        // -------------------- CLEANUP --------------------
 
         public void Clear()
         {

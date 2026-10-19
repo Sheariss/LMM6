@@ -11,7 +11,6 @@ namespace Atlas.Presentation.SOS.Taskbar
         private readonly VisualElement container;
         private readonly Action<string> launchApp;
 
-        // Cache every available app's button for this desktop session.
         private readonly Dictionary<string, ButtonInstance> instances =
             new(StringComparer.Ordinal);
 
@@ -41,7 +40,6 @@ namespace Atlas.Presentation.SOS.Taskbar
                 ?? throw new ArgumentNullException(nameof(launchApp));
         }
 
-        // Preserve the original API for callers that only supply pinned apps.
         public void Build(IReadOnlyList<AppDefinition> apps)
         {
             Build(apps, apps);
@@ -61,8 +59,6 @@ namespace Atlas.Presentation.SOS.Taskbar
 
             try
             {
-                // Clone each available app's button exactly once.
-                // Unpinned buttons remain detached until the app opens.
                 for (int index = 0; index < availableApps.Count; index++)
                 {
                     AppDefinition app = availableApps[index];
@@ -81,7 +77,6 @@ namespace Atlas.Presentation.SOS.Taskbar
                     CreateButton(app);
                 }
 
-                // Attach pinned buttons in the user's configured order.
                 for (int index = 0; index < pinnedApps.Count; index++)
                 {
                     AppDefinition app = pinnedApps[index];
@@ -145,8 +140,22 @@ namespace Atlas.Presentation.SOS.Taskbar
             });
 
             binder.Button.clicked += clickHandler;
+        }
 
-            // Build or SetAppState attaches the cached root when needed.
+        public bool TryGetButton(string appID, out Button button)
+        {
+            button = null;
+
+            if (string.IsNullOrWhiteSpace(appID) ||
+                !instances.TryGetValue(
+                    appID,
+                    out ButtonInstance instance))
+            {
+                return false;
+            }
+
+            button = instance.Binder.Button;
+            return true;
         }
 
         public void SetAppState(
@@ -169,14 +178,11 @@ namespace Atlas.Presentation.SOS.Taskbar
 
             if (shouldBeVisible)
             {
-                // Already attached buttons keep their position.
-                // Newly opened unpinned apps append after existing buttons.
                 if (instance.Binder.InstanceRoot.parent != container)
                     container.Add(instance.Binder.InstanceRoot);
             }
             else
             {
-                // Keep the cached button and its click handler for reuse.
                 instance.View.Remove();
             }
         }

@@ -359,6 +359,8 @@ MonoBehaviour:
   shortcutIconSize: {x: 48, y: 48}
   shortcutLabelFontSize: 14
   pinnedButtonTemplate: {fileID: 9197481963319205126, guid: 43aefdb6befc1f8408ec67900f2d6e82, type: 3}
+  taskbarPreviewTemplate: {fileID: 9197481963319205126, guid: 60af555181990674baede387970f28a2, type: 3}
+  previewCaptureService: {fileID: 1332095828}
   startMenuTemplate: {fileID: 9197481963319205126, guid: 89cb9a4ba133d45498195ecc60b36cc4, type: 3}
   fileSystemLibrary: {fileID: 11400000, guid: 193bb63488853ea49b85a95156e9d42e, type: 2}
   fileAssociationCatalog: {fileID: 11400000, guid: d6e357d953dc9634cbaf9db9f95975b6, type: 2}
@@ -703,6 +705,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Email.EmailManager
   emailLibrary: {fileID: 11400000, guid: 33e3855bf2097e642bc1f8a39277699d, type: 2}
   deliveryFailureDelay: 1.5
+--- !u!1 &1332095826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1332095827}
+  - component: {fileID: 1332095828}
+  m_Layer: 0
+  m_Name: PreviewCaptureService
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1332095827
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332095826}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1897112152}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1332095828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332095826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 837faea43f1a2c34d82d4bad1099a3e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Taskbar.WindowPreviewCaptureService
+  maximumWidth: 320
+  maximumHeight: 180
+  captureInterval: 0.2
+  idleRefreshInterval: 1
+  flipCaptureVertically: 1
 --- !u!1 &1360319444
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,6 +1255,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1664625964}
+  - {fileID: 1332095827}
   m_Father: {fileID: 906545945}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1897112153
@@ -1316,6 +1368,8 @@ MonoBehaviour:
     runtimePrefab: {fileID: 7619379079515360810, guid: 28f0d166d48aaa24b8ef92978722243c, type: 3}
   - id: 4
     runtimePrefab: {fileID: 6571743189070254489, guid: 37c1384d2d71eeb49bae56b991077291, type: 3}
+  - id: 2
+    runtimePrefab: {fileID: 8252290141740187653, guid: aeacf4c7cff18764698300524e726b30, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

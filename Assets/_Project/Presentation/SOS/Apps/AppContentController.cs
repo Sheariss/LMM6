@@ -13,6 +13,9 @@ namespace Atlas.Presentation.SOS.Apps
 
         public bool IsInitialized { get; private set; }
 
+        public uint PreviewRevision { get; private set; } = 1;
+        public string PreviewTitle { get; private set; }
+
         public void Initialize(VisualElement instanceRoot)
         {
             if (instanceRoot == null)
@@ -40,9 +43,19 @@ namespace Atlas.Presentation.SOS.Apps
 
         protected abstract void OnInitialize();
 
-        // Apps can release additional resources here.
         protected virtual void OnShutdown()
         {
+        }
+
+        protected void NotifyPreviewChanged(string title = null)
+        {
+            if (title != null)
+                PreviewTitle = title;
+
+            unchecked
+            {
+                PreviewRevision++;
+            }
         }
 
         protected void BindClick(Button button, Action handler)
@@ -57,8 +70,6 @@ namespace Atlas.Presentation.SOS.Apps
                 throw new ArgumentNullException(nameof(handler));
 
             button.clicked += handler;
-
-            // Retain the exact delegate, including anonymous lambdas.
             cleanupActions.Push(() => button.clicked -= handler);
         }
 
@@ -77,11 +88,10 @@ namespace Atlas.Presentation.SOS.Apps
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            element.RegisterCallback<TEvent>(handler, trickleDown);
+            element.RegisterCallback(handler, trickleDown);
 
             cleanupActions.Push(() =>
-                element.UnregisterCallback<TEvent>(
-                    handler, trickleDown));
+                element.UnregisterCallback(handler, trickleDown));
         }
 
         public void Shutdown()
@@ -91,7 +101,6 @@ namespace Atlas.Presentation.SOS.Apps
 
             IsInitialized = false;
 
-            // Unsubscribe before releasing the binder and engine.
             while (cleanupActions.Count > 0)
             {
                 Action cleanup = cleanupActions.Pop();
