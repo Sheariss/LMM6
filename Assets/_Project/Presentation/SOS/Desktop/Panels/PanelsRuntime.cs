@@ -9,7 +9,8 @@ namespace Atlas.Presentation.SOS.Panels
         Widgets,
         Network,
         DateTime,
-        Notifications
+        Notifications,
+        Audio
     }
 
     public abstract class PanelRuntime : MonoBehaviour

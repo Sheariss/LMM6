@@ -1,0 +1,161 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         editor-extension-mode="False">
+
+    <Style src="Audio.uss" />
+
+    <ui:VisualElement name="AudioPanel"
+                      class="audio-panel">
+
+        <ui:VisualElement class="audio-header">
+
+            <ui:Label name="AudioDeviceName"
+                      text="Speakers"
+                      class="audio-device-name" />
+
+            <ui:Button name="ExpandAudioButton"
+                       tooltip="Expand audio controls"
+                       class="audio-button audio-icon-button">
+
+                <ui:Image picking-mode="Ignore"
+                          class="audio-icon audio-expand-icon" />
+
+            </ui:Button>
+
+        </ui:VisualElement>
+
+        <ui:VisualElement class="audio-master">
+
+            <ui:Label text="Master volume"
+                      class="audio-control-label" />
+
+            <ui:VisualElement class="audio-volume-controls">
+
+                <ui:Button name="MasterMuteButton"
+                           tooltip="Mute master volume"
+                           class="audio-button audio-icon-button">
+
+                    <ui:Image name="MasterVolumeIcon"
+                              picking-mode="Ignore"
+                              class="audio-icon" />
+
+                </ui:Button>
+
+                <ui:Slider name="MasterVolumeSlider"
+                           low-value="0"
+                           high-value="100"
+                           value="50"
+                           tooltip="Master volume"
+                           class="audio-slider" />
+
+                <ui:Label name="MasterVolumeValue"
+                          text="50"
+                          class="audio-volume-value" />
+
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+
+        <ui:ScrollView name="AudioDetails"
+                       mode="Vertical"
+                       horizontal-scroller-visibility="Hidden"
+                       vertical-scroller-visibility="Auto"
+                       class="audio-details">
+
+            <ui:VisualElement class="audio-section">
+
+                <ui:Label text="Volume mixer"
+                          class="audio-section-title" />
+
+                <ui:VisualElement name="AudioCategoryList"
+                                  class="audio-category-list" />
+
+            </ui:VisualElement>
+
+            <ui:VisualElement class="audio-section">
+
+                <ui:Label text="Audio output"
+                          class="audio-section-title" />
+
+                <ui:Label text="Output device"
+                          class="audio-control-label" />
+
+                <ui:DropdownField name="AudioOutputDevice"
+                                  tooltip="Output device"
+                                  class="audio-dropdown" />
+
+                <ui:Label text="Playback mode"
+                          class="audio-control-label audio-control-label--spaced" />
+
+                <ui:DropdownField name="AudioPlaybackMode"
+                                  tooltip="Playback mode"
+                                  class="audio-dropdown" />
+
+            </ui:VisualElement>
+
+            <ui:VisualElement class="audio-section">
+
+                <ui:Label text="Accessibility"
+                          class="audio-section-title" />
+
+                <ui:VisualElement class="audio-toggle-row">
+
+                    <ui:Label text="Mono audio"
+                              class="audio-toggle-label" />
+
+                    <ui:Toggle name="MonoAudioToggle"
+                               tooltip="Combine left and right audio channels"
+                               class="audio-switch" />
+
+                </ui:VisualElement>
+
+                <ui:VisualElement class="audio-balance-heading">
+
+                    <ui:Label text="Left/right balance"
+                              class="audio-toggle-label" />
+
+                    <ui:Label name="AudioBalanceValue"
+                              text="50 / 50"
+                              class="audio-balance-value" />
+
+                </ui:VisualElement>
+
+                <ui:Slider name="AudioBalanceSlider"
+                           low-value="0"
+                           high-value="100"
+                           value="50"
+                           tooltip="Left/right balance; 50 is centered"
+                           class="audio-slider audio-balance-slider" />
+
+                <ui:VisualElement class="audio-balance-endpoints">
+
+                    <ui:Label text="Left" />
+                    <ui:Label text="Right" />
+
+                </ui:VisualElement>
+
+                <ui:VisualElement class="audio-toggle-row">
+
+                    <ui:Label text="Subtitles"
+                              class="audio-toggle-label" />
+
+                    <ui:Toggle name="AudioSubtitlesToggle"
+                               tooltip="Enable subtitles"
+                               class="audio-switch" />
+
+                </ui:VisualElement>
+
+            </ui:VisualElement>
+
+        </ui:ScrollView>
+
+        <ui:VisualElement class="audio-footer">
+
+            <ui:Button name="AudioSettingsButton"
+                       text="More sound settings"
+                       class="audio-button audio-settings-link" />
+
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+
+</ui:UXML>

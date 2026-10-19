@@ -1,0 +1,468 @@
+.audio-panel {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+    width: 360px;
+    max-width: 100%;
+    max-height: 100%;
+    min-height: 0;
+
+    flex-direction: column;
+    overflow: hidden;
+
+    background-color: rgb(39, 39, 39);
+    color: rgb(255, 255, 255);
+
+    border-width: 1px;
+    border-color: rgb(66, 66, 66);
+    border-radius: 8px;
+
+    font-size: 14px;
+    -unity-font-style: normal;
+}
+
+.audio-panel--expanded {
+    height: 600px;
+}
+
+/* Buttons */
+
+.audio-panel .audio-button {
+    margin: 0;
+    padding: 0;
+
+    background-color: transparent;
+    background-image: none;
+
+    border-width: 1px;
+    border-color: transparent;
+    border-radius: 4px;
+
+    color: rgb(255, 255, 255);
+    font-size: 14px;
+    -unity-font-style: normal;
+    -unity-text-align: middle-left;
+
+    transition-property: background-color, border-color;
+    transition-duration: 0.1s;
+}
+
+.audio-panel .audio-button:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.audio-panel .audio-button:active {
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.audio-panel .audio-button:focus {
+    border-color: rgb(255, 255, 255);
+}
+
+.audio-panel .audio-icon-button {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.audio-panel .audio-button:disabled {
+    opacity: 0.45;
+}
+
+/* Image assets */
+
+.audio-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.audio-expand-icon {
+    background-image:
+        resource("Icons/Arrows 1/Expand-Arrow/keyboard_arrow_down_32dp");
+
+    rotate: 180deg;
+}
+
+.audio-panel--expanded .audio-expand-icon {
+    rotate: 0deg;
+}
+
+.audio-dropdown-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+
+    margin-left: 8px;
+
+    background-image:
+        resource("Icons/Arrows 1/Expand-Arrow/keyboard_arrow_down_32dp");
+}
+
+/* Compact panel */
+
+.audio-header {
+    min-height: 52px;
+    flex-shrink: 0;
+
+    flex-direction: row;
+    align-items: center;
+
+    padding: 10px 12px 4px 16px;
+}
+
+.audio-device-name {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+
+    margin: 0 12px 0 0;
+    padding: 0;
+
+    white-space: normal;
+}
+
+.audio-master {
+    flex-shrink: 0;
+    padding: 0 16px 16px;
+}
+
+.audio-control-label {
+    margin: 0 0 6px;
+    padding: 0;
+
+    color: rgb(210, 210, 210);
+    font-size: 12px;
+    white-space: normal;
+}
+
+.audio-control-label--spaced {
+    margin-top: 16px;
+}
+
+.audio-volume-controls {
+    flex-direction: row;
+    align-items: center;
+    min-height: 36px;
+}
+
+.audio-volume-value {
+    width: 36px;
+    flex-shrink: 0;
+
+    margin: 0 0 0 8px;
+    padding: 0;
+
+    -unity-text-align: middle-right;
+}
+
+/* Expanded content */
+
+.audio-details,
+.audio-footer {
+    display: none;
+}
+
+.audio-panel--expanded .audio-details,
+.audio-panel--expanded .audio-footer {
+    display: flex;
+}
+
+.audio-details {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-height: 0;
+
+    margin: 0;
+    padding: 0;
+
+    border-top-width: 1px;
+    border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+.audio-details .unity-scroll-view__content-container {
+    padding: 0;
+}
+
+.audio-section {
+    flex-shrink: 0;
+    padding: 16px;
+
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.audio-section-title {
+    margin: 0 0 12px;
+    padding: 0;
+
+    font-size: 14px;
+    -unity-font-style: bold;
+    white-space: normal;
+}
+
+.audio-category-row {
+    flex-shrink: 0;
+    margin-bottom: 14px;
+}
+
+.audio-category-label {
+    margin: 0 0 4px;
+    padding: 0;
+
+    color: rgb(230, 230, 230);
+    white-space: normal;
+}
+
+/* Native sliders */
+
+.audio-slider {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    height: 32px;
+
+    margin: 0 0 0 8px;
+    padding: 0;
+}
+
+.audio-slider .unity-base-slider__input {
+    min-width: 0;
+    margin: 0;
+}
+
+.audio-slider .unity-base-slider__tracker {
+    height: 4px;
+
+    background-color: rgb(125, 125, 125);
+
+    border-width: 0;
+    border-radius: 2px;
+}
+
+.audio-slider-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    background-color: rgb(96, 205, 255);
+    border-radius: 2px;
+}
+
+.audio-slider .unity-base-slider__dragger {
+    width: 18px;
+    height: 18px;
+
+    background-color: rgb(96, 205, 255);
+
+    border-width: 4px;
+    border-color: rgb(69, 69, 69);
+    border-radius: 9px;
+}
+
+.audio-slider:hover .unity-base-slider__dragger {
+    border-color: rgb(82, 82, 82);
+}
+
+.audio-slider:focus .unity-base-slider__dragger {
+    border-color: rgb(235, 235, 235);
+}
+
+.audio-slider .unity-base-slider__dragger-border {
+    display: none;
+}
+
+/* Output selectors */
+
+.audio-dropdown {
+    min-width: 0;
+
+    margin: 0;
+    padding: 0;
+}
+
+.audio-dropdown .unity-base-popup-field__input {
+    min-width: 0;
+    min-height: 36px;
+
+    margin: 0;
+    padding: 8px 10px;
+
+    background-color: rgb(51, 51, 51);
+
+    border-width: 1px;
+    border-color: rgb(75, 75, 75);
+    border-radius: 4px;
+}
+
+.audio-dropdown .unity-base-popup-field__text {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+
+    color: rgb(255, 255, 255);
+    white-space: normal;
+}
+
+.audio-dropdown .unity-base-popup-field__arrow {
+    display: none;
+}
+
+.audio-dropdown:hover .unity-base-popup-field__input {
+    background-color: rgb(58, 58, 58);
+}
+
+.audio-dropdown:focus .unity-base-popup-field__input {
+    border-color: rgb(96, 205, 255);
+}
+
+/* Accessibility */
+
+.audio-toggle-row {
+    min-height: 44px;
+
+    flex-direction: row;
+    align-items: center;
+}
+
+.audio-toggle-label {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+
+    margin: 0 12px 0 0;
+    padding: 0;
+
+    white-space: normal;
+}
+
+.audio-switch {
+    width: 40px;
+    height: 22px;
+    flex-shrink: 0;
+
+    margin: 0;
+    padding: 0;
+}
+
+.audio-switch > .unity-toggle__label {
+    display: none;
+}
+
+.audio-switch > .unity-toggle__input {
+    width: 40px;
+    min-width: 40px;
+    height: 22px;
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    align-items: flex-start;
+    justify-content: center;
+
+    margin: 0;
+    padding: 3px;
+
+    background-color: transparent;
+    background-image: none;
+
+    border-width: 1px;
+    border-color: rgb(162, 162, 162);
+    border-radius: 11px;
+}
+
+.audio-switch .unity-toggle__checkmark {
+    display: none;
+}
+
+.audio-switch-thumb {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+
+    background-color: rgb(220, 220, 220);
+    border-radius: 6px;
+}
+
+.audio-switch--on > .unity-toggle__input {
+    background-color: rgb(96, 205, 255);
+    border-color: rgb(96, 205, 255);
+}
+
+.audio-switch--on .audio-switch-thumb {
+    align-self: flex-end;
+    background-color: rgb(0, 54, 76);
+}
+
+.audio-switch:focus > .unity-toggle__input {
+    border-color: rgb(255, 255, 255);
+}
+
+.audio-balance-heading {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.audio-balance-value {
+    margin: 0;
+    padding: 0;
+
+    color: rgb(190, 190, 190);
+    font-size: 12px;
+}
+
+.audio-balance-slider {
+    margin-left: 0;
+}
+
+.audio-balance-endpoints {
+    flex-direction: row;
+    justify-content: space-between;
+
+    margin-bottom: 8px;
+}
+
+.audio-balance-endpoints > Label {
+    margin: 0;
+    padding: 0;
+
+    color: rgb(190, 190, 190);
+    font-size: 12px;
+}
+
+/* Fixed footer */
+
+.audio-footer {
+    min-height: 56px;
+    flex-shrink: 0;
+
+    justify-content: center;
+    align-items: flex-start;
+
+    padding: 8px 16px;
+
+    background-color: rgb(32, 32, 32);
+
+    border-top-width: 1px;
+    border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+.audio-panel .audio-settings-link {
+    min-height: 32px;
+    padding: 4px;
+
+    color: rgb(153, 235, 255);
+    font-size: 12px;
+    white-space: normal;
+}
