@@ -1,197 +1,68 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements"
-         editor-extension-mode="False">
-
-    <Style src="../../../Tokens/Global-Colors.uss" />
-    <Style src="../../../Tokens/Global-Tokens.uss" />
-    <Style src="../../../Tokens/ATLAS.uss" />
-    <Style src="StickyNotes.uss" />
-
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Colors.uss?fileID=7433441132597879392&amp;guid=8dac24df6972d5a4b92f92dcf1ce83a2&amp;type=3#Global-Colors"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/Global-Tokens.uss?fileID=7433441132597879392&amp;guid=dadbf6dc3eccd0d45a1533ff4081471d&amp;type=3#Global-Tokens"/>
+    <Style src="project://database/Assets/_Project/Presentation/Tokens/ATLAS.uss?fileID=7433441132597879392&amp;guid=7fc1c24c6bff61548bd2f989f6ca2048&amp;type=3#ATLAS"/>
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Apps/StickyNotes/StickyNotes.uss?fileID=7433441132597879392&amp;guid=f7076068c69343e4bb1df83b7112ea8a&amp;type=3#StickyNotes"/>
     <ui:VisualElement name="WindowRoot" class="sn-app">
-
         <ui:VisualElement name="WindowHeader" class="sn-header">
-
-            <ui:VisualElement name="WindowIcon"
-                              class="sn-hidden" />
-
-            <ui:Button name="new-note-button"
-                       text=""
-                       tooltip="Create a note"
-                       class="sn-header-button">
-                <ui:Image picking-mode="Ignore"
-                          class="sn-icon"
-                          style="background-image: resource('Icons/Math/Add/add_2_24dp');" />
+            <ui:VisualElement name="WindowIcon" class="sn-hidden"/>
+            <ui:Label text="Label" name="WindowTitle" style="display: none;"/>
+            <ui:Button name="new-note-button" text="" tooltip="Create a note" class="sn-header-button">
+                <ui:Image picking-mode="Ignore" class="sn-icon" style="background-image: resource(&quot;Icons/Math/Add/add_2_24dp&quot;);"/>
             </ui:Button>
-
-            <ui:VisualElement class="sn-spacer" />
-
-            <ui:Button name="settings-button"
-                       text=""
-                       tooltip="Settings"
-                       class="sn-header-button">
-                <ui:Image picking-mode="Ignore"
-                          class="sn-icon"
-                          style="background-image: resource('Icons/PDW/Settings/settings_24dp');" />
+            <ui:VisualElement class="sn-spacer"/>
+            <ui:Button name="settings-button" text="" tooltip="Settings" class="sn-header-button">
+                <ui:Image picking-mode="Ignore" class="sn-icon" style="background-image: resource(&quot;Icons/PDW/Settings/settings_24dp&quot;);"/>
             </ui:Button>
-
-            <!-- Required by the shared window binder; hidden for this app. -->
-            <ui:Button name="WindowMinimizeButton"
-                       text=""
-                       class="sn-hidden" />
-
-            <ui:Button name="WindowMaximizeButton"
-                       text=""
-                       class="sn-hidden" />
-
-            <ui:Button name="WindowCloseButton"
-                       text=""
-                       tooltip="Close notes list"
-                       class="sn-header-button sn-close-button">
-                <ui:Image picking-mode="Ignore"
-                          class="sn-icon"
-                          style="background-image: resource('Icons/UI/Close/close_24dp');" />
+            <ui:Button name="WindowMinimizeButton" text="" class="sn-hidden"/>
+            <ui:Button name="WindowMaximizeButton" text="" class="sn-hidden"/>
+            <ui:Button name="WindowCloseButton" text="" tooltip="Close notes list" class="sn-header-button sn-close-button">
+                <ui:Image picking-mode="Ignore" class="sn-icon" style="background-image: resource(&quot;Icons/UI/Close/close_24dp&quot;);"/>
             </ui:Button>
-
         </ui:VisualElement>
-
         <ui:VisualElement name="WindowContent" class="sn-content">
-
-            <ui:Label name="WindowTitle"
-                      text="Sticky Notes"
-                      class="sn-heading" />
-
+            <ui:Label name="WindowTitle" text="Sticky Notes" class="sn-heading"/>
             <ui:VisualElement class="sn-search-container">
-
-                <ui:TextField name="search-field"
-                              placeholder-text="Search your notes"
-                              hide-placeholder-on-focus="true"
-                              multiline="false"
-                              is-delayed="false"
-                              class="sn-search" />
-
-                <ui:Image picking-mode="Ignore"
-                          class="sn-search-icon"
-                          style="background-image: resource('Icons/UI/Search/search_24dp');" />
-
-                <!-- Retained for compatibility with the existing binder.
-                     The TextField now supplies the visible placeholder. -->
-                <ui:Label name="search-placeholder"
-                          text=""
-                          picking-mode="Ignore"
-                          class="sn-legacy-placeholder" />
-
+                <ui:TextField name="search-field" placeholder-text="Search your notes" hide-placeholder-on-focus="true" multiline="false" is-delayed="false" class="sn-search"/>
+                <ui:Image picking-mode="Ignore" class="sn-search-icon" style="background-image: resource(&quot;Icons/UI/Search/search_24dp&quot;);"/>
+                <ui:Label name="search-placeholder" text="" picking-mode="Ignore" class="sn-legacy-placeholder"/>
             </ui:VisualElement>
-
             <ui:VisualElement class="sn-list-area">
-
-                <ui:ScrollView name="notes-list"
-                               mode="Vertical"
-                               horizontal-scroller-visibility="Hidden"
-                               vertical-scroller-visibility="Auto"
-                               class="sn-list" />
-
-                <ui:VisualElement name="notes-empty-state"
-                                  picking-mode="Ignore"
-                                  class="sn-empty-state">
-
-                    <ui:VisualElement picking-mode="Ignore"
-                                      class="sn-empty-art">
-
-                        <ui:Image picking-mode="Ignore"
-                                  class="sn-empty-notes-image"
-                                  style="background-image: resource('Icons/PDW/Notes/note_stack_128dp');" />
-
-                        <ui:VisualElement picking-mode="Ignore"
-                                          class="sn-empty-add-badge">
-                            <ui:Image picking-mode="Ignore"
-                                      class="sn-empty-add-image"
-                                      style="background-image: resource('Icons/Math/Add/add_2_24dp');" />
+                <ui:ScrollView name="notes-list" mode="Vertical" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Auto" class="sn-list"/>
+                <ui:VisualElement name="notes-empty-state" picking-mode="Ignore" class="sn-empty-state">
+                    <ui:VisualElement picking-mode="Ignore" class="sn-empty-art">
+                        <ui:Image picking-mode="Ignore" class="sn-empty-notes-image" style="background-image: resource(&quot;Icons/PDW/Notes/note_stack_128dp&quot;);"/>
+                        <ui:VisualElement picking-mode="Ignore" class="sn-empty-add-badge">
+                            <ui:Image picking-mode="Ignore" class="sn-empty-add-image" style="background-image: resource(&quot;Icons/Math/Add/add_2_24dp&quot;);"/>
                         </ui:VisualElement>
-
                     </ui:VisualElement>
-
-                    <ui:Label name="notes-empty"
-                              text="No notes yet. Use + to create one."
-                              picking-mode="Ignore"
-                              class="sn-empty-message" />
-
+                    <ui:Label name="notes-empty" text="No notes yet. Use + to create one." picking-mode="Ignore" class="sn-empty-message"/>
                 </ui:VisualElement>
-
             </ui:VisualElement>
-
             <ui:VisualElement class="sn-footer">
-
-                <ui:Label name="notes-count"
-                          text=""
-                          class="sn-count" />
-
-                <ui:Label name="notes-status"
-                          text=""
-                          class="sn-status" />
-
+                <ui:Label name="notes-count" text="" class="sn-count"/>
+                <ui:Label name="notes-status" text="" class="sn-status"/>
             </ui:VisualElement>
-
-            <ui:VisualElement name="note-context-menu"
-                              class="sn-context-menu">
-
-                <ui:Button name="open-note-button"
-                           text=""
-                           class="sn-menu-action">
-
-                    <ui:Image picking-mode="Ignore"
-                              class="sn-action-icon"
-                              style="background-image: resource('Icons/Arrows 1/Open-in-Full/open_in_full_24dp');" />
-
-                    <ui:Label text="Open note"
-                              picking-mode="Ignore"
-                              class="sn-action-label" />
-
+            <ui:VisualElement name="note-context-menu" class="sn-context-menu">
+                <ui:Button name="open-note-button" text="" class="sn-menu-action">
+                    <ui:Image picking-mode="Ignore" class="sn-action-icon" style="background-image: resource(&quot;Icons/Arrows 1/Open-in-Full/open_in_full_24dp&quot;);"/>
+                    <ui:Label text="Open note" picking-mode="Ignore" class="sn-action-label"/>
                 </ui:Button>
-
-                <ui:Button name="delete-note-button"
-                           text=""
-                           class="sn-menu-action sn-delete-action">
-
-                    <ui:Image picking-mode="Ignore"
-                              class="sn-action-icon"
-                              style="background-image: resource('Icons/Apps/Photos/Delete/delete_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24');" />
-
-                    <ui:Label text="Delete note"
-                              picking-mode="Ignore"
-                              class="sn-action-label" />
-
+                <ui:Button name="delete-note-button" text="" class="sn-menu-action sn-delete-action">
+                    <ui:Image picking-mode="Ignore" class="sn-action-icon" style="background-image: resource(&quot;Icons/Apps/Photos/Delete/delete_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24&quot;);"/>
+                    <ui:Label text="Delete note" picking-mode="Ignore" class="sn-action-label"/>
                 </ui:Button>
-
             </ui:VisualElement>
-
-            <ui:VisualElement name="delete-overlay"
-                              class="sn-delete-overlay">
-
+            <ui:VisualElement name="delete-overlay" class="sn-delete-overlay">
                 <ui:VisualElement class="sn-delete-dialog">
-
-                    <ui:Label text="Delete note?"
-                              class="sn-dialog-heading" />
-
-                    <ui:Label name="delete-message"
-                              text=""
-                              class="sn-dialog-message" />
-
+                    <ui:Label text="Delete note?" class="sn-dialog-heading"/>
+                    <ui:Label name="delete-message" text="" class="sn-dialog-message"/>
                     <ui:VisualElement class="sn-dialog-actions">
-
-                        <ui:Button name="cancel-delete-button"
-                                   text="Cancel"
-                                   class="sn-dialog-button" />
-
-                        <ui:Button name="confirm-delete-button"
-                                   text="Delete"
-                                   class="sn-dialog-button sn-delete-confirm" />
-
+                        <ui:Button name="cancel-delete-button" text="Cancel" class="sn-dialog-button"/>
+                        <ui:Button name="confirm-delete-button" text="Delete" class="sn-dialog-button sn-delete-confirm"/>
                     </ui:VisualElement>
-
                 </ui:VisualElement>
-
             </ui:VisualElement>
-
         </ui:VisualElement>
-
     </ui:VisualElement>
 </ui:UXML>
