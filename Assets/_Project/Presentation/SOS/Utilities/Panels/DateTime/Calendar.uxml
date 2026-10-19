@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
-    <Style src="CalendarWidget.uss"/>
+    <Style src="Calendar.uss"/>
 
     <ui:VisualElement name="CalendarWidget" class="calendar-widget">
         <ui:VisualElement class="calendar-header">
