@@ -174,6 +174,62 @@ MonoBehaviour:
         key: app.file-explorer.opened
         expectedValue: 1
       automaticNextNodeId: 
+  - id: guest.invitation
+    title: Workspace introduction invitation
+    entryNodeId: offer
+    prerequisites:
+    - kind: 0
+      key: desktop.guest.visible
+      expectedValue: 1
+    nodes:
+    - id: offer
+      message: Would you like a short introduction to this workspace?
+      choices:
+      - id: start
+        label: Start introduction
+        nextNodeId:
+        conditions: []
+        effects: []
+      - id: no-thanks
+        label: No thanks
+        nextNodeId: reminder
+        conditions: []
+        effects: []
+      enterEffects: []
+      advanceWhen: []
+      automaticNextNodeId:
+    - id: reminder
+      message: Would you like me to remind you later?
+      choices:
+      - id: back
+        label: Back
+        nextNodeId: offer
+        conditions: []
+        effects: []
+      - id: continue
+        label: Continue
+        nextNodeId: confirmation
+        conditions: []
+        effects: []
+      enterEffects: []
+      advanceWhen: []
+      automaticNextNodeId:
+    - id: confirmation
+      message:
+      choices:
+      - id: start
+        label: Start introduction
+        nextNodeId:
+        conditions: []
+        effects: []
+      - id: no-thanks
+        label: Change reminder
+        nextNodeId: reminder
+        conditions: []
+        effects: []
+      enterEffects: []
+      advanceWhen: []
+      automaticNextNodeId:
   tutorials:
   - id: guest.introduction
     conversationId: tutorial.guest
@@ -183,6 +239,7 @@ MonoBehaviour:
       expectedValue: 1
   offers:
   - id: guest.introduction.offer
+    invitationConversationId: guest.invitation
     title: Welcome to ATLAS!
     description: Would you like a short introduction to this workspace?
     conversationId: tutorial.guest

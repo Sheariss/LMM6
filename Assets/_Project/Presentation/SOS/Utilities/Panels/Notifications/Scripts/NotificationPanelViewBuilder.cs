@@ -42,6 +42,7 @@ namespace Atlas.Presentation.SOS.Notifications
             NotificationPanelEngine engine,
             bool settingsAvailable,
             Action<string> expand,
+            Action<string> expandCard,
             Action<string> menu,
             Action<string> clearGroup,
             Action<string> dismiss,
@@ -71,26 +72,25 @@ namespace Atlas.Presentation.SOS.Notifications
                 group.Latest.SourceName,
                 "notification-source"));
 
-            if (group.Entries.Count > 1)
-            {
-                Button expandButton = IconButton(
-                    "expand-" + sourceId,
-                    expanded ? "Collapse notifications" : "Expand notifications",
-                    "notification-expand-icon",
-                    () => expand(sourceId));
-
-                expandButton.Q<Image>().EnableInClassList(
-                    "is-expanded",
-                    expanded);
-
-                header.Add(expandButton);
-            }
-
-            header.Add(IconButton(
+            var controls = Element("notification-header-controls");
+            controls.Add(IconButton(
                 "menu-" + sourceId,
                 "Notification group actions",
                 "notification-more-icon",
                 () => menu(sourceId)));
+            controls.Add(IconButton(
+                "clear-group-" + sourceId,
+                "Clear this app's notification history",
+                "notification-close-icon",
+                () => clearGroup(sourceId)));
+            header.Add(controls);
+            header.RegisterCallback<FocusInEvent>(_ =>
+                header.AddToClassList("has-focus"));
+            header.RegisterCallback<FocusOutEvent>(evt =>
+            {
+                if (!(evt.relatedTarget is VisualElement target) || !header.Contains(target))
+                    header.RemoveFromClassList("has-focus");
+            });
 
             root.Add(header);
 
@@ -118,22 +118,22 @@ namespace Atlas.Presentation.SOS.Notifications
 
             for (int i = 0; i < count; i++)
             {
-                root.Add(BuildCard(
+                VisualElement card = BuildCard(
                     group.Entries[i],
                     engine,
+                    expandCard,
                     dismiss,
-                    open));
-            }
-
-            if (!expanded && group.Entries.Count > 1)
-            {
-                Button more = TextButton(
-                    "count-" + sourceId,
-                    $"{group.Entries.Count - 1} more notifications",
-                    () => expand(sourceId));
-
-                more.AddToClassList("notification-count");
-                root.Add(more);
+                    open);
+                if (i == 0 && !expanded && group.Entries.Count > 1)
+                {
+                    Button more = TextButton(
+                        "count-" + sourceId,
+                        $"+{group.Entries.Count - 1} " + (group.Entries.Count == 2 ? "notification" : "notifications"),
+                        () => expand(sourceId));
+                    more.AddToClassList("notification-count");
+                    card.Add(more);
+                }
+                root.Add(card);
             }
 
             return root;
@@ -142,27 +142,69 @@ namespace Atlas.Presentation.SOS.Notifications
         private VisualElement BuildCard(
             NotificationEntry entry,
             NotificationPanelEngine engine,
+            Action<string> expandCard,
             Action<string> dismiss,
             Action<string> open)
         {
             VisualElement card = Element("notification-card");
+            card.name = "notification-card-" + entry.Id;
+            bool expanded = engine.IsCardExpanded(entry.Id);
+            bool available = engine.CanOpen(entry.Id);
+            card.EnableInClassList("is-collapsed", !expanded);
+            card.EnableInClassList("can-open", available);
+            card.focusable = available;
+            card.tabIndex = available ? 0 : -1;
+            card.tooltip = available ? "Open in app" : "This destination is currently unavailable.";
+            card.RegisterCallback<ClickEvent>(evt =>
+            {
+                if (available && !IsControl(evt.target as VisualElement, card))
+                    open(entry.Id);
+            });
+            card.RegisterCallback<KeyDownEvent>(evt =>
+            {
+                if (evt.target != card || !available ||
+                    (evt.keyCode != KeyCode.Return && evt.keyCode != KeyCode.Space))
+                    return;
+                evt.StopPropagation();
+                open(entry.Id);
+            });
             VisualElement header = Element("notification-card-header");
 
             header.Add(Text(
                 FormatTime(entry.CreatedUtc),
                 "notification-time"));
 
-            header.Add(IconButton(
-                "dismiss-" + entry.Id,
-                "Remove from notification history",
-                "notification-close-icon",
-                () => dismiss(entry.Id)));
+            Button toggle = IconButton(
+                "expand-card-" + entry.Id,
+                expanded ? "Collapse notification" : "Expand notification",
+                "notification-expand-icon",
+                () => expandCard(entry.Id));
+            toggle.Q<Image>().EnableInClassList("is-expanded", expanded);
+            header.Add(toggle);
 
             card.Add(header);
-            card.Add(Text(entry.Title, "notification-title"));
+            var content = Element("notification-content");
+            if (entry.Layout == NotificationLayout.Message || entry.Layout == NotificationLayout.Email)
+            {
+                var portrait = new Image
+                {
+                    sprite = entry.ActorImage ?? entry.Icon,
+                    scaleMode = ScaleMode.ScaleToFit,
+                    pickingMode = PickingMode.Ignore
+                };
+                portrait.AddToClassList("notification-portrait");
+                if (portrait.sprite != null)
+                    content.Add(portrait);
+            }
+            var body = Element("notification-body");
+            if (!string.IsNullOrWhiteSpace(entry.ActorName))
+                body.Add(Text(entry.ActorName, "notification-title"));
+            body.Add(Text(entry.Title, "notification-title"));
 
             if (!string.IsNullOrWhiteSpace(entry.Message))
-                card.Add(Text(entry.Message, "notification-message"));
+                body.Add(Text(entry.Message, "notification-message"));
+            content.Add(body);
+            card.Add(content);
 
             if (entry.IsResolved)
             {
@@ -170,15 +212,14 @@ namespace Atlas.Presentation.SOS.Notifications
                     entry.ResolutionText,
                     "notification-resolution"));
             }
-            else if (!string.IsNullOrWhiteSpace(entry.AppId) ||
-                     !string.IsNullOrWhiteSpace(entry.DestinationId))
+            else if (expanded && !string.IsNullOrWhiteSpace(entry.OpenLabel) &&
+                     (!string.IsNullOrWhiteSpace(entry.AppId) ||
+                      !string.IsNullOrWhiteSpace(entry.DestinationId)))
             {
                 Button openButton = TextButton(
                     "open-" + entry.Id,
-                    "Open",
+                    entry.OpenLabel,
                     () => open(entry.Id));
-
-                bool available = engine.CanOpen(entry.Id);
 
                 openButton.SetEnabled(available);
                 openButton.tooltip = available
@@ -190,6 +231,14 @@ namespace Atlas.Presentation.SOS.Notifications
             }
 
             return card;
+        }
+
+        private static bool IsControl(VisualElement target, VisualElement card)
+        {
+            for (var element = target; element != null && element != card; element = element.parent)
+                if (element is Button || element is TextField || element is DropdownField)
+                    return true;
+            return false;
         }
 
         private static VisualElement Element(string className)

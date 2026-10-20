@@ -119,6 +119,14 @@ namespace Atlas.Presentation.SOS.Assistant
                     throw new InvalidOperationException(
                         $"Offer '{offer.id}' has no conversation.");
 
+                if (!string.IsNullOrWhiteSpace(offer.invitationConversationId))
+                {
+                    var invitation = FindConversation(offer.invitationConversationId);
+                    if (invitation == null || invitation.FindNode("offer") == null ||
+                        invitation.FindNode("reminder") == null || invitation.FindNode("confirmation") == null)
+                        throw new InvalidOperationException($"Offer '{offer.id}' has an incomplete invitation.");
+                }
+
                 if (string.IsNullOrWhiteSpace(offer.triggerSignal))
                     throw new InvalidOperationException(
                         $"Offer '{offer.id}' has no trigger signal.");

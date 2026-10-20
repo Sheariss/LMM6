@@ -27,6 +27,7 @@ namespace Atlas.Presentation.SOS.Notifications
 
         private readonly HashSet<string> expanded =
             new(StringComparer.Ordinal);
+        private readonly HashSet<string> expandedCards = new(StringComparer.Ordinal);
 
         public string MenuSourceId { get; private set; }
         public bool DoNotDisturb => inbox.DoNotDisturb;
@@ -101,7 +102,19 @@ namespace Atlas.Presentation.SOS.Notifications
         public void ResetNavigation()
         {
             expanded.Clear();
+            expandedCards.Clear();
             MenuSourceId = null;
+        }
+
+        public bool IsCardExpanded(string id) => expandedCards.Contains(id);
+
+        public void ToggleCard(string id)
+        {
+            if (!GetEntries().Any(entry => entry.Id == id))
+                return;
+            if (!expandedCards.Add(id))
+                expandedCards.Remove(id);
+            Changed?.Invoke();
         }
 
         public void ToggleDoNotDisturb()
@@ -163,6 +176,8 @@ namespace Atlas.Presentation.SOS.Notifications
                 StringComparer.Ordinal);
 
             expanded.RemoveWhere(id => !sources.Contains(id));
+            var ids = new HashSet<string>(GetEntries().Select(entry => entry.Id));
+            expandedCards.RemoveWhere(id => !ids.Contains(id));
 
             if (MenuSourceId != null && !sources.Contains(MenuSourceId))
                 MenuSourceId = null;

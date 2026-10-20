@@ -139,7 +139,7 @@ namespace Atlas.Presentation.SOS.Assistant
                 return false;
 
             // Launch restores the catalog's single Assistant instance. Do not
-            // accept an offer or start its conversation as a side effect.
+            // accept an offer or start its tutorial as a side effect.
             appController.Launch(AssistantAppId);
 
             if (!IsCurrentContext() ||
@@ -176,22 +176,25 @@ namespace Atlas.Presentation.SOS.Assistant
                         if (existing != null)
                             published.Add(offer.id);
 
-                        if (existing == null && !published.Add(offer.id))
+                        bool firstPublication = existing == null && published.Add(offer.id);
+                        if (existing == null && !firstPublication)
                             continue;
 
-                        string message = definition.description ?? string.Empty;
+                        string message = manager.GetOfferStatusMessage(offer);
+                        bool deferredInvitation = offer.status == AssistantOfferStatus.Deferred &&
+                            !string.IsNullOrWhiteSpace(definition.invitationConversationId);
+                        string title = string.IsNullOrWhiteSpace(definition.title)
+                            ? "Guidance available" : definition.title;
+                        if (deferredInvitation)
+                            title = offer.reminderSuppressed ? "Introduction available anytime" :
+                                offer.reminderDueUtcTicks > 0 ? "Introduction reminder scheduled" : "Introduction reminder";
 
-                        if (offer.status == AssistantOfferStatus.Deferred)
-                            message = "Saved for later. " + message;
-
-                        inbox.Post(new NotificationRequest
+                        NotificationEntry posted = inbox.Post(new NotificationRequest
                         {
                             SourceId = SourceId,
                             SourceName = "ATLAS Assistant",
                             Key = offer.id,
-                            Title = string.IsNullOrWhiteSpace(definition.title)
-                                ? "Guidance available"
-                                : definition.title,
+                            Title = title,
                             Message = message,
                             AppId = AssistantAppId,
                             Icon = assistantIcon,
@@ -200,9 +203,15 @@ namespace Atlas.Presentation.SOS.Assistant
                             // Offer priority orders invitations; it must not
                             // automatically bypass the player's DND setting.
                             IsPriority = false,
-                            RequestBanner =
+                            RequireInteraction = offer.id == "guest.introduction.offer",
+                            Layout = deferredInvitation
+                                ? NotificationLayout.Status : NotificationLayout.Standard,
+                            OpenLabel = "Open Assistant",
+                            RequestBanner = firstPublication &&
                                 offer.status == AssistantOfferStatus.Presented
                         });
+                        if (offer.status == AssistantOfferStatus.Deferred)
+                            inbox.DismissBanner(posted.Id);
                     }
                     else if (existing != null)
                     {

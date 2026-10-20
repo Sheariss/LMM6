@@ -52,6 +52,7 @@ namespace Atlas.Presentation.SOS.Assistant
             view.OfferAccepted += OnOfferAccepted;
             view.OfferDeferred += OnOfferDeferred;
             view.OfferDismissed += OnOfferDismissed;
+            view.ReminderChanged += OnReminderChanged;
 
             manager.Changed += Render;
 
@@ -99,7 +100,15 @@ namespace Atlas.Presentation.SOS.Assistant
         private void OnOfferAccepted(string offerId)
         {
             view.Capture();
-            manager.AcceptOffer(offerId);
+            if (!string.IsNullOrWhiteSpace(manager.Catalog.FindOffer(offerId)?.invitationConversationId))
+                manager.TrySelectOffer(offerId);
+            else
+                manager.AcceptOffer(offerId);
+        }
+
+        private void OnReminderChanged(string conversationId, int minutes)
+        {
+            manager.SetReminderChoice(conversationId, minutes);
         }
 
         private void OnOfferDeferred(string offerId)
@@ -173,6 +182,7 @@ namespace Atlas.Presentation.SOS.Assistant
                 view.OfferAccepted -= OnOfferAccepted;
                 view.OfferDeferred -= OnOfferDeferred;
                 view.OfferDismissed -= OnOfferDismissed;
+                view.ReminderChanged -= OnReminderChanged;
 
                 view.Dispose();
             }

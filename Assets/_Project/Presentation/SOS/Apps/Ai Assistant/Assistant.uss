@@ -645,3 +645,18 @@
 .assistant-send-button {
     border-radius: 21px;
 }
+
+.assistant-reminder-picker {
+    width: 100%;
+    min-width: 0;
+    min-height: 36px;
+    flex-shrink: 0;
+    margin-bottom: 8px;
+    flex-direction: column;
+    align-items: stretch;
+}
+.assistant-reminder-picker > .unity-base-field__label {
+    min-width: 0;
+    margin-bottom: 6px;
+    white-space: normal;
+}

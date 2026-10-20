@@ -15,6 +15,56 @@ namespace Atlas.Development
         private const string FirstKey = "first";
         private const string SecondKey = "second";
         private const string RouteKey = "unavailable";
+        private const string PopupSource = "development.notifications.popups";
+        private const string LayoutSource = "development.notifications.layouts";
+
+        [MenuItem(MenuRoot + "Post timed popup", false, 110)]
+        private static void PostTimedPopup() => PostPopup(false);
+
+        [MenuItem(MenuRoot + "Post persistent popup", false, 111)]
+        private static void PostPersistentPopup() => PostPopup(true);
+
+        private static void PostPopup(bool persistent)
+        {
+            if (!TryGetInbox(out NotificationInbox inbox, out _)) return;
+            inbox.Post(new NotificationRequest
+            {
+                SourceId = PopupSource, SourceName = "Popup test",
+                Key = System.Guid.NewGuid().ToString("N"),
+                Title = persistent ? "Persistent notification" : "Timed notification",
+                Message = persistent ? "This stays visible until opened or closed. Closing preserves inbox history." :
+                    "This closes after 12 seconds. Hover or keyboard focus pauses its timer.",
+                AppId = "file-explorer", RequireInteraction = persistent
+            });
+        }
+
+        [MenuItem(MenuRoot + "Post card layout samples", false, 112)]
+        private static void PostLayoutSamples()
+        {
+            if (!TryGetInbox(out NotificationInbox inbox, out _)) return;
+            var icon = Resources.Load<Sprite>("AppIcons/Assistant/icons8-sparkle-48");
+            foreach (var layout in new[] { NotificationLayout.Message, NotificationLayout.Email, NotificationLayout.Standard })
+                inbox.Post(new NotificationRequest
+                {
+                    SourceId = LayoutSource + "." + layout, SourceName = layout + " layout test",
+                    Key = "layout", Title = layout == NotificationLayout.Email ? "Workspace training update" : "A new message",
+                    Message = "This is a longer preview to check truncation when collapsed and wrapping when expanded. Clicking the content opens the destination app; expanding the card only reveals its content.",
+                    ActorName = layout == NotificationLayout.Standard ? null : "ATLAS Team",
+                    Icon = icon, ActorImage = icon, Layout = layout,
+                    OpenLabel = layout == NotificationLayout.Email ? null : "Open",
+                    AppId = "file-explorer", RequestBanner = false
+                });
+        }
+
+        [MenuItem(MenuRoot + "Deliver scheduled Assistant reminder now", false, 113)]
+        private static void DeliverAssistantReminder()
+        {
+            if (!CanUseMenu()) return;
+            var assistant = Atlas.Presentation.SOS.Assistant.AssistantManager.Instance;
+            if (assistant == null || assistant.ActiveUserId != AuthenticationManager.Instance.CurrentUser.UserId)
+                return;
+            assistant.ProcessReminders(System.DateTime.UtcNow.AddHours(2).Ticks);
+        }
 
         [MenuItem(MenuRoot + "Post sample notifications", false, 100)]
         private static void PostSamples()
@@ -113,7 +163,8 @@ namespace Atlas.Development
                 .Where(entry =>
                     (entry.SourceId == SampleSource &&
                      (entry.Key == FirstKey || entry.Key == SecondKey)) ||
-                    (entry.SourceId == RouteSource && entry.Key == RouteKey))
+                    (entry.SourceId == RouteSource && entry.Key == RouteKey)
+                    || entry.SourceId == PopupSource || entry.SourceId.StartsWith(LayoutSource + ".", System.StringComparison.Ordinal))
                 .Select(entry => entry.Id)
                 .ToArray();
 
@@ -127,6 +178,10 @@ namespace Atlas.Development
         [MenuItem(MenuRoot + "Update first sample", true)]
         [MenuItem(MenuRoot + "Resolve first sample", true)]
         [MenuItem(MenuRoot + "Clear sample notifications", true)]
+        [MenuItem(MenuRoot + "Post timed popup", true)]
+        [MenuItem(MenuRoot + "Post persistent popup", true)]
+        [MenuItem(MenuRoot + "Post card layout samples", true)]
+        [MenuItem(MenuRoot + "Deliver scheduled Assistant reminder now", true)]
         private static bool CanUseMenu()
         {
             AuthenticationManager authentication = AuthenticationManager.Instance;

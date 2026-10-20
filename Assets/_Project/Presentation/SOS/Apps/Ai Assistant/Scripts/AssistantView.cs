@@ -24,6 +24,7 @@ namespace Atlas.Presentation.SOS.Assistant
         public event Action<string> OfferAccepted;
         public event Action<string> OfferDeferred;
         public event Action<string> OfferDismissed;
+        public event Action<string, int> ReminderChanged;
 
         public AssistantView(
             AssistantBinder binder,
@@ -129,7 +130,29 @@ namespace Atlas.Presentation.SOS.Assistant
                 string conversationId = selected.id;
                 string nodeId = selected.currentNodeId;
 
-                foreach (var choice in manager.GetChoices(selected))
+                var invitation = manager.GetInvitationOffer(selected);
+                if (invitation != null && nodeId == "reminder" && manager.CanPresentOffer(invitation.id))
+                {
+                    var options = new System.Collections.Generic.List<string>
+                        { "10 minutes", "30 minutes", "1 hour", "Never" };
+                    int index = invitation.reminderMinutes == 0 ? 3 :
+                        invitation.reminderMinutes == 60 ? 2 : invitation.reminderMinutes == 30 ? 1 : 0;
+                    var picker = new DropdownField("Remind me again in", options, index)
+                    {
+                        name = "AssistantReminderPicker"
+                    };
+                    picker.AddToClassList("assistant-reminder-picker");
+                    picker.RegisterValueChangedCallback(evt =>
+                    {
+                        int selectedIndex = options.IndexOf(evt.newValue);
+                        if (selectedIndex >= 0)
+                            ReminderChanged?.Invoke(conversationId, new[] { 10, 30, 60, 0 }[selectedIndex]);
+                    });
+                    binder.PromptList.Add(picker);
+                }
+
+                foreach (var choice in invitation != null && !manager.CanPresentOffer(invitation.id)
+                             ? new System.Collections.Generic.List<AssistantChoiceDefinition>() : manager.GetChoices(selected))
                 {
                     string choiceId = choice.id;
 
@@ -232,6 +255,10 @@ namespace Atlas.Presentation.SOS.Assistant
                 var definition = manager.Catalog.FindOffer(offer.id);
 
                 if (definition == null)
+                    continue;
+
+                if (!string.IsNullOrWhiteSpace(definition.invitationConversationId) &&
+                    manager.SelectedConversation?.offerId == offer.id)
                     continue;
 
                 string id = offer.id;

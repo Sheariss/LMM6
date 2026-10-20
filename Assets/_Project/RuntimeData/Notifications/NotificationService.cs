@@ -5,6 +5,8 @@ using UnityEngine;
 
 namespace Atlas.SOS.Notifications
 {
+    public enum NotificationLayout { Standard, Message, Email, Status }
+
     public sealed class NotificationRequest
     {
         // Identifies the publishing system and its group.
@@ -27,6 +29,11 @@ namespace Atlas.SOS.Notifications
 
         public bool IsPriority;
         public bool RequestBanner = true;
+        public bool RequireInteraction;
+        public NotificationLayout Layout;
+        public string ActorName;
+        public Sprite ActorImage;
+        public string OpenLabel = "Open";
     }
 
     public sealed class NotificationEntry
@@ -49,6 +56,11 @@ namespace Atlas.SOS.Notifications
         public bool IsRead { get; internal set; }
         public bool IsResolved { get; internal set; }
         public string ResolutionText { get; internal set; }
+        public bool RequireInteraction { get; private set; }
+        public NotificationLayout Layout { get; private set; }
+        public string ActorName { get; private set; }
+        public Sprite ActorImage { get; private set; }
+        public string OpenLabel { get; private set; }
 
         internal NotificationEntry(NotificationRequest request)
         {
@@ -75,7 +87,10 @@ namespace Atlas.SOS.Notifications
                 Icon != request.Icon ||
                 DestinationId != destinationId ||
                 TargetId != targetId ||
-                IsPriority != request.IsPriority;
+                IsPriority != request.IsPriority ||
+                RequireInteraction != request.RequireInteraction ||
+                Layout != request.Layout || ActorName != request.ActorName ||
+                ActorImage != request.ActorImage || OpenLabel != request.OpenLabel;
 
             SourceName = request.SourceName;
             Title = request.Title;
@@ -85,6 +100,11 @@ namespace Atlas.SOS.Notifications
             DestinationId = destinationId;
             TargetId = targetId;
             IsPriority = request.IsPriority;
+            RequireInteraction = request.RequireInteraction;
+            Layout = request.Layout;
+            ActorName = request.ActorName;
+            ActorImage = request.ActorImage;
+            OpenLabel = request.OpenLabel;
 
             return changed;
         }
@@ -123,14 +143,31 @@ namespace Atlas.SOS.Notifications
             new(StringComparer.Ordinal);
 
         private bool opening;
+        private int viewers;
 
         public bool DoNotDisturb { get; private set; }
+        public bool IsBeingViewed => viewers > 0;
+
+        public IDisposable BeginViewing()
+        {
+            viewers++;
+            Changed?.Invoke();
+            return new Subscription(() =>
+            {
+                viewers--;
+                Changed?.Invoke();
+            });
+        }
 
         public event Action Changed;
 
-        // A future popup host subscribes to this.
+        // Desktop popup hosts subscribe for their currently bound account.
         // The entry has already been stored when this fires.
         public event Action<NotificationEntry> BannerRequested;
+        public event Action<string> BannerDismissRequested;
+
+        // Presentation only: leave notification history and domain state intact.
+        public void DismissBanner(string notificationId) => BannerDismissRequested?.Invoke(notificationId);
 
         public IReadOnlyList<NotificationEntry> GetSnapshot()
         {

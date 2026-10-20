@@ -351,6 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3ea761397429784fb08d159ee2dfba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Desktop.DesktopController
+  notificationPopupTemplate: {fileID: 9197481963319205126, guid: dbd7fcbfc7014f7e8bc9382b49a9cb87, type: 3}
   appCatalog: {fileID: 11400000, guid: ab7cff7353a143742a455312169db2ea, type: 2}
   appController: {fileID: 1897112153}
   shortcutTemplate: {fileID: 9197481963319205126, guid: e7732217972d5a94a8ab501f97f07bfa, type: 3}

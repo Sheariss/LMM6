@@ -242,7 +242,7 @@
 }
 
 .notification-time {
-    flex-grow: 1;
+    flex-grow: 0;
     color: var(--text-muted);
     font-size: var(--text-xs);
 }
@@ -272,9 +272,31 @@
 }
 
 .notification-panel .notification-count {
-    width: 100%;
+    align-self: flex-start;
     margin-top: var(--space-1);
     background-color: var(--bg-tertiary);
+}
+
+.notification-header-controls {
+    flex-direction: row;
+    opacity: 0;
+}
+
+.notification-group-header:hover .notification-header-controls,
+.notification-group-header.has-focus .notification-header-controls {
+    opacity: 1;
+}
+
+.notification-content { flex-direction: row; }
+.notification-body { flex-grow: 1; flex-shrink: 1; min-width: 0; }
+.notification-portrait { width: 48px; height: 48px; margin-right: 12px; flex-shrink: 0; }
+.notification-card.can-open:hover { border-color: var(--border-focus); }
+.notification-card:focus { border-color: var(--border-focus); }
+.notification-card.is-collapsed .notification-title,
+.notification-card.is-collapsed .notification-message {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .notification-empty {

@@ -8,6 +8,7 @@ using Atlas.SOS.Apps;
 using Atlas.SOS.Authentication;
 using Atlas.SOS.FileSystem;
 using Atlas.SOS.Notifications;
+using Atlas.Presentation.SOS.Notifications;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static Atlas.AuthoredData.Users.UserLibrarySO;
@@ -54,6 +55,7 @@ namespace Atlas.Presentation.SOS.Desktop
 
         [Header("Panels")]
         [SerializeField] private PanelController panelController;
+        [SerializeField] private VisualTreeAsset notificationPopupTemplate;
 
         private DesktopBinder binder;
         private DesktopView view;
@@ -63,6 +65,7 @@ namespace Atlas.Presentation.SOS.Desktop
         private DesktopShortcutController shortcutController;
         private TaskbarPinnedButtonController pinnedButtonController;
         private TaskbarNotificationController taskbarNotificationController;
+        private NotificationPopupController notificationPopupController;
 
         private readonly List<AppDefinition> availableApps = new();
         private readonly List<AppDefinition> pinnedApps = new();
@@ -118,6 +121,7 @@ namespace Atlas.Presentation.SOS.Desktop
                 pinnedButtonTemplate == null ||
                 taskbarPreviewTemplate == null ||
                 startMenuTemplate == null ||
+                notificationPopupTemplate == null ||
                 fileSystemLibrary == null ||
                 fileAssociationCatalog == null ||
                 appController == null ||
@@ -233,6 +237,13 @@ namespace Atlas.Presentation.SOS.Desktop
                         taskbarBinder,
                         NotificationService.ForUser(user.UserId),
                         appID => user.CanAccessApp(appID));
+
+                notificationPopupController = new NotificationPopupController(
+                    binder.Workspace, notificationPopupTemplate,
+                    NotificationService.ForUser(user.UserId),
+                    appID => IsPreparedForCurrentUser && ActiveUser.CanAccessApp(appID),
+                    RequestAppLaunch,
+                    () => desktopVisible && IsPreparedForCurrentUser);
 
                 startMenuHost = startMenuTemplate.CloneTree();
                 startMenuHost.name = "StartMenuHost";
@@ -382,6 +393,7 @@ namespace Atlas.Presentation.SOS.Desktop
         public void Hide()
         {
             desktopVisible = false;
+            notificationPopupController?.Clear();
             taskbarPreviewController?.Hide();
 
             panelController?.Close();
@@ -394,6 +406,8 @@ namespace Atlas.Presentation.SOS.Desktop
         public void Clear()
         {
             desktopVisible = false;
+            notificationPopupController?.Dispose();
+            notificationPopupController = null;
 
             taskbarNotificationController?.Dispose();
             taskbarNotificationController = null;

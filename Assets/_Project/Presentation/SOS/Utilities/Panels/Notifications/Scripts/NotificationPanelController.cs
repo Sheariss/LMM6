@@ -24,6 +24,8 @@ namespace Atlas.Presentation.SOS.Notifications
         private bool initialized;
         private bool visible;
         private bool synchronizing;
+        private NotificationInbox inbox;
+        private IDisposable viewing;
 
         public override VisualElement Surface => view?.Binder.Root;
 
@@ -62,7 +64,7 @@ namespace Atlas.Presentation.SOS.Notifications
 
             try
             {
-                NotificationInbox inbox = NotificationService.ForUser(
+                inbox = NotificationService.ForUser(
                     authentication.CurrentUser.UserId);
 
                 engine = new NotificationPanelEngine(
@@ -96,6 +98,8 @@ namespace Atlas.Presentation.SOS.Notifications
             view.Binder.Scroll.scrollOffset = Vector2.zero;
 
             visible = true;
+            viewing?.Dispose();
+            viewing = inbox.BeginViewing();
             OnChanged();
             view.Show();
         }
@@ -103,6 +107,9 @@ namespace Atlas.Presentation.SOS.Notifications
         public override void Hide()
         {
             visible = false;
+            viewing?.Dispose();
+            viewing = null;
+            engine?.ResetNavigation();
             view?.Hide();
         }
 
@@ -110,6 +117,8 @@ namespace Atlas.Presentation.SOS.Notifications
         {
             initialized = false;
             visible = false;
+            viewing?.Dispose();
+            viewing = null;
 
             if (view != null && engine != null)
             {
@@ -118,6 +127,7 @@ namespace Atlas.Presentation.SOS.Notifications
                 view.Binder.SettingsButton.clicked -= OpenSettings;
 
                 view.ExpandRequested -= engine.ToggleExpanded;
+                view.CardExpandRequested -= engine.ToggleCard;
                 view.MenuRequested -= engine.ToggleMenu;
                 view.ClearGroupRequested -= engine.ClearGroup;
                 view.DismissRequested -= engine.Dismiss;
@@ -135,6 +145,7 @@ namespace Atlas.Presentation.SOS.Notifications
             view?.Detach();
 
             engine = null;
+            inbox = null;
             view = null;
             canAccessApp = null;
             launchApp = null;
@@ -148,6 +159,7 @@ namespace Atlas.Presentation.SOS.Notifications
             view.Binder.SettingsButton.clicked += OpenSettings;
 
             view.ExpandRequested += engine.ToggleExpanded;
+            view.CardExpandRequested += engine.ToggleCard;
             view.MenuRequested += engine.ToggleMenu;
             view.ClearGroupRequested += engine.ClearGroup;
             view.DismissRequested += engine.Dismiss;

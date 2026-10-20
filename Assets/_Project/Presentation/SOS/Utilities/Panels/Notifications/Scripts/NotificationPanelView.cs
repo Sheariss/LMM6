@@ -13,6 +13,7 @@ namespace Atlas.Presentation.SOS.Notifications
         public NotificationPanelBinder Binder { get; }
 
         public event Action<string> ExpandRequested;
+        public event Action<string> CardExpandRequested;
         public event Action<string> MenuRequested;
         public event Action<string> ClearGroupRequested;
         public event Action<string> DismissRequested;
@@ -70,6 +71,7 @@ namespace Atlas.Presentation.SOS.Notifications
                     engine,
                     settingsAvailable,
                     id => ExpandRequested?.Invoke(id),
+                    id => CardExpandRequested?.Invoke(id),
                     id => MenuRequested?.Invoke(id),
                     id => ClearGroupRequested?.Invoke(id),
                     id => DismissRequested?.Invoke(id),

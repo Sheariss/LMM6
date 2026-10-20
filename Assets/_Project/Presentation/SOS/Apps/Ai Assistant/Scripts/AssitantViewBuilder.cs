@@ -99,8 +99,13 @@ namespace Atlas.Presentation.SOS.Assistant
             card.Add(description);
 
             card.Add(BuildChoice(
-                deferred ? "Open saved guidance" : "Open guidance",
+                !string.IsNullOrWhiteSpace(definition.invitationConversationId)
+                    ? "Open introduction conversation"
+                    : deferred ? "Open saved guidance" : "Open guidance",
                 accept));
+
+            if (!string.IsNullOrWhiteSpace(definition.invitationConversationId))
+                return card;
 
             if (!deferred)
                 card.Add(BuildChoice("Later", later));

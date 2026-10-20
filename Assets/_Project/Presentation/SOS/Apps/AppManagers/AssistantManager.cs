@@ -17,6 +17,7 @@ namespace Atlas.Presentation.SOS.Assistant
         private readonly AssistantEngine engine = new();
 
         private bool pumping;
+        private float nextReminderCheck;
 
         public event Action Changed;
         public event Action<AssistantActionRequest> ActionRequested;
@@ -65,6 +66,88 @@ namespace Atlas.Presentation.SOS.Assistant
                 Instance = null;
         }
 
+        private void Update()
+        {
+            if (ActiveUserId == null || Time.unscaledTime < nextReminderCheck)
+                return;
+            nextReminderCheck = Time.unscaledTime + 1f;
+            ProcessReminders(DateTime.UtcNow.Ticks);
+        }
+
+        // Real-world deadlines are evaluated only for the currently bound account.
+        // This API also permits deterministic reminder validation without waiting.
+        public void ProcessReminders(long utcTicks)
+        {
+            if (ActiveUserId == null) return;
+            bool changed = false;
+            foreach (var offer in state.offers.ToArray())
+            {
+                if (offer.status != AssistantOfferStatus.Deferred ||
+                    offer.reminderSuppressed || offer.reminderDueUtcTicks <= 0 ||
+                    offer.reminderDueUtcTicks > utcTicks) continue;
+                offer.reminderDueUtcTicks = 0;
+                if (!IsOfferValid(offer))
+                {
+                    offer.status = AssistantOfferStatus.Expired;
+                    changed = true;
+                    continue;
+                }
+                offer.reminderDelivered = true;
+                var invitation = EnsureInvitation(offer);
+                if (invitation != null)
+                {
+                    invitation.finished = false;
+                    invitation.currentNodeId = "offer";
+                    AddMessage(invitation, "You asked me to remind you about the workspace introduction. Would you like to start now?", false);
+                }
+                changed = true;
+            }
+            if (changed) Refresh();
+        }
+
+        private AssistantConversationState EnsureInvitation(AssistantOfferState offer)
+        {
+            string id = catalog.FindOffer(offer.id)?.invitationConversationId;
+            if (string.IsNullOrWhiteSpace(id)) return null;
+            var conversation = FindConversation(id);
+            if (conversation == null)
+            {
+                if (!StartConversation(id, false, offer.returnContext)) return null;
+                conversation = FindConversation(id);
+            }
+            conversation.offerId = offer.id;
+            return conversation;
+        }
+
+        public void SetReminderChoice(string conversationId, int minutes)
+        {
+            var conversation = FindConversation(conversationId);
+            if (conversation == null || conversation.currentNodeId != "reminder" ||
+                string.IsNullOrWhiteSpace(conversation.offerId) ||
+                (minutes != 0 && minutes != 10 && minutes != 30 && minutes != 60)) return;
+            var offer = state.offers.Find(item => item.id == conversation.offerId);
+            if (offer != null && CanPresentOffer(offer.id)) offer.reminderMinutes = minutes;
+        }
+
+        public AssistantOfferState GetInvitationOffer(AssistantConversationState conversation) =>
+            string.IsNullOrWhiteSpace(conversation?.offerId) ? null :
+            state.offers.Find(item => item.id == conversation.offerId);
+
+        public string GetOfferStatusMessage(AssistantOfferState offer)
+        {
+            var definition = catalog.FindOffer(offer.id);
+            if (string.IsNullOrWhiteSpace(definition?.invitationConversationId))
+                return (offer.status == AssistantOfferStatus.Deferred ? "Saved for later. " : "") +
+                    (definition?.description ?? string.Empty);
+            if (offer.reminderSuppressed)
+                return "Reminders are off. You can start the introduction from Assistant whenever you're ready.";
+            if (offer.reminderDueUtcTicks > 0)
+                return $"A {offer.reminderMinutes}-minute reminder is set. You can open Assistant and start the introduction now.";
+            if (offer.reminderDelivered)
+                return "Your introduction reminder is ready in Assistant. Open the conversation whenever you're ready.";
+            return definition.description ?? string.Empty;
+        }
+
         // Account state is retained only for this manager's lifetime. The
         // existing JSON API still exports/imports the currently bound account.
         public void SetActiveUser(string userId)
@@ -107,10 +190,14 @@ namespace Atlas.Presentation.SOS.Assistant
             if (!CanPresentOffer(offerId))
                 return false;
 
-            // This requests presentation only. It does not accept the offer,
-            // start a tutorial, or change the selected conversation.
+            // Open the invitation chat without accepting or starting a tutorial.
+            // Offers without an invitation retain their existing card selection.
             SelectedOfferId = offerId;
             OfferSelectionVersion++;
+            var offer = state.offers.Find(item => item.id == offerId);
+            var invitation = EnsureInvitation(offer);
+            if (invitation != null)
+                state.selectedConversationId = invitation.id;
             Changed?.Invoke();
             return true;
         }
@@ -209,6 +296,12 @@ namespace Atlas.Presentation.SOS.Assistant
             }
 
             var definition = catalog.FindConversation(conversationId);
+
+            if (!string.IsNullOrWhiteSpace(runtime.offerId))
+            {
+                SelectInvitationChoice(runtime, choiceId);
+                return;
+            }
 
             var transition = engine.Choose(
                 definition,
@@ -328,6 +421,15 @@ namespace Atlas.Presentation.SOS.Assistant
 
             conversation.returnContext = offer.returnContext;
             offer.status = AssistantOfferStatus.Accepted;
+            offer.reminderDueUtcTicks = 0;
+            offer.reminderSuppressed = false;
+            var invitation = FindConversation(definition.invitationConversationId);
+            if (invitation != null)
+            {
+                AddMessage(invitation, "Let's begin the introduction. Any scheduled introduction reminder is now canceled.", false);
+                invitation.finished = true;
+                invitation.currentNodeId = null;
+            }
 
             state.selectedConversationId = conversation.id;
 
@@ -336,6 +438,12 @@ namespace Atlas.Presentation.SOS.Assistant
 
         public void DeferOffer(string offerId)
         {
+            if (!string.IsNullOrWhiteSpace(catalog.FindOffer(offerId)?.invitationConversationId))
+            {
+                if (TrySelectOffer(offerId))
+                    SelectInvitationChoice(SelectedConversation, "no-thanks");
+                return;
+            }
             SetOfferStatus(
                 offerId,
                 AssistantOfferStatus.Deferred);
@@ -343,9 +451,48 @@ namespace Atlas.Presentation.SOS.Assistant
 
         public void DismissOffer(string offerId)
         {
+            if (!string.IsNullOrWhiteSpace(catalog.FindOffer(offerId)?.invitationConversationId))
+            {
+                DeferOffer(offerId);
+                return;
+            }
             SetOfferStatus(
                 offerId,
                 AssistantOfferStatus.Dismissed);
+        }
+
+        private void SelectInvitationChoice(AssistantConversationState conversation, string choiceId)
+        {
+            var offer = GetInvitationOffer(conversation);
+            if (offer == null || !CanPresentOffer(offer.id) || conversation.finished) return;
+            var choice = GetChoices(conversation).Find(item => item.id == choiceId);
+            if (choice == null) return;
+            if (choiceId == "start")
+            {
+                // Do not claim success or clear the reminder unless starting succeeds.
+                AcceptOffer(offer.id);
+                return;
+            }
+            AddMessage(conversation, choice.label, true);
+            if (choiceId == "no-thanks")
+                EnterNode(conversation, "reminder");
+            else if (choiceId == "back")
+                EnterNode(conversation, "offer");
+            else if (choiceId == "continue")
+            {
+                offer.status = AssistantOfferStatus.Deferred;
+                offer.reminderSuppressed = offer.reminderMinutes == 0;
+                offer.reminderDelivered = false;
+                offer.reminderDueUtcTicks = offer.reminderSuppressed ? 0 :
+                    DateTime.UtcNow.AddMinutes(offer.reminderMinutes).Ticks;
+                AddMessage(conversation, offer.reminderSuppressed ? "Never remind me." :
+                    $"Remind me in {offer.reminderMinutes} minutes.", true);
+                EnterNode(conversation, "confirmation");
+                AddMessage(conversation, offer.reminderSuppressed ?
+                    "Okay. You can start the introduction from Assistant whenever you're ready." :
+                    $"I'll remind you in {offer.reminderMinutes} minutes. You can also start the introduction here anytime.", false);
+            }
+            Refresh();
         }
 
         public void SkipTutorial(string tutorialId)
@@ -692,7 +839,10 @@ namespace Atlas.Presentation.SOS.Assistant
                     offer.status == AssistantOfferStatus.Deferred;
 
                 if (unresolved && !IsOfferValid(offer))
+                {
                     offer.status = AssistantOfferStatus.Expired;
+                    offer.reminderDueUtcTicks = 0;
+                }
 
                 if (offer.status == AssistantOfferStatus.Presented)
                     alreadyPresented = true;

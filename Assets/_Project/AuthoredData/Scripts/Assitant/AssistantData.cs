@@ -146,6 +146,7 @@ namespace Atlas.Presentation.SOS.Assistant
         public string description;
 
         public string conversationId;
+        public string invitationConversationId;
         public string triggerSignal;
         public int priority;
 
@@ -182,6 +183,7 @@ namespace Atlas.Presentation.SOS.Assistant
     public sealed class AssistantConversationState
     {
         public string id;
+        public string offerId;
         public string currentNodeId;
         public long nodeEnteredSequence;
         public bool finished;
@@ -201,6 +203,10 @@ namespace Atlas.Presentation.SOS.Assistant
         public string id;
         public AssistantOfferStatus status;
         public string returnContext;
+        public int reminderMinutes = 10;
+        public long reminderDueUtcTicks;
+        public bool reminderSuppressed;
+        public bool reminderDelivered;
     }
 
     [Serializable]

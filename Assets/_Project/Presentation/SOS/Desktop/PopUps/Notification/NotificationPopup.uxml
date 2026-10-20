@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="project://database/Assets/_Project/Presentation/SOS/Desktop/PopUps/Notification/NotificationPopup.uss?fileID=7433441132597879392&amp;guid=24f06a943b8448f9b33a59be71e8cb5f&amp;type=3#NotificationPopup"/>
+    <ui:VisualElement name="NotificationPopup" class="notification-popup">
+        <ui:VisualElement class="popup-header">
+            <ui:Image name="PopupIcon" class="popup-icon" picking-mode="Ignore"/>
+            <ui:Label name="PopupSource" class="popup-source" picking-mode="Ignore"/>
+            <ui:Button name="PopupClose" tooltip="Close popup" class="popup-close">
+                <ui:Image class="popup-close-icon" picking-mode="Ignore"/>
+            </ui:Button>
+        </ui:VisualElement>
+        <ui:Label name="PopupTitle" class="popup-title" picking-mode="Ignore"/>
+        <ui:Label name="PopupMessage" class="popup-message" picking-mode="Ignore"/>
+        <ui:Button name="PopupOpen" text="Open" class="popup-open"/>
+    </ui:VisualElement>
+</ui:UXML>
