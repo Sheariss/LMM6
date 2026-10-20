@@ -1370,6 +1370,8 @@ MonoBehaviour:
     runtimePrefab: {fileID: 6571743189070254489, guid: 37c1384d2d71eeb49bae56b991077291, type: 3}
   - id: 2
     runtimePrefab: {fileID: 8252290141740187653, guid: aeacf4c7cff18764698300524e726b30, type: 3}
+  - id: 3
+    runtimePrefab: {fileID: 11400000, guid: e79f496e37e64b0585b1c34a74b8eb98, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ using Atlas.Presentation.SOS.Windows;
 using Atlas.SOS.Apps;
 using Atlas.SOS.Authentication;
 using Atlas.SOS.FileSystem;
+using Atlas.SOS.Notifications;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static Atlas.AuthoredData.Users.UserLibrarySO;
@@ -61,6 +62,7 @@ namespace Atlas.Presentation.SOS.Desktop
         private DesktopShortcutGridController gridController;
         private DesktopShortcutController shortcutController;
         private TaskbarPinnedButtonController pinnedButtonController;
+        private TaskbarNotificationController taskbarNotificationController;
 
         private readonly List<AppDefinition> availableApps = new();
         private readonly List<AppDefinition> pinnedApps = new();
@@ -222,6 +224,16 @@ namespace Atlas.Presentation.SOS.Desktop
                     DesktopPanelID.DateTime,
                     taskbarBinder.DateTimeButton);
 
+                panelController.BindButton(
+                    DesktopPanelID.Notifications,
+                    taskbarBinder.NotificationsButton);
+
+                taskbarNotificationController =
+                    new TaskbarNotificationController(
+                        taskbarBinder,
+                        NotificationService.ForUser(user.UserId),
+                        appID => user.CanAccessApp(appID));
+
                 startMenuHost = startMenuTemplate.CloneTree();
                 startMenuHost.name = "StartMenuHost";
                 startMenuHost.pickingMode = PickingMode.Ignore;
@@ -382,6 +394,9 @@ namespace Atlas.Presentation.SOS.Desktop
         public void Clear()
         {
             desktopVisible = false;
+
+            taskbarNotificationController?.Dispose();
+            taskbarNotificationController = null;
 
             if (taskbarPreviewController != null)
             {

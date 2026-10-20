@@ -1,0 +1,77 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="../../../../Tokens/Global-Colors.uss" />
+    <Style src="../../../../Tokens/Global-Tokens.uss" />
+    <Style src="Notifications.uss" />
+
+    <ui:VisualElement
+        name="NotificationPanel"
+        class="notification-panel"
+        tabindex="0">
+
+        <ui:VisualElement class="notification-header">
+            <ui:Label
+                text="Notifications"
+                class="notification-heading" />
+
+            <ui:Button
+                name="NotificationDndButton"
+                tooltip="Turn do not disturb on"
+                class="notification-button notification-icon-button">
+
+                <ui:Image
+                    picking-mode="Ignore"
+                    class="notification-icon notification-dnd-icon" />
+            </ui:Button>
+
+            <ui:Button
+                name="NotificationClearAllButton"
+                text="Clear all"
+                class="notification-button notification-filled-button" />
+        </ui:VisualElement>
+
+        <ui:VisualElement
+            name="NotificationDndBanner"
+            class="notification-dnd-banner">
+
+            <ui:Label
+                text="Do not disturb is on"
+                class="notification-wrap" />
+
+            <ui:Label
+                text="Notifications stay here. Priority notifications can still show popups."
+                class="notification-secondary notification-wrap" />
+        </ui:VisualElement>
+
+        <ui:Button
+            name="NotificationSettingsButton"
+            text="Notification settings"
+            class="notification-button notification-settings-link" />
+
+        <ui:ScrollView
+            name="NotificationScroll"
+            mode="Vertical"
+            horizontal-scroller-visibility="Hidden"
+            vertical-scroller-visibility="Auto"
+            class="notification-scroll">
+
+            <ui:VisualElement name="NotificationGroups" />
+        </ui:ScrollView>
+
+        <ui:VisualElement
+            name="NotificationEmpty"
+            class="notification-empty">
+
+            <ui:Image
+                picking-mode="Ignore"
+                class="notification-empty-icon" />
+
+            <ui:Label
+                text="You're all caught up"
+                class="notification-wrap" />
+
+            <ui:Label
+                text="New notifications will appear here."
+                class="notification-secondary notification-wrap" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
