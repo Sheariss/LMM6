@@ -36,8 +36,14 @@ namespace Atlas.Presentation.SOS.Panels
         private Action<string> launchApp;
 
         private Instance active;
+        private int escapeClaimedFrame = -1;
 
         public bool HasOpenPanel => active != null;
+
+        // The UI event can close the panel before the pause menu polls the same
+        // key. Retain ownership for that frame so one press cannot do both.
+        public bool HasEscapePriority =>
+            HasOpenPanel || escapeClaimedFrame == Time.frameCount;
 
         public event Action PanelOpening;
 
@@ -102,6 +108,9 @@ namespace Atlas.Presentation.SOS.Panels
                     OnPointerDown,
                     TrickleDown.TrickleDown);
 
+                documentRoot.RegisterCallback<KeyDownEvent>(
+                    OnKeyDownCapture,
+                    TrickleDown.TrickleDown);
                 documentRoot.RegisterCallback<KeyDownEvent>(OnKeyDown);
             }
             catch
@@ -253,6 +262,12 @@ namespace Atlas.Presentation.SOS.Panels
             Close();
         }
 
+        private void OnKeyDownCapture(KeyDownEvent evt)
+        {
+            if (active != null && evt.keyCode == KeyCode.Escape)
+                escapeClaimedFrame = Time.frameCount;
+        }
+
         private void OnKeyDown(KeyDownEvent evt)
         {
             if (active == null || evt.keyCode != KeyCode.Escape)
@@ -273,6 +288,9 @@ namespace Atlas.Presentation.SOS.Panels
                     TrickleDown.TrickleDown);
 
                 documentRoot.UnregisterCallback<KeyDownEvent>(OnKeyDown);
+                documentRoot.UnregisterCallback<KeyDownEvent>(
+                    OnKeyDownCapture,
+                    TrickleDown.TrickleDown);
             }
 
             foreach (Instance instance in instances.Values)

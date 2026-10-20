@@ -1,4 +1,5 @@
 using Atlas.Core.GameState;
+using Atlas.Presentation.SOS.Panels;
 using Atlas.Presentation.GameUI.SecurityScreen;
 using System.Reflection;
 using UnityEngine;
@@ -19,6 +20,8 @@ namespace Atlas.Presentation.GameUI.PauseMenu
 
         // -------------------- RUNTIME DEPENDENCIES --------------------
         private GameStateManager gameStateManager;
+
+        [SerializeField] private PanelController panelController;
 
         // -------------------- LIFECYCLE --------------------
         private void Start()
@@ -51,11 +54,20 @@ namespace Atlas.Presentation.GameUI.PauseMenu
 
         private void Update()
         {
-            if (Keyboard.current == null)
+            if (Keyboard.current == null ||
+                binder == null || !binder.IsValid || gameStateManager == null)
                 return;
 
             if (Keyboard.current.escapeKey.wasPressedThisFrame)
             {
+                // UI Toolkit StopPropagation does not consume Input System
+                // polling. Let the desktop panel handle this press first.
+                if (!isPaused && panelController != null &&
+                    panelController.HasEscapePriority)
+                {
+                    return;
+                }
+
                 TogglePauseMenu();
             }
         }

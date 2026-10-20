@@ -1110,6 +1110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 046ae38fd9279a64fb9e3de744d98525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.GameUI.PauseMenu.PauseMenuController
+  panelController: {fileID: 2126416100}
 --- !u!1 &1762314230
 GameObject:
   m_ObjectHideFlags: 0
