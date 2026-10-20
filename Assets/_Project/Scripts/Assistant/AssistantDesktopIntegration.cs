@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Atlas.Presentation.SOS.Desktop;
+using Atlas.SOS.Authentication;
 using UnityEngine;
 
 namespace Atlas.Presentation.SOS.Assistant
@@ -44,24 +45,35 @@ namespace Atlas.Presentation.SOS.Assistant
         {
             CancelPendingPresentation();
 
-            pendingPresentation = StartCoroutine(ReportDesktopShown());
+            var assistant = AssistantManager.Instance;
+
+            if (assistant == null || desktopManager.ActiveUser == null)
+                return;
+
+            string userId = desktopManager.ActiveUser.UserId;
+            assistant.SetActiveUser(userId);
+            assistant.SetFact("desktop.guest.visible", userId == "guest");
+
+            pendingPresentation = StartCoroutine(ReportDesktopShown(userId));
         }
 
-        private IEnumerator ReportDesktopShown()
+        private IEnumerator ReportDesktopShown(string expectedUserId)
         {
-            // ShowDesktop returns, then LoginScreenController hides login.
-            yield return null;
+            // Real time keeps the delay consistent with presentation timing.
+            yield return new WaitForSecondsRealtime(3f);
 
             pendingPresentation = null;
 
             if (desktopManager == null ||
                 !desktopManager.IsDesktopShown ||
-                desktopManager.ActiveUser == null)
+                desktopManager.ActiveUser == null ||
+                desktopManager.ActiveUser.UserId != expectedUserId)
             {
                 yield break;
             }
 
             var assistant = AssistantManager.Instance;
+            var authentication = AuthenticationManager.Instance;
 
             if (assistant == null)
             {
@@ -69,6 +81,13 @@ namespace Atlas.Presentation.SOS.Assistant
                     "[AssistantDesktopIntegration] " +
                     "AssistantManager has not initialized successfully.",
                     this);
+                yield break;
+            }
+
+            if (assistant.ActiveUserId != expectedUserId ||
+                authentication == null || !authentication.IsSignedIn ||
+                authentication.CurrentUser.UserId != expectedUserId)
+            {
                 yield break;
             }
 
@@ -90,7 +109,7 @@ namespace Atlas.Presentation.SOS.Assistant
             var assistant = AssistantManager.Instance;
 
             if (assistant != null)
-                assistant.SetFact("desktop.guest.visible", false);
+                assistant.SetActiveUser(null);
         }
 
         private void CancelPendingPresentation()

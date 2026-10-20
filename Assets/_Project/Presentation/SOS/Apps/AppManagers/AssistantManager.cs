@@ -12,6 +12,8 @@ namespace Atlas.Presentation.SOS.Assistant
         [SerializeField] private AssistantCatalog catalog;
 
         private AssistantSaveData state = new();
+        private readonly Dictionary<string, AssistantSaveData> userStates =
+            new(StringComparer.Ordinal);
         private readonly AssistantEngine engine = new();
 
         private bool pumping;
@@ -22,6 +24,9 @@ namespace Atlas.Presentation.SOS.Assistant
         public TutorialManager Tutorials { get; private set; }
 
         public AssistantCatalog Catalog => catalog;
+        public string ActiveUserId { get; private set; }
+        public string SelectedOfferId { get; private set; }
+        public long OfferSelectionVersion { get; private set; }
 
         public IReadOnlyList<AssistantConversationState> Conversations =>
             state.conversations;
@@ -58,6 +63,56 @@ namespace Atlas.Presentation.SOS.Assistant
         {
             if (Instance == this)
                 Instance = null;
+        }
+
+        // Account state is retained only for this manager's lifetime. The
+        // existing JSON API still exports/imports the currently bound account.
+        public void SetActiveUser(string userId)
+        {
+            userId = string.IsNullOrWhiteSpace(userId) ? null : userId;
+
+            if (ActiveUserId == userId)
+                return;
+
+            if (ActiveUserId != null)
+                userStates[ActiveUserId] = state;
+
+            ActiveUserId = userId;
+
+            if (userId == null || !userStates.TryGetValue(userId, out state))
+                state = new AssistantSaveData();
+
+            Tutorials = new TutorialManager(catalog, state, engine);
+            SelectedOfferId = null;
+            OfferSelectionVersion++;
+
+            // Rebinding must not replay effects or re-evaluate another
+            // account's signals. The desktop integration supplies fresh facts.
+            Changed?.Invoke();
+        }
+
+        public bool CanPresentOffer(string offerId)
+        {
+            var offer = state.offers.Find(item => item.id == offerId);
+
+            return offer != null &&
+                   (offer.status == AssistantOfferStatus.Presented ||
+                    offer.status == AssistantOfferStatus.Deferred) &&
+                   !GetFact("assistant.offers.blocked") &&
+                   IsOfferValid(offer);
+        }
+
+        public bool TrySelectOffer(string offerId)
+        {
+            if (!CanPresentOffer(offerId))
+                return false;
+
+            // This requests presentation only. It does not accept the offer,
+            // start a tutorial, or change the selected conversation.
+            SelectedOfferId = offerId;
+            OfferSelectionVersion++;
+            Changed?.Invoke();
+            return true;
         }
 
         public AssistantConversationState FindConversation(string id)
@@ -392,6 +447,8 @@ namespace Atlas.Presentation.SOS.Assistant
 
             state = restored;
             Tutorials = new TutorialManager(catalog, state, engine);
+            SelectedOfferId = null;
+            OfferSelectionVersion++;
 
             // Restoring never reruns node entry effects.
             Refresh();
@@ -582,6 +639,9 @@ namespace Atlas.Presentation.SOS.Assistant
                 }
 
                 RefreshOffers();
+
+                if (SelectedOfferId != null && !CanPresentOffer(SelectedOfferId))
+                    SelectedOfferId = null;
             }
             finally
             {

@@ -14,6 +14,7 @@ namespace Atlas.Presentation.SOS.Assistant
         private AssistantConversationState renderedConversation;
         private int renderedMessageCount;
         private int renderVersion;
+        private long focusedOfferSelectionVersion = -1;
         private bool disposed;
 
         public event Action<string> ConversationSelected;
@@ -109,7 +110,7 @@ namespace Atlas.Presentation.SOS.Assistant
                     () => ConversationSelected?.Invoke(id)));
             }
 
-            RenderOffers(manager);
+            VisualElement requestedOffer = RenderOffers(manager);
 
             binder.MessageList.Clear();
             binder.PromptList.Clear();
@@ -182,6 +183,8 @@ namespace Atlas.Presentation.SOS.Assistant
                 binder.MessageScroll.scrollOffset =
                     new UnityEngine.Vector2(0, y);
             });
+
+            FocusRequestedOffer(manager, requestedOffer, version);
         }
 
         public void RefreshComposer()
@@ -206,13 +209,14 @@ namespace Atlas.Presentation.SOS.Assistant
             RefreshComposer();
         }
 
-        private void RenderOffers(AssistantManager manager)
+        private VisualElement RenderOffers(AssistantManager manager)
         {
             offerArea.Clear();
+            VisualElement requestedOffer = null;
 
             // A blocking moment hides presentation without losing offers.
             if (manager.GetFact("assistant.offers.blocked"))
-                return;
+                return null;
 
             foreach (var offer in manager.Offers)
             {
@@ -232,13 +236,47 @@ namespace Atlas.Presentation.SOS.Assistant
 
                 string id = offer.id;
 
-                offerArea.Add(builder.BuildOffer(
+                VisualElement card = builder.BuildOffer(
                     definition,
                     deferred,
                     () => OfferAccepted?.Invoke(id),
                     () => OfferDeferred?.Invoke(id),
-                    () => OfferDismissed?.Invoke(id)));
+                    () => OfferDismissed?.Invoke(id));
+
+                card.name = "AssistantOffer-" + id;
+                offerArea.Add(card);
+
+                if (manager.SelectedOfferId == id)
+                    requestedOffer = card;
             }
+
+            return requestedOffer;
+        }
+
+        private void FocusRequestedOffer(
+            AssistantManager manager,
+            VisualElement card,
+            int version)
+        {
+            long selectionVersion = manager.OfferSelectionVersion;
+            string offerId = manager.SelectedOfferId;
+
+            if (card == null || selectionVersion == focusedOfferSelectionVersion)
+                return;
+
+            OfferScroll.schedule.Execute(() =>
+            {
+                if (disposed || version != renderVersion || card.panel == null ||
+                    manager.SelectedOfferId != offerId ||
+                    manager.OfferSelectionVersion != selectionVersion)
+                {
+                    return;
+                }
+
+                OfferScroll.ScrollTo(card);
+                card.Q<Button>()?.Focus();
+                focusedOfferSelectionVersion = selectionVersion;
+            });
         }
 
         public void Dispose()

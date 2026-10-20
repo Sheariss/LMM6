@@ -420,6 +420,7 @@ GameObject:
   m_Component:
   - component: {fileID: 818070169}
   - component: {fileID: 818070170}
+  - component: {fileID: 818070171}
   m_Layer: 0
   m_Name: AssistantDesktopIntegration
   m_TagString: Untagged
@@ -453,8 +454,23 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d26eec3090aeea438dab013ca75cc79, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AssistantDesktopIntegration
+  m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Assistant.AssistantDesktopIntegration
   desktopManager: {fileID: 59434329}
+--- !u!114 &818070171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818070168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b77ecd60e43344f6a40e77ea35aceb47, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Atlas.Presentation.SOS.Assistant.AssistantNotificationIntegration
+  desktopManager: {fileID: 59434329}
+  appController: {fileID: 1897112153}
+  assistantIcon: {fileID: 21300000, guid: 8181b436624566b419e3f18d75e710a2, type: 3}
 --- !u!1 &880322818
 GameObject:
   m_ObjectHideFlags: 0
